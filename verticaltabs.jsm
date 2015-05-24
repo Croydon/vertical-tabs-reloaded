@@ -53,14 +53,19 @@ VerticalTabs.prototype = {
 
         this.rearrangeXUL();
         this.initContextMenu();
-        this.observeRightPref();
         this.observeThemePref();
+        this.observePrefs();
 
         let tabs = this.document.getElementById("tabbrowser-tabs");
         this.tabIDs = new VTTabIDs(tabs);
         this.unloaders.push(function() {
             this.tabIDs.unload();
         });
+		
+		this.window.addEventListener("sizemodechange", this, false);
+		this.unloaders.push(function unloadSizeModeChangeListener() {
+			this.window.removeEventListener("sizemodechange", this, false);
+		});
     },
 
     installStylesheet: function(uri) {
@@ -167,7 +172,7 @@ VerticalTabs.prototype = {
 
         this.window.addEventListener("resize", this, false);
 
-        this.unloaders.push(function () {
+        this.unloaders.push(function() {
             // Move the bottom back to being the next sibling of contentbox.
             browserbox.insertBefore(bottom, contentbox.nextSibling);
 
@@ -230,7 +235,7 @@ VerticalTabs.prototype = {
 
         tabs.contextMenu.addEventListener("popupshowing", this, false);
 
-        this.unloaders.push(function () {
+        this.unloaders.push(function() {
             if (closeMultiple)
                 tabs.contextMenu.removeChild(closeMultiple);
             tabs.contextMenu.removeEventListener("popupshowing", this, false);
@@ -269,10 +274,10 @@ VerticalTabs.prototype = {
         }, 10);
     },
 
-    observeRightPref: function () {
-      Services.prefs.addObserver("extensions.verticaltabs.right", this, false);
-      this.unloaders.push(function () {
-        Services.prefs.removeObserver("extensions.verticaltabs.right", this, false);
+    observePrefs: function() {
+      Services.prefs.addObserver("extensions.verticaltabs.", this, false);
+      this.unloaders.push(function() {
+        Services.prefs.removeObserver("extensions.verticaltabs.", this, false);
       });
     },
 
@@ -282,8 +287,8 @@ VerticalTabs.prototype = {
         Services.prefs.removeObserver("extensions.verticaltabs.theme", this, false);
       });
     },
-
-    observe: function (subject, topic, data) {
+	
+	observe: function(subject, topic, data) {
       if (topic != "nsPref:changed") {
         return;
       }
@@ -302,8 +307,11 @@ VerticalTabs.prototype = {
           this.removeThemeStylesheet();
           this.applyThemeStylesheet();
           break;
+		case "extensions.verticaltabs.hideInFullscreen":
+		  // call manually, so we re-show tabs when in fullscreen
+		  this.onSizeModeChange();
+		  break;
       }
-
     },
 
     unload: function() {
@@ -326,6 +334,9 @@ VerticalTabs.prototype = {
         case "mouseup":
             this.onMouseUp(aEvent);
             return;
+        case "sizemodechange":
+            this.onSizeModeChange(aEvent);
+            return;
         case "popupshowing":
             this.onPopupShowing(aEvent);
             return;
@@ -333,6 +344,23 @@ VerticalTabs.prototype = {
             this.setPinnedSizes();
             return;
         }
+    },
+
+    onSizeModeChange: function() {
+        const window = this.window;
+        const document = this.document;
+
+        let hideOk = Services.prefs.getBoolPref("extensions.verticaltabs.hideInFullscreen");
+        let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
+
+        let tabs = document.getElementById("verticaltabs-box").style;
+        let splitter = document.getElementById("verticaltabs-splitter").style;
+
+        if (tabs.display == display && splitter.display == display) {
+          return;
+        }
+
+        tabs.display = splitter.display = display;
     },
 
     onTabOpen: function(aEvent) {
@@ -348,7 +376,7 @@ VerticalTabs.prototype = {
     onPopupShowing: function(aEvent) {
         if (!this.multiSelect)
             return;
-
+		
         let closeTabs = this.document.getElementById("context_verticalTabsCloseMultiple");
         let tabs = this.multiSelect.getSelected();
         if (tabs.length > 1) {

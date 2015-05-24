@@ -14,4 +14,7 @@
       </menupopup>
     </menulist>
   </setting>
+  <setting type="bool"
+           pref="extensions.verticaltabs.hideInFullscreen"
+           title="Hide tabs when in fullscreen"/>
 </vbox>
