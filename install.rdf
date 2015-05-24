@@ -8,13 +8,6 @@
     <em:version>0.2</em:version>
     <em:homepageURL>https://github.com/Croydon/vertical-tabs-reloaded</em:homepageURL>
     <em:creator>Croydon</em:creator>
-    <em:contributor>Vlad Vukicevic</em:contributor>
-    <em:contributor>Darrin Henein</em:contributor>
-    <em:contributor>Philipp von Weitershausen (original author)</em:contributor>
-    <em:contributor>SHIMODA Hiroshi (creator of Tree Style Tab)</em:contributor>
-    <em:contributor>bb10 (Linux and Windows theme contributions)</em:contributor>
-    <em:contributor>Frank Yan (various theming fixes)</em:contributor>
-    <em:contributor>Rob Campbell (some UI love)</em:contributor>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- Firefox -->
