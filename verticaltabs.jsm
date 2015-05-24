@@ -10,9 +10,9 @@
  * ***** END LICENSE BLOCK ***** */
 
 Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("resource://verticaltabs/tabdatastore.jsm");
-Components.utils.import("resource://verticaltabs/multiselect.jsm");
-Components.utils.import("resource://verticaltabs/groups.jsm");
+Components.utils.import("resource://verticaltabsreloaded/tabdatastore.jsm");
+Components.utils.import("resource://verticaltabsreloaded/multiselect.jsm");
+Components.utils.import("resource://verticaltabsreloaded/groups.jsm");
 
 let console = (Components.utils.import("resource://gre/modules/devtools/Console.jsm", {})).console;
 
@@ -45,9 +45,9 @@ VerticalTabs.prototype = {
         this.ios = Components.classes["@mozilla.org/network/io-service;1"]
                     .getService(Components.interfaces.nsIIOService);
 
-        this.installStylesheet("resource://verticaltabs/override-bindings.css");
-        this.installStylesheet("resource://verticaltabs/skin/bindings.css");
-        this.installStylesheet("resource://verticaltabs/skin/base.css");
+        this.installStylesheet("resource://verticaltabsreloaded/override-bindings.css");
+        this.installStylesheet("resource://verticaltabsreloaded/data/skin/bindings.css");
+        this.installStylesheet("resource://verticaltabsreloaded/data/skin/base.css");
         this.applyThemeStylesheet();
         this.unloaders.push(this.removeThemeStylesheet);
 
@@ -84,21 +84,21 @@ VerticalTabs.prototype = {
         case "default":
             switch(Services.appinfo.OS) {
               case "WINNT":
-                stylesheet = "resource://verticaltabs/skin/win7/win7.css";
+                stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
                 break;
               case "Darwin":
-                stylesheet = "resource://verticaltabs/skin/osx/osx.css";
+                stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
                 break;
               case "Linux":
-                stylesheet = "resource://verticaltabs/skin/linux/linux.css";
+                stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
                 break;
             }
           break;
         case "dark":
-          stylesheet = "resource://verticaltabs/skin/dark/dark.css";
+          stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
           break;
         case "light":
-          stylesheet = "resource://verticaltabs/skin/light/light.css";
+          stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
           break;
       }
 
