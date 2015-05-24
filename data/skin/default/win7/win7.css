@@ -20,8 +20,8 @@
 }
 
 .tabbrowser-tabs {
-    /*margin: 0 !important;*/
-    /*padding: 1px 0px 1px 1px !important;*/
+    margin: 0 !important;
+    padding: 1px 0px 1px 1px !important;
     background: transparent !important;
     background-color: #fcfcfc !important; /* other Win7 apps seems to use this */
 }
@@ -57,8 +57,8 @@
 
 .tabbrowser-tab[selected="true"],
 .tabbrowser-tab[multiselect="true"] {
-    /*margin: 0 !important;*/
-    /*padding: 0 0 0 3px !important;*/
+    margin: 0 !important;
+    padding: 0 0 0 3px !important;
 
     border-color: gray;
     background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x !important;
