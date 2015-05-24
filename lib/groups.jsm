@@ -25,7 +25,7 @@
  */
 
 const EXPORTED_SYMBOLS = ["VTGroups"];
-Components.utils.import("resource://verticaltabsreloaded/tabdatastore.jsm");
+Components.utils.import("resource://verticaltabsreloaded/lib/tabdatastore.jsm");
 
 const TAB_DROP_TYPE = "application/x-moz-tabbrowser-tab";
 

@@ -19,7 +19,7 @@ const DEFAULT_PREFS = {
   "extensions.verticaltabs.right": false,
   "extensions.verticaltabs.tabsOnTop": false,
   "browser.tabs.drawInTitlebar": false,
-  "extensions.verticaltabs.theme": 'default',
+  "extensions.verticaltabs.theme": "default",
   "extensions.verticaltabs.hideInFullscreen": true
 };
 
@@ -56,7 +56,7 @@ function install() {
 
 function startup(data, reason) {
   // Load helpers from utils.js.
-  include(data.resourceURI.spec + "utils.js");
+  include(data.resourceURI.spec + "lib/utils.js");
 
   // Back up 'browser.tabs.animate' pref before overwriting it.
   try {
@@ -83,7 +83,7 @@ function startup(data, reason) {
   });
 
   // Initialize VerticalTabs object for each window.
-  Cu.import("resource://verticaltabsreloaded/verticaltabs.jsm");
+  Cu.import("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
   watchWindows(function(window) {
     let vt = new VerticalTabs(window);
     unload(vt.unload.bind(vt), window);
