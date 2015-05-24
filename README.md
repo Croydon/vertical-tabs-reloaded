@@ -4,7 +4,7 @@ This Firefox add-on arranges tabs in a vertical rather than horizontal
 fashion. It is heavily inspired by and borrows ideas from the excellent
 Tree Style Tab add-on.
 
-Download & Install: https://github.com/Croydon/VerticalTabs
+Download & Install: https://github.com/Croydon/vertical-tabs-reloaded
 
 ## Goals:
 
