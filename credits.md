@@ -10,3 +10,4 @@ This project did already got a lot of contribution over time. In fact, this repo
  * bb10 (Linux and Windows theme contributions)
  * Frank Yan (various theming fixes)
  * Rob Campbell (some UI love)
+ * [@breunigs](https://github.com/breunigs) (fullscreen hiding of the tab bar)
