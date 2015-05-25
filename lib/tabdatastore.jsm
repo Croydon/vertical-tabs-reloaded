@@ -3,17 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * The Original Code is the Tree Style Tab.
- *
- * The Initial Developer of the Original Code is
- * SHIMODA Hiroshi.
- * Portions created by the Initial Developer are Copyright (C) 2010
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   SHIMODA Hiroshi <piro@p.club.ne.jp>
- *   Philipp von Weitershausen <philipp@weitershausen.de>
- *
+ * This file is a derivation of a part of the Tree Style Tab Addon, 
+ * which is created by SHIMODA Hiroshi <piro@p.club.ne.jp>.
+ * 
  * ***** END LICENSE BLOCK ***** */
  
 /**
