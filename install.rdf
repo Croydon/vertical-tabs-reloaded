@@ -4,6 +4,7 @@
     <em:id>verticaltabsreloaded@go-dev.de</em:id>
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
+	<em:optionsType>2</em:optionsType>
 	<em:optionsURL>chrome://verticaltabsreloaded/content/lib/options.xul</em:optionsURL>
 	
     <em:name>Vertical Tabs Reloaded</em:name>
