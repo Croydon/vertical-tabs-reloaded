@@ -1,18 +1,19 @@
+@import "resource://verticaltabsreloaded/data/skin/default/win7/variable.css";
 @import "resource://verticaltabsreloaded/data/skin/default/win7/tab.css";
 @import "resource://verticaltabsreloaded/data/skin/default/win7/tabbrowser.css";
 @import "resource://verticaltabsreloaded/data/skin/default/win7/group.css";
-
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 
+/* Seperator between tabbar and website */
 #verticaltabs-splitter {
     min-width: 3px !important;
     width: 3px !important;
     border-top: none !important;
     border-bottom: none !important;
-    border-left: 1px solid #fcfcfc !important;
-    border-right: 1px solid #fcfcfc !important;
-    background-color: #d6e5f5 !important;
+    border-left: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+    border-right: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+    background-color: var(--vtr-splitter-color) !important;
     margin: 0 0 23px 0 !important;
     -moz-border-top-colors: none !important;
     -moz-border-left-colors: none !important;
@@ -25,26 +26,28 @@
 }
 
 
-/*** Tab toolbar styling ***/
-
 #browser-border-start {
-margin-bottom: 23px !important;
+	/* Todo: What's #browser-border-start? */
+    margin-bottom: 23px !important;
 }
 
+/* Tab toolbar, which is placed at the bottom of the tab sidebar */
 #TabsToolbar:not(:-moz-lwtheme)  {
-    height: 24px;
+	/* Just overwrite the defaults when there is no theme selected */
+    height: var(--vtr-tabbar-height);
     margin: 0 -3px -1px 0px !important;
-    border-bottom-left-radius: 0px !important;
     box-shadow: none !important;
     -moz-appearance: none !important;
     border-top: 1px solid rgb(160,160,160) !important;
     border-right: 2px solid !important;
+	border-bottom-left-radius: 0px !important;
     -moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
-    background-color: rgb(207,219,236) !important;
+    background-color: var(--vtr-tabbar-bg-color) !important;
     background-image: -moz-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
 }
 
 #main-window[sizemode=normal] #TabsToolbar:not(:-moz-lwtheme) {
+	/* Just overwrite the defaults when there is no theme selected */
     margin: 0 -3px 0 -1px !important;
     border-bottom: 1px solid rgb(154,154,154) !important;
     border-left: 1px solid rgb(154,154,154) !important;
@@ -67,7 +70,7 @@ margin-bottom: 23px !important;
 /*** Addon bar styling ***/
 
 #addon-bar {
-    height: 23px; /* make addonbar the same height as tab toolbar*/
+    height: calc(var(--vtr-tabbar-height) - 1px); /* make addonbar the same height as tab toolbar */
 }
 
 #browser-bottombox {
