@@ -4,6 +4,8 @@
     <em:id>verticaltabsreloaded@go-dev.de</em:id>
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
+	<em:optionsURL>chrome://verticaltabsreloaded/content/lib/options.xul</em:optionsURL>
+	
     <em:name>Vertical Tabs Reloaded</em:name>
     <em:version>0.3</em:version>
     <em:homepageURL>https://github.com/Croydon/vertical-tabs-reloaded</em:homepageURL>
