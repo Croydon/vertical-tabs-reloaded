@@ -1,8 +1,7 @@
-# Vertical Tabs for Firefox
+# Vertical Tabs Reloaded for Firefox
 
 This Firefox add-on arranges tabs in a vertical rather than horizontal
-fashion. It is heavily inspired by and borrows ideas from the excellent
-Tree Style Tab add-on.
+fashion. Vertical Tabs Reloaded is a fork of [Vertical Tabs](https://addons.mozilla.org/de/firefox/addon/vertical-tabs/), which was discontinued. The original project is heavily inspired by the Tree Style Tab add-on.
 
 Download & Install: https://github.com/Croydon/vertical-tabs-reloaded
 
@@ -11,13 +10,10 @@ Download & Install: https://github.com/Croydon/vertical-tabs-reloaded
 * Ability to arrange tabs in groups (instead of arbitrary trees) plus
   some group-related features (collapse group, tab previews, etc.)
 
-* Very few other features and hopefully little or no preference settings.
-  Instead a good JavaScript API might be provided for other extensions
-  (e.g. JetPack SDK based) to provide additional features.
+* Minimalist implementation.
 
-* Native look and feel.
+* Native look and feel and ability to customize if wanted.
 
-* Readable and maintainable code, taking latest Mozilla practices into
-  account. No eval() hacks.
+* Readable and maintainable code.
 
 License: Mozilla Public License Version 2.0
