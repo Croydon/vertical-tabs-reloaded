@@ -1,10 +1,15 @@
+/* The complete tab sidebar */
 .tabbrowser-tabs {
     margin: 0 !important;
     padding: 1px 0px 1px 1px !important;
     background: transparent !important;
-    background-color: #fcfcfc !important; /* other Win7 apps seems to use this */
 }
 
+.tabbrowser-tabs:not(:-moz-lwtheme) {
+    background-color: var(--vtr-tabbrowser-bg-color) !important; 
+}
+
+/* Single tab */
 .tabbrowser-tab {
     -moz-box-pack: start;
     -moz-box-flex: 0;
@@ -15,36 +20,49 @@
     margin: 0;
     padding: 1px 2px 2px 0px;
 
-    /* XXX this height isn't correct, especially on higher dpi settings. */
-    /* but we can force it with a font-size, so it'll be correct */
-    font-size: 12px ! important;
+	/* XXX this height isn't correct, especially on higher dpi settings. */
+	/* but we can force it with a font-size, so it'll be correct */
+	/*font-size: 12px !important;*/
 
-    height: 21px;
-    min-height: 21px;
-    max-height: 21px;
+    height: var(--vtr-tab-height);
+    min-height: var(--vtr-tab-height);
+    max-height: var(--vtr-tab-height);
 }
 
-.tabbrowser-tab:hover {
+.tabbrowser-tab:-moz-lwtheme {
+	/* !?? */
+    color: black;
+    text-shadow: none;
+}
+
+.tabbrowser-tab:hover:not(:-moz-lwtheme) {
     border-color: gray;
     background: -moz-linear-gradient(top, #fafbfd, #ebf3fd) repeat-x !important;
 }
 
 .tabbrowser-tab[pinned] {
-    position: inherit;
-    background: -moz-linear-gradient(left, gray, #ebf3fd) repeat-y !important;
+    position: inherit; 
+}
+
+.tabbrowser-tab[pinned]:not(:-moz-lwtheme) {
+	background: -moz-linear-gradient(left, gray, #ebf3fd) repeat-y !important;
 }
 
 .tabbrowser-tab[selected="true"],
 .tabbrowser-tab[multiselect="true"] {
     margin: 0 !important;
     padding: 0 0 0 3px !important;
+}
 
-    border-color: gray;
-    background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x !important;
+.tabbrowser-tab[selected="true"]:not(:-moz-lwtheme),
+.tabbrowser-tab[multiselect="true"]:not(:-moz-lwtheme) {
+	border-color: gray;
+    background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x;
 
     font-weight: normal;
     text-shadow: none;
 }
+
 .tabbrowser-tab[selected="true"]:-moz-window-inactive,
 .tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
     border: 1px solid !important;
@@ -60,13 +78,7 @@
     /*padding: 0 0 0 3px !important;*/
 }
 
-.tabbrowser-tab:-moz-lwtheme {
-    color: black;
-    text-shadow: none;
-}
-
-/* Turn mouse cursor into a pointy hand.  This seems to be the
-   standard for link lists like these. */
+/* Turn mouse cursor into a pointy hand. */
 .tabbrowser-tab,
 .tab-text {
     cursor: pointer !important;
