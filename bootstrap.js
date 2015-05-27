@@ -35,21 +35,35 @@ function include(src) {
 function setDefaultPrefs() {
   let branch = Services.prefs.getDefaultBranch("");
   for (let [name, value] in Iterator(DEFAULT_PREFS)) {
-    switch (typeof value) {
-      case "boolean":
-        branch.setBoolPref(name, value);
-        break;
-      case "number":
-        branch.setIntPref(name, value);
-        break;
-      case "string":
-        branch.setCharPref(name, value);
-        break;
-    }
+	if(Services.prefs.prefHasUserValue(name) == false) {
+		/* The user didn't set yet a custom value */
+		switch (typeof value) {
+		  case "boolean":
+			branch.setBoolPref(name, value);
+			break;
+		  case "number":
+			branch.setIntPref(name, value);
+			break;
+		  case "string":
+			branch.setCharPref(name, value);
+			break;
+		}
+	}
   }
 }
 
-function install() {
+function install(data, reason) {
+	if (reason == ADDON_INSTALL) {
+	} else if (reason == ADDON_UPGRADE) {
+	}
+}
+
+function uninstall(data, reason) {
+	// Unloaders might want access to prefs, so do this last
+	// Delete all settings
+	if (reason == ADDON_UNINSTALL) {
+		Services.prefs.getDefaultBranch(PREF_BRANCH).deleteBranch("");
+	}
 }
 
 function startup(data, reason) {
@@ -93,6 +107,4 @@ function shutdown(data, reason) {
     return;
   }
   unload();
-  // Unloaders might want access to prefs, so do this last
-  Services.prefs.getDefaultBranch(PREF_BRANCH).deleteBranch("");
 }
