@@ -7,129 +7,129 @@
 
 /* Seperator between tabbar and website */
 #verticaltabs-splitter {
-    min-width: 3px !important;
-    width: 3px !important;
-    border-top: none !important;
-    border-bottom: none !important;
-    border-left: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
-    border-right: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
-    background-color: var(--vtr-splitter-color) !important;
-    margin: 0 0 23px 0 !important;
-    -moz-border-top-colors: none !important;
-    -moz-border-left-colors: none !important;
-    -moz-border-right-colors: none !important;
-    -moz-border-bottom-colors: none !important;
+	min-width: 3px !important;
+	width: 3px !important;
+	border-top: none !important;
+	border-bottom: none !important;
+	border-left: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+	border-right: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+	background-color: var(--vtr-splitter-color) !important;
+	margin: 0 0 23px 0 !important;
+	-moz-border-top-colors: none !important;
+	-moz-border-left-colors: none !important;
+	-moz-border-right-colors: none !important;
+	-moz-border-bottom-colors: none !important;
 }
 
 #main-window[sizemode=normal] #verticaltabs-splitter {
-    margin: 0 0 24px 0 !important;
+	margin: 0 0 24px 0 !important;
 }
 
 
 #browser-border-start {
 	/* Todo: What's #browser-border-start? */
-    margin-bottom: 23px !important;
+	margin-bottom: 23px !important;
 }
 
 /* Tab toolbar, which is placed at the bottom of the tab sidebar */
 #TabsToolbar:not(:-moz-lwtheme)  {
 	/* Just overwrite the defaults when there is no theme selected */
-    height: var(--vtr-tabbar-height);
-    margin: 0 -3px -1px 0px !important;
-    box-shadow: none !important;
-    -moz-appearance: none !important;
-    border-top: 1px solid rgb(160,160,160) !important;
-    border-right: 2px solid !important;
+	height: var(--vtr-tabbar-height);
+	margin: 0 -3px -1px 0px !important;
+	box-shadow: none !important;
+	-moz-appearance: none !important;
+	border-top: 1px solid rgb(160,160,160) !important;
+	border-right: 2px solid !important;
 	border-bottom-left-radius: 0px !important;
-    -moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
-    background-color: var(--vtr-tabbar-bg-color) !important;
-    background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
+	-moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
+	background-color: var(--vtr-tabbar-bg-color) !important;
+	background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
 }
 
 #main-window[sizemode=normal] #TabsToolbar:not(:-moz-lwtheme) {
 	/* Just overwrite the defaults when there is no theme selected */
-    margin: 0 -3px 0 -1px !important;
-    border-bottom: 1px solid rgb(154,154,154) !important;
-    border-left: 1px solid rgb(154,154,154) !important;
-    border-bottom-left-radius: 4px !important;
+	margin: 0 -3px 0 -1px !important;
+	border-bottom: 1px solid rgb(154,154,154) !important;
+	border-left: 1px solid rgb(154,154,154) !important;
+	border-bottom-left-radius: 4px !important;
 }
 
 #verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
+	/* TODO need icon to symbolize tab group */
+	list-style-image: url("chrome://browser/skin/Toolbar.png");
+	-moz-image-region: rect(0, 234px, 18px, 216px);
 }
 
 
 /* Ensure that content area has a top border */
 #navigator-toolbox::after {
-    visibility: visible !important;
+	visibility: visible !important;
 }
 
 
 /*** Addon bar styling ***/
 
 #addon-bar {
-    height: calc(var(--vtr-tabbar-height) - 1px); /* make addonbar the same height as tab toolbar */
+	height: calc(var(--vtr-tabbar-height) - 1px); /* make addonbar the same height as tab toolbar */
 }
 
 #browser-bottombox {
-    border-left: none !important; /* remove extra line between addon bar and tab toolbar */
-    margin-left: -1px !important;
+	border-left: none !important; /* remove extra line between addon bar and tab toolbar */
+	margin-left: -1px !important;
 }
 
 #main-window[sizemode=normal] #browser-bottombox:not(:-moz-lwtheme),
 #main-window[sizemode=normal] #addon-bar:not(:-moz-lwtheme) {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 4px !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 4px !important;
 }
 
 #appcontent {
-    border-bottom-right-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
 }
 
 /*** Link display ***/
 
 .statuspanel-label {
-    -moz-appearance: tooltip !important;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-    box-shadow: 8px 3px 0 rgba(0,0,0,.18) !important; /* would otherwise display a transparent pixel on the tooltip's corner */
+	-moz-appearance: tooltip !important;
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+	box-shadow: 8px 3px 0 rgba(0,0,0,.18) !important; /* would otherwise display a transparent pixel on the tooltip's corner */
 }
 
 .statuspanel-inner {
-    height: 100% !important;
+	height: 100% !important;
 }
 
 #main-window[sizemode="normal"]:not([inFullscreen="true"]) .statuspanel-inner {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
 }
 
 statuspanel[mirror]:-moz-locale-dir(ltr),
 statuspanel[mirror]:-moz-locale-dir(rtl) {
-    padding: 0px 6px 0px 0px !important;
+	padding: 0px 6px 0px 0px !important;
 }
 
 statuspanel:-moz-locale-dir(ltr):not([mirror]),
 statuspanel:-moz-locale-dir(rtl):not([mirror]) {
-    padding: 0px 0px 0px 4px !important;
+	padding: 0px 0px 0px 4px !important;
 }
 
 statuspanel[mirror]:-moz-locale-dir(ltr) .statuspanel-inner,
 statuspanel[mirror]:-moz-locale-dir(rtl) .statuspanel-inner {
-    margin-top: 8px !important;
-    margin-bottom: 5px !important;
-    box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
-    padding: 0px 0px !important;
-    border-radius: 5.8px !important;
+	margin-top: 8px !important;
+	margin-bottom: 5px !important;
+	box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
+	padding: 0px 0px !important;
+	border-radius: 5.8px !important;
 }
 
 statuspanel:-moz-locale-dir(ltr):not([mirror]) .statuspanel-inner,
 statuspanel:-moz-locale-dir(rtl):not([mirror]) .statuspanel-inner {
-    margin-top: 8px !important;
-    margin-bottom: 5px !important;
-    box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
-    padding: 0px 0px !important;
-    border-radius: 5.8px !important;
+	margin-top: 8px !important;
+	margin-bottom: 5px !important;
+	box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
+	padding: 0px 0px !important;
+	border-radius: 5.8px !important;
 }

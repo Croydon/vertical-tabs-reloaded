@@ -13,43 +13,39 @@ const RESOURCE_HOST = "verticaltabsreloaded";
 const PREF_BRANCH = "extensions.verticaltabs.";
 
 const DEFAULT_PREFS = {
-  "extensions.verticaltabs.width": 250,
-  "extensions.verticaltabs.right": false,
-  "extensions.verticaltabs.tabsOnTop": false,
-  "browser.tabs.drawInTitlebar": false,
-  "extensions.verticaltabs.theme": Services.appinfo.OS,
-  "extensions.verticaltabs.hideInFullscreen": true
+	"extensions.verticaltabs.width": 250,
+	"extensions.verticaltabs.right": false,
+	"extensions.verticaltabs.tabsOnTop": false,
+	"browser.tabs.drawInTitlebar": false,
+	"extensions.verticaltabs.theme": Services.appinfo.OS,
+	"extensions.verticaltabs.hideInFullscreen": true
 };
 
-/**
- * Load and execute another file.
- */
+// Load and execute another file.
 let GLOBAL_SCOPE = this;
 function include(src) {
-  Services.scriptloader.loadSubScript(src, GLOBAL_SCOPE);
+	Services.scriptloader.loadSubScript(src, GLOBAL_SCOPE);
 }
 
-/**
- * Declare a bunch of default preferences.
- */
+// Declare a bunch of default preferences.
 function setDefaultPrefs() {
-  let branch = Services.prefs.getDefaultBranch("");
-  for (let [name, value] in Iterator(DEFAULT_PREFS)) {
-	if(Services.prefs.prefHasUserValue(name) == false) {
-		/* The user didn't set yet a custom value */
-		switch (typeof value) {
-		  case "boolean":
-			branch.setBoolPref(name, value);
-			break;
-		  case "number":
-			branch.setIntPref(name, value);
-			break;
-		  case "string":
-			branch.setCharPref(name, value);
-			break;
+	let branch = Services.prefs.getDefaultBranch("");
+	for (let [name, value] in Iterator(DEFAULT_PREFS)) {
+		if(Services.prefs.prefHasUserValue(name) == false) {
+			/* The user didn't set yet a custom value */
+			switch (typeof value) {
+			  case "boolean":
+				branch.setBoolPref(name, value);
+				break;
+			  case "number":
+				branch.setIntPref(name, value);
+				break;
+			  case "string":
+				branch.setCharPref(name, value);
+				break;
+			}
 		}
 	}
-  }
 }
 
 function install(data, reason) {
@@ -67,44 +63,43 @@ function uninstall(data, reason) {
 }
 
 function startup(data, reason) {
-  // Load helpers from utils.js.
-  include(data.resourceURI.spec + "lib/utils.js");
+	// Load helpers from utils.js.
+	include(data.resourceURI.spec + "lib/utils.js");
 
-  // Back up 'browser.tabs.animate' pref before overwriting it.
-  try {
-    Services.prefs.getBoolPref("extensions.verticaltabs.animate");
-  } catch (ex if (ex.result == Components.results.NS_ERROR_UNEXPECTED)) {
-    let animate = Services.prefs.getBoolPref("browser.tabs.animate");
-    Services.prefs.setBoolPref("extensions.verticaltabs.animate", animate);
-    Services.prefs.setBoolPref("browser.tabs.animate", false);
-  }
-  unload(function () {
-    let animate = Services.prefs.getBoolPref("extensions.verticaltabs.animate");
-    Services.prefs.setBoolPref("browser.tabs.animate", animate);
-  });
+	// Back up 'browser.tabs.animate' pref before overwriting it.
+	try {
+		Services.prefs.getBoolPref("extensions.verticaltabs.animate");
+	} catch (ex if (ex.result == Components.results.NS_ERROR_UNEXPECTED)) {
+		let animate = Services.prefs.getBoolPref("browser.tabs.animate");
+		Services.prefs.setBoolPref("extensions.verticaltabs.animate", animate);
+		Services.prefs.setBoolPref("browser.tabs.animate", false);
+	}
+	unload(function () {
+		let animate = Services.prefs.getBoolPref("extensions.verticaltabs.animate");
+		Services.prefs.setBoolPref("browser.tabs.animate", animate);
+	});
 
-  // Set default preferences.
-  setDefaultPrefs();
+	// Set default preferences.
+	setDefaultPrefs();
 
-  // Register the resource:// alias.
-  let resource = Services.io.getProtocolHandler("resource")
-                         .QueryInterface(Ci.nsIResProtocolHandler);
-  resource.setSubstitution(RESOURCE_HOST, data.resourceURI);
-  unload(function () {
-    resource.setSubstitution(RESOURCE_HOST, null);
-  });
+	// Register the resource:// alias.
+	let resource = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
+	resource.setSubstitution(RESOURCE_HOST, data.resourceURI);
+	unload(function () {
+		resource.setSubstitution(RESOURCE_HOST, null);
+	});
 
-  // Initialize VerticalTabs object for each window.
-  Cu.import("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
-  watchWindows(function(window) {
-    let vt = new VerticalTabs(window);
-    unload(vt.unload.bind(vt), window);
-  }, "navigator:browser");
+	// Initialize VerticalTabs object for each window.
+	Cu.import("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
+	watchWindows(function(window) {
+		let vt = new VerticalTabs(window);
+		unload(vt.unload.bind(vt), window);
+	}, "navigator:browser");
 };
 
 function shutdown(data, reason) {
-  if (reason == APP_SHUTDOWN) {
-    return;
-  }
-  unload();
+	if (reason == APP_SHUTDOWN) {
+		return;
+	}
+	unload();
 }
