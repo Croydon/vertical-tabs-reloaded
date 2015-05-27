@@ -37,7 +37,7 @@
 
 .tabbrowser-tab:hover:not(:-moz-lwtheme) {
     border-color: gray;
-    background: -moz-linear-gradient(top, #fafbfd, #ebf3fd) repeat-x !important;
+    background: linear-gradient(to bottom, #fafbfd, #ebf3fd) repeat-x !important;
 }
 
 .tabbrowser-tab[pinned] {
@@ -45,7 +45,7 @@
 }
 
 .tabbrowser-tab[pinned]:not(:-moz-lwtheme) {
-	background: -moz-linear-gradient(left, gray, #ebf3fd) repeat-y !important;
+	background: linear-gradient(to right, gray, #ebf3fd) repeat-y !important;
 }
 
 .tabbrowser-tab[selected="true"],
@@ -57,7 +57,7 @@
 .tabbrowser-tab[selected="true"]:not(:-moz-lwtheme),
 .tabbrowser-tab[multiselect="true"]:not(:-moz-lwtheme) {
 	border-color: gray;
-    background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x;
+    background: linear-gradient(to bottom, #ebf4fe, #cfe4fe) repeat-x;
 
     font-weight: normal;
     text-shadow: none;
@@ -70,7 +70,7 @@
     -moz-border-bottom-colors: #d9d9d9 #f0f0f0 !important;
     -moz-border-left-colors: #d9d9d9 #f8f8f8 !important;
     -moz-border-right-colors: #d9d9d9 #f8f8f8 !important;
-    background: -moz-linear-gradient(top, #f8f8f8, #e5e5e5) repeat-x !important;
+    background: linear-gradient(to bottom, #f8f8f8, #e5e5e5) repeat-x !important;
 }
 
 .tabbrowser-tab:not([selected="true"]):hover {

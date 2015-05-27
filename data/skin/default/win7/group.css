@@ -29,7 +29,7 @@
     -moz-border-bottom-colors: #84acdd #deedfe !important;
     -moz-border-left-colors: #84acdd #e8f2fe !important;
     -moz-border-right-colors: #84acdd #e8f2fe !important;
-    background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x !important;
+    background: linear-gradient(to bottom, #ebf4fe, #cfe4fe) repeat-x !important;
 }
 
 .verticaltabs-dropingroup {

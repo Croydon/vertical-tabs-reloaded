@@ -43,7 +43,7 @@
 	border-bottom-left-radius: 0px !important;
     -moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
     background-color: var(--vtr-tabbar-bg-color) !important;
-    background-image: -moz-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
+    background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
 }
 
 #main-window[sizemode=normal] #TabsToolbar:not(:-moz-lwtheme) {
