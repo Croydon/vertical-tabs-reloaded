@@ -8,7 +8,9 @@
           title="Theme">
     <menulist>
       <menupopup>
-      <menuitem value="default" label="Default" />
+      <menuitem value="WINNT" label="Windows" />
+      <menuitem value="Darwin" label="Darwin" />
+      <menuitem value="Linux" label="Linux" />
       <menuitem value="dark" label="Dark" />
       <menuitem value="light" label="Light" />
       </menupopup>

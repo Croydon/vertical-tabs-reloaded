@@ -82,8 +82,8 @@ VerticalTabs.prototype = {
     getThemeStylesheet: function(theme) {
       var stylesheet;
       switch (theme) {
-        case "default":
-            switch(Services.appinfo.OS) {
+        // case "default":
+            // switch(Services.appinfo.OS) {
               case "WINNT":
                 stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
                 break;
@@ -93,7 +93,7 @@ VerticalTabs.prototype = {
               case "Linux":
                 stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
                 break;
-            }
+            // }
           break;
         case "dark":
           stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";

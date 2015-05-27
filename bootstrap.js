@@ -11,12 +11,13 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 const RESOURCE_HOST = "verticaltabsreloaded";
 const PREF_BRANCH = "extensions.verticaltabs.";
+
 const DEFAULT_PREFS = {
   "extensions.verticaltabs.width": 250,
   "extensions.verticaltabs.right": false,
   "extensions.verticaltabs.tabsOnTop": false,
   "browser.tabs.drawInTitlebar": false,
-  "extensions.verticaltabs.theme": "default",
+  "extensions.verticaltabs.theme": Services.appinfo.OS,
   "extensions.verticaltabs.hideInFullscreen": true
 };
 
