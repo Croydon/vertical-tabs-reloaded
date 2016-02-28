@@ -82,25 +82,22 @@ VerticalTabs.prototype = {
 	getThemeStylesheet: function(theme) {
 		var stylesheet;
 		switch (theme) {
-		// case "default":
-			// switch(Services.appinfo.OS) {
-			case "WINNT":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
-				break;
-			case "Darwin":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
-				break;
-			case "Linux":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
-				break;
-		// }
-		// break;
-			case "dark":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
-				break;
-			case "light":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
-				break;
+		case "WINNT":
+			stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
+			break;
+		case "Darwin":
+			stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
+			break;
+		case "Linux":
+			stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
+			break;
+		case "light":
+			stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
+			break;
+		case "default":
+		case "dark":
+			stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
+			break;
 		}
 
 		return stylesheet;

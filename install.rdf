@@ -8,7 +8,7 @@
 	<em:optionsURL>chrome://verticaltabsreloaded/content/lib/options.xul</em:optionsURL>
 	
     <em:name>Vertical Tabs Reloaded</em:name>
-    <em:version>0.3.1</em:version>
+    <em:version>0.3.2</em:version>
     <em:homepageURL>https://github.com/Croydon/vertical-tabs-reloaded</em:homepageURL>
     <em:creator>Croydon</em:creator>
     <em:targetApplication>
