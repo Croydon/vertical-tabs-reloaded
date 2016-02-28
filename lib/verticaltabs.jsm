@@ -4,13 +4,12 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
  * ***** END LICENSE BLOCK ***** */
-
 Components.utils.import("resource://gre/modules/Services.jsm");
 Components.utils.import("resource://verticaltabsreloaded/lib/tabdatastore.jsm");
 Components.utils.import("resource://verticaltabsreloaded/lib/multiselect.jsm");
 Components.utils.import("resource://verticaltabsreloaded/lib/groups.jsm");
 
-let console = (Components.utils.import("resource://gre/modules/devtools/Console.jsm", {})).console;
+let console = (Components.utils.import("resource://gre/modules/Console.jsm", {})).console;
 
 const EXPORTED_SYMBOLS = ["VerticalTabs"];
 
@@ -23,13 +22,13 @@ const TAB_DROP_TYPE = "application/x-moz-tabbrowser-tab";
  * Main entry point of this add-on.
  */
 function VerticalTabs(window) {
-	this.window = window;
-	this.document = window.document;
-	this.unloaders = [];
-	this.init();
+    this.window = window;
+    this.document = window.document;
+    this.unloaders = [];
+    this.init();
 }
-VerticalTabs.prototype = {
 
+VerticalTabs.prototype = {
 	init: function() {
 		this.window.VerticalTabs = this;
 		this.unloaders.push(function() {
@@ -40,6 +39,7 @@ VerticalTabs.prototype = {
 								.getService(Components.interfaces.nsIStyleSheetService);
 		this.ios = Components.classes["@mozilla.org/network/io-service;1"]
 								.getService(Components.interfaces.nsIIOService);
+
 
 		this.installStylesheet("resource://verticaltabsreloaded/data/override-bindings.css");
 		this.installStylesheet("resource://verticaltabsreloaded/data/skin/bindings.css");
@@ -70,7 +70,7 @@ VerticalTabs.prototype = {
 	},
 
 	applyThemeStylesheet: function() {
-		this.theme = Services.prefs.getCharPref("extensions.verticaltabs.theme");
+		this.theme = Services.prefs.getCharPref("extensions.@verticaltabsreloaded.theme");
 		this.installStylesheet(this.getThemeStylesheet(this.theme));
 	},
 
@@ -82,20 +82,20 @@ VerticalTabs.prototype = {
 	getThemeStylesheet: function(theme) {
 		var stylesheet;
 		switch (theme) {
-		case "WINNT":
+		case "winnt":
 			stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
 			break;
-		case "Darwin":
+		case "darwin":
 			stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
 			break;
-		case "Linux":
+		case "linux":
 			stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
 			break;
 		case "light":
 			stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
 			break;
-		case "default":
 		case "dark":
+		default:
 			stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
 			break;
 		}
@@ -132,7 +132,7 @@ VerticalTabs.prototype = {
 
 		// Move the tabs next to the app content, make them vertical,
 		// and restore their width from previous session
-		if (Services.prefs.getBoolPref("extensions.verticaltabs.right")) {
+		if (Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.right")) {
 			browserbox.dir = "reverse";
 		}
 
@@ -141,7 +141,7 @@ VerticalTabs.prototype = {
 		tabs.orient = "vertical";
 		tabs.mTabstrip.orient = "vertical";
 		tabs.tabbox.orient = "horizontal"; // probably not necessary
-		tabs.setAttribute("width", Services.prefs.getIntPref("extensions.verticaltabs.width"));
+		tabs.setAttribute("width", Services.prefs.getIntPref("extensions.@verticaltabsreloaded.width"));
 
 		// Move the tabs toolbar into the tab strip
 		let toolbar = document.getElementById("TabsToolbar");
@@ -191,7 +191,7 @@ VerticalTabs.prototype = {
 
 			// Restore tabs on top.
 			window.TabsOnTop.enabled = Services.prefs.getBoolPref(
-					"extensions.verticaltabs.tabsOnTop");
+					"extensions.@verticaltabsreloaded.tabsOnTop");
 			toolbar_context_menu.firstChild.collapsed = false;
 			toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
@@ -261,21 +261,21 @@ VerticalTabs.prototype = {
 		let tabs = this.document.getElementById("tabbrowser-tabs");
 		this.setPinnedSizes();
 		this.window.setTimeout(function() {
-				Services.prefs.setIntPref("extensions.verticaltabs.width", tabs.boxObject.width);
+				Services.prefs.setIntPref("extensions.@verticaltabsreloaded.width", tabs.boxObject.width);
 		}, 10);
 	},
 
 	observePrefs: function() {
-		Services.prefs.addObserver("extensions.verticaltabs.", this, false);
+		Services.prefs.addObserver("extensions.@verticaltabsreloaded.", this, false);
 		this.unloaders.push(function() {
-			Services.prefs.removeObserver("extensions.verticaltabs.", this, false);
+			Services.prefs.removeObserver("extensions.@verticaltabsreloaded.", this, false);
 		});
 	},
 
 	observeThemePref: function() {
-		Services.prefs.addObserver("extensions.verticaltabs.theme", this, false);
+		Services.prefs.addObserver("extensions.@verticaltabsreloaded.theme", this, false);
 		this.unloaders.push(function() {
-			Services.prefs.removeObserver("extensions.verticaltabs.theme", this, false);
+			Services.prefs.removeObserver("extensions.@verticaltabsreloaded.theme", this, false);
 		});
 	},
 
@@ -285,7 +285,7 @@ VerticalTabs.prototype = {
 		}
 
 		switch (data) {
-			case "extensions.verticaltabs.right":
+			case "extensions.@verticaltabsreloaded.right":
 				let browserbox = this.document.getElementById("browser");
 				if (browserbox.dir != "reverse") {
 					browserbox.dir = "reverse";
@@ -293,12 +293,12 @@ VerticalTabs.prototype = {
 					browserbox.dir = "normal";
 				}
 				break;
-			case "extensions.verticaltabs.theme":
+			case "extensions.@verticaltabsreloaded.theme":
 				console.log("updating theme");
 				this.removeThemeStylesheet();
 				this.applyThemeStylesheet();
 				break;
-			case "extensions.verticaltabs.hideInFullscreen":
+			case "extensions.@verticaltabsreloaded.hideInFullscreen":
 				// call manually, so we re-show tabs when in fullscreen
 				this.onSizeModeChange();
 				break;
@@ -311,7 +311,7 @@ VerticalTabs.prototype = {
 		}, this);
 	},
 
-	/*** Event handlers ***/
+	// Event handlers
 
 	handleEvent: function(aEvent) {
 		switch (aEvent.type) {
@@ -341,7 +341,7 @@ VerticalTabs.prototype = {
 		const window = this.window;
 		const document = this.document;
 
-		let hideOk = Services.prefs.getBoolPref("extensions.verticaltabs.hideInFullscreen");
+		let hideOk = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.hideInFullscreen");
 		let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
 
 		let tabs = document.getElementById("verticaltabs-box").style;
@@ -376,4 +376,5 @@ VerticalTabs.prototype = {
 			closeTabs.disabled = true;
 		}
 	}
+  
 };

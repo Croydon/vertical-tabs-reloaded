@@ -2,3 +2,4 @@ build
 *~
 *.DS_Store
 *.xpi
+install.rdf

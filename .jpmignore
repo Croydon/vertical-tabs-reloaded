@@ -1,0 +1,7 @@
+.git
+.gitignore
+.jpmignore
+build
+*~
+*.DS_Store
+*.xpi
