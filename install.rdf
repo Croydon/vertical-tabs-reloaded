@@ -8,14 +8,14 @@
 	<em:optionsURL>chrome://verticaltabsreloaded/content/lib/options.xul</em:optionsURL>
 	
     <em:name>Vertical Tabs Reloaded</em:name>
-    <em:version>0.3</em:version>
+    <em:version>0.3.1</em:version>
     <em:homepageURL>https://github.com/Croydon/vertical-tabs-reloaded</em:homepageURL>
     <em:creator>Croydon</em:creator>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- Firefox -->
-        <em:minVersion>31.0</em:minVersion>
-        <em:maxVersion>40.a2</em:maxVersion>
+        <em:minVersion>38.0</em:minVersion>
+        <em:maxVersion>46.0a2</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>
