@@ -4,12 +4,16 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
  * ***** END LICENSE BLOCK ***** */
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("resource://verticaltabsreloaded/lib/tabdatastore.jsm");
-Components.utils.import("resource://verticaltabsreloaded/lib/multiselect.jsm");
-Components.utils.import("resource://verticaltabsreloaded/lib/groups.jsm");
 
-let console = (Components.utils.import("resource://gre/modules/Console.jsm", {})).console;
+var { Cc, Ci, Cu } = require('chrome');
+ 
+Cu.import("resource://gre/modules/Services.jsm");
+Cu.import("resource://verticaltabsreloaded/lib/tabdatastore.jsm");
+Cu.import("resource://verticaltabsreloaded/lib/multiselect.jsm");
+Cu.import("resource://verticaltabsreloaded/lib/groups.jsm");
+
+let console = (Cu.import("resource://gre/modules/Console.jsm", {})).console;
+var { Hotkey } = require("sdk/hotkeys");
 
 const EXPORTED_SYMBOLS = ["VerticalTabs"];
 
@@ -24,6 +28,8 @@ const TAB_DROP_TYPE = "application/x-moz-tabbrowser-tab";
 function VerticalTabs(window) {
     this.window = window;
     this.document = window.document;
+	this.toggleDisplayHotkey;
+	this.changedDisplayState = false;
     this.unloaders = [];
     this.init();
 }
@@ -35,10 +41,10 @@ VerticalTabs.prototype = {
 				delete this.window.VerticalTabs;
 		});
 
-		this.sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-								.getService(Components.interfaces.nsIStyleSheetService);
-		this.ios = Components.classes["@mozilla.org/network/io-service;1"]
-								.getService(Components.interfaces.nsIIOService);
+		this.sss = Cc["@mozilla.org/content/style-sheet-service;1"]
+								.getService(Ci.nsIStyleSheetService);
+		this.ios = Cc["@mozilla.org/network/io-service;1"]
+								.getService(Ci.nsIIOService);
 
 
 		this.installStylesheet("resource://verticaltabsreloaded/data/override-bindings.css");
@@ -51,6 +57,7 @@ VerticalTabs.prototype = {
 		this.initContextMenu();
 		this.observeThemePref();
 		this.observePrefs();
+		this.initHotkeys();
 
 		let tabs = this.document.getElementById("tabbrowser-tabs");
 		this.tabIDs = new VTTabIDs(tabs);
@@ -190,8 +197,7 @@ VerticalTabs.prototype = {
 			tabs.removeEventListener("TabOpen", this, false);
 
 			// Restore tabs on top.
-			window.TabsOnTop.enabled = Services.prefs.getBoolPref(
-					"extensions.@verticaltabsreloaded.tabsOnTop");
+			window.TabsOnTop.enabled = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.tabsOnTop");
 			toolbar_context_menu.firstChild.collapsed = false;
 			toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
@@ -234,6 +240,20 @@ VerticalTabs.prototype = {
 		});
 	},
 
+	initHotkeys: function() {
+		let vt = this;
+		vt.toggleDisplayHotkey = Hotkey({
+			combo: Services.prefs.getCharPref("extensions.@verticaltabsreloaded.toggleDisplayHotkey"),
+			onPress: function() {
+				vt.toggleDisplayState();
+			}
+		});
+		
+		this.unloaders.push(function() {
+			vt.toggleDisplayHotkey.destroy();
+		});
+	},
+	
 	initTab: function(aTab) {
 		aTab.setAttribute("align", "stretch");
 		aTab.maxWidth = 65000;
@@ -302,6 +322,10 @@ VerticalTabs.prototype = {
 				// call manually, so we re-show tabs when in fullscreen
 				this.onSizeModeChange();
 				break;
+			case "extensions.@verticaltabsreloaded.toggleDisplayHotkey":
+				this.toggleDisplayHotkey.destroy();
+				this.initHotkeys();
+				break;
 		}
 	},
 
@@ -337,13 +361,24 @@ VerticalTabs.prototype = {
 		}
 	},
 
-	onSizeModeChange: function() {
-		const window = this.window;
+	toggleDisplayState: function() {
 		const document = this.document;
-
-		let hideOk = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.hideInFullscreen");
-		let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
-
+		
+		if(document.getElementById("verticaltabs-box").style.display == "")
+		{
+			this.changeDisplayState("none");
+			this.changedDisplayState = true;
+		}
+		else
+		{
+			this.changeDisplayState("");
+			this.changedDisplayState = false;
+		}
+	},
+	
+	changeDisplayState: function(display) {
+		const document = this.document;
+		
 		let tabs = document.getElementById("verticaltabs-box").style;
 		let splitter = document.getElementById("verticaltabs-splitter").style;
 
@@ -353,7 +388,23 @@ VerticalTabs.prototype = {
 
 		tabs.display = splitter.display = display;
 	},
+	
+	onSizeModeChange: function() {
+		if(this.changedDisplayState == true) 
+		{
+			return;
+		}
+		
+		const window = this.window;
+		const document = this.document;
 
+		let hideOk = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.hideInFullscreen");
+		let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
+
+		this.changeDisplayState(display);
+	},
+
+	
 	onTabOpen: function(aEvent) {
 		this.initTab(aEvent.target);
 	},

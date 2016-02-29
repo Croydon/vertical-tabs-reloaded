@@ -7,7 +7,7 @@
 
 "use strict";
 
-let { Cc, Ci, Cu } = require('chrome');
+var { Cc, Ci, Cu } = require('chrome');
 
 Cu.import("resource://gre/modules/Services.jsm");
 
@@ -25,7 +25,8 @@ let DEFAULT_PREFS = new Map([
     ["extensions.@verticaltabsreloaded.right", false],
     ["extensions.@verticaltabsreloaded.tabsOnTop", false],
     ["extensions.@verticaltabsreloaded.theme", "linux"],
-    ["extensions.@verticaltabsreloaded.hideInFullscreen", true]
+    ["extensions.@verticaltabsreloaded.hideInFullscreen", true],
+    ["extensions.@verticaltabsreloaded.toggleDisplayHotkey", "control-alt-v"]
 ]);
 
 /* "browser.tabs.drawInTitlebar": false, */
@@ -96,7 +97,7 @@ exports.main = function (options, callbacks) {
 	});
 
 	// Initialize VerticalTabs object for each window.
-	Cu.import("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
+	include("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
 	
 	watchWindows(function(window) {
 		let vt = new VerticalTabs(window);
