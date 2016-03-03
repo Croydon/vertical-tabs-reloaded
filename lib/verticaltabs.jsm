@@ -6,14 +6,14 @@
  * ***** END LICENSE BLOCK ***** */
 
 var { Cc, Ci, Cu } = require('chrome');
- 
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://verticaltabsreloaded/lib/tabdatastore.jsm");
-Cu.import("resource://verticaltabsreloaded/lib/multiselect.jsm");
-Cu.import("resource://verticaltabsreloaded/lib/groups.jsm");
 
-let console = (Cu.import("resource://gre/modules/Console.jsm", {})).console;
-var { Hotkey } = require("sdk/hotkeys");
+var hotkey = require("sdk/hotkeys").Hotkey;
+var simplePrefs = require("sdk/simple-prefs");
+var preferences = simplePrefs.prefs;
+
+var { VTTabDataStore, VTTabIDs } = require("./lib/tabdatastore.jsm");
+var { VTMultiSelect } = require("./lib/multiselect.jsm");
+var { VTGroups } = require("./lib/groups.jsm");
 
 const EXPORTED_SYMBOLS = ["VerticalTabs"];
 
@@ -21,31 +21,28 @@ const NS_XUL = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
 const TAB_DROP_TYPE = "application/x-moz-tabbrowser-tab";
 
 /*
- * Vertical Tabs
+ * Vertical Tabs Reloaded
  *
  * Main entry point of this add-on.
  */
 function VerticalTabs(window) {
-    this.window = window;
-    this.document = window.document;
+	this.window = window;
+	this.document = window.document;
 	this.toggleDisplayHotkey;
 	this.changedDisplayState = false;
-    this.unloaders = [];
-    this.init();
+	this.unloaders = [];
+	this.init();
 }
 
 VerticalTabs.prototype = {
 	init: function() {
 		this.window.VerticalTabs = this;
 		this.unloaders.push(function() {
-				delete this.window.VerticalTabs;
+			delete this.window.VerticalTabs;
 		});
 
-		this.sss = Cc["@mozilla.org/content/style-sheet-service;1"]
-								.getService(Ci.nsIStyleSheetService);
-		this.ios = Cc["@mozilla.org/network/io-service;1"]
-								.getService(Ci.nsIIOService);
-
+		this.sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+		this.ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
 
 		this.installStylesheet("resource://verticaltabsreloaded/data/override-bindings.css");
 		this.installStylesheet("resource://verticaltabsreloaded/data/skin/bindings.css");
@@ -55,7 +52,6 @@ VerticalTabs.prototype = {
 
 		this.rearrangeXUL();
 		this.initContextMenu();
-		this.observeThemePref();
 		this.observePrefs();
 		this.initHotkeys();
 
@@ -72,12 +68,12 @@ VerticalTabs.prototype = {
 	},
 
 	installStylesheet: function(uri) {
-			uri = this.ios.newURI(uri, null, null);
-			this.sss.loadAndRegisterSheet(uri, this.sss.USER_SHEET);
+		uri = this.ios.newURI(uri, null, null);
+		this.sss.loadAndRegisterSheet(uri, this.sss.USER_SHEET);
 	},
 
 	applyThemeStylesheet: function() {
-		this.theme = Services.prefs.getCharPref("extensions.@verticaltabsreloaded.theme");
+		this.theme = preferences["theme"];
 		this.installStylesheet(this.getThemeStylesheet(this.theme));
 	},
 
@@ -89,22 +85,22 @@ VerticalTabs.prototype = {
 	getThemeStylesheet: function(theme) {
 		var stylesheet;
 		switch (theme) {
-		case "winnt":
-			stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
-			break;
-		case "darwin":
-			stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
-			break;
-		case "linux":
-			stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
-			break;
-		case "light":
-			stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
-			break;
-		case "dark":
-		default:
-			stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
-			break;
+			case "winnt":
+				stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
+				break;
+			case "darwin":
+				stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
+				break;
+			case "linux":
+				stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
+				break;
+			case "light":
+				stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";
+				break;
+			case "dark":
+			default:
+				stylesheet = "resource://verticaltabsreloaded/data/skin/dark/dark.css";
+				break;
 		}
 
 		return stylesheet;
@@ -139,7 +135,7 @@ VerticalTabs.prototype = {
 
 		// Move the tabs next to the app content, make them vertical,
 		// and restore their width from previous session
-		if (Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.right")) {
+		if (preferences["right"]) {
 			browserbox.dir = "reverse";
 		}
 
@@ -148,7 +144,7 @@ VerticalTabs.prototype = {
 		tabs.orient = "vertical";
 		tabs.mTabstrip.orient = "vertical";
 		tabs.tabbox.orient = "horizontal"; // probably not necessary
-		tabs.setAttribute("width", Services.prefs.getIntPref("extensions.@verticaltabsreloaded.width"));
+		tabs.setAttribute("width", preferences["width"]);
 
 		// Move the tabs toolbar into the tab strip
 		let toolbar = document.getElementById("TabsToolbar");
@@ -197,7 +193,7 @@ VerticalTabs.prototype = {
 			tabs.removeEventListener("TabOpen", this, false);
 
 			// Restore tabs on top.
-			window.TabsOnTop.enabled = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.tabsOnTop");
+			window.TabsOnTop.enabled = preferences["tabsOnTop"];
 			toolbar_context_menu.firstChild.collapsed = false;
 			toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
@@ -235,15 +231,15 @@ VerticalTabs.prototype = {
 
 		this.unloaders.push(function() {
 			if (closeMultiple)
-					tabs.contextMenu.removeChild(closeMultiple);
+				tabs.contextMenu.removeChild(closeMultiple);
 			tabs.contextMenu.removeEventListener("popupshowing", this, false);
 		});
 	},
 
 	initHotkeys: function() {
-		let vt = this;
-		vt.toggleDisplayHotkey = Hotkey({
-			combo: Services.prefs.getCharPref("extensions.@verticaltabsreloaded.toggleDisplayHotkey"),
+		let vt = this; let toggleKey = preferences["toggleDisplayHotkey"];
+		vt.toggleDisplayHotkey = hotkey({
+			combo: toggleKey,
 			onPress: function() {
 				vt.toggleDisplayState();
 			}
@@ -262,14 +258,14 @@ VerticalTabs.prototype = {
 
 	setPinnedSizes: function() {
 		let tabs = this.document.getElementById("tabbrowser-tabs");
-		// awfulness
+		// awfulness //- Thank you, unknown commentator, for this helpful note.
 		let numPinned = tabs.tabbrowser._numPinnedTabs;
 
 		if (tabs.getAttribute("positionpinnedtabs")) {
-				let width = tabs.boxObject.width;
-				for (let i = 0; i < numPinned; ++i) {
-						tabs.childNodes[i].style.width = tabs.boxObject.width + "px";
-				}
+			let width = tabs.boxObject.width;
+			for (let i = 0; i < numPinned; ++i) {
+				tabs.childNodes[i].style.width = tabs.boxObject.width + "px";
+			}
 		} else {
 			for (let i = 0; i < numPinned; ++i) {
 				tabs.childNodes[i].style.width = "";
@@ -281,50 +277,41 @@ VerticalTabs.prototype = {
 		let tabs = this.document.getElementById("tabbrowser-tabs");
 		this.setPinnedSizes();
 		this.window.setTimeout(function() {
-				Services.prefs.setIntPref("extensions.@verticaltabsreloaded.width", tabs.boxObject.width);
+			preferences.width = tabs.boxObject.width;
 		}, 10);
 	},
 
 	observePrefs: function() {
-		Services.prefs.addObserver("extensions.@verticaltabsreloaded.", this, false);
+		let vt = this;
+		simplePrefs.on("", function(prefName) { vt.onPreferenceChange(prefName, vt); });
 		this.unloaders.push(function() {
-			Services.prefs.removeObserver("extensions.@verticaltabsreloaded.", this, false);
+			simplePrefs.on("", function(prefName) { vt.onPreferenceChange(prefName, vt); });
 		});
 	},
 
-	observeThemePref: function() {
-		Services.prefs.addObserver("extensions.@verticaltabsreloaded.theme", this, false);
-		this.unloaders.push(function() {
-			Services.prefs.removeObserver("extensions.@verticaltabsreloaded.theme", this, false);
-		});
-	},
-
-	observe: function(subject, topic, data) {
-		if (topic != "nsPref:changed") {
-			return;
-		}
-
-		switch (data) {
-			case "extensions.@verticaltabsreloaded.right":
-				let browserbox = this.document.getElementById("browser");
+	onPreferenceChange: function(prefName, vt) {
+		// vt = this;
+		switch (prefName) {
+			case "right":
+				let browserbox = vt.document.getElementById("browser");
 				if (browserbox.dir != "reverse") {
 					browserbox.dir = "reverse";
 				} else {
 					browserbox.dir = "normal";
 				}
 				break;
-			case "extensions.@verticaltabsreloaded.theme":
+			case "theme":
 				console.log("updating theme");
-				this.removeThemeStylesheet();
-				this.applyThemeStylesheet();
+				vt.removeThemeStylesheet();
+				vt.applyThemeStylesheet();
 				break;
-			case "extensions.@verticaltabsreloaded.hideInFullscreen":
+			case "hideInFullscreen":
 				// call manually, so we re-show tabs when in fullscreen
-				this.onSizeModeChange();
+				vt.onSizeModeChange();
 				break;
-			case "extensions.@verticaltabsreloaded.toggleDisplayHotkey":
-				this.toggleDisplayHotkey.destroy();
-				this.initHotkeys();
+			case "toggleDisplayHotkey":
+				vt.toggleDisplayHotkey.destroy();
+				vt.initHotkeys();
 				break;
 		}
 	},
@@ -336,7 +323,6 @@ VerticalTabs.prototype = {
 	},
 
 	// Event handlers
-
 	handleEvent: function(aEvent) {
 		switch (aEvent.type) {
 		case "DOMContentLoaded":
@@ -398,7 +384,7 @@ VerticalTabs.prototype = {
 		const window = this.window;
 		const document = this.document;
 
-		let hideOk = Services.prefs.getBoolPref("extensions.@verticaltabsreloaded.hideInFullscreen");
+		let hideOk = preferences["hideInFullscreen"];
 		let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
 
 		this.changeDisplayState(display);
