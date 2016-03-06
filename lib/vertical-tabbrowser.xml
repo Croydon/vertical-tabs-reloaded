@@ -30,8 +30,7 @@
         if (tabs._lastTabClosedByMouse)
           tabs._expandSpacerBy(this._scrollButtonDown.clientWidth);
 
-        tabs.tabbrowser._removingTabs.forEach(tabs.tabbrowser.removeTab,
-                                              tabs.tabbrowser);
+        tabs.tabbrowser._removingTabs.forEach(tabs.tabbrowser.removeTab, tabs.tabbrowser);
 
         tabs._positionPinnedTabs();
       ]]></handler>
@@ -101,8 +100,7 @@
           let verticalTabs = this._verticalTabs;
 
           var numPinned = this.tabbrowser._numPinnedTabs;
-          var doPosition = this.getAttribute("overflow") == "true" &&
-                           numPinned > 0;
+          var doPosition = this.getAttribute("overflow") == "true" && numPinned > 0;
 
           if (doPosition) {
             this.setAttribute("positionpinnedtabs", "true");

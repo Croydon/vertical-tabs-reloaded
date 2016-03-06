@@ -86,13 +86,13 @@ VerticalTabs.prototype = {
 		var stylesheet;
 		switch (theme) {
 			case "winnt":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/win7/win7.css";
+				stylesheet = "resource://verticaltabsreloaded/data/skin/win7/win7.css";
 				break;
 			case "darwin":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/osx/osx.css";
+				stylesheet = "resource://verticaltabsreloaded/data/skin/osx/osx.css";
 				break;
 			case "linux":
-				stylesheet = "resource://verticaltabsreloaded/data/skin/default/linux/linux.css";
+				stylesheet = "resource://verticaltabsreloaded/data/skin/linux/linux.css";
 				break;
 			case "light":
 				stylesheet = "resource://verticaltabsreloaded/data/skin/light/light.css";

@@ -27,6 +27,7 @@
     max-height: 28px !important;
     color: #333333 !important;
     border-left: 4px solid transparent !important;
+	border-bottom: 1px solid #bbc3cc !important;
 }
 
 .tabbrowser-tab[selected="true"],
