@@ -10,6 +10,7 @@ var { Cc, Ci, Cu } = require('chrome');
 var hotkey = require("sdk/hotkeys").Hotkey;
 var simplePrefs = require("sdk/simple-prefs");
 var preferences = simplePrefs.prefs;
+var stylesheetUtils = require("sdk/stylesheet/utils");
 
 var { VTTabDataStore, VTTabIDs } = require("./lib/tabdatastore.jsm");
 //var { VTMultiSelect } = require("./lib/multiselect.jsm");
@@ -41,7 +42,6 @@ VerticalTabs.prototype = {
 			delete this.window.VerticalTabs;
 		});
 
-		this.sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 		this.ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
 
 		this.installStylesheet("resource://verticaltabsreloaded/data/override-bindings.css");
@@ -69,7 +69,7 @@ VerticalTabs.prototype = {
 
 	installStylesheet: function(uri) {
 		uri = this.ios.newURI(uri, null, null);
-		this.sss.loadAndRegisterSheet(uri, this.sss.USER_SHEET);
+		stylesheetUtils.loadSheet(this.window, uri);
 	},
 
 	applyThemeStylesheet: function() {
@@ -79,7 +79,7 @@ VerticalTabs.prototype = {
 
 	removeThemeStylesheet: function() {
 		var uri = this.ios.newURI(this.getThemeStylesheet(this.theme), null, null);
-		this.sss.unregisterSheet(uri, this.sss.USER_SHEET);
+		stylesheetUtils.removeSheet(this.window, uri);
 	},
 
 	getThemeStylesheet: function(theme) {
@@ -188,7 +188,6 @@ VerticalTabs.prototype = {
 			tabs.removeAttribute("width");
 			tabs.removeEventListener("TabOpen", this, false);
 
-			// Restore tabs on top.
 			toolbar_context_menu.firstChild.collapsed = false;
 			toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
@@ -397,7 +396,7 @@ VerticalTabs.prototype = {
 	},
 
 	onPopupShowing: function(aEvent) {
-		if (!this.multiSelect)
+		/*if (!this.multiSelect)
 			return;
 
 		let closeTabs = this.document.getElementById("context_verticalTabsCloseMultiple");
@@ -406,7 +405,7 @@ VerticalTabs.prototype = {
 			closeTabs.disabled = false;
 		} else {
 			closeTabs.disabled = true;
-		}
+		}*/
 	}
   
 };
