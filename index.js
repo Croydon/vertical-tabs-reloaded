@@ -23,7 +23,7 @@ function include(src) {
     Services.scriptloader.loadSubScript(src, GLOBAL_SCOPE);
 }
 
-let DEFAULT_PREFS = new Array("width", "right", "tabsOnTop", "theme", "hideInFullscreen", "toggleDisplayHotkey");
+let DEFAULT_PREFS = new Array("width", "right", "theme", "hideInFullscreen", "toggleDisplayHotkey");
 
 /* "browser.tabs.drawInTitlebar": false, */
 

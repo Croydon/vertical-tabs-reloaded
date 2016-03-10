@@ -3,15 +3,13 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * This file is a derivation of a part of the Tree Style Tab Addon, 
+ * This file is a derivation of Tree Style Tab's TreeStyleTabUtils, 
  * which is created by SHIMODA Hiroshi <piro@p.club.ne.jp>.
  * 
  * ***** END LICENSE BLOCK ***** */
  
 /**
  * Persistently store tab attributes in the session store service.
- *
- * Heavily inspired by Tree Style Tab's TreeStyleTabUtils.
  */
 
 const EXPORTED_SYMBOLS = ["VTTabDataStore", "VTTabIDs"];

@@ -13,8 +13,6 @@ var preferences = simplePrefs.prefs;
 var stylesheetUtils = require("sdk/stylesheet/utils");
 
 var { VTTabDataStore, VTTabIDs } = require("./lib/tabdatastore.jsm");
-//var { VTMultiSelect } = require("./lib/multiselect.jsm");
-//var { VTGroups } = require("./lib/groups.jsm");
 
 const EXPORTED_SYMBOLS = ["VerticalTabs"];
 
@@ -45,7 +43,6 @@ VerticalTabs.prototype = {
 		this.ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
 
 		this.installStylesheet("resource://verticaltabsreloaded/data/override-bindings.css");
-		this.installStylesheet("resource://verticaltabsreloaded/data/skin/bindings.css");
 		this.installStylesheet("resource://verticaltabsreloaded/data/skin/base.css");
 		this.applyThemeStylesheet();
 		this.unloaders.push(this.removeThemeStylesheet);
@@ -112,7 +109,7 @@ VerticalTabs.prototype = {
 
 		// Move the bottom stuff (findbar, addonbar, etc.) in with the
 		// tabbrowser.  That way it will share the same (horizontal)
-		// space as the brower.  In other words, the bottom stuff no
+		// space as the browser.  In other words, the bottom stuff no
 		// longer extends across the whole bottom of the window.
 		let contentbox = document.getElementById("appcontent");
 		let bottom = document.getElementById("browser-bottombox");
@@ -208,26 +205,6 @@ VerticalTabs.prototype = {
 	},
 
 	initContextMenu: function() {
-		/*const document = this.document;
-		const tabs = document.getElementById("tabbrowser-tabs");
-
-		let closeMultiple = null;
-		if (this.multiSelect) {
-			closeMultiple = document.createElementNS(NS_XUL, "menuitem");
-			closeMultiple.id = "context_verticalTabsCloseMultiple";
-			closeMultiple.setAttribute("label", "Close Selected Tabs"); //TODO l10n
-			closeMultiple.setAttribute("tbattr", "tabbrowser-multiple");
-			closeMultiple.setAttribute("oncommand", "gBrowser.tabContainer.VTMultiSelect.closeSelected();");
-			tabs.contextMenu.appendChild(closeMultiple);
-		}
-
-		tabs.contextMenu.addEventListener("popupshowing", this, false);
-
-		this.unloaders.push(function() {
-			if (closeMultiple)
-				tabs.contextMenu.removeChild(closeMultiple);
-			tabs.contextMenu.removeEventListener("popupshowing", this, false);
-		});*/
 	},
 
 	initHotkeys: function() {
@@ -300,7 +277,6 @@ VerticalTabs.prototype = {
 				vt.applyThemeStylesheet();
 				break;
 			case "hideInFullscreen":
-				// call manually, so we re-show tabs when in fullscreen
 				vt.onSizeModeChange();
 				break;
 			case "toggleDisplayHotkey":
@@ -314,6 +290,8 @@ VerticalTabs.prototype = {
 		this.unloaders.forEach(function(func) {
 			func.call(this);
 		}, this);
+		
+		this.unloaders = [];
 	},
 
 	// Event handlers
@@ -332,9 +310,8 @@ VerticalTabs.prototype = {
 		case "sizemodechange":
 			this.onSizeModeChange(aEvent);
 			return;
-		case "popupshowing":
-			this.onPopupShowing(aEvent);
-			return;
+		//case "popupshowing":
+			//return;
 		case "resize":
 			this.setPinnedSizes();
 			return;
@@ -369,6 +346,10 @@ VerticalTabs.prototype = {
 		tabs.display = splitter.display = display;
 	},
 	
+	/* 
+	* The size of the window changed, check if we entered/left fullscreen and
+	* hide/show tabs according to user setting
+	*/
 	onSizeModeChange: function() {
 		if(this.changedDisplayState == true) 
 		{
@@ -384,7 +365,6 @@ VerticalTabs.prototype = {
 		this.changeDisplayState(display);
 	},
 
-	
 	onTabOpen: function(aEvent) {
 		this.initTab(aEvent.target);
 	},
@@ -394,18 +374,5 @@ VerticalTabs.prototype = {
 			this.onTabbarResized();
 		}
 	},
-
-	onPopupShowing: function(aEvent) {
-		/*if (!this.multiSelect)
-			return;
-
-		let closeTabs = this.document.getElementById("context_verticalTabsCloseMultiple");
-		let tabs = this.multiSelect.getSelected();
-		if (tabs.length > 1) {
-			closeTabs.disabled = false;
-		} else {
-			closeTabs.disabled = true;
-		}*/
-	}
-  
+ 
 };
