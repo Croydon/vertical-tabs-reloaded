@@ -12,8 +12,8 @@ var simplePrefs = require("sdk/simple-prefs");
 var preferences = simplePrefs.prefs;
 
 var { VTTabDataStore, VTTabIDs } = require("./lib/tabdatastore.jsm");
-var { VTMultiSelect } = require("./lib/multiselect.jsm");
-var { VTGroups } = require("./lib/groups.jsm");
+//var { VTMultiSelect } = require("./lib/multiselect.jsm");
+//var { VTGroups } = require("./lib/groups.jsm");
 
 const EXPORTED_SYMBOLS = ["VerticalTabs"];
 
@@ -214,7 +214,7 @@ VerticalTabs.prototype = {
 	},
 
 	initContextMenu: function() {
-		const document = this.document;
+		/*const document = this.document;
 		const tabs = document.getElementById("tabbrowser-tabs");
 
 		let closeMultiple = null;
@@ -233,7 +233,7 @@ VerticalTabs.prototype = {
 			if (closeMultiple)
 				tabs.contextMenu.removeChild(closeMultiple);
 			tabs.contextMenu.removeEventListener("popupshowing", this, false);
-		});
+		});*/
 	},
 
 	initHotkeys: function() {
