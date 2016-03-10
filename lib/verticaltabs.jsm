@@ -48,7 +48,6 @@ VerticalTabs.prototype = {
 		this.unloaders.push(this.removeThemeStylesheet);
 
 		this.rearrangeXUL();
-		this.initContextMenu();
 		this.observePrefs();
 		this.initHotkeys();
 
@@ -204,9 +203,6 @@ VerticalTabs.prototype = {
 		});
 	},
 
-	initContextMenu: function() {
-	},
-
 	initHotkeys: function() {
 		let vt = this; let toggleKey = preferences["toggleDisplayHotkey"];
 		vt.toggleDisplayHotkey = hotkey({
@@ -272,7 +268,6 @@ VerticalTabs.prototype = {
 				}
 				break;
 			case "theme":
-				console.log("updating theme");
 				vt.removeThemeStylesheet();
 				vt.applyThemeStylesheet();
 				break;
@@ -301,7 +296,7 @@ VerticalTabs.prototype = {
 			this.init();
 			return;
 		case "TabOpen":
-			this.onTabOpen(aEvent);
+			this.initTab(aEvent.target);
 			this.setPinnedSizes();
 			return;
 		case "mouseup":
@@ -363,10 +358,6 @@ VerticalTabs.prototype = {
 		let display = hideOk && window.windowState == window.STATE_FULLSCREEN ? "none" : "";
 
 		this.changeDisplayState(display);
-	},
-
-	onTabOpen: function(aEvent) {
-		this.initTab(aEvent.target);
 	},
 
 	onMouseUp: function(aEvent) {

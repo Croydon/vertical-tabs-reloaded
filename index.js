@@ -11,6 +11,8 @@ var { Cc, Ci, Cu } = require('chrome');
 var simplePrefs = require("sdk/simple-prefs");
 var preferences = simplePrefs.prefs;
 var preferencesService = require("sdk/preferences/service");
+var windows = require("sdk/windows");
+var { viewFor } = require("sdk/view/core");
 
 Cu.import("resource://gre/modules/Services.jsm");
 
@@ -62,11 +64,19 @@ exports.main = function (options, callbacks) {
 	// Initialize VerticalTabs object for each window.
 	include("resource://verticaltabsreloaded/lib/verticaltabs.jsm");
 	
-	watchWindows(function(window) {
-		let vt = new VerticalTabs(window);
+	for (let window of windows.browserWindows) {
+		let lowLevelWindow = viewFor(window);
+		let vt = new VerticalTabs(lowLevelWindow);
 		//unload(vt.installStylesheet("chrome://browser/content/tabbrowser.css"));
-		unload(vt.unload.bind(vt), window);
-	}, "navigator:browser");
+		unload(vt.unload.bind(vt), lowLevelWindow);
+	}
+
+	windows.browserWindows.on('open', function(window) {
+		let lowLevelWindow = viewFor(window);
+		let vt = new VerticalTabs(lowLevelWindow);
+		unload(vt.unload.bind(vt), lowLevelWindow);
+	});
+	
 };
 
 exports.onUnload = function (reason) {
