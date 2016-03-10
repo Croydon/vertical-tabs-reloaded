@@ -69,12 +69,5 @@
 		"title": "Width of the tab sidebar",
 		"value": 250,
 		"hidden": true
-	},
-	{
-		"name": "tabsOnTop",
-		"type": "bool",
-		"title": "tabsOnTop",
-		"value": false,
-		"hidden": true
 	}]
 }

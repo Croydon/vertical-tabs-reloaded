@@ -153,10 +153,6 @@ VerticalTabs.prototype = {
 		toolbar.setAttribute("toolboxid", "navigator-toolbox");
 		leftbox.appendChild(toolbar);
 
-		// Not sure what this does, it and all related code might be unnecessary
-		window.TabsOnTop = window.TabsOnTop ? window.TabsOnTop : {};
-		window.TabsOnTop.enabled = false;
-
 		let toolbar_context_menu = document.getElementById("toolbar-context-menu");
 		toolbar_context_menu.firstChild.collapsed = true;
 		toolbar_context_menu.firstChild.nextSibling.collapsed = true; // separator
@@ -193,7 +189,6 @@ VerticalTabs.prototype = {
 			tabs.removeEventListener("TabOpen", this, false);
 
 			// Restore tabs on top.
-			window.TabsOnTop.enabled = preferences["tabsOnTop"];
 			toolbar_context_menu.firstChild.collapsed = false;
 			toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
