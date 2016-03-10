@@ -1,7 +1,7 @@
-@import "resource://verticaltabsreloaded/data/skin/default/win7/variable.css";
-@import "resource://verticaltabsreloaded/data/skin/default/win7/tab.css";
-@import "resource://verticaltabsreloaded/data/skin/default/win7/tabbrowser.css";
-@import "resource://verticaltabsreloaded/data/skin/default/win7/group.css";
+@import "resource://verticaltabsreloaded/data/skin/win7/variable.css";
+@import "resource://verticaltabsreloaded/data/skin/win7/tab.css";
+@import "resource://verticaltabsreloaded/data/skin/win7/tabbrowser.css";
+@import "resource://verticaltabsreloaded/data/skin/win7/group.css";
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 

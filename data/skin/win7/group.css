@@ -46,8 +46,8 @@
 	cursor: default !important;
 	margin-left: 1px !important;
 	margin-right: 2px !important;
-	list-style-image: url("resource://verticaltabsreloaded/data/skin/default/win7/twisty.png");
+	list-style-image: url("resource://verticaltabsreloaded/data/skin/win7/twisty.png");
 }
 .tabbrowser-tab[verticaltabs-collapsed="true"] .verticaltabs-twisty {
-	list-style-image: url("resource://verticaltabsreloaded/data/skin/default/win7/twisty-collapsed.png");
+	list-style-image: url("resource://verticaltabsreloaded/data/skin/win7/twisty-collapsed.png");
 }
