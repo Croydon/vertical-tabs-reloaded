@@ -5,16 +5,25 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+"use strict";
+ 
+// SDK
+let { require } = Components.utils.import("resource://gre/modules/commonjs/toolkit/require.js", {});
+ 
 var { Cc, Ci, Cu } = require('chrome');
 
 var hotkey = require("sdk/hotkeys").Hotkey;
 var simplePrefs = require("sdk/simple-prefs");
 var preferences = simplePrefs.prefs;
+//var tabsSDK = require("sdk/tabs");
+//var tabsUtils = require("sdk/tabs/utils");
 var stylesheetUtils = require("sdk/stylesheet/utils");
 
-var { VTTabDataStore, VTTabIDs } = require("./lib/tabdatastore.jsm");
+// Modules
+var { VTTabDataStore, VTTabIDs } = require("./tabdatastore.jsm");
 
-const EXPORTED_SYMBOLS = ["VerticalTabs"];
+
+export.VerticalTabs = VerticalTabs;
 
 const NS_XUL = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
 const TAB_DROP_TYPE = "application/x-moz-tabbrowser-tab";
