@@ -20,7 +20,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 // Modules
 var { unload } = require("./lib/utils.js");
-var { VerticalTabs } = require("./lib/verticaltabs.jsm");
+var { VerticalTabs } = require("./lib/verticaltabs.js");
 
 const PREF_BRANCH = "extensions.@verticaltabsreloaded.";
 
@@ -35,8 +35,8 @@ function setDefaultPrefs()
 	}
 }
 
+
 exports.main = function (options, callbacks) {
-    
     // if (options.loadReason == "install") {
         
     // } else if (options.loadReason == "upgrade") {
