@@ -13,10 +13,7 @@ var preferences = simplePrefs.prefs;
 var preferencesService = require("sdk/preferences/service");
 var windows = require("sdk/windows");
 var { viewFor } = require("sdk/view/core");
-
-//let { Services } = require("Services");
-var { Cc, Ci, Cu } = require('chrome');
-Cu.import("resource://gre/modules/Services.jsm");
+var { Services }  = require("resource://gre/modules/Services.jsm");
 
 // Modules
 var { unload } = require("./lib/utils.js");
