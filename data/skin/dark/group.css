@@ -45,6 +45,7 @@
     margin-right: 2px !important;
     -moz-appearance: treetwisty !important;
 }
+
 .tabbrowser-tab[verticaltabs-collapsed="true"] .verticaltabs-twisty {
     -moz-appearance: treetwistyopen !important;
 }

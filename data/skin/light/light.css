@@ -30,8 +30,7 @@
 	border-bottom: 1px solid #bbc3cc !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
     margin: 0 !important;
     padding: 1px 0 !important;
     background-color: #dadada !important;
@@ -41,8 +40,7 @@
     border-radius: 0 !important;
     font-weight: 600 !important;
 }
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background-color: InactiveCaption !important;
     color: InactiveCaptionText !important;
    /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */

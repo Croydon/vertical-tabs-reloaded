@@ -1,6 +1,5 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-
 .tabbrowser-tabs {
     margin: 1px 0 0 0 !important;
     padding: 0 !important;
@@ -14,17 +13,17 @@
     -moz-box-flex: 0;
     -moz-appearance: none !important;
     background: transparent !important;
-    border: 1px solid transparent !important;
-    border-radius: 0 !important;
     margin: 0 !important;
     padding: 1px 0 !important;
     height: 24px !important;
     min-height: 24px !important;
     max-height: 24px !important;
+	border: 1px solid transparent !important;
+    border-radius: 0 !important;
+	border-bottom: 1px solid #bbc3cc !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
     margin: 0 !important;
     padding: 1px 0 !important;
 
@@ -34,8 +33,8 @@
     font-weight: normal;
     text-shadow: none;
 }
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background-color: InactiveCaption !important;
     color: InactiveCaptionText !important;
    /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
