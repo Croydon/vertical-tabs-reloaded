@@ -24,6 +24,12 @@
 		"value": false
 	},
 	{
+		"name": "hideInFullscreen",
+		"type": "bool",
+		"title": "Hide tabs when in fullscreen",
+		"value": true
+	},
+	{
 		"name": "theme",
 		"type": "menulist",
 		"title": "Theme",
@@ -50,12 +56,6 @@
 				"label": "Light"
 			}
 		]
-	},
-	{
-		"name": "hideInFullscreen",
-		"type": "bool",
-		"title": "Hide tabs when in fullscreen",
-		"value": true
 	},
 	{
 		"name": "toggleDisplayHotkey",
