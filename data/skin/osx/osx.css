@@ -18,6 +18,7 @@
     background: transparent !important;
     background-color: #333 !important;
 }
+
 .tabbrowser-tabs:-moz-window-inactive {
     background-color: #333 !important;
 }
@@ -69,6 +70,18 @@
     border-bottom: 1px solid rgba(0,0,0,0.15) !important;
 }
 
+.tabbrowser-tab[selected="true"] {
+    background: #222 !important;
+
+}
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
+    background: #222 !important;
+}
+
+.tabbrowser-tab:not([selected="true"]):hover {
+	background-color: rgba(0,0,0,0.15) !important;
+}
+
 /* remove curvy tab ends */
 .tab-background-middle,
 .tab-background-start,
@@ -96,14 +109,6 @@
 .tabbrowser-tab:not([selected]):not([afterselected-visible]):not([afterhovered]):not([first-visible-tab]):not(:hover)::before,
 #tabbrowser-tabs:not([overflow]) > .tabbrowser-tab[last-visible-tab]:not([selected]):not([beforehovered]):not(:hover)::after {
   background-image: none !important;
-}
-
-.tabbrowser-tab[selected="true"] {
-    background: #222 !important;
-
-}
-.tabbrowser-tab[selected="true"]:-moz-window-inactive {
-    background: #222 !important;
 }
 
 .tab-background-start, .tab-background-middle, .tab-background-end {

@@ -43,8 +43,8 @@
 .tabbrowser-tab:not([selected="true"]):hover {
     margin: 0 !important;
     padding: 1px 0 !important;
+	background-color: #ebebeb !important;
 }
-
 
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
     visibility: collapse !important;
