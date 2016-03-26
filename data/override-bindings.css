@@ -1,7 +1,7 @@
 .tabbrowser-tabs {
-  -moz-binding: url("chrome://verticaltabsreloaded/content/lib/vertical-tabbrowser.xml#tabbrowser-tabs") ! important;
+  -moz-binding: url("chrome://verticaltabsreloaded/content/lib/vertical-tabbrowser.xml#tabbrowser-tabs");
 }
 
 .tabbrowser-arrowscrollbox {
-  -moz-binding: url("chrome://verticaltabsreloaded/content/lib/vertical-tabbrowser.xml#tabbrowser-arrowscrollbox") ! important;
+  -moz-binding: url("chrome://verticaltabsreloaded/content/lib/vertical-tabbrowser.xml#tabbrowser-arrowscrollbox");
 }
