@@ -71,11 +71,13 @@ exports.main = function (options, callbacks) {
 };
 
 exports.onUnload = function (reason) {
-	if(reason == "shutdown")
-	{
-		return;
-	}
-    else if(reason == "disable")
+	console.log("onUnload:" + reason);
+	//if(reason == "shutdown")
+	//{
+		//return;
+	//}
+    //else 
+	if(reason == "disable")
     {
         console.log("VTR disabled");
     }  
