@@ -26,6 +26,11 @@ Installation: https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/
  * Readable, maintainable and robust code.
 
  
+## Support
+
+Only the latest Firefox version is fully supported. Compatibility with the latest [ESR version](https://www.mozilla.org/en-US/firefox/organizations/faq/) will not get broken on purpose, but it might be necessary to do so sometimes. Pull requests fixing compatibility with the latest ESR version have a good chance to get accepted. Pull requests concerning other versions as the latest Firefox version or the latest Firefox ESR version will not be accepted.
+
+
 ## License and Credits
 
 This project is licensed under the terms of the [Mozilla Public License Version 2.0](LICENSE.md).
