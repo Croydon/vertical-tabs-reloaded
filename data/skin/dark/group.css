@@ -5,9 +5,6 @@
     padding-left: 16px !important;
 }
 
-.tabbrowser-tab[verticaltabs-group] {
-}
-
 .tabbrowser-tab[verticaltabs-group] .tab-close-button {
     opacity: 1 !important;
 }

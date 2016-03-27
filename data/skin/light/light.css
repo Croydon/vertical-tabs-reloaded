@@ -5,7 +5,6 @@
   right: 4px;
 }
 
-
 .tabbrowser-tabs {
     margin: 0 0 0 0 !important;
     padding: 0 !important;
@@ -40,6 +39,7 @@
     border-radius: 0 !important;
     font-weight: 600 !important;
 }
+
 .tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background-color: InactiveCaption !important;
     color: InactiveCaptionText !important;
@@ -51,7 +51,6 @@
     padding: 1px 0 !important;
     background-color: #ebebeb !important;
 }
-
 
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
     visibility: collapse !important;
@@ -124,9 +123,6 @@
     padding-left: 16px !important;
 }
 
-.tabbrowser-tab[verticaltabs-group] {
-}
-
 .tabbrowser-tab[verticaltabs-group] .tab-close-button {
     opacity: 1 !important;
 }
@@ -188,7 +184,7 @@
 
 statuspanel[mirror]:-moz-locale-dir(ltr),
 statuspanel[mirror]:-moz-locale-dir(rtl) {
-    padding: 6px 6px 0px 0px !important;
+    padding: 0px 6px 0px 0px !important;
 }
 
 statuspanel:-moz-locale-dir(ltr):not([mirror]),
@@ -199,17 +195,17 @@ statuspanel:-moz-locale-dir(rtl):not([mirror]) {
 statuspanel[mirror]:-moz-locale-dir(ltr) .statuspanel-inner,
 statuspanel[mirror]:-moz-locale-dir(rtl) .statuspanel-inner {
     margin-top: 8px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 5px !important;
     box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
     padding: 0px 0px !important;
-    border-radius: 4px !important;
+    border-radius: 5.8px !important;
 }
 
 statuspanel:-moz-locale-dir(ltr):not([mirror]) .statuspanel-inner,
 statuspanel:-moz-locale-dir(rtl):not([mirror]) .statuspanel-inner {
-    margin-top: 14px !important;
+    margin-top: 8px !important;
     margin-bottom: 5px !important;
     box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
     padding: 0px 0px !important;
-    border-radius: 4px !important;
+    border-radius: 5.8px !important;
 }

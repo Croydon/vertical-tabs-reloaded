@@ -30,11 +30,11 @@
 	max-height: var(--vtr-tab-height);
 }
 
+/* This is nonsense
 .tabbrowser-tab:-moz-lwtheme {
-	/* !?? */
 	color: black;
 	text-shadow: none;
-}
+}*/
 
 .tabbrowser-tab:hover:not(:-moz-lwtheme) {
 	border-color: gray;
@@ -49,14 +49,12 @@
 	background: linear-gradient(to right, gray, #ebf3fd) repeat-y !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
 	margin: 0 !important;
 	padding: 0 0 0 3px !important;
 }
 
-.tabbrowser-tab[selected="true"]:not(:-moz-lwtheme),
-.tabbrowser-tab[multiselect="true"]:not(:-moz-lwtheme) {
+.tabbrowser-tab[selected="true"]:not(:-moz-lwtheme) {
 	border-color: gray;
 	background: linear-gradient(to bottom, #ebf4fe, #cfe4fe) repeat-x;
 
@@ -64,8 +62,7 @@
 	text-shadow: none;
 }
 
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+.tabbrowser-tab[selected="true"]:-moz-window-inactive{
 	border: 1px solid !important;
 	-moz-border-top-colors: #d9d9d9 #fafafb !important;
 	-moz-border-bottom-colors: #d9d9d9 #f0f0f0 !important;

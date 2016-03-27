@@ -1,6 +1,5 @@
 @import "tab.css";
 @import "tabbrowser.css";
-@import "group.css";
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 #TabsToolbar:not(:-moz-lwtheme)  {
