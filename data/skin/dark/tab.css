@@ -27,7 +27,7 @@
 
 .tab-icon-image {
   padding: 3px;
-  background-color: #transparent !important; /* VT Original: f2f2f2 */
+  background-color: transparent !important; /* VT Original: f2f2f2 */
   border-radius: 2px;
   min-height: 22px !important;
   min-width: 22px !important;
