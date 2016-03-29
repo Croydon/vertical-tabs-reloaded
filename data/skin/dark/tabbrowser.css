@@ -45,7 +45,6 @@
     background-color: #5E6972 !important;
 }
 
-
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
     visibility: collapse !important;
 }
