@@ -36,9 +36,15 @@ exports.main = function (options, callbacks) {
     if (options.loadReason == "install") {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
 	}
-
-	//else if (options.loadReason == "upgrade") {   
-    // }
+	else if (options.loadReason == "upgrade") {
+		// v0.4.0 -> v0.5.0, remove when most use >= v0.5.0 
+		if(preferences["theme"] == "winnt") {
+			preferences["theme"] = "windows";
+		}
+		
+		// v0.4.0 -> v0.5.0, remove with the next version
+		preferencesService.set("browser.tabs.drawInTitlebar", false);
+    }
 	
 	// Back up 'browser.tabs.animate' pref before overwriting it
 	let animate = preferencesService.get("browser.tabs.animate");
