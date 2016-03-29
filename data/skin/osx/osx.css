@@ -82,6 +82,14 @@
 	background-color: rgba(0,0,0,0.15) !important;
 }
 
+.tab-icon-sound[soundplaying] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-white") !important;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-muted-white") !important;
+}
+
 /* remove curvy tab ends */
 .tab-background-middle,
 .tab-background-start,

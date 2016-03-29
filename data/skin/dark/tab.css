@@ -1,14 +1,25 @@
 /* Keep the close button at a safe distance from the tab label. */
 .tab-close-button {
-  position: absolute;
-  right: 4px;
+	position: absolute;
+	right: 4px;
+	display: -moz-box;
+	margin-left: 3px !important;
+	margin-right: 1px !important;
+	list-style-image: url("chrome://global/skin/icons/close-inverted.png") !important;
 }
 
-/* Keep the close button at a safe distance from the tab label. */
-.tab-close-button {
-    display: -moz-box;
-    margin-left: 3px !important;
-    margin-right: 1px !important;
+@media (min-resolution: 1.1dppx) {
+	.tab-close-button {
+		list-style-image: url("chrome://global/skin/icons/close-inverted@2x.png") !important;
+	}
+}
+
+.tab-icon-sound[soundplaying] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-white") !important;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-muted-white") !important;
 }
 
 .tab-label {
