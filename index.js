@@ -19,7 +19,8 @@ var { Services }  = require("resource://gre/modules/Services.jsm");
 var { unload } = require("./lib/utils.js");
 var { VerticalTabs } = require("./lib/verticaltabs.js");
 
-const PREF_BRANCH = "extensions.@verticaltabsreloaded.";
+let packageJSON = require("./package.json");
+const PREF_BRANCH = "extensions."+packageJSON['preferences-branch']+".";
 
 /* "browser.tabs.drawInTitlebar": false, */
 
