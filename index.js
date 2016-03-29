@@ -41,18 +41,14 @@ exports.main = function (options, callbacks) {
     // }
 	
 	// Back up 'browser.tabs.animate' pref before overwriting it
-	if(preferencesService.has(PREF_BRANCH + "animate") == false)
-	{
-		let animate = preferencesService.get("browser.tabs.animate");
-		preferences["animate"] = animate;
-		preferencesService.set("browser.tabs.animate", false);
-	}
+	let animate = preferencesService.get("browser.tabs.animate");
+	preferences["animate"] = animate;
+	preferencesService.set("browser.tabs.animate", false);
 	
 	unload(function () {
 		let animate = preferences["animate"];
 		preferencesService.set("browser.tabs.animate", animate);
 	});
-
 
 	// Initialize VerticalTabs object for each window.
 	
