@@ -22,8 +22,6 @@ var { VerticalTabs } = require("./lib/verticaltabs.js");
 let packageJSON = require("./package.json");
 const PREF_BRANCH = "extensions."+packageJSON['preferences-branch']+".";
 
-/* "browser.tabs.drawInTitlebar": false, */
-
 // Reset the preferences
 function setDefaultPrefs() 
 {
@@ -35,10 +33,11 @@ function setDefaultPrefs()
 
 
 exports.main = function (options, callbacks) {
-    // if (options.loadReason == "install") {
-        
-    // } else if (options.loadReason == "upgrade") {
-        
+    if (options.loadReason == "install") {
+		preferencesService.set("browser.tabs.drawInTitlebar", false);
+	}
+
+	//else if (options.loadReason == "upgrade") {   
     // }
 	
 	// Back up 'browser.tabs.animate' pref before overwriting it
