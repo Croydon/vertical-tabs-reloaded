@@ -5,6 +5,7 @@
 	background: transparent !important;
 }
 
+/* Style rules applied if there is no theme installed */
 .tabbrowser-tabs:not(:-moz-lwtheme) {
 	background-color: var(--vtr-tabbrowser-bg-color) !important; 
 }

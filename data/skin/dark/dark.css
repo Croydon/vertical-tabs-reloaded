@@ -2,6 +2,7 @@
 @import "tabbrowser.css";
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+/* Tab toolbar styling */
 #TabsToolbar:not(:-moz-lwtheme)  {
     height: 24px;
     border-bottom-left-radius: 0px !important;
@@ -11,15 +12,6 @@
     -moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
     background-color: #f1f1f1 !important;
     background-image: none !important;
-}
-
-
-/* Tab toolbar styling */
-
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
 }
 
 /*** Link Display ***/

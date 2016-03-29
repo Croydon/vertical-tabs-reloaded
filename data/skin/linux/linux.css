@@ -66,66 +66,6 @@
 }
 
 
-/* Tab toolbar styling */
-
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
-}
-
-
-/*** Group related styles ***/
-
-.tabbrowser-tab[verticaltabs-ingroup],
-.tabbrowser-tab[verticaltabs-ingroup]:hover {
-    padding-left: 16px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] {
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-close-button {
-    opacity: 1 !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-text {
-    padding-left: 3px !important;
-}
-
-.verticaltabs-textbox {
-    margin: 0;
-}
-
-.verticaltabs-counter {
-    visibility: collapse;
-}
-
-.verticaltabs-droptarget {
-    background-color: Highlight !important;
-    color: HighlightText !important;
-}
-
-.verticaltabs-dropingroup {
-    margin-left: 10px !important;
-}
-
-.verticaltabs-droptonewgroup {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
-}
-
-.verticaltabs-twisty {
-    cursor: default !important;
-    margin-left: 1px !important;
-    margin-right: 2px !important;
-    -moz-appearance: treetwisty !important;
-}
-.tabbrowser-tab[verticaltabs-collapsed="true"] .verticaltabs-twisty {
-    -moz-appearance: treetwistyopen !important;
-}
-
 /*** Link Display ***/
 
 .statuspanel-label {

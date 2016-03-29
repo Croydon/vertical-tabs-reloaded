@@ -52,13 +52,6 @@
 	border-bottom-left-radius: 4px !important;
 }
 
-#verticaltabs-groupbutton {
-	/* TODO need icon to symbolize tab group */
-	list-style-image: url("chrome://browser/skin/Toolbar.png");
-	-moz-image-region: rect(0, 234px, 18px, 216px);
-}
-
-
 /* Ensure that content area has a top border */
 #navigator-toolbox::after {
 	visibility: visible !important;
@@ -66,7 +59,6 @@
 
 
 /*** Addon bar styling ***/
-
 #addon-bar {
 	height: calc(var(--vtr-tabbar-height) - 1px); /* make addonbar the same height as tab toolbar */
 }

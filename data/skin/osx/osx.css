@@ -203,6 +203,7 @@
     margin-bottom: 1px;
     text-align: left !important;
 }
+
 .tabbrowser-tab[selected="true"] .tab-text {
     font-weight: bold !important;
     color: #DDD !important;
@@ -217,23 +218,8 @@
     margin-bottom: 0 !important;
 }
 
-/* Tab toolbar styling */
-
-#TabsToolbar[tabsontop="false"]:not(:-moz-lwtheme),
-#TabsToolbar[tabsontop="false"]:not(:-moz-lwtheme):-moz-window-inactive {
-    background: none;
-    background-color: #4C9ED9;
-}
-
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 280px, 20px, 260px);
-}
-
 
 /* Personas */
-
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-start:-moz-lwtheme-brighttext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-brighttext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-brighttext:not([selected="true"]),
@@ -241,94 +227,4 @@
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-darktext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-darktext:not([selected="true"]) {
     background-image: none !important;
-}
-
-
-/*** Group related styles ***/
-
-.tabbrowser-tab[verticaltabs-ingroup] {
-    padding-left: 20px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] {
-    padding-top: 1px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-close-button {
-    opacity: 1 !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-text {
-    color: #738192 !important;
-    font-weight: bold !important;
-    text-transform: uppercase !important;
-    text-shadow: 0 1px #ffffff !important;
-}
-.tabbrowser-tab[selected="true"][verticaltabs-group] .tab-text {
-    color: #ffffff !important;
-    text-shadow: 0 1px #404040 !important;
-}
-
-.verticaltabs-textbox {
-    font-size: 11px;
-    margin: 0 0 0 6px;
-}
-
-.verticaltabs-counter {
-    visibility: collapse;
-    font-size: 11px;
-    margin: 0;
-    padding: 0 6px;
-    height: 14px;
-    max-height: 14px;
-    -moz-border-radius: 8px;
-    background-color: #91a0c0;
-    color: #ffffff;
-    font-weight: bold;
-    text-shadow: none;
-}
-.tabbrowser-tab[verticaltabs-collapsed="true"] .verticaltabs-counter {
-    visibility: visible;
-}
-.tabbrowser-tab[selected="true"] .verticaltabs-counter {
-    background-color: #ffffff;
-    color: #91a0c0;
-}
-.verticaltabs-counter:-moz-window-inactive {
-    background-color: #b5b5b5;
-}
-.tabbrowser-tab[selected="true"] .verticaltabs-counter:-moz-window-inactive {
-    background-color: #ffffff;
-    color: #929292;
-}
-
-.verticaltabs-droptarget {
-    border: 2px solid #577bf3 !important; /* not OSX's colour but Firefox's */
-    background: #d0def5 !important;
-    -moz-border-radius: 8px !important;
-    /* TODO avoid increasing the overall height */
-}
-
-.verticaltabs-dropingroup {
-    margin-left: 10px !important;
-}
-
-.verticaltabs-droptonewgroup {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 280px, 20px, 260px);
-}
-
-.verticaltabs-twisty {
-    list-style-image: url("twisty.png");
-    opacity: 0.38;
-    -moz-transition-property: -moz-transform;
-    -moz-transition-duration: .1s;
-}
-.tabbrowser-tab[verticaltabs-collapsed="true"] .verticaltabs-twisty {
-    -moz-transform: rotate(-90deg);
-}
-
-.verticaltabs-twisty:active {
-    opacity: 1.0;
 }
