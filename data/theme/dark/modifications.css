@@ -1,10 +1,10 @@
 /* Single Tab modifications */
-.tab-close-button {
+.tabbrowser-tab:not([pinned]) .tab-close-button {
 	list-style-image: url("chrome://global/skin/icons/close-inverted.png") !important;
 }
 
 @media (min-resolution: 1.1dppx) {
-	.tab-close-button {
+	.tabbrowser-tab:not([pinned]) .tab-close-button {
 		list-style-image: url("chrome://global/skin/icons/close-inverted@2x.png") !important;
 	}
 }
