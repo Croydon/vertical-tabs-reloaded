@@ -1,0 +1,37 @@
+/* Keep the close button at a safe distance from the tab label. */
+.tab-close-button {
+	position: absolute;
+	right: 4px;
+	display: -moz-box;
+	margin-left: 3px !important;
+	margin-right: 1px !important;
+}
+
+.tab-label {
+	text-align: left !important;
+}
+
+.tab-label[pinned] {
+	margin-left: 6px !important;
+	position: relative !important;
+}
+
+.tab-content {
+	-moz-margin-start: 0px;
+	margin-top: 1px;
+}
+
+.tab-icon-image {
+	padding: 3px;
+	background-color: transparent !important; /* VT Original: f2f2f2 for Dark Theme */
+	border-radius: 2px;
+	min-height: 22px !important;
+	min-width: 22px !important;
+	opacity: 1 !important;
+}
+
+/** Drop indicator for drag'n'drop of tabs - Works OOTB(TM)- Just needs a margin.**/
+.tab-drop-indicator {
+	margin-top: -11px !important;
+	margin-bottom: 0 !important;
+}
