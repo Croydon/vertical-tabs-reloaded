@@ -36,6 +36,10 @@
 		"value": "dark",
 		"options": [
 			{
+				"value": "none",
+				"label": "None / Firefox default"
+			},
+			{
 				"value": "windows",
 				"label": "Windows"
 			},
