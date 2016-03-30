@@ -22,6 +22,17 @@
 	border-bottom: var(--vtr-tab-border-bottom) !important;
 }
 
+.tabbrowser-tab[pinned] {
+	margin: 0 !important;
+	padding: 1px 0 !important;
+	color: var(--vtr-tab-pinned-text-color) !important;
+	background-color: var(--vtr-tab-pinned-background-color) !important;
+	font-weight: var(--vtr-tab-pinned-font-weight);
+	text-shadow: var(--vtr-tab-pinned-text-shadow);
+	border-left: var(--vtr-tab-pinned-border-left) !important;
+	border-radius: var(--vtr-tab-pinned-border-radius) !important;
+}
+
 .tabbrowser-tab[selected="true"] {
 	margin: 0 !important;
 	padding: 1px 0 !important;
