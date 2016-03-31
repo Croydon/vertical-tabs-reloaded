@@ -1,10 +1,47 @@
 # Changelog
 
+### v0.5.0, 2016-03-31
+ * themes improvements:
+   * all themes:
+     * all themes have now a border between tabs (#24)
+	 * show Firefox placeholder favicon if the tab has none instead of no icon at all (#25)
+	 * internal: remove unnecessary style rules
+   * internal: introduced templates
+	 * create and adapt easily a theme without worrying too much about css
+	 * if a templates get bug fixes or enhancements all themes building on it are profiting
+	 * templates might be also the foundation for full user customization of themes in the future
+	 * created a template named Basic, based on the Dark Theme style
+   * introduce option to choose no theme
+     * this might be a good option to let other add-ons decide tab colors, font attributes etc.
+   * Darwin theme:
+     * tabs which are getting hovered with the mouse are getting visual highlighted (#24)
+	 * use white sound icons instead of black ones (#26)
+   * Linux theme:
+     * tabs which are getting hovered with the mouse are getting visual highlighted (#24)
+	 * fixed: unwanted white bar at bottom of window (#16)
+   * Dark theme:
+     * make background of the favicons transparent instead of white (#18)
+	 * use white close icon and white sound icons instead of black ones (#26)
+	 * add blue left border to pinned tabs
+	 * fixed: unwanted white bar at bottom of window (#16)
+	 * internal: port to Basic template
+   * Light theme:
+   	 * add blue left border to pinned tabs
+	 * fixed: unwanted white bar at bottom of window (#16)
+	 * internal: port to Basic template
+ * fixed: toolbar context menu was damaged (#27)
+ * fixed: browser.tabs.animated was just disabled one time instead of always
+ * heavily refactoring of the code base
+
+
+***
+
+
 ### v0.4.0, 2016-03-15
- * added possibility to hide/show the tab sidebar manually at any time with a hotkey (customizable)
- * migrated the add-on to package.json & JPM
- * added an icon
- * removed broken group and multiselect features
+ * added possibility to hide/show the tab sidebar manually at any time with a hotkey (customizable) (#6)
+ * migrated the add-on to package.json & JPM (#7)
+ * added an icon (#3)
+ * removed broken group and multiselect features (#10, #12)
  * heavily refactoring of the code base
 
 
@@ -12,8 +49,8 @@
 
 
 ### v0.3.2, 2016-03-01
- * published on Mozilla's Add-on page for auto updates and user friendly installing
- * fixed: settings were not persistent
+ * published on Mozilla's Add-on page for auto updates and user friendly installing (#5)
+ * fixed: settings were not persistent (#1)
  * added credits
  * refactoring of the code base
 
