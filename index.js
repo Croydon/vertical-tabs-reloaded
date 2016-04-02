@@ -17,7 +17,7 @@ var { Services }  = require("resource://gre/modules/Services.jsm");
 
 // Modules
 var { unload } = require("./lib/utils.js");
-var { VerticalTabs } = require("./lib/verticaltabs.js");
+var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
 let packageJSON = require("./package.json");
 const PREF_BRANCH = "extensions."+packageJSON['preferences-branch']+".";
@@ -56,18 +56,18 @@ exports.main = function (options, callbacks) {
 		preferencesService.set("browser.tabs.animate", animate);
 	});
 
-	// Initialize VerticalTabs object for each window.
+	// Initialize VerticalTabsReloaded object for each window.
 	
 	for (let window of windows.browserWindows) {
 		let lowLevelWindow = viewFor(window);
-		let vt = new VerticalTabs(lowLevelWindow);
+		let vt = new VerticalTabsReloaded(lowLevelWindow);
 		//unload(vt.installStylesheet("chrome://browser/content/tabbrowser.css"));
 		unload(vt.unload.bind(vt), lowLevelWindow);
 	}
 
 	windows.browserWindows.on('open', function(window) {
 		let lowLevelWindow = viewFor(window);
-		let vt = new VerticalTabs(lowLevelWindow);
+		let vt = new VerticalTabsReloaded(lowLevelWindow);
 		unload(vt.unload.bind(vt), lowLevelWindow);
 	});
 };

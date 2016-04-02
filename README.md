@@ -11,7 +11,7 @@ Installation: https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/
 ## Features:
 
  * arranges tabs vertical
- * ships 5 different styles for the tab sidebar
+ * ships 5 different styles for the tab sidebar (+ option to use Firefox/thirdparty add-ons style)
  * hides tab sidebar in fullscreen mode (toggleable)
  * hide/display manually the tab sidebar at any time with a hotkey (customizable)
  * display the tab sidebar either on the left side (default) or on the right
