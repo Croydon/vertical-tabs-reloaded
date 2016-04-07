@@ -5,7 +5,7 @@ fashion. Vertical Tabs Reloaded is a fork of [Vertical Tabs](https://addons.mozi
 
 Source Code & Issue Tracker: https://github.com/Croydon/vertical-tabs-reloaded
 
-Installation: ![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)
+Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
 
 
 ## Features:
