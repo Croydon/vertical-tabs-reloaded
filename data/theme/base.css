@@ -63,6 +63,10 @@
     pointer-events: auto ! important;
     min-width: 30px ! important;
     max-width: 100% ! important;
+	min-height: 20px;
+	height: 20px;
+	max-height: 40px !important;
+	border-bottom: 1px solid #5E6972;
 }
 
 .tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
