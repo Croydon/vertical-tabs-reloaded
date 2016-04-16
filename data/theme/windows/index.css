@@ -81,10 +81,8 @@
 /*** Link display ***/
 
 .statuspanel-label {
-	-moz-appearance: tooltip !important;
 	margin-right: 0px !important;
 	margin-left: 0px !important;
-	box-shadow: 8px 3px 0 rgba(0,0,0,.18) !important; /* would otherwise display a transparent pixel on the tooltip's corner */
 }
 
 .statuspanel-inner {
@@ -110,7 +108,6 @@ statuspanel[mirror]:-moz-locale-dir(ltr) .statuspanel-inner,
 statuspanel[mirror]:-moz-locale-dir(rtl) .statuspanel-inner {
 	margin-top: 8px !important;
 	margin-bottom: 5px !important;
-	box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
 	padding: 0px 0px !important;
 	border-radius: 5.8px !important;
 }
@@ -119,7 +116,6 @@ statuspanel:-moz-locale-dir(ltr):not([mirror]) .statuspanel-inner,
 statuspanel:-moz-locale-dir(rtl):not([mirror]) .statuspanel-inner {
 	margin-top: 8px !important;
 	margin-bottom: 5px !important;
-	box-shadow: 5px 5px 0 -4px rgba(0,0,0,.18), 5px 5px 0 -3px rgba(0,0,0,.15), 5px 5px 0 -2px rgba(0,0,0,.12), 5px 5px 0 -1px rgba(0,0,0,.09) !important;
 	padding: 0px 0px !important;
 	border-radius: 5.8px !important;
 }
