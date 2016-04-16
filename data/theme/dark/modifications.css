@@ -3,6 +3,20 @@
 	list-style-image: url("chrome://global/skin/icons/close-inverted.png") !important;
 }
 
+@media (max-resolution: 1dppx) {
+	.tab-close-button {
+		-moz-image-region: rect(0px, 20px, 20px, 0px) !important;
+	}
+	
+	.tab-close-button:hover {
+		-moz-image-region: rect(0px, 40px, 20px, 20px) !important;
+	}
+	
+	.tab-close-button:active {
+		-moz-image-region: rect(0px, 60px, 20px, 40px) !important;
+	}
+}
+
 @media (min-resolution: 1.1dppx) {
 	.tabbrowser-tab:not([pinned]) .tab-close-button {
 		list-style-image: url("chrome://global/skin/icons/close-inverted@2x.png") !important;
