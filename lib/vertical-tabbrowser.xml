@@ -77,14 +77,8 @@
     <implementation implements="nsIDOMEventListener">
 		<constructor>
 		<![CDATA[ 
-			var scriptloader = Cc["@mozilla.org/moz/jssubscript-loader;1"]
-                            .getService(Components.interfaces.mozIJSSubScriptLoader);
-			let GLOBAL_SCOPE = this;
-			function include(src) 
-			{
-				scriptloader.loadSubScript(src, GLOBAL_SCOPE);
-			}
-			include("resource://verticaltabsreloaded-at-go-dev-dot-de/lib/xbl.js");
+			Cu.import("resource://gre/modules/Services.jsm");
+			Services.scriptloader.loadSubScript("resource://verticaltabsreloaded-at-go-dev-dot-de/lib/xbl.js", this);
 		]]>	
 		</constructor>
       <field name="mTabstripHeight">0</field>
