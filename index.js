@@ -12,6 +12,8 @@ var simplePrefs = require("sdk/simple-prefs");
 var preferences = simplePrefs.prefs;
 var preferencesService = require("sdk/preferences/service");
 var windows = require("sdk/windows");
+var windowUtils = require("sdk/window/utils");
+var hotkey = require("sdk/hotkeys").Hotkey;
 var { viewFor } = require("sdk/view/core");
 var { Services }  = require("resource://gre/modules/Services.jsm");
 
@@ -31,7 +33,24 @@ function setDefaultPrefs()
 	}
 }
 
-
+var GLOBAL_SCOPE = this;
+function initHotkeys() {
+	var objectScope = GLOBAL_SCOPE;
+	let toggleKey = preferences["toggleDisplayHotkey"];
+	let windowUtilsx = windowUtils;
+	GLOBAL_SCOPE.vtToggleDisplayHotkey = hotkey({
+		combo: toggleKey,
+		onPress: function() {
+			let windowID = windowUtilsx.getOuterId(windowUtilsx.getToplevelWindow(windowUtilsx.getFocusedWindow()));
+			objectScope["vt"+windowID].toggleDisplayState();
+		}
+	});
+	
+	unload(function() {
+		GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
+	});
+}
+	
 exports.main = function (options, callbacks) {
     if (options.loadReason == "install") {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
@@ -60,25 +79,27 @@ exports.main = function (options, callbacks) {
 	
 	for (let window of windows.browserWindows) {
 		let lowLevelWindow = viewFor(window);
-		let vt = new VerticalTabsReloaded(lowLevelWindow);
+		let windowID = windowUtils.getOuterId(lowLevelWindow);
+		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
 		//unload(vt.installStylesheet("chrome://browser/content/tabbrowser.css"));
-		unload(vt.unload.bind(vt), lowLevelWindow);
+		unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 	}
 
 	windows.browserWindows.on('open', function(window) {
 		let lowLevelWindow = viewFor(window);
-		let vt = new VerticalTabsReloaded(lowLevelWindow);
-		unload(vt.unload.bind(vt), lowLevelWindow);
+		let windowID = windowUtils.getOuterId(lowLevelWindow);
+		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
+		unload(GLOBAL_SCOPE["vt"+windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 	});
+	
+	initHotkeys();
+	
+	simplePrefs.on("toggleDisplayHotkey", function(prefName) { GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy(); initHotkeys(); });
+	
 };
 
 exports.onUnload = function (reason) {
 	console.log("onUnload:" + reason);
-	//if(reason == "shutdown")
-	//{
-		//return;
-	//}
-    //else 
 	if(reason == "disable")
     {
         console.log("VTR disabled");
