@@ -6,7 +6,7 @@
   * only respective latest version
   * latest version of [Firefox ESR](https://www.mozilla.org/en-US/firefox/organizations/faq/) is _somewhat_ supported
     * this means, compatibility is not getting broken on purpose, but it might be necessary sometimes
-	* pull requests concerning the latest ESR version are welcome, but if keeping compatiblity means introducing major nasty hacks, the chance of merging is low
+	* pull requests concerning the latest ESR version are welcome, but if keeping compatibility means introducing major nasty hacks, the chance of merging is low
 	
 If you want to extend the platform support please start first a discussion by creating an issue (and as always search first for an existing one).
 
