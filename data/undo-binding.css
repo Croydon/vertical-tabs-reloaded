@@ -1,9 +1,0 @@
-@import "chrome://browser/content/tabbrowser.css" !important;
-
-.tabbrowser-tabs {
-  -moz-binding: url("chrome://browser/content/tabbrowser.xml#tabbrowser-tabs");
-}
-
-.tabbrowser-arrowscrollbox {
-  -moz-binding: url("chrome://browser/content/tabbrowser.xml#tabbrowser-arrowscrollbox");
-}

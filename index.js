@@ -81,7 +81,6 @@ exports.main = function (options, callbacks) {
 		let lowLevelWindow = viewFor(window);
 		let windowID = windowUtils.getOuterId(lowLevelWindow);
 		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-		//unload(vt.installStylesheet("chrome://browser/content/tabbrowser.css"));
 		unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 	}
 
