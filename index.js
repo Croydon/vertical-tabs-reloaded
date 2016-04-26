@@ -91,7 +91,14 @@ exports.main = function (options, callbacks) {
 		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
 		unload(GLOBAL_SCOPE["vt"+windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 	});
-	
+
+	windows.browserWindows.on('close', function(window) {
+		let lowLevelWindow = viewFor(window);
+		let windowID = windowUtils.getOuterId(lowLevelWindow);
+		GLOBAL_SCOPE["vt"+windowID].unload();
+		delete GLOBAL_SCOPE["vt"+windowID];
+	});
+
 	initHotkeys();
 	
 	simplePrefs.on("toggleDisplayHotkey", function(prefName) { GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy(); initHotkeys(); });
