@@ -80,5 +80,11 @@
 		"title": "Enable/Disable titlebar",
 		"label": "Toggle titlebar",
 		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"     
+	},
+	{
+		"name": "setDefaultPrefs",
+		"type": "control",
+		"title": "Reset preferences of VTR",
+		"label": "Restore default preferences"
 	}]
 }

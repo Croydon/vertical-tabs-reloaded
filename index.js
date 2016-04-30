@@ -32,7 +32,9 @@ function setDefaultPrefs()
 		preferencesService.reset(aPreference);
 	}
 }
+simplePrefs.on("setDefaultPrefs", setDefaultPrefs);
 
+// Toggle function of browser.tabs.drawInTitlebar for preference page
 simplePrefs.on("toggleDrawInTitlebar", function() {
 	if(preferencesService.get("browser.tabs.drawInTitlebar", true))
 	{
