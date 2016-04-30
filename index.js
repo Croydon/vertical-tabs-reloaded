@@ -33,6 +33,17 @@ function setDefaultPrefs()
 	}
 }
 
+simplePrefs.on("toggleDrawInTitlebar", function() {
+	if(preferencesService.get("browser.tabs.drawInTitlebar", true))
+	{
+		preferencesService.set("browser.tabs.drawInTitlebar", false);
+	}
+	else
+	{
+		preferencesService.set("browser.tabs.drawInTitlebar", true);
+	}
+});
+
 var GLOBAL_SCOPE = this;
 function initHotkeys() {
 	var objectScope = GLOBAL_SCOPE;
