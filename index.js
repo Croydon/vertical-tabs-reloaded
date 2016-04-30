@@ -71,9 +71,6 @@ exports.main = function (options, callbacks) {
 		if(preferences["theme"] == "winnt") {
 			preferences["theme"] = "windows";
 		}
-		
-		// v0.4.0 -> v0.5.0, remove with the next version
-		preferencesService.set("browser.tabs.drawInTitlebar", false);
     }
 	
 	// Back up 'browser.tabs.animate' pref before overwriting it
