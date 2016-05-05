@@ -26,9 +26,9 @@
 	/* but we can force it with a font-size, so it'll be correct */
 	/*font-size: 12px !important;*/
 
-	height: var(--vtr-tab-height);
-	min-height: var(--vtr-tab-height);
-	max-height: var(--vtr-tab-height);
+	height: var(--vtr-tab-height) !important;
+	min-height: var(--vtr-tab-height) !important;
+	max-height: var(--vtr-tab-height) !important;
 }
 
 /* This is nonsense
