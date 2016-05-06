@@ -1,5 +1,24 @@
 # Changelog
 
+### v0.6.0, 2016-05-06
+ * added: button to toggle `browser.tabs.drawInTitlebar` for the case that window control elements are overlappig with FF (#9)
+   * note: this is set automatically to `true` once at installation
+ * added: possibility to reset VTR preferences to default via button (#11)
+ * fixed: hotkey to hide tabbar only works in the latest opened window (#30)
+ * fixed: destroy references to closed windows, set memory free (#39)
+ * themes improvements:
+   * all themes (except Darwin):
+     * fixed: status bar was not readable on some Linux desktops (e.g. KDE) (#37)
+   * no theme option:
+     * the base style rules are including now a border between tabs and a min and max height of tabs
+   * Dark theme:
+     * fixed: Close button shown thrice under some circumstances (#35)
+ * intern: rename object to VerticalTabsReloaded (before: VerticalTabs)
+
+
+***
+
+
 ### v0.5.0, 2016-03-31
  * themes improvements:
    * all themes:
