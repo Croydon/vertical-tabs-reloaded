@@ -44,6 +44,7 @@
 
 .tabbrowser-tab[pinned] {
 	position: inherit; 
+	border-left: 4px solid #2292D0 !important;
 }
 
 .tabbrowser-tab[pinned]:not(:-moz-lwtheme) {

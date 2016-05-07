@@ -23,6 +23,10 @@
 	border-bottom: 1px solid #bbc3cc !important;
 }
 
+.tabbrowser-tab[pinned] {
+	border-left: 4px solid #2292D0 !important;
+}
+
 .tabbrowser-tab[selected="true"] {
     margin: 0 !important;
     padding: 1px 0 !important;

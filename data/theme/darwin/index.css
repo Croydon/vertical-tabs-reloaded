@@ -171,6 +171,10 @@
     position: relative !important;
 }
 
+.tabbrowser-tab[pinned] {
+	border-left: 4px solid #2292D0 !important;
+}
+
 .tabbrowser-tab[pinned]:before {
     position: relative !important;
 }
