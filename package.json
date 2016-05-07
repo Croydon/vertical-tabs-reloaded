@@ -40,6 +40,14 @@
 				"label": "None / Firefox default"
 			},
 			{
+				"value": "dark",
+				"label": "Dark (recommended)"
+			},
+			{
+				"value": "light",
+				"label": "Light (recommended)"
+			},
+			{
 				"value": "windows",
 				"label": "Windows"
 			},
@@ -50,14 +58,6 @@
 			{
 				"value": "linux",
 				"label": "Linux"
-			},
-			{
-				"value": "dark",
-				"label": "Dark"
-			},
-			{
-				"value": "light",
-				"label": "Light"
 			}
 		]
 	},
