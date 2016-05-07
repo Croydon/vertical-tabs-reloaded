@@ -112,14 +112,14 @@
         <body><![CDATA[
           
         ]]></body>
-      </method>-->
+      </method>
 
       <method name="handleEvent">
         <parameter name="aEvent"/>
         <body><![CDATA[
 			handleEvent(aEvent);
         ]]></body>
-      </method>
+      </method>-->
 
       <!-- XXX todo: implement notifyBackgroundtab for vertical tabs-->
 

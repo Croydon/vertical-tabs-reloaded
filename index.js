@@ -24,6 +24,7 @@ var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 let packageJSON = require("./package.json");
 const PREF_BRANCH = "extensions."+packageJSON['preferences-branch']+".";
 
+
 // Reset the preferences
 function setDefaultPrefs() 
 {
@@ -35,7 +36,7 @@ function setDefaultPrefs()
 simplePrefs.on("setDefaultPrefs", setDefaultPrefs);
 
 // Toggle function of browser.tabs.drawInTitlebar for preference page
-simplePrefs.on("toggleDrawInTitlebar", function() {
+function toggleDrawInTitlebar() {
 	if(preferencesService.get("browser.tabs.drawInTitlebar", true))
 	{
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
@@ -44,8 +45,16 @@ simplePrefs.on("toggleDrawInTitlebar", function() {
 	{
 		preferencesService.set("browser.tabs.drawInTitlebar", true);
 	}
+}
+
+simplePrefs.on("toggleDrawInTitlebar", toggleDrawInTitlebar);
+
+unload(function() {
+	simplePrefs.off("setDefaultPrefs", setDefaultPrefs);
+	simplePrefs.off("toggleDrawInTitlebar", toggleDrawInTitlebar);
 });
 
+// Hotkeys
 var GLOBAL_SCOPE = this;
 function initHotkeys() {
 	var objectScope = GLOBAL_SCOPE;
@@ -58,12 +67,18 @@ function initHotkeys() {
 			objectScope["vt"+windowID].toggleDisplayState();
 		}
 	});
-	
-	unload(function() {
-		GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
-	});
 }
 	
+function destroyHotkey() {
+	GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
+}
+
+function changeHotkey() {
+	destroyHotkey(); 
+	initHotkeys();
+}
+
+// Entry point
 exports.main = function (options, callbacks) {
     if (options.loadReason == "install") {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
@@ -84,6 +99,7 @@ exports.main = function (options, callbacks) {
 		let animate = preferences["animate"];
 		preferencesService.set("browser.tabs.animate", animate);
 	});
+
 
 	// Initialize VerticalTabsReloaded object for each window.
 	
@@ -108,9 +124,14 @@ exports.main = function (options, callbacks) {
 		delete GLOBAL_SCOPE["vt"+windowID];
 	});
 
-	initHotkeys();
 	
-	simplePrefs.on("toggleDisplayHotkey", function(prefName) { GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy(); initHotkeys(); });
+	initHotkeys();
+	simplePrefs.on("toggleDisplayHotkey", changeHotkey);
+	
+	unload(function() {
+		destroyHotkey();
+		simplePrefs.off("toggleDisplayHotkey", changeHotkey);
+	});
 	
 };
 
@@ -119,14 +140,14 @@ exports.onUnload = function (reason) {
 	if(reason == "disable")
     {
         console.log("VTR disabled");
-    }  
+    }
 	
 	unload();
 	
+	// Unloaders might want access to prefs, so do this last
     if (reason == "uninstall") {
-        // Unloaders might want access to prefs, so do this last
         // Delete all settings
-		console.log("VTR uninstall");
         Services.prefs.getDefaultBranch(PREF_BRANCH).deleteBranch("");
+		console.log("VTR uninstalled");
     }
 }
