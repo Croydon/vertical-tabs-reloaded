@@ -1,5 +1,19 @@
 # Changelog
 
+### v0.6.1, 2016-05-08
+ * themes improvements:
+   * the Dark (default) and Light themes are now official recommended
+   * all themes:
+     * remove all statuspanel related styles
+   * Darwin, Linux, Windows themes:
+     * add blue left border to pinned tabs (#32)
+ * fixed: don't spam the console with debug output
+ * internal: some refactoring for more efficient code 
+
+
+***
+
+	
 ### v0.6.0, 2016-05-06
  * added: button to toggle `browser.tabs.drawInTitlebar` for the case that window control elements are overlappig with FF (#9)
    * note: this is set automatically to `true` once at installation
@@ -41,11 +55,11 @@
    * Dark theme:
      * make background of the favicons transparent instead of white (#18)
 	 * use white close icon and white sound icons instead of black ones (#26)
-	 * add blue left border to pinned tabs
+	 * add blue left border to pinned tabs (#32)
 	 * fixed: unwanted white bar at bottom of window (#16)
 	 * internal: port to Basic template
    * Light theme:
-   	 * add blue left border to pinned tabs
+   	 * add blue left border to pinned tabs (#32)
 	 * fixed: unwanted white bar at bottom of window (#16)
 	 * internal: port to Basic template
  * fixed: toolbar context menu was damaged (#27)
