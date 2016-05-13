@@ -18,7 +18,7 @@ var { viewFor } = require("sdk/view/core");
 var { Services }  = require("resource://gre/modules/Services.jsm");
 
 // Modules
-var { unload } = require("./lib/utils.js");
+var { unload } = require("./lib/unload.js");
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
 let packageJSON = require("./package.json");
