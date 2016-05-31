@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.6.2, 2016-05-31
+ * added: compatibility to Tab Mix Plus v0.5 or newer (#19)
+
+
+***
+
+
 ### v0.6.1, 2016-05-08
  * themes improvements:
    * the Dark (default) and Light themes are now official recommended
@@ -13,7 +20,7 @@
 
 ***
 
-	
+
 ### v0.6.0, 2016-05-06
  * added: button to toggle `browser.tabs.drawInTitlebar` for the case that window control elements are overlappig with FF (#9)
    * note: this is set automatically to `true` once at installation
