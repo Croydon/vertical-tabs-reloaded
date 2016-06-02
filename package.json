@@ -10,7 +10,8 @@
 	"version": "0.6.2",
 	"permissions": 
 	{
-		"private-browsing": true
+		"private-browsing": true,
+		"multiprocess": true
 	},
 	"engines": 
 	{
