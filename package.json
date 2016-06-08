@@ -15,7 +15,7 @@
 	},
 	"engines": 
 	{
-		"firefox": "45.0 - 48.0"
+		"firefox": "45.0 - 50.0"
     },
 	"preferences-branch": "@verticaltabsreloaded",
 	"preferences": [{
