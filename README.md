@@ -15,6 +15,7 @@ Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded
  * hides tab sidebar in fullscreen mode (toggleable)
  * hide/display manually the tab sidebar at any time with a hotkey (customizable)
  * display the tab sidebar either on the left side (default) or on the right
+ * display the tab toolbar at top (default) or at bottom
  
  
 ## Goals:
