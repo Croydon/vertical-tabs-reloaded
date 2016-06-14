@@ -41,10 +41,10 @@
 	--vtr-tab-hover-background-color: #5E6972;
 	
 	/* Splitter/Separation between tabbar and website */
-	--vtr-splitter-background: #424F5A;
+	--vtr-splitter-background: #343F48;
 	--vtr-splitter-width: 3px;
 	--vtr-splitter-border-left-size: 0;
-	--vtr-splitter-border-left-color: #424F5A; 
+	--vtr-splitter-border-left-color: #343F48; 
 	--vtr-splitter-border-right-size: 0;
-	--vtr-splitter-border-right-color: #424F5A; 
+	--vtr-splitter-border-right-color: #343F48; 
 }
