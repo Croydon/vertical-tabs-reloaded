@@ -40,8 +40,11 @@
 	/* Single tab hover */
 	--vtr-tab-hover-background-color: #5E6972;
 	
-	/* TODO: Splitter/Seperation between tabbar and website
-	--vtr-splitter-color: #d6e5f5;
-	--vtr-splitter-border-size: 1px;
-	--vtr-splitter-border-color: #fcfcfc; */
+	/* Splitter/Separation between tabbar and website */
+	--vtr-splitter-background: #424F5A;
+	--vtr-splitter-width: 3px;
+	--vtr-splitter-border-left-size: 0;
+	--vtr-splitter-border-left-color: #424F5A; 
+	--vtr-splitter-border-right-size: 0;
+	--vtr-splitter-border-right-color: #424F5A; 
 }

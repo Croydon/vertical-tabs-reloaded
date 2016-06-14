@@ -12,7 +12,7 @@
 	border-left: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
 	border-right: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
 	background-color: var(--vtr-splitter-color) !important;
-	margin: 0 0 23px 0 !important;
+	margin: 0 !important;
 	-moz-border-top-colors: none !important;
 	-moz-border-left-colors: none !important;
 	-moz-border-right-colors: none !important;

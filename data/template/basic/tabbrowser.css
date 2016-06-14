@@ -59,3 +59,19 @@
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
 	visibility: collapse !important;
 }
+
+/* Seperator between tabbar and website */
+#verticaltabs-splitter {
+	min-width: var(--vtr-splitter-width) !important;
+	width: var(--vtr-splitter-width) !important;
+	border-top: none !important;
+	border-bottom: none !important;
+	border-left: var(--vtr-splitter-border-left-size) solid var(--vtr-splitter-border-left-color) !important;
+	border-right: var(--vtr-splitter-border-right-size) solid var(--vtr-splitter-border-right-color) !important;
+	background: var(--vtr-splitter-background) !important;
+	margin: 0 !important;
+	-moz-border-top-colors: none !important;
+	-moz-border-left-colors: none !important;
+	-moz-border-right-colors: none !important;
+	-moz-border-bottom-colors: none !important;
+}

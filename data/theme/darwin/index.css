@@ -30,16 +30,17 @@
 
 /* Use the splitter to display the border of .tabbrowser-tabs */
 #verticaltabs-splitter {
-  -moz-appearance: none;
-  background-image: none;
-  background-color: none;
-  border: 0;
-  min-width: 3px;
-  width: 3px;
-  -moz-margin-start: -3px;
-  position: relative;
-  -moz-border-end: #404040;
+    -moz-appearance: none;
+    background-image: none;
+    background-color: none;
+    border: 0;
+    min-width: 3px;
+    width: 3px;
+    -moz-margin-start: -3px;
+    position: relative;
+    -moz-border-end: #404040;
 }
+
 #verticaltabs-splitter:-moz-window-inactive {
     background-color: transparent;
 }
