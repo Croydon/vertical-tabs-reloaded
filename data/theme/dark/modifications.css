@@ -4,15 +4,15 @@
 }
 
 @media (max-resolution: 1dppx) {
-	.tab-close-button {
+	.tabbrowser-tab:not([pinned]) .tab-close-button {
 		-moz-image-region: rect(0px, 20px, 20px, 0px) !important;
 	}
 	
-	.tab-close-button:hover {
+	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
 		-moz-image-region: rect(0px, 40px, 20px, 20px) !important;
 	}
 	
-	.tab-close-button:active {
+	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
 		-moz-image-region: rect(0px, 60px, 20px, 40px) !important;
 	}
 }
