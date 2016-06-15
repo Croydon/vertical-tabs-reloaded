@@ -26,7 +26,7 @@
 	margin: 0 !important;
 	padding: 1px 0 !important;
 	color: var(--vtr-tab-pinned-text-color) !important;
-	background-color: var(--vtr-tab-pinned-background-color) !important;
+	background: var(--vtr-tab-pinned-background) !important;
 	font-weight: var(--vtr-tab-pinned-font-weight);
 	text-shadow: var(--vtr-tab-pinned-text-shadow);
 	border-left: var(--vtr-tab-pinned-border-left) !important;
@@ -37,7 +37,7 @@
 	margin: 0 !important;
 	padding: 1px 0 !important;
 	color: var(--vtr-tab-selected-text-color) !important;
-	background-color: var(--vtr-tab-selected-background-color) !important;
+	background: var(--vtr-tab-selected-background) !important;
 	font-weight: var(--vtr-tab-selected-font-weight);
 	text-shadow: var(--vtr-tab-selected-text-shadow);
 	border-left: var(--vtr-tab-selected-border-left) !important;
@@ -53,7 +53,7 @@
 .tabbrowser-tab:not([selected="true"]):hover {
 	margin: 0 !important;
 	padding: 1px 0 !important;
-	background-color: var(--vtr-tab-hover-background-color) !important;
+	background: var(--vtr-tab-hover-background) !important;
 }
 
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {

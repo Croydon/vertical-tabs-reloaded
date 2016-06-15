@@ -23,7 +23,7 @@
 	
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #fbfbfb;
-	--vtr-tab-selected-background-color: #343F48;
+	--vtr-tab-selected-background: #343F48;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
 	--vtr-tab-selected-border-left: 4px solid #ff9500;
@@ -31,14 +31,14 @@
 	
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
-	--vtr-tab-pinned-background-color: #343F48;
+	--vtr-tab-pinned-background: #343F48;
 	--vtr-tab-pinned-font-weight: 600;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #ff9500;
 	--vtr-tab-pinned-border-radius: 0;	
 	
 	/* Single tab hover */
-	--vtr-tab-hover-background-color: #5E6972;
+	--vtr-tab-hover-background: #5E6972;
 	
 	/* Splitter/Separation between tabbar and website */
 	--vtr-splitter-background: #d6e5f5;
