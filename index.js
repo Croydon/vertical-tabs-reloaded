@@ -80,6 +80,7 @@ function changeHotkey() {
 
 // Entry point
 exports.main = function (options, callbacks) {
+	//console.log(options.loadReason);
     if (options.loadReason == "install") {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
 	}
@@ -91,13 +92,11 @@ exports.main = function (options, callbacks) {
     }
 	
 	// Back up 'browser.tabs.animate' pref before overwriting it
-	let animate = preferencesService.get("browser.tabs.animate");
-	preferences["animate"] = animate;
+	preferences["animate"] = preferencesService.get("browser.tabs.animate");
 	preferencesService.set("browser.tabs.animate", false);
 	
 	unload(function () {
-		let animate = preferences["animate"];
-		preferencesService.set("browser.tabs.animate", animate);
+		preferencesService.set("browser.tabs.animate", preferences["animate"]);
 	});
 
 
@@ -114,7 +113,7 @@ exports.main = function (options, callbacks) {
 		let lowLevelWindow = viewFor(window);
 		let windowID = windowUtils.getOuterId(lowLevelWindow);
 		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-		unload(GLOBAL_SCOPE["vt"+windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+		unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 	});
 
 	windows.browserWindows.on('close', function(window) {
@@ -124,7 +123,6 @@ exports.main = function (options, callbacks) {
 		delete GLOBAL_SCOPE["vt"+windowID];
 	});
 
-	
 	initHotkeys();
 	simplePrefs.on("toggleDisplayHotkey", changeHotkey);
 	
@@ -136,7 +134,7 @@ exports.main = function (options, callbacks) {
 };
 
 exports.onUnload = function (reason) {
-	console.log("onUnload:" + reason);
+	//console.log("onUnload:" + reason);
 	if(reason == "disable")
     {
         console.log("VTR disabled");
