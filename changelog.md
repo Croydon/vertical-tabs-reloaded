@@ -1,5 +1,22 @@
 # Changelog
 
+### v0.7.0, 2016-07-01
+ * added: compact mode, hide text labels on tabs for a minimal tab sidebar (#55)
+ * added: preference to display tab toolbar at top (new default) or at bottom (#46)
+ * themes improvements:
+   * Dark, Light themes:
+     * more subtle (smaller and less contrast) splitter between tab sidebar and website (#21)
+   * template Basic, Dark theme:
+     * fixed: don't show close button on pinned tabs
+   * template Basic:
+     * internal: accept all kind of background values
+ * internal: don't spam the console anymore for good
+ * internal: mark as compatible with e10s
+
+
+***
+
+
 ### v0.6.2, 2016-05-31
  * added: compatibility to Tab Mix Plus v0.5 or newer (#19)
 
