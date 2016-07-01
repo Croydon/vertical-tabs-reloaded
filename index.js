@@ -80,7 +80,7 @@ function changeHotkey() {
 
 // Entry point
 exports.main = function (options, callbacks) {
-	//console.log(options.loadReason);
+	//debugOutput(options.loadReason);
     if (options.loadReason == "install") {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
 	}
@@ -134,10 +134,10 @@ exports.main = function (options, callbacks) {
 };
 
 exports.onUnload = function (reason) {
-	//console.log("onUnload:" + reason);
+	//debugOutput("onUnload:" + reason);
 	if(reason == "disable")
     {
-        console.log("VTR disabled");
+        debugOutput("VTR disabled");
     }
 	
 	unload();
@@ -146,6 +146,12 @@ exports.onUnload = function (reason) {
     if (reason == "uninstall") {
         // Delete all settings
         Services.prefs.getDefaultBranch(PREF_BRANCH).deleteBranch("");
-		console.log("VTR uninstalled");
+		debugOutput("VTR uninstalled");
     }
+}
+
+function debugOutput(output) {
+	if (preferences["debug"] == true) {
+		console.log(output);
+	}
 }
