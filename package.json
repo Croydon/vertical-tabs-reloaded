@@ -31,6 +31,12 @@
 		"value": true
 	},
 	{
+		"name": "compact",
+		"type": "bool",
+		"title": "Compact Mode",
+		"value": false
+	},
+	{
 		"name": "theme",
 		"type": "menulist",
 		"title": "Theme",

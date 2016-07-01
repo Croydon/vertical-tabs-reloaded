@@ -1,0 +1,5 @@
+/* Compact mode, toggleable in options */
+
+.tab-label {
+	display: none !important;
+}
