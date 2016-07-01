@@ -32,6 +32,12 @@ function setDefaultPrefs()
 	{
 		preferencesService.reset(aPreference);
 	}
+	
+	// Reset hidden preferences not inited in package.json
+	if (preferences["debug"] == true)
+	{
+		preferences["debug"] = false;
+	}
 }
 simplePrefs.on("setDefaultPrefs", setDefaultPrefs);
 
