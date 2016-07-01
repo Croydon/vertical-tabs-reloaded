@@ -33,7 +33,7 @@
 	{
 		"name": "compact",
 		"type": "bool",
-		"title": "Compact Mode",
+		"title": "Compact Mode (hides text labels)",
 		"value": false
 	},
 	{
