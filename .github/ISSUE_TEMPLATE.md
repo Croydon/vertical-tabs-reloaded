@@ -1,4 +1,4 @@
-<!-- Please fill out the following information when reporting a bug/problem/error -->
+<!-- Please fill out the following information: -->
 Add-on version:
 Firefox version:
 OS + OS-Version:
