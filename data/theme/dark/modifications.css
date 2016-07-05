@@ -15,6 +15,22 @@
 	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
 		-moz-image-region: rect(0px, 60px, 20px, 40px) !important;
 	}
+	
+	@media (-moz-os-version: windows-xp),
+       (-moz-os-version: windows-vista),
+       (-moz-os-version: windows-win7) {
+		.tabbrowser-tab:not([pinned]) .tab-close-button {
+			-moz-image-region: rect(0, 16px, 16px, 0) !important;
+		}
+
+		.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
+			-moz-image-region: rect(0, 32px, 16px, 16px) !important;
+		}
+
+		.tabbrowser-tab:not([pinned]) .tab-close-button:active {
+			-moz-image-region: rect(0, 48px, 16px, 32px) !important;
+		}
+	}
 }
 
 @media (min-resolution: 1.1dppx) {
