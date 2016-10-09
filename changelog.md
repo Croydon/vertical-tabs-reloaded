@@ -1,5 +1,14 @@
 # Changelog
 
+### v0.7.1, 2016-10-09
+ * themes improvements:
+   * Dark theme:
+     * fixed: close button displayed wrong on low resolution displays running Windows 7 
+
+
+***
+
+
 ### v0.7.0, 2016-07-01
  * added: compact mode, hide text labels on tabs for a minimal tab sidebar (#55)
  * added: preference to display tab toolbar at top (new default) or at bottom (#46)
