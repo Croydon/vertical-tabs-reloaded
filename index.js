@@ -116,6 +116,18 @@ function webext_sendChangedSetting(settingName)
         value: preferences[settingName]
     });
 }
+
+function observPrefs(settingName)
+{        
+    for (let window of windows.browserWindows) 
+    {
+        let lowLevelWindow = viewFor(window);
+        let windowID = windowUtils.getOuterId(lowLevelWindow);
+        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName);
+    }
+    
+    webext_sendChangedSetting(settingName);
+}
   
 // Entry point
 exports.main = function (options, callbacks) {
@@ -178,12 +190,12 @@ exports.main = function (options, callbacks) {
         initHotkeys();
         simplePrefs.on("toggleDisplayHotkey", changeHotkey);
         
-        simplePrefs.on("", webext_sendChangedSetting);
+        simplePrefs.on("", observPrefs);
 
         unload(function() {
             destroyHotkey();
             simplePrefs.off("toggleDisplayHotkey", changeHotkey);
-            simplePrefs.on("", webext_sendChangedSetting);
+            simplePrefs.on("", observPrefs);
         });
     });
 }
