@@ -1,0 +1,9 @@
+{
+    "name": "Vertical Tabs Reloaded",
+    "version": "0.8.0-alpha",
+    "manifest_version": 2,
+    "permissions": ["storage"],
+    "background": {
+        "scripts": ["background.js"]
+    }
+}

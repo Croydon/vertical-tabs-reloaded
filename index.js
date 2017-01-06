@@ -17,6 +17,10 @@ var hotkey = require("sdk/hotkeys").Hotkey;
 var { viewFor } = require("sdk/view/core");
 var { Services }  = require("resource://gre/modules/Services.jsm");
 
+// WebExtension
+const webExtension = require("sdk/webextension");
+var webextPort;
+
 // Modules
 var { unload } = require("./lib/unload.js");
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
@@ -84,6 +88,35 @@ function changeHotkey() {
 	initHotkeys();
 }
 
+//
+// WebExtenions Communication 
+//
+
+// Send message to WebExtension
+function webext_sendMsg(message)
+{
+    webextPort.postMessage(message);
+}
+
+// Handle messages from WebExtension
+function webext_replyHandler(message, sender, sendResponse)
+{  
+    if(message.type == "settings.get") 
+    {
+        webext_sendChangedSetting(message.name);
+    }
+}
+
+// Changed addon preferences, send to WebExtension
+function webext_sendChangedSetting(settingName)
+{
+    webext_sendMsg({
+        type: "settings.post",
+        name: settingName,
+        value: preferences[settingName]
+    });
+}
+  
 // Entry point
 exports.main = function (options, callbacks) {
 	//debugOutput(options.loadReason);
@@ -105,39 +138,55 @@ exports.main = function (options, callbacks) {
 		preferencesService.set("browser.tabs.animate", preferences["animate"]);
 	});
 
+    // WebExtension startup + communication
+    webExtension.startup().then(api => 
+    {
+        const {browser} = api;
+        browser.runtime.onConnect.addListener((port) => 
+        {
+            webextPort = port; // make it global
+        });   
+        
+        browser.runtime.onMessage.addListener((msg, sender, sendResponse) => 
+        {
+            webext_replyHandler(msg, sender, sendResponse);
+        });
+    
+        // Initialize VerticalTabsReloaded object for each window.
+        
+        for (let window of windows.browserWindows) {
+            let lowLevelWindow = viewFor(window);
+            let windowID = windowUtils.getOuterId(lowLevelWindow);
+            GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
+            unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+        }
 
-	// Initialize VerticalTabsReloaded object for each window.
-	
-	for (let window of windows.browserWindows) {
-		let lowLevelWindow = viewFor(window);
-		let windowID = windowUtils.getOuterId(lowLevelWindow);
-		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-		unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
-	}
+        windows.browserWindows.on('open', function(window) {
+            let lowLevelWindow = viewFor(window);
+            let windowID = windowUtils.getOuterId(lowLevelWindow);
+            GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
+            unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+        });
 
-	windows.browserWindows.on('open', function(window) {
-		let lowLevelWindow = viewFor(window);
-		let windowID = windowUtils.getOuterId(lowLevelWindow);
-		GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-		unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
-	});
+        windows.browserWindows.on('close', function(window) {
+            let lowLevelWindow = viewFor(window);
+            let windowID = windowUtils.getOuterId(lowLevelWindow);
+            GLOBAL_SCOPE["vt"+windowID].unload();
+            delete GLOBAL_SCOPE["vt"+windowID];
+        });
 
-	windows.browserWindows.on('close', function(window) {
-		let lowLevelWindow = viewFor(window);
-		let windowID = windowUtils.getOuterId(lowLevelWindow);
-		GLOBAL_SCOPE["vt"+windowID].unload();
-		delete GLOBAL_SCOPE["vt"+windowID];
-	});
+        initHotkeys();
+        simplePrefs.on("toggleDisplayHotkey", changeHotkey);
+        
+        simplePrefs.on("", webext_sendChangedSetting);
 
-	initHotkeys();
-	simplePrefs.on("toggleDisplayHotkey", changeHotkey);
-	
-	unload(function() {
-		destroyHotkey();
-		simplePrefs.off("toggleDisplayHotkey", changeHotkey);
-	});
-	
-};
+        unload(function() {
+            destroyHotkey();
+            simplePrefs.off("toggleDisplayHotkey", changeHotkey);
+            simplePrefs.on("", webext_sendChangedSetting);
+        });
+    });
+}
 
 exports.onUnload = function (reason) {
 	//debugOutput("onUnload:" + reason);
@@ -161,3 +210,4 @@ function debugOutput(output) {
 		console.log(output);
 	}
 }
+
