@@ -46,7 +46,7 @@ function getSettings(name)
 
 
 //
-// Communication with the legacy part of the addon
+// Communication with the legacy part + content script
 //
 
 function sdk_replyHandler(message)
@@ -58,7 +58,8 @@ function sdk_replyHandler(message)
     }
 }
 
-port.onMessage.addListener(sdk_replyHandler);
+port.onMessage.addListener(sdk_replyHandler); // legacy listener
+browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
 
 function sdk_sendMsg(message)
 {

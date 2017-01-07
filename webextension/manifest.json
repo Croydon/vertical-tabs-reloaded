@@ -2,8 +2,17 @@
     "name": "Vertical Tabs Reloaded",
     "version": "0.8.0-alpha",
     "manifest_version": 2,
-    "permissions": ["storage"],
-    "background": {
-        "scripts": ["background.js"]
+    "permissions": ["storage", "tabs"],
+    "background": 
+    {
+        "scripts": ["main.js"]
+    },
+    "applications": 
+    {
+        "gecko": 
+        {
+            "id": "verticaltabsreloaded@go-dev.de",
+            "strict_min_version": "51.0"
+        }
     }
 }
