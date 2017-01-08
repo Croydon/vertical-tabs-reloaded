@@ -98,6 +98,13 @@
 		"value": 250,
 		"hidden": true
 	},
+    {
+		"name": "debug",
+		"type": "bool",
+		"title": "Enables console logging for debugging",
+		"value": false,
+		"hidden": true
+	},
 	{
 		"name": "toggleDrawInTitlebar",
 		"type": "control",

@@ -25,23 +25,13 @@ var webextPort;
 var { unload } = require("./lib/unload.js");
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
-let packageJSON = require("./package.json");
-const PREF_BRANCH = "extensions."+packageJSON['preferences-branch']+".";
-
 
 // Reset the preferences
 function setDefaultPrefs() 
 {
-	for (let aPreference of preferencesService.keys(PREF_BRANCH))
-	{
-		preferencesService.reset(aPreference);
-	}
-	
-	// Reset hidden preferences not inited in package.json
-	if (preferences["debug"] == true)
-	{
-		preferences["debug"] = false;
-	}
+    webext_sendMsg({
+        type: "settings.reset",
+    });
 }
 simplePrefs.on("setDefaultPrefs", setDefaultPrefs);
 
@@ -98,12 +88,20 @@ function webext_sendMsg(message)
     webextPort.postMessage(message);
 }
 
+
 // Handle messages from WebExtension
 function webext_replyHandler(message, sender, sendResponse)
 {  
     if(message.type == "settings.get") 
     {
+        // Send settings to WebExt
         webext_sendChangedSetting(message.name);
+    }
+    
+    if(message.type == "settings.post")
+    {
+        // Get settings from WebExt
+        preferences[message.name] = message.value;
     }
 }
 
@@ -123,13 +121,25 @@ function observPrefs(settingName)
     {
         let lowLevelWindow = viewFor(window);
         let windowID = windowUtils.getOuterId(lowLevelWindow);
-        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName);
+        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, preferences[settingName]);
     }
     
     webext_sendChangedSetting(settingName);
 }
-  
-// Entry point
+
+//
+// End of WebExtenions Communication 
+//
+
+function initialize_window(window)
+{
+    let lowLevelWindow = viewFor(window);
+    let windowID = windowUtils.getOuterId(lowLevelWindow);
+    GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, preferences["compact"], preferences["right"], preferences["width"], preferences["tabtoolbarPosition"], preferences["debug"], preferences["theme"]);
+    unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+}
+
+// Entry point of the add-on
 exports.main = function (options, callbacks) {
 	//debugOutput(options.loadReason);
     if (options.loadReason == "install") {
@@ -154,48 +164,45 @@ exports.main = function (options, callbacks) {
     webExtension.startup().then(api => 
     {
         const {browser} = api;
-        browser.runtime.onConnect.addListener((port) => 
-        {
-            webextPort = port; // make it global
-        });   
         
         browser.runtime.onMessage.addListener((msg, sender, sendResponse) => 
         {
             webext_replyHandler(msg, sender, sendResponse);
         });
-    
-        // Initialize VerticalTabsReloaded object for each window.
         
-        for (let window of windows.browserWindows) {
-            let lowLevelWindow = viewFor(window);
-            let windowID = windowUtils.getOuterId(lowLevelWindow);
-            GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-            unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
-        }
+        browser.runtime.onConnect.addListener((port) => 
+        {
+            webextPort = port; // make it global
+           
+           
+            // Initialize VerticalTabsReloaded object for each window.
+            
+            for (let window of windows.browserWindows) 
+            {
+                initialize_window(window);
+            }
 
-        windows.browserWindows.on('open', function(window) {
-            let lowLevelWindow = viewFor(window);
-            let windowID = windowUtils.getOuterId(lowLevelWindow);
-            GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow);
-            unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
-        });
+            windows.browserWindows.on('open', function(window) {
+                initialize_window(window);
+            });
 
-        windows.browserWindows.on('close', function(window) {
-            let lowLevelWindow = viewFor(window);
-            let windowID = windowUtils.getOuterId(lowLevelWindow);
-            GLOBAL_SCOPE["vt"+windowID].unload();
-            delete GLOBAL_SCOPE["vt"+windowID];
-        });
+            windows.browserWindows.on('close', function(window) {
+                let lowLevelWindow = viewFor(window);
+                let windowID = windowUtils.getOuterId(lowLevelWindow);
+                GLOBAL_SCOPE["vt"+windowID].unload();
+                delete GLOBAL_SCOPE["vt"+windowID];
+            });
 
-        initHotkeys();
-        simplePrefs.on("toggleDisplayHotkey", changeHotkey);
-        
-        simplePrefs.on("", observPrefs);
-
-        unload(function() {
-            destroyHotkey();
-            simplePrefs.off("toggleDisplayHotkey", changeHotkey);
+            initHotkeys();
+            simplePrefs.on("toggleDisplayHotkey", changeHotkey);
+            
             simplePrefs.on("", observPrefs);
+
+            unload(function() {
+                destroyHotkey();
+                simplePrefs.off("toggleDisplayHotkey", changeHotkey);
+                simplePrefs.on("", observPrefs);
+            });
         });
     });
 }
@@ -212,14 +219,16 @@ exports.onUnload = function (reason) {
 	// Unloaders might want access to prefs, so do this last
     if (reason == "uninstall") {
         // Delete all settings
-        Services.prefs.getDefaultBranch(PREF_BRANCH).deleteBranch("");
+        Services.prefs.getDefaultBranch("extensions.@verticaltabsreloaded.").deleteBranch("");
 		debugOutput("VTR uninstalled");
     }
 }
 
-function debugOutput(output) {
-	if (preferences["debug"] == true) {
-		console.log(output);
-	}
+function debugOutput(output)
+{
+    webext_sendMsg({
+        type: "debug.log",
+        value: output
+    });
 }
 
