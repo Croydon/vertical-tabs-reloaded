@@ -26,15 +26,6 @@ var { unload } = require("./lib/unload.js");
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
 
-// Reset the preferences
-function setDefaultPrefs() 
-{
-    webext_sendMsg({
-        type: "settings.reset",
-    });
-}
-simplePrefs.on("setDefaultPrefs", setDefaultPrefs);
-
 // Toggle function of browser.tabs.drawInTitlebar for preference page
 function toggleDrawInTitlebar() {
 	if(preferencesService.get("browser.tabs.drawInTitlebar", true))
@@ -46,13 +37,6 @@ function toggleDrawInTitlebar() {
 		preferencesService.set("browser.tabs.drawInTitlebar", true);
 	}
 }
-
-simplePrefs.on("toggleDrawInTitlebar", toggleDrawInTitlebar);
-
-unload(function() {
-	simplePrefs.off("setDefaultPrefs", setDefaultPrefs);
-	simplePrefs.off("toggleDrawInTitlebar", toggleDrawInTitlebar);
-});
 
 // Hotkeys
 var GLOBAL_SCOPE = this;
@@ -101,7 +85,13 @@ function webext_replyHandler(message, sender, sendResponse)
     if(message.type == "settings.post")
     {
         // Get settings from WebExt
+        debugOutput(message.name + " new value SDK: " + message.value);
         preferences[message.name] = message.value;
+    }
+    
+    if(message.type == "settings.toggleDrawInTitlebar")
+    {
+        toggleDrawInTitlebar();   
     }
 }
 

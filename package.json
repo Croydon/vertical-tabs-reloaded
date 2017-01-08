@@ -23,19 +23,22 @@
 		"name": "right",
 		"type": "bool",
 		"title": "Display tabs on the right",
-		"value": false
+		"value": false,
+		"hidden": true
 	},
 	{
 		"name": "hideInFullscreen",
 		"type": "bool",
 		"title": "Hide tabs in fullscreen",
-		"value": true
+		"value": true,
+		"hidden": true
 	},
 	{
 		"name": "compact",
 		"type": "bool",
 		"title": "Compact Mode (hides text labels)",
-		"value": false
+		"value": false,
+		"hidden": true
 	},
 	{
 		"name": "theme",
@@ -67,7 +70,8 @@
 				"value": "linux",
 				"label": "Linux"
 			}
-		]
+		],
+		"hidden": true
 	},
 	{
 		"name": "tabtoolbarPosition",
@@ -83,13 +87,15 @@
 				"value": "bottom",
 				"label": "Bottom"
 			}
-		]
+		],
+		"hidden": true
 	},
 	{
 		"name": "toggleDisplayHotkey",
 		"type": "string",
 		"title": "Hotkey for hiding/showing tabbar",
-		"value": "control-alt-v"
+		"value": "control-alt-v",
+		"hidden": true
 	},
 	{
 		"name": "width",
@@ -110,12 +116,7 @@
 		"type": "control",
 		"title": "Enable/Disable titlebar",
 		"label": "Toggle titlebar",
-		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"     
-	},
-	{
-		"name": "setDefaultPrefs",
-		"type": "control",
-		"title": "Reset preferences of VTR",
-		"label": "Restore default preferences"
+		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements",
+		"hidden": true   
 	}]
 }
