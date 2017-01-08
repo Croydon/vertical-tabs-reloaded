@@ -6,8 +6,27 @@ var port = browser.runtime.connect({name: "connection-to-legacy"});
 //
 // Handle addon settings
 //
+var defaultSettings = {
+    right: false,
+    hideInFullscreen: true,
+    compact: false,
+    theme: "dark",
+    tabtoolbarPosition: "top",
+    toggleDisplayHotkey: "control-alt-v",
+    width: 250,
+    debug: false
+}
+    
+function restore_default_settings()
+{
+    Object.keys(defaultSettings).forEach(function(k)
+    {
+        save_setting(k, defaultSettings[k]);
+        sdk_send_changed_setting(k);
+    });
+}
 
-function saveSettings(name, value)
+function save_setting(name, value)
 {
     let settingsObject = {};
     settingsObject[name] = value;
@@ -23,12 +42,12 @@ function saveSettings(name, value)
     });
 }
 
-function getSettingsError(name)
+function get_setting_error(name)
 {
-    console.log("VTR WebExt setting '"+ name +"' not saved.");
+    debug_log("VTR WebExt setting '"+ name +"' not saved.");
 }
 
-function getSettings(name)
+function get_setting(name)
 {
     return new Promise(function (fulfill, reject) 
     {
@@ -36,7 +55,8 @@ function getSettings(name)
         {
             if (!results[name]) 
             {
-                getSettingsError(name);
+                // Todo: Fix false values are not returnes, promise fix!
+                get_setting_error(name);
             }
             
             fulfill(results[name]);
@@ -49,12 +69,42 @@ function getSettings(name)
 // Communication with the legacy part + content script
 //
 
+// Changed addon preferences, send to SDK
+function sdk_send_changed_setting(settingName)
+{
+    get_setting(settingName).then(value => {
+        sdk_sendMsg({
+            type: "settings.post",
+            name: settingName,
+            value: value
+        });
+    });
+}
+
 function sdk_replyHandler(message)
 {
     if(message.type == "settings.post") 
     {
         // the legacy part sent settings, save them
-        saveSettings(message.name, message.value);
+        save_setting(message.name, message.value);
+    }
+    
+    if(message.type == "settings.post-to-sdk") 
+    {
+        // the very-very-legacy part of the add-on wants to save settings
+        // send to legacy part for actual saving
+        message.type = "settings.post";
+        sdk_sendMsg(message);
+    }
+    
+    if(message.type == "settings.reset")
+    {
+        restore_default_settings();
+    }
+    
+    if(message.type == "debug.log")
+    {
+        debug_log(message.value);
     }
 }
 
@@ -83,18 +133,14 @@ setTimeout(function(){
     sdk_sendMsg({type: "settings.get", name: "debug"});
 }, 10000);
 
-/*setInterval(function(){ 
 
-    getSettings("theme").then(value => {
-        console.log("received theme setting: " + value);
-    });
-    
-    getSettings("toggleDisplayHotkey").then(value => {
-        console.log("received toggleDisplayHotkey setting: " + value);
-    });
-    
-    getSettings().then(value => {
-        console.log(value);
-    });
-
-}, 4000);*/
+// Utils
+function debug_log(output) 
+{
+	get_setting("debug").then(value => {
+        if(value == true)
+        {
+            console.log(output);
+        }
+	});
+}
