@@ -59,11 +59,15 @@ var settings = [
 		"options": [
 			{
 				"value": "top",
-				"label": "Top"
+				"label": "Top (recommended)"
 			},
 			{
 				"value": "bottom",
 				"label": "Bottom"
+			},
+			{
+				"value": "hide",
+				"label": "Don't show"
 			}
 		]
 	},
