@@ -53,14 +53,17 @@ function get_setting(name)
     {
         browser.storage.local.get(name).then(results =>
         {
-            if (!results[name]) 
+            if (!results.hasOwnProperty(name)) 
             {
-                // Todo: Fix false values are not returnes, promise fix!
                 get_setting_error(name);
             }
             
             fulfill(results[name]);
-        });
+        }).catch(
+            function(reason) {
+                debug_log(reason);
+            }
+        );
     });
 }
 
