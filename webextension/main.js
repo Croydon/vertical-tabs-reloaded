@@ -42,11 +42,6 @@ function save_setting(name, value)
     });
 }
 
-function get_setting_error(name)
-{
-    debug_log("VTR WebExt setting '"+ name +"' not saved.");
-}
-
 function get_setting(name)
 {
     return new Promise(function (fulfill, reject) 
@@ -55,7 +50,15 @@ function get_setting(name)
         {
             if (!results.hasOwnProperty(name)) 
             {
-                get_setting_error(name);
+                debug_log("VTR WebExt setting '"+ name +"': not saved use default value.");
+                if(defaultSettings.hasOwnProperty(name))
+                {
+                    results[name] = defaultSettings[name];
+                }
+                else
+                {
+                    debug_log("VTR WebExt setting '"+ name +"': no default value found.");
+                }
             }
             
             fulfill(results[name]);
