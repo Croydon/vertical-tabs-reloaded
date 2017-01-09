@@ -1,4 +1,5 @@
 var main = browser.extension.getBackgroundPage();
+var blockSaveEvent = false;
 
 var settings = [
     {
@@ -114,6 +115,9 @@ function toggleDrawInTitlebar()
 
 function save_setting(event)
 {
+    // Incredible small chance that settings aren't getting saved, solved by managing settings entirely be WebExt
+    if(blockSaveEvent == true) { return; } 
+    
     let input = document.getElementById(event.target.id);
     if(input.type == "checkbox")
     {
@@ -182,7 +186,7 @@ function build()
     });
 }
 
-function show_setting(input)
+function load_value(input)
 {
     if(input.type != "button") 
     {
@@ -202,6 +206,11 @@ function show_setting(input)
     }
     
     main.debug_log("found element:" + input.id);
+}
+
+
+function add_events(input)
+{
     if(input.type == "button")
     {
         // id of element equals the function which is getting executed on click
@@ -210,16 +219,46 @@ function show_setting(input)
     else
     {
         input.addEventListener("change", save_setting);
+    }    
+}
+
+/*function all_forms_helper(functionName)
+{
+    var inputs = document.querySelectorAll("input, select, button");
+    for (var i = 0; i < inputs.length; i++) 
+    {
+        let params = [inputs[i]];
+        let funcObject = this[functionName];
+        funcObject.apply(this, params);
+    }  
+}*/
+
+function update_all_inputs()
+{
+    blockSaveEvent = true;
+    //all_forms_helper(load_value);
+    
+    var inputs = document.querySelectorAll("input, select, button");
+    for (var i = 0; i < inputs.length; i++) 
+    {
+        load_value(inputs[i]);
     }
+    
+    blockSaveEvent = false;    
 }
 
 document.addEventListener('DOMContentLoaded', function() 
 { 
     build();
     
+    update_all_inputs();
+    
     var inputs = document.querySelectorAll("input, select, button");
     for (var i = 0; i < inputs.length; i++) 
     {
-        show_setting(inputs[i]);
-    }
+        add_events(inputs[i]);
+    }  
+    
+    browser.storage.onChanged.addListener(update_all_inputs);
+
 });
