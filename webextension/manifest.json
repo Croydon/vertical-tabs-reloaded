@@ -1,6 +1,6 @@
 {
     "name": "Vertical Tabs Reloaded",
-    "version": "0.8.0-alpha",
+    "version": "0.8.0",
     "manifest_version": 2,
     "permissions": ["storage", "tabs"],
     "background": 

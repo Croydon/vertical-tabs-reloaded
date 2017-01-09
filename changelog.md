@@ -1,5 +1,15 @@
 # Changelog
 
+### v0.8.0, 2017-01-09
+ * internal: start rewriting add-on as a WebExtension
+   * sync settings between the legacy SDK and the new WebExtension part
+     * this is critical to release as soon as possible, so that in the best case nobody will lose their settings in the end of 2017
+     * At the end of 2017 non-WebExtensions will stop working. Data migration won't be possible either afterwards
+
+
+***
+
+
 ### v0.7.1, 2016-10-09
  * themes improvements:
    * Dark theme:
