@@ -24,7 +24,7 @@
         "gecko": 
         {
             "id": "verticaltabsreloaded@go-dev.de",
-            "strict_min_version": "51.0"
+            "strict_min_version": "52.0"
         }
     }
 }

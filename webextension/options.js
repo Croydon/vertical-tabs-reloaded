@@ -145,44 +145,41 @@ function build()
             return;
         }
         
-        document.getElementById("settings").innerHTML += "<hr>";
-        
         if(setting.type == "bool")
         {
-            document.getElementById("settings").innerHTML += '<div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label><input type="checkbox" id="' + setting.name + '"></div>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
         }
         
         if(setting.type == "string")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
             
-            document.getElementById("settings").innerHTML += setting.title + ' <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '">';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
         }
         
         if(setting.type == "menulist")
         {
-            newInnerHTML = setting.title + ' <select id="' + setting.name + '">';
+            newInnerHTML = '<tr class="detail-row-complex"><td>' + setting.title + ' </td> <td><select id="' + setting.name + '">';
             Object.keys(setting.options).forEach(function(key)
             {
                 let option = setting.options[key];
                 newInnerHTML += '<option value="' + option.value + '">' + option.label + '</option>';
             });
            
-            newInnerHTML += '</select>';
+            newInnerHTML += '</select></td></tr>';
             
             document.getElementById("settings").innerHTML += newInnerHTML;
         }
         
         if(setting.type == "control")
         {
-            document.getElementById("settings").innerHTML += setting.title + ' <button type="button" id="'+ setting.name +'">'+ setting.label +'</button>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
         }
         
         if(setting.description != undefined)
         {
-            document.getElementById("settings").innerHTML += '<br>' + setting.description;
+            document.getElementById("settings").innerHTML += '<span class="preferences-description">' + setting.description + '</span>';
         }
-
     });
 }
 
