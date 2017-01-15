@@ -193,7 +193,7 @@ function load_value(input)
     {
         // buttons don't have values
         main.get_setting(input.id).then(value => {
-            main.debug_log(input);
+            //main.debug_log(input);
 
             if(input.type == "checkbox")
             {
@@ -206,7 +206,7 @@ function load_value(input)
         });
     }
 
-    main.debug_log("found element:" + input.id);
+    //main.debug_log("found element:" + input.id);
 }
 
 
