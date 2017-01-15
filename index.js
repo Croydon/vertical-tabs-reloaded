@@ -62,6 +62,7 @@ function destroyHotkey() {
 }
 
 function changeHotkey() {
+    debugOutput("change Hotkey event!");
 	destroyHotkey();
 	initHotkeys();
 }
@@ -79,7 +80,7 @@ function webext_sendMsg(message)
 
 var sdk_inited = false;
 // Handle messages from WebExtension
-function webext_replyHandler(message, sender, sendResponse)
+function webext_replyHandler(message)
 {
     if(message.type == "settings.get")
     {
@@ -108,6 +109,7 @@ function webext_replyHandler(message, sender, sendResponse)
         {
             sdk_inited = "prepared";
         }
+
         observPrefs("");
     }
 
@@ -120,14 +122,14 @@ function webext_replyHandler(message, sender, sendResponse)
     {
         changeHotkey();
     }
-    
+
     /*if(message.type == "css.post")
     {
         if(webextPreferences.hasOwnProperty("css") == false)
         {
             webextPreferences["css"] = {};
         }
-        
+
         webextPreferences["css"][message.name] = message.value;
         //debugOutput(message.value);
         observPrefs("css");
@@ -158,7 +160,7 @@ function observPrefs(settingName)
         debugOutput("observPrefs: " + settingName);
         GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
     }
-    
+
     /*if(settingName == "css")
     {
         let newStyle;
@@ -174,14 +176,14 @@ function observPrefs(settingName)
         debugOutput("css changed!");
         debugOutput(style);
         debugOutput("dummy3");
-        for (let window of windows.browserWindows) 
+        for (let window of windows.browserWindows)
         {
             let lowLevelWindow = viewFor(window);
             let windowID = windowUtils.getOuterId(lowLevelWindow);
             contentMod.attachTo(style, lowLevelWindow);
         }
     }*/
-    
+
 
 }
 
@@ -234,7 +236,7 @@ exports.main = function (options, callbacks) {
 
         browser.runtime.onMessage.addListener((msg, sender, sendResponse) =>
         {
-            webext_replyHandler(msg, sender, sendResponse);
+            webext_replyHandler(msg);
         });
 
         browser.runtime.onConnect.addListener((port) =>
