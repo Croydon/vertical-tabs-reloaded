@@ -75,9 +75,28 @@ function get_setting(name)
 // Communication with the legacy part + content script
 //
 
+function sdk_send_all_settings()
+{
+    browser.storage.local.get().then(value => {
+        sdk_sendMsg({
+            type: "settings.post-all",
+            value: value
+        });
+    });
+}
+
+sdk_send_all_settings();
+
 // Changed addon preferences, send to SDK
 function sdk_send_changed_setting(settingName)
 {
+    sdk_send_all_settings();
+    
+    if(settingName == "toggleDisplayHotkey")
+    {
+        sdk_sendMsg({type: "settings.toggleDisplayHotkey"}); 
+    }
+
     get_setting(settingName).then(value => {
         sdk_sendMsg({
             type: "settings.post",
@@ -98,7 +117,7 @@ function sdk_replyHandler(message)
     if(message.type == "settings.post-to-sdk") 
     {
         // the very-very-legacy part of the add-on wants to save settings
-        // send to legacy part for actual saving
+        save_setting(message.name, message.value);
         message.type = "settings.post";
         sdk_sendMsg(message);
     }
@@ -128,7 +147,7 @@ function sdk_sendMsg(message)
 }
 
 
-// Get all settings from the legacy part 10secs after startup
+// Get all settings from the legacy part
 setTimeout(function(){ 
     sdk_sendMsg({type: "settings.get", name: "right"});
     sdk_sendMsg({type: "settings.get", name: "hideInFullscreen"});
@@ -137,7 +156,9 @@ setTimeout(function(){
     sdk_sendMsg({type: "settings.get", name: "toggleDisplayHotkey"});
     sdk_sendMsg({type: "settings.get", name: "width"});
     sdk_sendMsg({type: "settings.get", name: "debug"});
-}, 10000);
+    
+    browser.storage.onChanged.addListener(sdk_send_all_settings);
+}, 100);
 
 
 // Utils
