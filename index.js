@@ -62,6 +62,7 @@ function destroyHotkey() {
 }
 
 function changeHotkey() {
+    debugOutput("change Hotkey event!");
 	destroyHotkey(); 
 	initHotkeys();
 }
@@ -79,7 +80,7 @@ function webext_sendMsg(message)
 
 var sdk_inited = false;
 // Handle messages from WebExtension
-function webext_replyHandler(message, sender, sendResponse)
+function webext_replyHandler(message)
 {  
     if(message.type == "settings.get") 
     {
@@ -108,6 +109,7 @@ function webext_replyHandler(message, sender, sendResponse)
         {
             sdk_inited = "prepared";  
         }
+        
         observPrefs("");
     }
     
@@ -233,7 +235,7 @@ exports.main = function (options, callbacks) {
         
         browser.runtime.onMessage.addListener((msg, sender, sendResponse) => 
         {
-            webext_replyHandler(msg, sender, sendResponse);
+            webext_replyHandler(msg);
         });
         
         browser.runtime.onConnect.addListener((port) => 
