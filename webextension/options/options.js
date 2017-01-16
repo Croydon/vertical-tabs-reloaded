@@ -75,6 +75,26 @@ var settings = [
 		"value": "control-alt-v"
 	},
 	{
+		"name": "toggleDrawInTitlebar",
+		"type": "control",
+		"title": "Enable/Disable titlebar",
+		"label": "Toggle titlebar",
+		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"     
+	},
+	{
+		"name": "setDefaultPrefs",
+		"type": "control",
+		"title": "Reset preferences of VTR",
+		"label": "Restore default preferences"
+	},
+    {
+        "name": "showHiddenSettings",
+        "type": "bool",
+        "title": "Display hidden settings",
+        "value": false,
+        "hidden": true
+    },
+	{
 		"name": "width",
 		"type": "integer",
 		"title": "Width of the tab sidebar",
@@ -88,19 +108,6 @@ var settings = [
 		"value": false,
 		"hidden": true
 	},
-	{
-		"name": "toggleDrawInTitlebar",
-		"type": "control",
-		"title": "Enable/Disable titlebar",
-		"label": "Toggle titlebar",
-		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"     
-	},
-	{
-		"name": "setDefaultPrefs",
-		"type": "control",
-		"title": "Reset preferences of VTR",
-		"label": "Restore default preferences"
-	}
 ];
 
 function setDefaultPrefs()
@@ -142,24 +149,35 @@ function build()
         
         if(setting.hidden == true)
         {
-            return;
+            var classHidden = "hidden-setting";
+        }
+        else
+        {
+            var classHidden = "";
         }
         
         if(setting.type == "bool")
         {
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
         }
         
         if(setting.type == "string")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
             
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+        }
+        
+        if(setting.type == "integer")
+        {
+            if(setting.placeholder == undefined) { setting.placeholder = ""; }
+            
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <input type="number" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';  
         }
         
         if(setting.type == "menulist")
         {
-            newInnerHTML = '<tr class="detail-row-complex"><td>' + setting.title + ' </td> <td><select id="' + setting.name + '">';
+            newInnerHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + ' </td> <td><select id="' + setting.name + '">';
             Object.keys(setting.options).forEach(function(key)
             {
                 let option = setting.options[key];
@@ -173,7 +191,7 @@ function build()
         
         if(setting.type == "control")
         {
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
         }
         
         if(setting.description != undefined)
@@ -242,6 +260,25 @@ function update_all_inputs()
     }
     
     blockSaveEvent = false;    
+    
+    main.get_setting("showHiddenSettings").then(value => {
+        if(value == false)
+        {
+            var newDisplay = ""; // see default CSS
+        }
+        else
+        {
+            var newDisplay = "table-row";
+        }
+        
+        var elements = document.getElementsByClassName("hidden-setting");
+        for(var i=0; i<elements.length; i++)
+        {
+           main.debug_log(elements[i]);
+           elements[i].style.display = newDisplay; 
+        }
+
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() 
@@ -256,6 +293,17 @@ document.addEventListener('DOMContentLoaded', function()
         add_events(inputs[i]);
     }  
     
+    chrome.contextMenus.create({
+        id: "hiddenSettingToggle",
+        title: "VTR: Show hidden settings",
+        contexts: ["all"]
+    });
+    
+    
+    browser.contextMenus.onClicked.addListener((info) => {
+        main.save_setting("showHiddenSettings", true);
+    });
+        
     browser.storage.onChanged.addListener(update_all_inputs);
 
 });
