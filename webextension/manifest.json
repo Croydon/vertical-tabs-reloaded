@@ -10,8 +10,8 @@
         "name": "Michael 'Croydon' Keck"
     },
     "homepage_url": "https://github.com/Croydon/vertical-tabs-reloaded",
-    "permissions": ["storage", "tabs"],
-    "background":
+    "permissions": ["contextMenus", "storage", "tabs"],
+    "background": 
     {
         "scripts": ["main.js"]
     },
