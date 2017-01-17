@@ -1,5 +1,8 @@
 # ![](https://github.com/Croydon/vertical-tabs-reloaded/blob/master/data/icon.png) Vertical Tabs Reloaded for Firefox
 
+![](https://img.shields.io/amo/v/vertical-tabs-reloaded.svg?style=flat-square) ![](https://img.shields.io/amo/d/vertical-tabs-reloaded.svg) ![](https://img.shields.io/amo/users/vertical-tabs-reloaded.svg) ![](https://img.shields.io/amo/rating/vertical-tabs-reloaded.svg)
+
+
 This Firefox add-on arranges tabs in a vertical rather than horizontal
 fashion. Vertical Tabs Reloaded is a fork of [Vertical Tabs](https://addons.mozilla.org/firefox/addon/vertical-tabs/), which was discontinued. The original project is heavily inspired by the Tree Style Tab add-on.
 
