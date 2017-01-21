@@ -19,6 +19,11 @@
     {
         "page": "options/options.html"
     },
+    "icons": {
+        "48": "data/icon.png",
+        "96": "data/icon-96.png",
+        "128": "data/icon-128.png"
+    },
     "applications": 
     {
         "gecko": 

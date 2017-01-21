@@ -10,16 +10,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="500"
-   height="500"
+   width="533.33331"
+   height="533.33331"
    viewBox="0 0 500.00001 500.00001"
    id="svg3349"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="Zeichnung.svg"
-   inkscape:export-filename="C:\Users\Michael\Desktop\VRT Icon\Zeichnung64x64png"
-   inkscape:export-xdpi="11.52"
-   inkscape:export-ydpi="11.52">
+   inkscape:version="0.92.0 r15299"
+   sodipodi:docname="Icon.svg"
+   inkscape:export-xdpi="2.8800001"
+   inkscape:export-ydpi="2.8800001">
   <defs
      id="defs3351" />
   <sodipodi:namedview
@@ -29,22 +28,23 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-737.2045"
-     inkscape:cy="41.428619"
+     inkscape:zoom="0.44017399"
+     inkscape:cx="-229.72796"
+     inkscape:cy="285.70284"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      units="px"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="false" />
   <metadata
      id="metadata3354">
     <rdf:RDF>
@@ -53,7 +53,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -98,16 +98,15 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="395.71429"
        y="336.64792"
-       id="text3392"
-       sodipodi:linespacing="125%"><tspan
+       id="text3392"><tspan
          sodipodi:role="line"
          id="tspan3394"
          x="395.71429"
-         y="336.64792" /></text>
+         y="372.03854" /></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot3396"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
          id="flowRegion3398"><rect
            id="rect3400"
            width="268.57144"
@@ -119,17 +118,18 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="378.57144"
        y="336.64792"
-       id="text3404"
-       sodipodi:linespacing="125%"><tspan
+       id="text3404"><tspan
          sodipodi:role="line"
          id="tspan3406"
          x="378.57144"
-         y="336.64792" /></text>
+         y="372.03854" /></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot3408"
        style="font-style:normal;font-weight:normal;font-size:90px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.609938,0,0,1.0653207,219.64512,75.783513)"><flowRegion
+       transform="matrix(0.609938,0,0,1.0653207,222.3237,156.14066)"
+       inkscape:transform-center-x="-5.3571432"
+       inkscape:transform-center-y="-18.750001"><flowRegion
          id="flowRegion3410"><rect
            id="rect3412"
            width="537.14282"
