@@ -14,7 +14,8 @@ var defaultSettings = {
     tabtoolbarPosition: "top",
     toggleDisplayHotkey: "control-alt-v",
     width: 250,
-    debug: false
+    debug: false,
+    showHiddenSettings: false
 }
     
 function restore_default_settings()
