@@ -107,12 +107,6 @@ function webext_replyHandler(message)
         }
     }
 
-    if(message.type == "settings.get")
-    {
-        // Send settings to WebExt
-        webext_sendChangedSetting(message.name);
-    }
-
     if(message.type == "settings.post")
     {
         // Get settings from WebExt
@@ -295,12 +289,7 @@ exports.main = function (options, callbacks) {
 
 exports.onUnload = function (reason) {
 	//debugOutput("onUnload:" + reason);
-	if(reason == "disable")
-    {
-        console.log("VTR disabled");
-    }
 
-	// Update: Unloaders can't access prefs anymore on uninstall!
     if (reason == "uninstall")
     {
 		console.log("VTR uninstalled");
