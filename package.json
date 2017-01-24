@@ -8,12 +8,12 @@
 	"author": "Croydon",
 	"license": "MPL-2.0",
 	"version": "0.8.2-alpha",
-	"permissions": 
+	"permissions":
 	{
 		"private-browsing": true,
 		"multiprocess": true
 	},
-	"engines": 
+	"engines":
 	{
 		"firefox": "53.0a1 - 56.0"
     },

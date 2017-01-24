@@ -5,30 +5,30 @@
     "version": "0.8.2-alpha",
     "manifest_version": 2,
     "author": "Michael 'Croydon' Keck",
-    "developer": 
+    "developer":
     {
         "name": "Michael 'Croydon' Keck"
     },
     "homepage_url": "https://github.com/Croydon/vertical-tabs-reloaded",
     "permissions": ["contextMenus", "storage", "tabs"],
-    "background": 
+    "background":
     {
         "scripts": ["main.js"]
     },
-    "options_ui": 
+    "options_ui":
     {
         "page": "options/options.html"
     },
-    "icons": 
+    "icons":
     {
         "16": "data/icon-16.png",
         "48": "data/icon.png",
         "96": "data/icon-96.png",
         "128": "data/icon-128.png"
     },
-    "applications": 
+    "applications":
     {
-        "gecko": 
+        "gecko":
         {
             "id": "verticaltabsreloaded@go-dev.de",
             "strict_min_version": "53.0"
