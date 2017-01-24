@@ -82,6 +82,31 @@ var sdk_inited = false;
 // Handle messages from WebExtension
 function webext_replyHandler(message)
 {
+    if(message.type == "settings.migrate")
+    {
+        if(preferencesService.get("extensions.@verticaltabsreloaded.animate") != undefined)
+        {
+           webext_sendChangedSetting("compact");
+           webext_sendChangedSetting("debug");
+           webext_sendChangedSetting("hideInFullscreen");
+           webext_sendChangedSetting("right");
+           webext_sendChangedSetting("tabtoolbarPosition");
+           webext_sendChangedSetting("theme");
+           webext_sendChangedSetting("toggleDisplayHotkey");
+           webext_sendChangedSetting("width");
+           preferencesService.reset("extensions.@verticaltabsreloaded.animate");
+        }
+        else
+        {
+            // Delete all settings
+            var prefKeys = preferencesService.keys("extensions.@verticaltabsreloaded.");
+            for (var i = 0; i < prefKeys.length; i++)
+            {
+                preferencesService.reset(prefKeys[i]);
+            }
+        }
+    }
+
     if(message.type == "settings.get")
     {
         // Send settings to WebExt
@@ -92,7 +117,6 @@ function webext_replyHandler(message)
     {
         // Get settings from WebExt
         debugOutput(message.name + " new value SDK: " + message.value);
-        preferencesService.set("extensions.@verticaltabsreloaded." + message.name, message.value);
         observPrefs(message.name);
     }
 
@@ -249,11 +273,11 @@ exports.main = function (options, callbacks) {
             }
 
             // Back up 'browser.tabs.animate' pref before overwriting it
-            preferencesService.set("extensions.@verticaltabsreloaded.animate", preferencesService.get("browser.tabs.animate"));
+            webext_sendSetting("tabsAnimate", preferencesService.get("browser.tabs.animate"));
             preferencesService.set("browser.tabs.animate", false);
 
             unload(function () {
-                preferencesService.set("browser.tabs.animate", preferencesService.get("extensions.@verticaltabsreloaded.animate"));
+                preferencesService.set("browser.tabs.animate", webExtPreferences["tabsAnimate"]);
             });
 
             if(sdk_inited == "prepared")
@@ -279,13 +303,6 @@ exports.onUnload = function (reason) {
 	// Update: Unloaders can't access prefs anymore on uninstall!
     if (reason == "uninstall")
     {
-        // Delete all settings
-        var prefKeys = preferencesService.keys("extensions.@verticaltabsreloaded.");
-        for (var i = 0; i < prefKeys.length; i++)
-        {
-            preferencesService.reset(prefKeys[i]);
-        }
-
 		console.log("VTR uninstalled");
     }
 
