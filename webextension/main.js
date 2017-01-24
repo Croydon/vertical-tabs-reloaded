@@ -136,14 +136,6 @@ function sdk_replyHandler(message)
         save_setting(message.name, message.value);
     }
     
-    if(message.type == "settings.post-to-sdk") 
-    {
-        // the very-very-legacy part of the add-on wants to save settings
-        save_setting(message.name, message.value);
-        message.type = "settings.post";
-        sdk_sendMsg(message);
-    }
-    
     if(message.type == "settings.reset")
     {
         restore_default_settings();
@@ -192,9 +184,6 @@ setTimeout(function() {
     // Set up listener
     browser.storage.onChanged.addListener(sdk_send_all_settings);
 }, 100);
-
-
-
 
 
 // Utils
