@@ -132,6 +132,7 @@ function sdk_replyHandler(message)
     if(message.type == "settings.post") 
     {
         // the legacy part sent settings, save them
+        debug_log(message.name + " (from legacy) : " + message.value);
         save_setting(message.name, message.value);
     }
     
@@ -184,18 +185,16 @@ function sdk_sendMsg(message)
 }
 
 
-// Get all settings from the legacy part
-setTimeout(function(){ 
-    sdk_sendMsg({type: "settings.get", name: "right"});
-    sdk_sendMsg({type: "settings.get", name: "hideInFullscreen"});
-    sdk_sendMsg({type: "settings.get", name: "theme"});
-    sdk_sendMsg({type: "settings.get", name: "tabtoolbarPosition"});
-    sdk_sendMsg({type: "settings.get", name: "toggleDisplayHotkey"});
-    sdk_sendMsg({type: "settings.get", name: "width"});
-    sdk_sendMsg({type: "settings.get", name: "debug"});
+setTimeout(function() {     
+    // Get all settings from the legacy part once
+    sdk_sendMsg({type: "settings.migrate"});
     
+    // Set up listener
     browser.storage.onChanged.addListener(sdk_send_all_settings);
 }, 100);
+
+
+
 
 
 // Utils
