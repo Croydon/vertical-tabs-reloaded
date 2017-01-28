@@ -22,6 +22,7 @@ var { viewFor } = require("sdk/view/core");
 const webExtension = require("sdk/webextension");
 var webextPort;
 var webextPreferences = {};
+var tabsAnimatePrefBackup = false;
 
 // Modules
 var { unload } = require("./lib/unload.js");
@@ -267,11 +268,12 @@ exports.main = function (options, callbacks) {
             }
 
             // Back up 'browser.tabs.animate' pref before overwriting it
-            webext_sendSetting("tabsAnimate", preferencesService.get("browser.tabs.animate"));
+            tabsAnimatePrefBackup = preferencesService.get("browser.tabs.animate");
+
             preferencesService.set("browser.tabs.animate", false);
 
             unload(function () {
-                preferencesService.set("browser.tabs.animate", webExtPreferences["tabsAnimate"]);
+                preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
             });
 
             if(sdk_inited == "prepared")
