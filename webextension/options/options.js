@@ -20,6 +20,13 @@ var settings = [
 		"title": "Compact Mode (hides text labels)",
 		"value": false
 	},
+    {
+        "name": "style.tab.status",
+        "type": "bool",
+        "title": "Show Tab Status on Text Label",
+        "description": "Unloaded: strike-through; Unread/busy: underline",
+        "value": false
+    },
 	{
 		"name": "theme",
 		"type": "menulist",
