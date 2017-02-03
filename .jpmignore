@@ -5,5 +5,7 @@
 *~
 *.DS_Store
 *.xpi
+*.zip
 build
 src
+webextension/web-ext-artifacts
