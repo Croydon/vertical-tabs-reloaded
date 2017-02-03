@@ -1,4 +1,5 @@
 build
+webextension/web-ext-artifacts
 *~
 *.DS_Store
 *.xpi
