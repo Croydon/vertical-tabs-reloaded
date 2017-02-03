@@ -25,7 +25,6 @@ var webextPreferences = {};
 var tabsAnimatePrefBackup = false;
 
 // Modules
-var { unload } = require("./lib/unload.js");
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
 
@@ -52,14 +51,20 @@ function hotkeyPress()
 
 function initHotkeys() {
 	let toggleKey = webextPreferences["toggleDisplayHotkey"];
-	GLOBAL_SCOPE.vtToggleDisplayHotkey = hotkey({
-		combo: toggleKey,
-		onPress: hotkeyPress
-	});
+	if(toggleKey != "")
+	{
+		GLOBAL_SCOPE.vtToggleDisplayHotkey = hotkey({
+			combo: toggleKey,
+			onPress: hotkeyPress
+		});
+    }
 }
 
 function destroyHotkey() {
-	GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
+	if(typeof GLOBAL_SCOPE.vtToggleDisplayHotkey != undefined)
+	{
+		GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
+	}
 }
 
 function changeHotkey() {
@@ -137,11 +142,6 @@ function webext_replyHandler(message)
         toggleDrawInTitlebar();
     }
 
-    if(message.type == "settings.toggleDisplayHotkey")
-    {
-        changeHotkey();
-    }
-
     /*if(message.type == "css.post")
     {
         if(webextPreferences.hasOwnProperty("css") == false)
@@ -172,13 +172,20 @@ function webext_sendChangedSetting(settingName)
 
 function observPrefs(settingName)
 {
-    for (let window of windows.browserWindows)
-    {
-        let lowLevelWindow = viewFor(window);
-        let windowID = windowUtils.getOuterId(lowLevelWindow);
-        debugOutput("observPrefs: " + settingName);
-        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
-    }
+	if(settingName == "toggleDisplayHotkey")
+	{
+		changeHotkey();
+	}
+	else
+	{
+	    for (let window of windows.browserWindows)
+	    {
+	        let lowLevelWindow = viewFor(window);
+	        let windowID = windowUtils.getOuterId(lowLevelWindow);
+	        debugOutput("observPrefs: " + settingName);
+	        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
+	    }
+	}
 
     /*if(settingName == "css")
     {
@@ -215,7 +222,6 @@ function initialize_window(window)
     let lowLevelWindow = viewFor(window);
     let windowID = windowUtils.getOuterId(lowLevelWindow);
     GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, webextPreferences);
-    //unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 }
 
 function deinitialize_window(window)
@@ -246,11 +252,6 @@ function sdk_init()
     });
 
     initHotkeys();
-
-    unload(function()
-    {
-        destroyHotkey();
-    });
 }
 
 // Entry point of the add-on
@@ -279,10 +280,6 @@ exports.main = function (options, callbacks) {
 
             preferencesService.set("browser.tabs.animate", false);
 
-            unload(function () {
-                preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
-            });
-
             if(sdk_inited == "prepared")
             {
                 sdk_inited = true;
@@ -298,17 +295,19 @@ exports.main = function (options, callbacks) {
 
 exports.onUnload = function (reason) {
 	//debugOutput("onUnload:" + reason);
+	destroyHotkey();
+
     for (let window of windows.browserWindows)
     {
         deinitialize_window(window);
     }
 
+	preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
+
     if (reason == "uninstall")
     {
 		console.log("VTR uninstalled");
     }
-
-    unload();
 }
 
 function debugOutput(output)
