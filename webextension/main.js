@@ -10,6 +10,7 @@ var defaultSettings = {
     right: false,
     hideInFullscreen: true,
     compact: false,
+    "style.tab.status": false,
     theme: "dark",
     tabtoolbarPosition: "top",
     toggleDisplayHotkey: "control-alt-v",

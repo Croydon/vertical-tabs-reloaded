@@ -216,7 +216,15 @@ function initialize_window(window)
     let windowID = windowUtils.getOuterId(lowLevelWindow);
 
     GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, webextPreferences);
-    unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+    //unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
+}
+
+function deinitialize_window(window)
+{
+    let lowLevelWindow = viewFor(window);
+    let windowID = windowUtils.getOuterId(lowLevelWindow);
+    GLOBAL_SCOPE["vt"+windowID].unload();
+    delete GLOBAL_SCOPE["vt"+windowID];
 }
 
 function sdk_init()
@@ -228,20 +236,20 @@ function sdk_init()
         initialize_window(window);
     }
 
-    windows.browserWindows.on('open', function(window) {
+    windows.browserWindows.on('open', function(window)
+    {
         initialize_window(window);
     });
 
-    windows.browserWindows.on('close', function(window) {
-        let lowLevelWindow = viewFor(window);
-        let windowID = windowUtils.getOuterId(lowLevelWindow);
-        GLOBAL_SCOPE["vt"+windowID].unload();
-        delete GLOBAL_SCOPE["vt"+windowID];
+    windows.browserWindows.on('close', function(window)
+    {
+        deinitialize_window(window)
     });
 
     initHotkeys();
 
-    unload(function() {
+    unload(function()
+    {
         destroyHotkey();
     });
 }
@@ -291,6 +299,10 @@ exports.main = function (options, callbacks) {
 
 exports.onUnload = function (reason) {
 	//debugOutput("onUnload:" + reason);
+    for (let window of windows.browserWindows)
+    {
+        deinitialize_window(window);
+    }
 
     if (reason == "uninstall")
     {
