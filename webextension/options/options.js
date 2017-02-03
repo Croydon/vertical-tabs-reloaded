@@ -129,7 +129,6 @@ function toggleDrawInTitlebar()
 
 function save_setting(event)
 {
-    // Incredible small chance that settings aren't getting saved, solved by managing settings entirely be WebExt
     if(blockSaveEvent == true) { return; }
 
     let input = document.getElementById(event.target.id);
@@ -214,12 +213,10 @@ function build()
 
 function load_value(input)
 {
+    // buttons don't have values
     if(input.type != "button")
     {
-        // buttons don't have values
         main.get_setting(input.id).then(value => {
-            //main.debug_log(input);
-
             if(input.type == "checkbox")
             {
                 document.getElementById(input.id).checked = value;
