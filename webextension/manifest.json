@@ -17,7 +17,8 @@
     },
     "options_ui":
     {
-        "page": "options/options.html"
+        "page": "options/options.html",
+        "chrome_style": true
     },
     "icons":
     {
@@ -31,7 +32,7 @@
         "gecko":
         {
             "id": "verticaltabsreloaded@go-dev.de",
-            "strict_min_version": "53.0"
+            "strict_min_version": "55.0"
         }
     }
 }
