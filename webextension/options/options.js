@@ -111,7 +111,14 @@ var settings = [
     {
 		"name": "debug",
 		"type": "bool",
-		"title": "Enables console logging for debugging",
+		"title": "Enable console logging for debugging",
+		"value": false,
+		"hidden": true
+	},
+    {
+		"name": "experiment",
+		"type": "bool",
+		"title": "Enable VTR experimental features <b>(**unstable!**)</b>",
 		"value": false,
 		"hidden": true
 	},
