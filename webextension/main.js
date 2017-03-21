@@ -16,7 +16,8 @@ var defaultSettings = {
     toggleDisplayHotkey: "control-alt-v",
     width: 250,
     debug: false,
-    showHiddenSettings: false
+    showHiddenSettings: false,
+    experiment: false
 }
 
 function restore_default_settings()
