@@ -174,6 +174,48 @@ function sdk_sendMsg(message)
 }
 
 
+
+setInterval(function()
+{
+    browser.windows.getCurrent().then(currentWindow =>
+    {
+        if(typeof this["vtr.windows.state."+currentWindow.id] == undefined)
+        {
+            this["vtr.windows.state."+currentWindow.id] = "init";
+        }
+
+        if(currentWindow.state == "fullscreen")
+        {
+            if(this["vtr.windows.state."+currentWindow.id] != "fullscreen")
+            {
+                this["vtr.windows.state."+currentWindow.id] = "fullscreen";
+                get_setting("hideInFullscreen").then(value =>
+                {
+                    if(value == true)
+                    {
+                        sdk_sendMsg({type: "event.fullscreen", value: "true"});
+                    }
+                });
+            }
+        }
+        else
+        {
+            if(this["vtr.windows.state."+currentWindow.id] == "fullscreen")
+            {
+                this["vtr.windows.state."+currentWindow.id] = currentWindow.state;
+                get_setting("hideInFullscreen").then(value =>
+                {
+                    if(value == true)
+                    {
+                        sdk_sendMsg({type: "event.fullscreen", value: "false"});
+                    }
+                });
+            }
+        }
+    });
+}, 100);
+
+
 setTimeout(function() {
     // Get all settings from the legacy part once
     sdk_sendMsg({type: "settings.migrate"});

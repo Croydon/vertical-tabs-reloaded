@@ -148,7 +148,7 @@ function save_setting(event)
         value = input.value;
     }
 
-    main.debug_log(event.target.id + " new value: " + value);
+    //main.debug_log(event.target.id + " new value: " + value);
     main.save_setting(event.target.id, value);
     main.sdk_send_changed_setting(event.target.id);
 }

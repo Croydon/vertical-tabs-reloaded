@@ -142,6 +142,12 @@ function webext_replyHandler(message)
         toggleDrawInTitlebar();
     }
 
+	if(message.type == "event.fullscreen")
+	{
+		let windowID = windowUtils.getOuterId(windowUtils.getFocusedWindow());
+		GLOBAL_SCOPE["vt"+windowID].changeFullscreenMode(message.value);
+	}
+
     /*if(message.type == "css.post")
     {
         if(webextPreferences.hasOwnProperty("css") == false)
