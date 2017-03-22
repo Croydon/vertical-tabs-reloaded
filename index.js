@@ -141,6 +141,12 @@ function webext_replyHandler(message)
     {
         toggleDrawInTitlebar();
     }
+
+	if(message.type == "event.fullscreen")
+	{
+		let windowID = windowUtils.getOuterId(windowUtils.getFocusedWindow());
+		GLOBAL_SCOPE["vt"+windowID].changeFullscreenMode(message.value);
+	}
 }
 
 // Send setting to WebExtension
