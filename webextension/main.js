@@ -6,26 +6,27 @@ var port = browser.runtime.connect({name: "connection-to-legacy"});
 //
 // Handle addon settings
 //
-var defaultSettings = {
-    right: false,
-    hideInFullscreen: true,
-    compact: false,
-    "style.tab.status": false,
-    theme: "dark",
-    tabtoolbarPosition: "top",
-    toggleDisplayHotkey: "control-alt-v",
-    width: 250,
-    debug: false,
-    showHiddenSettings: false,
-    experiment: false
+var settings;
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function()
+{
+    settings = JSON.parse(xhr.responseText);
+}
+xhr.open("GET", "options/options.json", true);
+xhr.send();
+
+
+function get_options_object()
+{
+    return settings;
 }
 
 function restore_default_settings()
 {
-    Object.keys(defaultSettings).forEach(function(k)
+    Object.keys(settings).forEach(function(optionsElement)
     {
-        save_setting(k, defaultSettings[k]);
-        sdk_send_changed_setting(k);
+        save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
+        sdk_send_changed_setting(settings[optionsElement]["name"]);
     });
 }
 
@@ -54,9 +55,9 @@ function get_setting(name)
             if (!results.hasOwnProperty(name))
             {
                 debug_log("VTR WebExt setting '"+ name +"': not saved use default value.");
-                if(defaultSettings.hasOwnProperty(name))
+                if(settings.hasOwnProperty(name))
                 {
-                    results[name] = defaultSettings[name];
+                    results[name] = settings[name]["value"];
                 }
                 else
                 {

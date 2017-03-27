@@ -1,0 +1,122 @@
+{
+    "right": {
+		"name": "right",
+		"type": "bool",
+		"title": "Display tabs on the right",
+		"value": false
+	},
+	"hideInFullscreen": {
+		"name": "hideInFullscreen",
+		"type": "bool",
+		"title": "Hide tabs in fullscreen",
+		"value": true
+	},
+	"compact": {
+		"name": "compact",
+		"type": "bool",
+		"title": "Compact Mode (hides text labels)",
+		"value": false
+	},
+    "style.tab.status": {
+        "name": "style.tab.status",
+        "type": "bool",
+        "title": "Show Tab Status on Text Label",
+        "description": "Unloaded: strike-through; Unread/busy: underline",
+        "value": false
+    },
+	"theme": {
+		"name": "theme",
+		"type": "menulist",
+		"title": "Theme",
+		"value": "dark",
+		"options": [
+			{
+				"value": "none",
+				"label": "None / Firefox default"
+			},
+			{
+				"value": "dark",
+				"label": "Dark (recommended)"
+			},
+			{
+				"value": "light",
+				"label": "Light (recommended)"
+			},
+			{
+				"value": "windows",
+				"label": "Windows"
+			},
+			{
+				"value": "darwin",
+				"label": "Darwin"
+			},
+			{
+				"value": "linux",
+				"label": "Linux"
+			}
+		]
+	},
+	"tabtoolbarPosition": {
+		"name": "tabtoolbarPosition",
+		"type": "menulist",
+		"title": "Toolbar Position",
+		"value": "top",
+		"options": [
+			{
+				"value": "top",
+				"label": "Top"
+			},
+			{
+				"value": "bottom",
+				"label": "Bottom"
+			}
+		]
+	},
+	"toggleDisplayHotkey": {
+		"name": "toggleDisplayHotkey",
+		"type": "string",
+		"title": "Hotkey for hiding/showing tabbar",
+		"value": "control-alt-v"
+	},
+	"toggleDrawInTitlebar": {
+		"name": "toggleDrawInTitlebar",
+		"type": "control",
+		"title": "Enable/Disable titlebar",
+		"label": "Toggle titlebar",
+		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"
+	},
+	"setDefaultPrefs": {
+		"name": "setDefaultPrefs",
+		"type": "control",
+		"title": "Reset preferences of VTR",
+		"label": "Restore default preferences"
+	},
+    "showHiddenSettings": {
+        "name": "showHiddenSettings",
+        "type": "bool",
+        "title": "Display hidden settings",
+        "value": false,
+        "hidden": true
+    },
+	"width": {
+		"name": "width",
+		"type": "integer",
+		"title": "Width of the tab sidebar",
+		"value": 250,
+		"hidden": true
+	},
+    "debug": {
+		"name": "debug",
+		"type": "bool",
+		"title": "Enable console logging for debugging",
+		"value": false,
+		"hidden": true
+	},
+    "experiment": {
+		"name": "experiment",
+		"type": "bool",
+		"title": "Enable VTR experimental features <b>(**unstable!**)</b>",
+		"value": false,
+		"hidden": true
+	}
+}
