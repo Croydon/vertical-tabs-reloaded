@@ -46,11 +46,11 @@ function build()
 
         if(setting.description != undefined)
         {
-            var settingsDescription = '<div class="preferences-description">' + setting.description + '</div>';
+            var description = '<br> <span class="preferences-description">' + setting.description + '</span>';
         }
         else
         {
-            var settingsDescription = "";
+            var description = '';
         }
 
         if(setting.hidden == true)
@@ -62,42 +62,49 @@ function build()
             var classHidden = "";
         }
 
+        if(setting.readonly == true)
+        {
+            var addition = " disabled";
+        }
+        else
+        {
+            var addition = "";
+        }
+
         if(setting.type == "bool")
         {
-            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> ' + settingsDescription + ' </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
+            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label>' + description +'</td> <td> <input type="checkbox" id="' + setting.name + '"' + addition + '></div></td></tr>';
         }
 
         if(setting.type == "string")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
 
-            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + settingsDescription + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"' + addition + '></td></tr>';
         }
 
         if(setting.type == "integer")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
 
-            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + settingsDescription + '</td> <td> <input type="number" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <input type="number" id="' + setting.name + '" placeholder="' + setting.placeholder + '"' + addition + '></td></tr>';
         }
 
         if(setting.type == "menulist")
         {
-            newInnerHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + settingsDescription + ' </td> <td><select id="' + setting.name + '">';
+            settingsHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td><select id="' + setting.name + '"' + addition + '>';
             Object.keys(setting.options).forEach(function(key)
             {
                 let option = setting.options[key];
-                newInnerHTML += '<option value="' + option.value + '">' + option.label + '</option>';
+                settingsHTML += '<option value="' + option.value + '">' + option.label + '</option>';
             });
 
-            newInnerHTML += '</select></td></tr>';
-
-            settingsHTML += newInnerHTML;
+            settingsHTML += '</select></td></tr>';
         }
 
         if(setting.type == "control")
         {
-            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + settingsDescription + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
+            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <button type="button" id="'+ setting.name +'"' + addition + '>'+ setting.label +'</button> </td></tr>';
         }
     });
 
