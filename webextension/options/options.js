@@ -174,6 +174,11 @@ function update_all_inputs()
     });
 }
 
+function oncontentmenu_show_hidden_options()
+{
+    main.save_setting("showHiddenSettings", true);
+}
+
 document.addEventListener('DOMContentLoaded', function()
 {
     build();
@@ -186,16 +191,7 @@ document.addEventListener('DOMContentLoaded', function()
         add_events(inputs[i]);
     }
 
-    chrome.contextMenus.create({
-        id: "hiddenSettingToggle",
-        title: "VTR: Show hidden settings",
-        contexts: ["all"]
-    });
-
-
-    browser.contextMenus.onClicked.addListener((info) => {
-        main.save_setting("showHiddenSettings", true);
-    });
+    document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
 
     browser.storage.onChanged.addListener(update_all_inputs);
 

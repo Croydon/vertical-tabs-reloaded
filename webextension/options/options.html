@@ -50,14 +50,14 @@
         padding-inline-start: 10px;
         padding-inline-end: 30px;
     }
-    
+
     .hidden-setting {
         display: none;
     }
     </style>
 </head>
 
-<body class="detail-view-container">
+<body class="detail-view-container" contextmenu="vtr-options">
     <form>
 
         <table id="settings" style="width: 100%;">
@@ -65,6 +65,10 @@
         </table>
 
     </form>
+
+    <menu type="context" id="vtr-options">
+      <menuitem icon="/data/icon-16.png" id="contextmenu-show-hidden-options">VTR: Show hidden options</menuitem>
+    </menu>
 
     <script src="options.js"></script>
 
