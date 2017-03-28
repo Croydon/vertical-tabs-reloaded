@@ -72,7 +72,7 @@ var settings = [
 		"name": "toggleDisplayHotkey",
 		"type": "string",
 		"title": "Hotkey for hiding/showing tabbar",
-		"value": "control-alt-v"
+		"value": "control-shift-v"
 	},
 	{
 		"name": "width",
@@ -93,7 +93,7 @@ var settings = [
 		"type": "control",
 		"title": "Enable/Disable titlebar",
 		"label": "Toggle titlebar",
-		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"     
+		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"
 	},
 	{
 		"name": "setDefaultPrefs",
@@ -107,8 +107,8 @@ function setDefaultPrefs()
 {
     main.restore_default_settings();
 }
-    
-function toggleDrawInTitlebar() 
+
+function toggleDrawInTitlebar()
 {
     main.sdk_sendMsg({type: "settings.toggleDrawInTitlebar"});
 }
@@ -116,8 +116,8 @@ function toggleDrawInTitlebar()
 function save_setting(event)
 {
     // Incredible small chance that settings aren't getting saved, solved by managing settings entirely be WebExt
-    if(blockSaveEvent == true) { return; } 
-    
+    if(blockSaveEvent == true) { return; }
+
     let input = document.getElementById(event.target.id);
     if(input.type == "checkbox")
     {
@@ -127,7 +127,7 @@ function save_setting(event)
     {
         value = input.value;
     }
-    
+
     main.debug_log(event.target.id + " new value: " + value);
     main.save_setting(event.target.id, value);
     main.sdk_send_changed_setting(event.target.id);
@@ -139,24 +139,24 @@ function build()
     Object.keys(settings).forEach(function(k)
     {
         let setting = settings[k];
-        
+
         if(setting.hidden == true)
         {
             return;
         }
-        
+
         if(setting.type == "bool")
         {
             document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
         }
-        
+
         if(setting.type == "string")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
-            
+
             document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
         }
-        
+
         if(setting.type == "menulist")
         {
             newInnerHTML = '<tr class="detail-row-complex"><td>' + setting.title + ' </td> <td><select id="' + setting.name + '">';
@@ -165,17 +165,17 @@ function build()
                 let option = setting.options[key];
                 newInnerHTML += '<option value="' + option.value + '">' + option.label + '</option>';
             });
-           
+
             newInnerHTML += '</select></td></tr>';
-            
+
             document.getElementById("settings").innerHTML += newInnerHTML;
         }
-        
+
         if(setting.type == "control")
         {
             document.getElementById("settings").innerHTML += '<tr class="detail-row-complex"><td>' + setting.title + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
         }
-        
+
         if(setting.description != undefined)
         {
             document.getElementById("settings").innerHTML += '<span class="preferences-description">' + setting.description + '</span>';
@@ -185,7 +185,7 @@ function build()
 
 function load_value(input)
 {
-    if(input.type != "button") 
+    if(input.type != "button")
     {
         // buttons don't have values
         main.get_setting(input.id).then(value => {
@@ -201,7 +201,7 @@ function load_value(input)
             }
         });
     }
-    
+
     main.debug_log("found element:" + input.id);
 }
 
@@ -216,46 +216,46 @@ function add_events(input)
     else
     {
         input.addEventListener("change", save_setting);
-    }    
+    }
 }
 
 /*function all_forms_helper(functionName)
 {
     var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++) 
+    for (var i = 0; i < inputs.length; i++)
     {
         let params = [inputs[i]];
         let funcObject = this[functionName];
         funcObject.apply(this, params);
-    }  
+    }
 }*/
 
 function update_all_inputs()
 {
     blockSaveEvent = true;
     //all_forms_helper(load_value);
-    
+
     var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++) 
+    for (var i = 0; i < inputs.length; i++)
     {
         load_value(inputs[i]);
     }
-    
-    blockSaveEvent = false;    
+
+    blockSaveEvent = false;
 }
 
-document.addEventListener('DOMContentLoaded', function() 
-{ 
+document.addEventListener('DOMContentLoaded', function()
+{
     build();
-    
+
     update_all_inputs();
-    
+
     var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++) 
+    for (var i = 0; i < inputs.length; i++)
     {
         add_events(inputs[i]);
-    }  
-    
+    }
+
     browser.storage.onChanged.addListener(update_all_inputs);
 
 });
