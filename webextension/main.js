@@ -223,6 +223,13 @@ setTimeout(function() {
 
     // Set up listener
     browser.storage.onChanged.addListener(sdk_send_all_settings);
+    browser.commands.onCommand.addListener(function(command)
+    {
+        if (command == "toggleTabbrowser")
+        {
+            sdk_sendMsg({type: "event.toggleTabbrowser"});
+        }
+    });
 }, 100);
 
 

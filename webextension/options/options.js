@@ -51,28 +51,46 @@ function build()
             var classHidden = "";
         }
 
+        if(setting.readonly == true)
+        {
+            var addition = " disabled";
+        }
+        else
+        {
+            var addition = "";
+        }
+
+        if(setting.description != undefined)
+        {
+            var description = '<br> <span class="preferences-description">' + setting.description + '</span>';
+        }
+        else
+        {
+            var description = '';
+        }
+
         if(setting.type == "bool")
         {
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label> </td> <td> <input type="checkbox" id="' + setting.name + '"></div></td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td> <div class="checkboxItem"><label for="' + setting.name + '">' + setting.title + '</label>' + description +'</td> <td> <input type="checkbox" id="' + setting.name + '"' + addition + '></div></td></tr>';
         }
 
         if(setting.type == "string")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
 
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <input type="text" id="' + setting.name + '" placeholder="' + setting.placeholder + '"' + addition + '></td></tr>';
         }
 
         if(setting.type == "integer")
         {
             if(setting.placeholder == undefined) { setting.placeholder = ""; }
 
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <input type="number" id="' + setting.name + '" placeholder="' + setting.placeholder + '"></td></tr>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <input type="number" id="' + setting.name + '" placeholder="' + setting.placeholder + '"' + addition + '></td></tr>';
         }
 
         if(setting.type == "menulist")
         {
-            newInnerHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + ' </td> <td><select id="' + setting.name + '">';
+            newInnerHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td><select id="' + setting.name + '"' + addition + '>';
             Object.keys(setting.options).forEach(function(key)
             {
                 let option = setting.options[key];
@@ -86,12 +104,7 @@ function build()
 
         if(setting.type == "control")
         {
-            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + '</td> <td> <button type="button" id="'+ setting.name +'">'+ setting.label +'</button> </td></tr>';
-        }
-
-        if(setting.description != undefined)
-        {
-            document.getElementById("settings").innerHTML += '<span class="preferences-description">' + setting.description + '</span>';
+            document.getElementById("settings").innerHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td> <button type="button" id="'+ setting.name +'"' + addition + '>'+ setting.label +'</button> </td></tr>';
         }
     });
 }

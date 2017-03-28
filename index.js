@@ -11,12 +11,7 @@
 var preferencesService = require("sdk/preferences/service");
 var windows = require("sdk/windows");
 var windowUtils = require("sdk/window/utils");
-var hotkey = require("sdk/hotkeys").Hotkey;
 var { viewFor } = require("sdk/view/core");
-
-//var contentMod = require("sdk/content/mod");
-//var Style = require("sdk/stylesheet/style").Style;
-
 
 // WebExtension
 const webExtension = require("sdk/webextension");
@@ -40,38 +35,8 @@ function toggleDrawInTitlebar() {
 	}
 }
 
-// Hotkeys
+
 var GLOBAL_SCOPE = this;
-
-function hotkeyPress()
-{
-    let windowID = windowUtils.getOuterId(windowUtils.getToplevelWindow(windowUtils.getFocusedWindow()));
-	GLOBAL_SCOPE["vt"+windowID].toggleDisplayState();
-}
-
-function initHotkeys() {
-	let toggleKey = webextPreferences["toggleDisplayHotkey"];
-	if(toggleKey != "")
-	{
-		GLOBAL_SCOPE.vtToggleDisplayHotkey = hotkey({
-			combo: toggleKey,
-			onPress: hotkeyPress
-		});
-    }
-}
-
-function destroyHotkey() {
-	if(typeof GLOBAL_SCOPE.vtToggleDisplayHotkey != undefined)
-	{
-		GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
-	}
-}
-
-function changeHotkey() {
-    debugOutput("change Hotkey event!");
-	destroyHotkey();
-	initHotkeys();
-}
 
 //
 // WebExtenions Communication
@@ -148,17 +113,11 @@ function webext_replyHandler(message)
 		GLOBAL_SCOPE["vt"+windowID].changeFullscreenMode(message.value);
 	}
 
-    /*if(message.type == "css.post")
-    {
-        if(webextPreferences.hasOwnProperty("css") == false)
-        {
-            webextPreferences["css"] = {};
-        }
-
-        webextPreferences["css"][message.name] = message.value;
-        //debugOutput(message.value);
-        observPrefs("css");
-    }*/
+	if(message.type == "event.toggleTabbrowser")
+	{
+		let windowID = windowUtils.getOuterId(windowUtils.getToplevelWindow(windowUtils.getFocusedWindow()));
+		GLOBAL_SCOPE["vt"+windowID].toggleDisplayState();
+	}
 }
 
 // Send setting to WebExtension
@@ -178,45 +137,13 @@ function webext_sendChangedSetting(settingName)
 
 function observPrefs(settingName)
 {
-	if(settingName == "toggleDisplayHotkey")
-	{
-		changeHotkey();
-	}
-	else
-	{
-	    for (let window of windows.browserWindows)
-	    {
-	        let lowLevelWindow = viewFor(window);
-	        let windowID = windowUtils.getOuterId(lowLevelWindow);
-	        debugOutput("observPrefs: " + settingName);
-	        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
-	    }
-	}
-
-    /*if(settingName == "css")
+    for (let window of windows.browserWindows)
     {
-        let newStyle;
-        debugOutput("dummy");
-        Object.keys(webextPreferences["css"]).forEach(k =>
-        {
-            debugOutput(k);
-            newStyle = newStyle + webextPreferences["css"][k];
-            debugOutput(webextPreferences["css"][k]);
-        });
-        debugOutput("dummy2");
-        var style = Style({ source: newStyle });
-        debugOutput("css changed!");
-        debugOutput(style);
-        debugOutput("dummy3");
-        for (let window of windows.browserWindows)
-        {
-            let lowLevelWindow = viewFor(window);
-            let windowID = windowUtils.getOuterId(lowLevelWindow);
-            contentMod.attachTo(style, lowLevelWindow);
-        }
-    }*/
-
-
+        let lowLevelWindow = viewFor(window);
+        let windowID = windowUtils.getOuterId(lowLevelWindow);
+        debugOutput("observPrefs: " + settingName);
+        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
+    }
 }
 
 //
@@ -256,8 +183,6 @@ function sdk_init()
     {
         deinitialize_window(window)
     });
-
-    initHotkeys();
 }
 
 // Entry point of the add-on
@@ -301,7 +226,6 @@ exports.main = function (options, callbacks) {
 
 exports.onUnload = function (reason) {
 	//debugOutput("onUnload:" + reason);
-	destroyHotkey();
 
     for (let window of windows.browserWindows)
     {

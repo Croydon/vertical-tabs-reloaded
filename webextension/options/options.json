@@ -72,12 +72,6 @@
 			}
 		]
 	},
-	"toggleDisplayHotkey": {
-		"name": "toggleDisplayHotkey",
-		"type": "string",
-		"title": "Hotkey for hiding/showing tabbar",
-		"value": "control-alt-v"
-	},
 	"toggleDrawInTitlebar": {
 		"name": "toggleDrawInTitlebar",
 		"type": "control",
@@ -105,6 +99,15 @@
 		"value": 250,
 		"hidden": true
 	},
+    "toggleDisplayHotkey": {
+        "name": "toggleDisplayHotkey",
+        "type": "string",
+        "title": "Hotkey for hiding/showing tabbar",
+        "value": "control-alt-v",
+        "hidden": true,
+        "readonly": true,
+        "description": "Is now editable in the respective Firefox user interface"
+    },
     "debug": {
 		"name": "debug",
 		"type": "bool",
