@@ -1,5 +1,16 @@
 # Changelog
 
+### v0.8.1, 2017-03-28
+ * internal: continue rewriting add-on as a WebExtension
+   * manage settings UI by WebExtension
+   * move default settings restore function to WebExtension
+   * move more settings logic to WebExtension
+   * handle debug output by WebExtension
+
+
+***
+
+
 ### v0.8.0, 2017-01-09
  * internal: start rewriting add-on as a WebExtension
    * sync settings between the legacy SDK and the new WebExtension part
@@ -13,7 +24,7 @@
 ### v0.7.1, 2016-10-09
  * themes improvements:
    * Dark theme:
-     * fixed: close button displayed wrong on low resolution displays running Windows 7 
+     * fixed: close button displayed wrong on low resolution displays running Windows 7
 
 
 ***
@@ -51,7 +62,7 @@
    * Darwin, Linux, Windows themes:
      * add blue left border to pinned tabs (#32)
  * fixed: don't spam the console with debug output
- * internal: some refactoring for more efficient code 
+ * internal: some refactoring for more efficient code
 
 
 ***
