@@ -15,7 +15,7 @@
 	},
 	"engines":
 	{
-		"firefox": "52.0 - 56.0"
+		"firefox": "52.0 - 55.0"
     },
     "hasEmbeddedWebExtension": true,
 	"preferences-branch": "@verticaltabsreloaded",
