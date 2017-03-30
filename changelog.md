@@ -1,6 +1,8 @@
 # Changelog
 
 ### v0.8.2, 2017-03-30
+ * change default hotkey for hiding the tabbrowser to Control+Shift+V (#13)
+   * the former hotkey is not compatible with the WebExtension APIs
  * fixed: show checkboxes on the settings page
  * fixed: hide tabs in fullscreen
 
