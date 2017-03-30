@@ -1,7 +1,15 @@
 # Changelog
 
+### v0.8.2, 2017-03-30
+ * fixed: show checkboxes on the settings page
+ * fixed: hide tabs in fullscreen
+
+
+***
+
+
 ### v0.8.1, 2017-03-28
- * internal: continue rewriting add-on as a WebExtension
+ * internal: continue rewriting add-on as a WebExtension (#13)
    * manage settings UI by WebExtension
    * move default settings restore function to WebExtension
    * move more settings logic to WebExtension
@@ -12,7 +20,7 @@
 
 
 ### v0.8.0, 2017-01-09
- * internal: start rewriting add-on as a WebExtension
+ * internal: start rewriting add-on as a WebExtension (#13)
    * sync settings between the legacy SDK and the new WebExtension part
      * this is critical to release as soon as possible, so that in the best case nobody will lose their settings in the end of 2017
      * At the end of 2017 non-WebExtensions will stop working. Data migration won't be possible either afterwards

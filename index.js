@@ -52,18 +52,18 @@ function initHotkeys() {
 		}
 	});
 }
-	
+
 function destroyHotkey() {
 	GLOBAL_SCOPE.vtToggleDisplayHotkey.destroy();
 }
 
 function changeHotkey() {
-	destroyHotkey(); 
+	destroyHotkey();
 	initHotkeys();
 }
 
 //
-// WebExtenions Communication 
+// WebExtenions Communication
 //
 
 // Send message to WebExtension
@@ -75,23 +75,23 @@ function webext_sendMsg(message)
 
 // Handle messages from WebExtension
 function webext_replyHandler(message, sender, sendResponse)
-{  
-    if(message.type == "settings.get") 
+{
+    if(message.type == "settings.get")
     {
         // Send settings to WebExt
         webext_sendChangedSetting(message.name);
     }
-    
+
     if(message.type == "settings.post")
     {
         // Get settings from WebExt
         debugOutput(message.name + " new value SDK: " + message.value);
         preferences[message.name] = message.value;
     }
-    
+
     if(message.type == "settings.toggleDrawInTitlebar")
     {
-        toggleDrawInTitlebar();   
+        toggleDrawInTitlebar();
     }
 }
 
@@ -106,26 +106,26 @@ function webext_sendChangedSetting(settingName)
 }
 
 function observPrefs(settingName)
-{        
-    for (let window of windows.browserWindows) 
+{
+    for (let window of windows.browserWindows)
     {
         let lowLevelWindow = viewFor(window);
         let windowID = windowUtils.getOuterId(lowLevelWindow);
         GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, preferences[settingName]);
     }
-    
+
     webext_sendChangedSetting(settingName);
 }
 
 //
-// End of WebExtenions Communication 
+// End of WebExtenions Communication
 //
 
 function initialize_window(window)
 {
     let lowLevelWindow = viewFor(window);
     let windowID = windowUtils.getOuterId(lowLevelWindow);
-    GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, preferences["compact"], preferences["right"], preferences["width"], preferences["tabtoolbarPosition"], preferences["debug"], preferences["theme"]);
+    GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, preferences["compact"], preferences["right"], preferences["width"], preferences["tabtoolbarPosition"], preferences["debug"], preferences["theme"], preferences["hideInFullscreen"]);
     unload(GLOBAL_SCOPE["vt" + windowID].unload.bind(GLOBAL_SCOPE["vt"+windowID]), lowLevelWindow);
 }
 
@@ -136,38 +136,38 @@ exports.main = function (options, callbacks) {
 		preferencesService.set("browser.tabs.drawInTitlebar", false);
 	}
 	else if (options.loadReason == "upgrade") {
-		// v0.4.0 -> v0.5.0, remove when most use >= v0.5.0 
+		// v0.4.0 -> v0.5.0, remove when most use >= v0.5.0
 		if(preferences["theme"] == "winnt") {
 			preferences["theme"] = "windows";
 		}
     }
-	
+
 	// Back up 'browser.tabs.animate' pref before overwriting it
 	preferences["animate"] = preferencesService.get("browser.tabs.animate");
 	preferencesService.set("browser.tabs.animate", false);
-	
+
 	unload(function () {
 		preferencesService.set("browser.tabs.animate", preferences["animate"]);
 	});
 
     // WebExtension startup + communication
-    webExtension.startup().then(api => 
+    webExtension.startup().then(api =>
     {
         const {browser} = api;
-        
-        browser.runtime.onMessage.addListener((msg, sender, sendResponse) => 
+
+        browser.runtime.onMessage.addListener((msg, sender, sendResponse) =>
         {
             webext_replyHandler(msg, sender, sendResponse);
         });
-        
-        browser.runtime.onConnect.addListener((port) => 
+
+        browser.runtime.onConnect.addListener((port) =>
         {
             webextPort = port; // make it global
-           
-           
+
+
             // Initialize VerticalTabsReloaded object for each window.
-            
-            for (let window of windows.browserWindows) 
+
+            for (let window of windows.browserWindows)
             {
                 initialize_window(window);
             }
@@ -185,7 +185,7 @@ exports.main = function (options, callbacks) {
 
             initHotkeys();
             simplePrefs.on("toggleDisplayHotkey", changeHotkey);
-            
+
             simplePrefs.on("", observPrefs);
 
             unload(function() {
@@ -203,9 +203,9 @@ exports.onUnload = function (reason) {
     {
         debugOutput("VTR disabled");
     }
-	
+
 	unload();
-	
+
 	// Unloaders might want access to prefs, so do this last
     if (reason == "uninstall") {
         // Delete all settings
@@ -221,4 +221,3 @@ function debugOutput(output)
         value: output
     });
 }
-
