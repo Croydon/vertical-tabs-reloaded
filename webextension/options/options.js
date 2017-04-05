@@ -3,9 +3,6 @@ var blockSaveEvent = false;
 
 var settings = main.get_options_object();
 
-main.debug_log("the setting object: ");
-main.debug_log(settings);
-
 function setDefaultPrefs()
 {
     main.restore_default_settings();
@@ -182,7 +179,7 @@ function update_all_inputs()
         var elements = document.getElementsByClassName("hidden-setting");
         for(var i=0; i<elements.length; i++)
         {
-           main.debug_log(elements[i]);
+           // main.debug_log(elements[i]);
            elements[i].style.display = newDisplay;
         }
 

@@ -20,6 +20,12 @@
         "page": "options/options.html",
         "browser_style": true
     },
+    "sidebar_action":
+    {
+        "default_title": "Vertical Tabs Reloaded",
+        "default_icon": "data/icon-16.png",
+        "default_panel": "vtr.html"
+    },
     "commands":
     {
         "toggleTabbrowser":
