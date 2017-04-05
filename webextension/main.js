@@ -11,6 +11,17 @@ var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function()
 {
     settings = JSON.parse(xhr.responseText);
+
+    // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
+    // Right now it's possible to toggle so we toggeling on the base of good luck
+    // and just hoping to end up with an open sidebar
+    get_setting("experiment").then(value =>
+    {
+        if(value == true)
+        {
+            // browser.sidebarAction.toggleSidebar(); /// FIXME: not landed in Nightly yet
+        }
+    });
 }
 xhr.open("GET", "options/options.json", true);
 xhr.send();
@@ -35,6 +46,8 @@ function save_setting(name, value)
     let settingsObject = {};
     settingsObject[name] = value;
 
+    debug_log("save: " + name + " " + value);
+
     browser.storage.local.set(settingsObject).then(error =>
     {
         if(error)
@@ -48,6 +61,12 @@ function save_setting(name, value)
 
 function get_setting(name)
 {
+    if(name == undefined)
+    {
+        console.log("undefined!");
+        return browser.storage.local.get();
+    }
+
     return new Promise(function (fulfill, reject)
     {
         browser.storage.local.get(name).then(results =>
@@ -78,7 +97,20 @@ function get_setting(name)
 // CSS Mangament
 //
 
-function css_load_file(filename)
+function css_get_full_path()
+{
+    return new Promise(function (fulfill, reject)
+    {
+        get_setting("theme").then(theme =>
+        {
+            debug_log(browser.runtime.getURL("data/theme/"+theme+"/index.css"));
+            fulfill(browser.runtime.getURL("data/theme/"+theme+"/index.css"));
+        });
+    });
+}
+
+
+/*function css_load_file(filename)
 {
     return new Promise(function (fulfill, reject)
     {
@@ -92,15 +124,17 @@ function css_load_file(filename)
         }
         read.send();
     });
-}
+}*/
 
 //
 // Communication with the legacy part + content script
 //
 
-function sdk_send_all_settings()
+function on_options_change()
 {
-    browser.storage.local.get().then(value => {
+    browser.storage.local.get().then(value =>
+    {
+        // for legacy part FIXME: remove
         value["dataPath"] = browser.runtime.getURL("data/");
         sdk_sendMsg({
             type: "settings.post-all",
@@ -109,12 +143,12 @@ function sdk_send_all_settings()
     });
 }
 
-sdk_send_all_settings();
+on_options_change();
 
-// Changed addon preferences, send to SDK
+// Changed addon preferences, send to SDK // FIXME: remove
 function sdk_send_changed_setting(settingName)
 {
-    sdk_send_all_settings();
+    on_options_change();
 
     get_setting(settingName).then(value => {
         sdk_sendMsg({
@@ -125,6 +159,7 @@ function sdk_send_changed_setting(settingName)
     });
 }
 
+// FIXME: remove
 function sdk_replyHandler(message)
 {
     if(message.type == "settings.post")
@@ -138,22 +173,6 @@ function sdk_replyHandler(message)
     {
         restore_default_settings();
     }
-
-    /*if(message.type == "css.get")
-    {
-        if(message.file == "none")
-        {
-            // Reset some saved CSS values
-            sdk_sendMsg({type: "css.post", name: message.name, value: ""});
-        }
-        else
-        {
-            css_load_file(message.file).then(css =>
-            {
-                sdk_sendMsg({type: "css.post", name: message.name, value: css});
-            });
-        }
-    }*/
 
     if(message.type == "debug.log")
     {
@@ -175,7 +194,7 @@ function sdk_sendMsg(message)
 }
 
 
-
+// FIXME: Window Mangament missing
 setInterval(function()
 {
     browser.windows.getCurrent().then(currentWindow =>
@@ -222,7 +241,7 @@ setTimeout(function() {
     sdk_sendMsg({type: "settings.migrate"});
 
     // Set up listener
-    browser.storage.onChanged.addListener(sdk_send_all_settings);
+    browser.storage.onChanged.addListener(on_options_change);
     browser.commands.onCommand.addListener(function(command)
     {
         if (command == "toggleTabbrowser")

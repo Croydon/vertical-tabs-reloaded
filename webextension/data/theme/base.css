@@ -1,5 +1,3 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
 /* Style the scrollbox for vertical arrangements. */
 .tabbrowser-arrowscrollbox > scrollbox {
     overflow-x: hidden !important;
@@ -93,7 +91,7 @@
 .tabbrowser-tab:not([busy]) .tab-icon-image:not([src]):not([pinned]) {
 	display: -moz-box;
 }
-	
+
 /* Make room for the close/max/min button on the right of the window */
 /* XXX this should probably be per-OS, yes? */
 /* XXX if I was smarter I'd find a way to make a swoop on the right side of the bar, under the window buttons */

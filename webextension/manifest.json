@@ -18,7 +18,13 @@
     "options_ui":
     {
         "page": "options/options.html",
-        "chrome_style": true
+        "browser_style": true
+    },
+    "sidebar_action":
+    {
+        "default_title": "Vertical Tabs Reloaded",
+        "default_icon": "data/icon-16.png",
+        "default_panel": "vtr.html"
     },
     "commands":
     {
