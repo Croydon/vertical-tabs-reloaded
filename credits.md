@@ -15,5 +15,6 @@ This project did already got a lot of contribution over time. In fact, this repo
  * Rob Campbell - some UI love
  * [YUKI "Piro" Hiroshi](https://github.com/piroor) - Creator of Tree Style Tab, the original add-on used many code from this
  * [myBestSoftAndPref](https://github.com/myBestSoftAndPref) - Show tab status (#67)
- 
+ * [Andy McKay](https://github.com/andymckay/sidebar-tabs) - Experimental WebExtensions Vertical Tabs implementation as a references
+
 In addition to that a big thank you to all people who provided feedback, suggestions, ideas or who are simply using the add-on.
