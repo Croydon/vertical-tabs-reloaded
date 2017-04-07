@@ -1,0 +1,4 @@
+@import "../../../webextension/data/theme/light/index.css";
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+// legacy importer

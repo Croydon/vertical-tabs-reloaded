@@ -119,7 +119,8 @@ function on_options_change()
     browser.storage.local.get().then(value =>
     {
         // for legacy part FIXME: remove
-        value["dataPath"] = browser.runtime.getURL("data/");
+        value["dataPath"] = "resource://verticaltabsreloaded-at-go-dev-dot-de/data/";
+        if(typeof value["theme"] === "undefined") { value["theme"] = "dark"; }
         sdk_sendMsg({
             type: "settings.post-all",
             value: value

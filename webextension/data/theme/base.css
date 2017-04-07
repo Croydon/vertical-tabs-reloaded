@@ -31,7 +31,8 @@
 }
 
 .tab-label[pinned] {
-    width: auto ! important;
+    width: auto !important;
+    display: -moz-box !important;
 }
 
 /* Don't show close buttons for pinned tabs */
