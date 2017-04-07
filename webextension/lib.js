@@ -49,7 +49,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     installStylesheet(uri, type)
     {
         this.debug_log("VTR install sheet: " + uri + " of type: " + type);
-        this.tabbrowser.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="'+uri +'" id="vtr-'+type+'">');
+        this.tabbrowser.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
     }
 
     removeStylesheet(type)
@@ -138,6 +138,14 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             //this.initTab(tabs.childNodes[i]);
         //}
 
+        browser.tabs.query({currentWindow: true}).then((tabs) =>
+        {
+            for(let tab of tabs)
+            {
+                this.create_tab(tab);
+            }
+        });
+
         this.unloaders.push(() =>
         {
             // FIXME: Put the tabs back up, unhide tabstrip
@@ -152,6 +160,93 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         aTab.setAttribute("align", "stretch");
         aTab.maxWidth = 65000;
         aTab.minWidth = 0;
+    }
+
+    create_tab(tab)
+    {
+        let id = tab.id;
+        let url = tab.url;
+        let title = tab.title || "Connecting...";
+        let pinned = false;
+
+        let div = document.createElement("div");
+        div.className = "tabbrowser-tab";
+        div.setAttribute('contextmenu', 'tabContextMenu');
+        div.id = id;
+
+        /*let a = document.createElement('a');
+        a.className = 'tab';
+        a.innerText = this.url;
+        a.href = this.url;*/
+
+        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" label="${title}" class="tabbrowser-tab" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
+
+        //setTimeout(function(){}, 0); // workaround
+
+        this.document.getElementById("tab-"+id).addEventListener('click', (event) =>
+        {
+            browser.tabs.update(id, {active: true});
+            event.preventDefault();
+        });
+
+
+
+        /*for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
+          let button = document.createElement('a');
+          button.className = `button right ${method}`;
+          button.href = '#';
+          button.innerText = textMap[method];
+          button.title = method;
+          button.addEventListener('click', buttonEvent);
+          div.appendChild(button);
+      }*/
+
+        /*let icon = document.createElement('img');
+        icon.className = 'icon';
+        icon.style.visibility = 'hidden';*/
+
+        //icon.addEventListener('error', handleImageError);
+
+        /*let context = document.createElement('span');
+        context.className = 'context';
+        context.style.visibility = 'hidden';*/
+
+        /*div.appendChild(icon);
+        div.appendChild(context);
+        div.appendChild(a);
+        tabList.appendChild(div);*/
+
+        /*div.addEventListener('dragstart', handleDragStart, false);
+        div.addEventListener('dragover', handleDragOver, false);
+        div.addEventListener('drop', handleDrop, false);*/
+    }
+
+    update_tab(tabID, attribute, value)
+    {
+        console.log("update tab: " + tabID + " " + attribute + " " + value);
+        if(attribute == "title")
+        {
+            this.document.getElementById("tab-"+tabID).setAttribute("label", value);
+            this.document.getElementById("tab-title-"+tabID).innerHTML = value;
+        }
+
+        if(attribute == "pinned")
+        {
+            if(value == true)
+            {
+                this.document.getElementById("tab-"+tabID).setAttribute("pinned", "true");
+            }
+            else
+            {
+                this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
+            }
+        }
+    }
+
+    remove_tab(tabID)
+    {
+        this.debug_log("remove tab: " + tabID);
+        this.document.getElementById("tab-"+tabID).remove();
     }
 
     setPinnedSizes()
@@ -224,7 +319,56 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         // Note: Not all eventsListener are set up here
 
-        browser.storage.onChanged.addListener((changes, area) => { this.on_storage_change_iterator(changes, area); });
+        browser.storage.onChanged.addListener((changes, area) =>
+        {
+            this.on_storage_change_iterator(changes, area);
+        });
+
+        browser.tabs.onCreated.addListener((tab) =>
+        {
+            this.create_tab(tab);
+        });
+
+        browser.tabs.onUpdated.addListener((tabID, changeInfo, tab) =>
+        {
+            console.log("Update: " + tabID + " " + changeInfo["title"]);
+            if (changeInfo.hasOwnProperty("title"))
+            {
+                this.update_tab(tabID, "title", changeInfo["title"]);
+            }
+
+            if (changeInfo.hasOwnProperty("pinned"))
+            {
+                if (changeInfo.pinned === true || changeInfo.pinned === false)
+                {
+                    this.update_tab(tabID, "pinned", changeInfo.pinned);
+                }
+            }
+            /*if (changeInfo.hasOwnProperty('mutedInfo')) {
+                sidetabs.setMuted(tab, changeInfo.mutedInfo);
+              }
+          if (changeInfo.hasOwnProperty('audible')) {
+            sidetabs.setAudible(tab, changeInfo.audible);
+          }
+          if (changeInfo.status === 'loading') {
+            sidetabs.setSpinner(tab);
+          }
+          if (changeInfo.status === 'complete') {
+            sidetabs.setIcon(tab);
+        }*/
+        });
+
+        browser.tabs.onDetached.addListener((tabID, details) =>
+        {
+            this.remove_tab(tabID);
+        });
+
+        browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
+        {
+            this.remove_tab(tabID);
+        });
+
+
 
         //this.window.addEventListener("resize", this, false);
 
