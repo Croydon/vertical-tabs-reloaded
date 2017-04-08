@@ -19,7 +19,7 @@ xhr.onreadystatechange = function()
     {
         if(value == true)
         {
-            // browser.sidebarAction.toggleSidebar(); /// FIXME: not landed in Nightly yet
+            // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
         }
     });
 }
@@ -63,7 +63,6 @@ function get_setting(name)
 {
     if(name == undefined)
     {
-        console.log("undefined!");
         return browser.storage.local.get();
     }
 
@@ -154,18 +153,13 @@ function sdk_replyHandler(message)
         save_setting(message.name, message.value);
     }
 
-    if(message.type == "settings.reset")
-    {
-        restore_default_settings();
-    }
-
     if(message.type == "debug.log")
     {
         debug_log(message.value);
     }
 }
 
-port.onMessage.addListener(sdk_replyHandler); // legacy listener
+port.onMessage.addListener(sdk_replyHandler); // legacy listener FIXME: remove
 browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
 
 function sdk_sendMsg(message)
