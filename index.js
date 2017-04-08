@@ -233,11 +233,6 @@ exports.onUnload = function (reason) {
     }
 
 	preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
-
-    if (reason == "uninstall")
-    {
-		console.log("VTR uninstalled");
-    }
 }
 
 function debugOutput(output)

@@ -19,7 +19,7 @@ xhr.onreadystatechange = function()
     {
         if(value == true)
         {
-            // browser.sidebarAction.toggleSidebar(); /// FIXME: not landed in Nightly yet
+            // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
         }
     });
 }
@@ -63,7 +63,6 @@ function get_setting(name)
 {
     if(name == undefined)
     {
-        console.log("undefined!");
         return browser.storage.local.get();
     }
 
@@ -110,22 +109,6 @@ function css_get_full_path()
 }
 
 
-/*function css_load_file(filename)
-{
-    return new Promise(function (fulfill, reject)
-    {
-        var read = new XMLHttpRequest();
-        debug_log(browser.runtime.getURL("data/"+filename));
-        read.open("GET", browser.runtime.getURL("data/"+filename), false);
-        read.onreadystatechange = function()
-        {
-            //console.log(read.responseText);
-            fulfill(read.responseText);
-        }
-        read.send();
-    });
-}*/
-
 //
 // Communication with the legacy part + content script
 //
@@ -170,18 +153,13 @@ function sdk_replyHandler(message)
         save_setting(message.name, message.value);
     }
 
-    if(message.type == "settings.reset")
-    {
-        restore_default_settings();
-    }
-
     if(message.type == "debug.log")
     {
         debug_log(message.value);
     }
 }
 
-port.onMessage.addListener(sdk_replyHandler); // legacy listener
+port.onMessage.addListener(sdk_replyHandler); // legacy listener FIXME: remove
 browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
 
 function sdk_sendMsg(message)

@@ -406,34 +406,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         // FIREFIX: Not yet able to read the status of the sidebar.
 
-        /*const document = this.document;
+        // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
 
-        if(document.getElementById("verticaltabs-box").style.display == "")
+        /* if(sidebar visible == true)
         {
-            this.changeDisplayState("none");
             this.changedDisplayState = true;
         }
         else
         {
-            this.changeDisplayState("");
             this.changedDisplayState = false;
         }*/
     }
 
     changeDisplayState(display)
     {
+        // FIREFIX: Not yet able to read the status of the sidebar.
 
-        const document = this.document;
-
-        let tabs = document.getElementById("verticaltabs-box").style;
-        let splitter = document.getElementById("verticaltabs-splitter").style;
-
-        if (tabs.display == display && splitter.display == display)
+        /*
+        if((display == "none" && sidebar visible == true) || (display == "" && sidebar visible == false))
         {
-            return;
-        }
-
-        tabs.display = splitter.display = display;
+            // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
+        } */
     }
 
     /* Enter/Left fullscreen mode */
@@ -472,7 +465,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
 }
 
-document.addEventListener('DOMContentLoaded', function()
+document.addEventListener("DOMContentLoaded", function()
 {
     main.get_setting().then(value =>
     {
