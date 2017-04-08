@@ -234,6 +234,19 @@ setTimeout(function() {
             sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
     });
+
+    // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    {
+        let version = browserInfo.version;
+        if(version.includes("a1"))
+        {
+            save_setting("showHiddenSettings", true);
+            save_setting("debug", true);
+            save_setting("experiment", true);
+        }
+    });
+
 }, 100);
 
 
