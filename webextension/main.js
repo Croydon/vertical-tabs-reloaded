@@ -235,15 +235,23 @@ setTimeout(function() {
         }
     });
 
-    // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
     browser.runtime.getBrowserInfo().then((browserInfo) =>
     {
         let version = browserInfo.version;
+
+        // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
         if(version.includes("a1"))
         {
             save_setting("showHiddenSettings", true);
             save_setting("debug", true);
             save_setting("experiment", true);
+        }
+
+        // Enforce debugging and hidden settings for Firefox Beta
+        if(version.includes("b"))
+        {
+            save_setting("showHiddenSettings", true);
+            save_setting("debug", true);
         }
     });
 
