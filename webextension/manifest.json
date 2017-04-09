@@ -26,6 +26,17 @@
         "default_icon": "data/icon-16.png",
         "default_panel": "vtr.html"
     },
+    "browser_action":
+    {
+        "default_icon":
+        {
+            "16": "data/icon-16.png",
+            "48": "data/icon.png",
+            "96": "data/icon-96.png",
+            "128": "data/icon-128.png"
+        },
+        "default_title": "Toggle Tabs Sidebar"
+    },
     "commands":
     {
         "toggleTabbrowser":

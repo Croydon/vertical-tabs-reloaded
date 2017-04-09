@@ -23,19 +23,6 @@ var tabsAnimatePrefBackup = false;
 var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
 
 
-// Toggle function of browser.tabs.drawInTitlebar for preference page
-function toggleDrawInTitlebar() {
-	if(preferencesService.get("browser.tabs.drawInTitlebar", true))
-	{
-		preferencesService.set("browser.tabs.drawInTitlebar", false);
-	}
-	else
-	{
-		preferencesService.set("browser.tabs.drawInTitlebar", true);
-	}
-}
-
-
 var GLOBAL_SCOPE = this;
 
 //
@@ -104,7 +91,15 @@ function webext_replyHandler(message)
 
     if(message.type == "settings.toggleDrawInTitlebar")
     {
-        toggleDrawInTitlebar();
+		// Toggle function of browser.tabs.drawInTitlebar for preference page
+		if(preferencesService.get("browser.tabs.drawInTitlebar", true))
+		{
+			preferencesService.set("browser.tabs.drawInTitlebar", false);
+		}
+		else
+		{
+			preferencesService.set("browser.tabs.drawInTitlebar", true);
+		}
     }
 
 	if(message.type == "event.fullscreen")
@@ -203,7 +198,8 @@ exports.main = function (options, callbacks) {
             webextPort = port; // make it global
 
            	//debugOutput(options.loadReason);
-            if (options.loadReason == "install") {
+            if (options.loadReason == "install")
+			{
                 preferencesService.set("browser.tabs.drawInTitlebar", false);
             }
 
