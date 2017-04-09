@@ -22,7 +22,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.changedDisplayState = false;
         this.unloaders = [];
 
-
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
         this.init();
@@ -96,9 +95,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         // FIREFIX: Placeholder. Firefox doesn't support hiding the default tabbrowser currently.
 
-
         // Injecting CSS
-        this.debug_log("apply stylesheets");
         this.installStylesheet(browser.runtime.getURL("theme/base.css"), "base");
         this.applyThemeStylesheet();
         if (this.preferences("compact") == true)
@@ -130,14 +127,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             //leftbox.appendChild(toolbar);
         //}
 
-
-        // FIXME: Init every tab
-        //tabs.addEventListener("TabOpen", this, false);
-        //for (let i=0; i < tabs.childNodes.length; i++)
-        //{
-            //this.initTab(tabs.childNodes[i]);
-        //}
-
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
             for(let tab of tabs)
@@ -153,13 +142,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             // FIXME: Properly not necessary since sidebars are totally isolated and are just getting "deleted" on closing
             //this.removeThemeStylesheet();
         });
-    }
-
-    initTab(aTab)
-    {
-        aTab.setAttribute("align", "stretch");
-        aTab.maxWidth = 65000;
-        aTab.minWidth = 0;
     }
 
     create_tab(tab)
@@ -179,6 +161,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         a.innerText = this.url;
         a.href = this.url;*/
 
+        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
         this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" label="${title}" class="tabbrowser-tab" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
 
         //setTimeout(function(){}, 0); // workaround
@@ -223,7 +206,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        console.log("update tab: " + tabID + " " + attribute + " " + value);
+        this.debug_log("update tab: " + tabID + " " + attribute + " " + value);
         if(attribute == "title")
         {
             this.document.getElementById("tab-"+tabID).setAttribute("label", value);
@@ -251,6 +234,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     setPinnedSizes()
     {
+        //this.window.addEventListener("resize", this, false);
+
+        //this.unloaders.push(function()
+        //{
+            //this.window.removeEventListener("resize", this, false);
+        //});
+
         //this.debug_log("set pinned sizes!");
     }
 
@@ -368,38 +358,21 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.remove_tab(tabID);
         });
 
-
-
-        //this.window.addEventListener("resize", this, false);
-
-        //this.unloaders.push(function()
-        //{
-            //this.window.removeEventListener("resize", this, false);
-        //});
-    }
-
-    // Event handlers
-    handleEvent(aEvent)
-    {
-        //debug_log("aEvent.type: "+aEvent.type);
-        switch (aEvent.type)
+        browser.commands.onCommand.addListener((command) =>
         {
-            case "TabOpen":
-                this.initTab(aEvent.target);
-                this.setPinnedSizes();
-                return;
-            case "mouseup":
-                if (aEvent.target.getAttribute("id") == "verticaltabs-splitter")
-                {
-                    this.onTabbarResized();
-                }
-                return;
-            //case "popupshowing":
-                //return;
-            case "resize":
-                this.setPinnedSizes();
-                return;
-        }
+            if (command == "toggleTabbrowser")
+            {
+                this.toggleDisplayState();
+            }
+        });
+
+        browser.browserAction.onClicked.addListener(() =>
+        {
+            this.toggleDisplayState();
+        });
+
+        //Old event handler: case "popupshowing":
+            //return;
     }
 
     toggleDisplayState()

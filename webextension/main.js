@@ -162,6 +162,7 @@ function sdk_replyHandler(message)
 port.onMessage.addListener(sdk_replyHandler); // legacy listener FIXME: remove
 browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
 
+// FIXME: remove
 function sdk_sendMsg(message)
 {
     browser.runtime.sendMessage(message).then(reply =>
@@ -216,17 +217,25 @@ setInterval(function()
 
 
 setTimeout(function() {
-    // Get all settings from the legacy part once
+    // Get all settings from the legacy part once // FIXME: remove
     sdk_sendMsg({type: "settings.migrate"});
 
     // Set up listener
     browser.storage.onChanged.addListener(on_options_change);
-    browser.commands.onCommand.addListener(function(command)
+
+    // FIXME: remove listener for legacy
+    browser.commands.onCommand.addListener((command) =>
     {
         if (command == "toggleTabbrowser")
         {
             sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
+    });
+
+    // FIXME: remove listener for legacy
+    browser.browserAction.onClicked.addListener(() =>
+    {
+        sdk_sendMsg({type: "event.toggleTabbrowser"});
     });
 
     browser.runtime.getBrowserInfo().then((browserInfo) =>
@@ -255,7 +264,8 @@ setTimeout(function() {
 // Utils
 function debug_log(output)
 {
-	get_setting("debug").then(value => {
+	get_setting("debug").then(value =>
+    {
         if(value == true)
         {
             console.log(output);
