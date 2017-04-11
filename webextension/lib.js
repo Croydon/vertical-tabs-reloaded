@@ -149,7 +149,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let id = tab.id;
         let url = tab.url;
         let title = tab.title || "Connecting...";
-        let pinned = false;
+        let pinned = tab.pinned;
 
         let div = document.createElement("div");
         div.className = "tabbrowser-tab";
@@ -161,8 +161,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         a.innerText = this.url;
         a.href = this.url;*/
 
+        if(pinned == true)
+        {
+            var pinnedHTML = 'pinned="true"';
+        }
+        else
+        {
+            var pinnedHTML = '';
+        }
+        
         // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
-        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" label="${title}" class="tabbrowser-tab" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
+        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" class="tabbrowser-tab" label="${title}" ${pinnedHTML} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
 
         //setTimeout(function(){}, 0); // workaround
 
