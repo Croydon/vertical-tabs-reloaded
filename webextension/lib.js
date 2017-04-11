@@ -96,18 +96,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // FIREFIX: Placeholder. Firefox doesn't support hiding the default tabbrowser currently.
 
         // Injecting CSS
-        this.installStylesheet(browser.runtime.getURL("theme/base.css"), "base");
+        this.installStylesheet(browser.runtime.getURL("data/theme/base.css"), "base");
         this.applyThemeStylesheet();
         if (this.preferences("compact") == true)
         {
             this.debug_log("compact true");
-            this.installStylesheet(browser.runtime.getURL("compact.css"), "compact");
+            this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
         }
 
         if (this.preferences("style.tab.status") == true)
         {
             this.debug_log("style.tab.status true");
-            this.installStylesheet(browser.runtime.getURL("status.css"), "status");
+            this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
         // FIREFIX: Placeholder. Sidebars on the right are currently not suppoted by Firefox.
@@ -268,7 +268,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.webExtPreferences[prefName] = newValue;
                 if (this.preferences("compact") == true)
                 {
-                    this.installStylesheet(browser.runtime.getURL("compact.css"), "compact");
+                    this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
                 }
                 else
                 {
@@ -280,7 +280,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.webExtPreferences[prefName] = newValue;
                 if (this.preferences("style.tab.status") == true)
                 {
-                    this.installStylesheet(browser.runtime.getURL("status.css"), "status");
+                    this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
                 }
                 else
                 {
