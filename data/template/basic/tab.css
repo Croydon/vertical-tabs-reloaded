@@ -21,16 +21,12 @@
 	margin-top: 1px;
 }
 
-/* FIXME: tab-icon-image likely to be removed from this section */
-.tab-icon,
 .tab-icon-image {
 	padding: 3px;
 	background-color: transparent !important; /* VT Original: f2f2f2 for Dark Theme */
 	border-radius: 2px;
-	/*min-height: 22px !important;
+	min-height: 22px !important;
 	min-width: 22px !important;
-	max-height: 22px;
-	max-width: 22px;*/
 	opacity: 1 !important;
 }
 

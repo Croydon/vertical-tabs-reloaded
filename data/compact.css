@@ -1,4 +1,5 @@
-@import "../../../webextension/data/compact.css";
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+/* Compact mode, toggleable in options */
 
-// legacy importer
+.tab-label {
+	display: none !important;
+}

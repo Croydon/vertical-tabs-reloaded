@@ -21,6 +21,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.webExtPreferences = preferences;
         this.changedDisplayState = false;
         this.unloaders = [];
+        this.selectedTabID = undefined;
+        this.newOpenedTabSelectIt = undefined;
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
@@ -37,6 +39,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.build_ui();
         this.initEventListeners();
+        this.scroll_to_tab(this.selectedTabID);
     }
 
     preferences(settingName)
@@ -61,10 +64,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(this.preferences("theme") != "none")
         {
-            /*main.css_get_full_path().then(fullPath => {
-                this.installStylesheet(fullPath);
-            });*/
-
             this.installStylesheet( this.getThemeStylesheet(this.preferences("theme")), "theme" );
         }
     }
@@ -80,7 +79,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     getThemeStylesheet(theme)
     {
-        var stylesheet;
+        let stylesheet;
         switch (theme)
         {
             default:
@@ -89,6 +88,42 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         return browser.runtime.getURL(stylesheet);
+    }
+
+    scroll_to_tab(tabID)
+    {
+        if(typeof tabID != "number")
+        {
+            return;
+        }
+
+        let tabElement = this.document.getElementById("tab-"+tabID);
+
+        if(tabElement == null)
+        {
+            setTimeout(() =>
+            {
+                tabElement = this.document.getElementById("tab-"+tabID);
+                if(tabElement == null)
+                {
+                    return;
+                }
+            }, 10);
+        }
+
+        var rect = tabElement.getBoundingClientRect();
+
+        if(rect.top >= 0
+        && rect.left >= 0
+        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+        &&  rect.right <= (window.innerWidth || document.documentElement.clientWidth))
+        {
+            // visible
+        }
+        else
+        {
+            tabElement.scrollIntoView({block: "end", behavior: "smooth"});
+        }
     }
 
     build_ui()
@@ -144,17 +179,44 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
     }
 
+    /* Firefox's security features prevents us from loading some default icons,
+    replace with local, exact-same icon versions
+    - yes. that's kinda stupid  */
+    normalize_tab_icon(iconURL)
+    {
+        if(typeof iconURL == "undefined")
+        {
+            return "data/chrome/icon/defaultFavicon.png";
+        }
+
+        switch (iconURL)
+        {
+            case "chrome://mozapps/skin/extensions/extensionGeneric-16.png":
+                return "data/chrome/icon/extensionGeneric-16.png"
+            break;
+
+            case "chrome://mozapps/skin/places/defaultFavicon.png":
+                return "data/chrome/icon/defaultFavicon.png";
+            break;
+
+            default:
+                return iconURL;
+        }
+
+    }
+
     create_tab(tab)
     {
         let id = tab.id;
         let url = tab.url;
         let title = tab.title || "Connecting...";
         let pinned = tab.pinned;
+        let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let div = document.createElement("div");
+        /*let div = document.createElement("div");
         div.className = "tabbrowser-tab";
         div.setAttribute('contextmenu', 'tabContextMenu');
-        div.id = id;
+        div.id = id;*/
 
         /*let a = document.createElement('a');
         a.className = 'tab';
@@ -169,11 +231,21 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             var pinnedHTML = '';
         }
-        
-        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
-        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" class="tabbrowser-tab" label="${title}" ${pinnedHTML} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
 
-        //setTimeout(function(){}, 0); // workaround
+
+        if(tab.selected == true)
+        {
+            var selectedAttribute = 'selected="true"';
+            this.selectedTabID = id;
+        }
+        else
+        {
+            var selectedAttribute = '';
+        }
+
+        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
+        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
+
 
         this.document.getElementById("tab-"+id).addEventListener('click', (event) =>
         {
@@ -182,7 +254,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
 
 
-
+        if(this.newOpenedTabSelectIt == id)
+        {
+            this.newOpenedTabSelectIt = undefined;
+            this.update_tab(id, "selected", "true");
+        }
         /*for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
           button.className = `button right ${method}`;
@@ -216,22 +292,50 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     update_tab(tabID, attribute, value)
     {
         this.debug_log("update tab: " + tabID + " " + attribute + " " + value);
-        if(attribute == "title")
+        switch(attribute)
         {
-            this.document.getElementById("tab-"+tabID).setAttribute("label", value);
-            this.document.getElementById("tab-title-"+tabID).innerHTML = value;
-        }
+            case "title":
+                this.document.getElementById("tab-"+tabID).setAttribute("label", value);
+                this.document.getElementById("tab-title-"+tabID).innerHTML = value;
+            break;
 
-        if(attribute == "pinned")
-        {
-            if(value == true)
-            {
-                this.document.getElementById("tab-"+tabID).setAttribute("pinned", "true");
-            }
-            else
-            {
-                this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
-            }
+            case "pinned":
+                if(value == true)
+                {
+                    this.document.getElementById("tab-"+tabID).setAttribute("pinned", "true");
+                }
+                else
+                {
+                    this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
+                }
+            break;
+
+            case "favIconUrl":
+                value = this.normalize_tab_icon(value);
+                this.document.getElementById("tab-icon-"+tabID).setAttribute("src", value);
+            break;
+
+            case "selected":
+                if(this.selectedTabID != undefined)
+                {
+                    this.document.getElementById("tab-"+this.selectedTabID).removeAttribute("selected");
+                }
+
+                let selectedTab = this.document.getElementById("tab-"+tabID);
+                if(selectedTab != null)
+                {
+                    this.document.getElementById("tab-"+tabID).setAttribute("selected", "true");
+                    this.selectedTabID = tabID;
+
+                    this.scroll_to_tab(tabID);
+                }
+                else
+                {
+                    this.newOpenedTabSelectIt = tabID;
+                }
+
+            break;
+
         }
     }
 
@@ -328,9 +432,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.create_tab(tab);
         });
 
+        browser.tabs.onActivated.addListener((details) =>
+        {
+            this.update_tab(details.tabId, "selected", "true");
+        });
+
         browser.tabs.onUpdated.addListener((tabID, changeInfo, tab) =>
         {
-            console.log("Update: " + tabID + " " + changeInfo["title"]);
             if (changeInfo.hasOwnProperty("title"))
             {
                 this.update_tab(tabID, "title", changeInfo["title"]);
@@ -342,6 +450,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 {
                     this.update_tab(tabID, "pinned", changeInfo.pinned);
                 }
+            }
+
+            if(changeInfo.hasOwnProperty("favIconUrl"))
+            {
+                this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]);
             }
             /*if (changeInfo.hasOwnProperty('mutedInfo')) {
                 sidetabs.setMuted(tab, changeInfo.mutedInfo);

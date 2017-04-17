@@ -4,14 +4,14 @@
 
 :root {
 	/* Tabbrowser */
-	--vtr-tabbrowser-background-color: #FBFBFB;
+	--vtr-tabbrowser-background-color: #424F5A;
 	
 	/* Tabbar, only used if no Firefox Theme installed */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1; 
 	
 	/* Single tab */
-	--vtr-tab-text-color: #333333;
+	--vtr-tab-text-color: #fbfbfb;
 	--vtr-tab-background: transparent;
 	--vtr-tab-height: 28px; 
 	--vtr-tab-min-height: 28px; 
@@ -19,32 +19,32 @@
 	--vtr-tab-border: 0;
 	--vtr-tab-border-radius: 0;
 	--vtr-tab-border-left: 4px solid transparent;
-	--vtr-tab-border-bottom: 1px solid #bbc3cc;
+	--vtr-tab-border-bottom: 1px solid #5E6972;
 	
 	/* Single tab selected */
-	--vtr-tab-selected-text-color: #333333;
-	--vtr-tab-selected-background: #dadada;
+	--vtr-tab-selected-text-color: #fbfbfb;
+	--vtr-tab-selected-background: #343F48;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
 	--vtr-tab-selected-border-left: 4px solid #ff9500;
 	--vtr-tab-selected-border-radius: 0;
 	
 	/* Single tab pinned */
-	--vtr-tab-pinned-text-color: #333333;
-	--vtr-tab-pinned-background: #dadada;
+	--vtr-tab-pinned-text-color: #fbfbfb;
+	--vtr-tab-pinned-background: #343F48;
 	--vtr-tab-pinned-font-weight: 600;
 	--vtr-tab-pinned-text-shadow: none;
-	--vtr-tab-pinned-border-left: 4px solid #2292D0;
-	--vtr-tab-pinned-border-radius: 0;
+	--vtr-tab-pinned-border-left: 4px solid #ff9500;
+	--vtr-tab-pinned-border-radius: 0;	
 	
 	/* Single tab hover */
-	--vtr-tab-hover-background: #ebebeb;
+	--vtr-tab-hover-background: #5E6972;
 	
 	/* Splitter/Separation between tabbar and website */
-	--vtr-splitter-background: #ebebeb;
+	--vtr-splitter-background: #d6e5f5;
 	--vtr-splitter-width: 3px;
-	--vtr-splitter-border-left-size: 0;
-	--vtr-splitter-border-left-color: #ebebeb; 
-	--vtr-splitter-border-right-size: 0;
-	--vtr-splitter-border-right-color: #ebebeb; 
+	--vtr-splitter-border-left-size: 1px;
+	--vtr-splitter-border-left-color: #fcfcfc; 
+	--vtr-splitter-border-right-size: 1px;
+	--vtr-splitter-border-right-color: #fcfcfc; 
 }

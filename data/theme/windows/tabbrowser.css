@@ -1,0 +1,89 @@
+/* The complete tab sidebar */
+.tabbrowser-tabs {
+	margin: 0 !important;
+	padding: 1px 0px 1px 1px !important;
+	background: transparent !important;
+}
+
+/* Style rules applied if there is no theme installed */
+.tabbrowser-tabs:not(:-moz-lwtheme) {
+	background-color: var(--vtr-tabbrowser-bg-color) !important; 
+}
+
+/* Single tab */
+.tabbrowser-tab {
+	-moz-box-pack: start;
+	-moz-box-flex: 0;
+
+	border: 1px solid transparent;
+	border-radius: 2.67px 0 0 2.67px;
+	border-bottom: 1px solid #5E6972;
+
+	margin: 0;
+	padding: 1px 2px 2px 0px;
+
+	/* XXX this height isn't correct, especially on higher dpi settings. */
+	/* but we can force it with a font-size, so it'll be correct */
+	/*font-size: 12px !important;*/
+
+	height: var(--vtr-tab-height) !important;
+	min-height: var(--vtr-tab-height) !important;
+	max-height: var(--vtr-tab-height) !important;
+}
+
+/* This is nonsense
+.tabbrowser-tab:-moz-lwtheme {
+	color: black;
+	text-shadow: none;
+}*/
+
+.tabbrowser-tab:hover:not(:-moz-lwtheme) {
+	border-color: gray;
+	background: linear-gradient(to bottom, #fafbfd, #ebf3fd) repeat-x !important;
+}
+
+.tabbrowser-tab[pinned] {
+	position: inherit; 
+	border-left: 4px solid #2292D0 !important;
+}
+
+.tabbrowser-tab[pinned]:not(:-moz-lwtheme) {
+	background: linear-gradient(to right, gray, #ebf3fd) repeat-y !important;
+}
+
+.tabbrowser-tab[selected="true"] {
+	margin: 0 !important;
+	padding: 0 0 0 3px !important;
+}
+
+.tabbrowser-tab[selected="true"]:not(:-moz-lwtheme) {
+	border-color: gray;
+	background: linear-gradient(to bottom, #ebf4fe, #cfe4fe) repeat-x;
+
+	font-weight: normal;
+	text-shadow: none;
+}
+
+.tabbrowser-tab[selected="true"]:-moz-window-inactive{
+	border: 1px solid !important;
+	-moz-border-top-colors: #d9d9d9 #fafafb !important;
+	-moz-border-bottom-colors: #d9d9d9 #f0f0f0 !important;
+	-moz-border-left-colors: #d9d9d9 #f8f8f8 !important;
+	-moz-border-right-colors: #d9d9d9 #f8f8f8 !important;
+	background: linear-gradient(to bottom, #f8f8f8, #e5e5e5) repeat-x !important;
+}
+
+.tabbrowser-tab:not([selected="true"]):hover {
+	/*margin: 0 !important;*/
+	/*padding: 0 0 0 3px !important;*/
+}
+
+/* Turn mouse cursor into a pointy hand. */
+.tabbrowser-tab,
+.tab-text {
+	cursor: pointer !important;
+}
+
+.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
+	visibility: collapse !important;
+}
