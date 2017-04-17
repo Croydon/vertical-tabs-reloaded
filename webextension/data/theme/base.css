@@ -1,10 +1,15 @@
-/* Style the scrollbox for vertical arrangements. */
+body
+{
+    font: message-box !important;
+}
+
+/* FIXME: likely to be removed; Style the scrollbox for vertical arrangements. */
 .tabbrowser-arrowscrollbox > scrollbox {
     overflow-x: hidden !important;
     overflow-y: auto !important;
 }
 
-/* Since we get an actual scrollbar in this vertical arrangement, we
+/* FIXME: likely to be removed; Since we get an actual scrollbar in this vertical arrangement, we
    don't need these extra scroll buttons. */
 .tabbrowser-arrowscrollbox > .scrollbutton-up,
 .tabbrowser-arrowscrollbox > .scrollbutton-down {
@@ -75,14 +80,23 @@
 	height: 20px;
 	max-height: 40px !important;
 	border-bottom: 1px solid #5E6972;
+    overflow: hidden;
 }
 
+.tab-label {
+    position: absolute;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-overflow: ellipsis
+}
+
+/* FIXME: likely to be removed */
 .tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
     -moz-padding-end: 0px ! important;
     -moz-padding-start: 0px ! important;
 }
 
-/* get rid of the tab separator from horizontal tabs */
+/* FIXME: likely to be removed; get rid of the tab separator from horizontal tabs */
 .tabbrowser-tab:after,
 .tabbrowser-tab:before {
   content: none !important;

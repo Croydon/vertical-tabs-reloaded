@@ -1,4 +1,70 @@
-@import "../../../webextension/data/theme/linux/index.css";
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-// legacy importer
+.tabbrowser-tabs {
+    margin: 1px 0 0 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    background-color: -moz-Field !important;
+    border: 1px solid ButtonShadow !important;
+}
+
+.tabbrowser-tab {
+    -moz-box-pack: start;
+    -moz-box-flex: 0;
+    -moz-appearance: none !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 1px 0 !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+	border: 1px solid transparent !important;
+    border-radius: 0 !important;
+	border-bottom: 1px solid #bbc3cc !important;
+}
+
+.tabbrowser-tab[pinned] {
+	border-left: 4px solid #2292D0 !important;
+}
+
+.tabbrowser-tab[selected="true"] {
+    margin: 0 !important;
+    padding: 1px 0 !important;
+
+    background-color: Highlight !important;
+    
+    color: HighlightText !important;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
+    background-color: InactiveCaption !important;
+    color: InactiveCaptionText !important;
+   /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
+}
+
+.tabbrowser-tab:not([selected="true"]):hover {
+    margin: 0 !important;
+    padding: 1px 0 !important;
+	background-color: #ebebeb !important;
+}
+
+.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
+    visibility: collapse !important;
+}
+
+/* Keep the close button at a safe distance from the tab label. */
+.tab-close-button {
+    display: -moz-box;
+    margin-left: 3px !important;
+    margin-right: 1px !important;
+    margin-bottom: -3px !important;
+}
+
+
+/** Drop indicator for drag'n'drop of tabs - Works OOTB(TM)- Just needs a margin.**/
+.tab-drop-indicator {
+    margin-top: -11px !important;
+    margin-bottom: 0 !important;
+}

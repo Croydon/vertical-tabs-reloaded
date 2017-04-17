@@ -31,7 +31,7 @@
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
 	--vtr-tab-pinned-background: #343F48;
-	--vtr-tab-pinned-font-weight: 600;
+	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #2292D0;
 	--vtr-tab-pinned-border-radius: 0;

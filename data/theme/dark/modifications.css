@@ -1,0 +1,48 @@
+/* Single Tab modifications */
+.tabbrowser-tab:not([pinned]) .tab-close-button {
+	list-style-image: url("chrome://global/skin/icons/close-inverted.png") !important;
+}
+
+@media (max-resolution: 1dppx) {
+	.tabbrowser-tab:not([pinned]) .tab-close-button {
+		-moz-image-region: rect(0px, 20px, 20px, 0px) !important;
+	}
+	
+	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
+		-moz-image-region: rect(0px, 40px, 20px, 20px) !important;
+	}
+	
+	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
+		-moz-image-region: rect(0px, 60px, 20px, 40px) !important;
+	}
+	
+	@media (-moz-os-version: windows-xp),
+       (-moz-os-version: windows-vista),
+       (-moz-os-version: windows-win7) {
+		.tabbrowser-tab:not([pinned]) .tab-close-button {
+			-moz-image-region: rect(0, 16px, 16px, 0) !important;
+		}
+
+		.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
+			-moz-image-region: rect(0, 32px, 16px, 16px) !important;
+		}
+
+		.tabbrowser-tab:not([pinned]) .tab-close-button:active {
+			-moz-image-region: rect(0, 48px, 16px, 32px) !important;
+		}
+	}
+}
+
+@media (min-resolution: 1.1dppx) {
+	.tabbrowser-tab:not([pinned]) .tab-close-button {
+		list-style-image: url("chrome://global/skin/icons/close-inverted@2x.png") !important;
+	}
+}
+
+.tab-icon-sound[soundplaying] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-white") !important;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-muted-white") !important;
+}
