@@ -141,18 +141,6 @@ function webext_replyHandler(message)
     {
         toggleDrawInTitlebar();
     }
-
-    /*if(message.type == "css.post")
-    {
-        if(webextPreferences.hasOwnProperty("css") == false)
-        {
-            webextPreferences["css"] = {};
-        }
-
-        webextPreferences["css"][message.name] = message.value;
-        //debugOutput(message.value);
-        observPrefs("css");
-    }*/
 }
 
 // Send setting to WebExtension
@@ -186,31 +174,6 @@ function observPrefs(settingName)
 	        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
 	    }
 	}
-
-    /*if(settingName == "css")
-    {
-        let newStyle;
-        debugOutput("dummy");
-        Object.keys(webextPreferences["css"]).forEach(k =>
-        {
-            debugOutput(k);
-            newStyle = newStyle + webextPreferences["css"][k];
-            debugOutput(webextPreferences["css"][k]);
-        });
-        debugOutput("dummy2");
-        var style = Style({ source: newStyle });
-        debugOutput("css changed!");
-        debugOutput(style);
-        debugOutput("dummy3");
-        for (let window of windows.browserWindows)
-        {
-            let lowLevelWindow = viewFor(window);
-            let windowID = windowUtils.getOuterId(lowLevelWindow);
-            contentMod.attachTo(style, lowLevelWindow);
-        }
-    }*/
-
-
 }
 
 //

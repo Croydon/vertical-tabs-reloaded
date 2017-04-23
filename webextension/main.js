@@ -72,25 +72,6 @@ function get_setting(name)
     });
 }
 
-//
-// CSS Mangament
-//
-
-function css_load_file(filename)
-{
-    return new Promise(function (fulfill, reject)
-    {
-        var read = new XMLHttpRequest();
-        debug_log(browser.runtime.getURL("data/"+filename));
-        read.open("GET", browser.runtime.getURL("data/"+filename), false);
-        read.onreadystatechange = function()
-        {
-            //console.log(read.responseText);
-            fulfill(read.responseText);
-        }
-        read.send();
-    });
-}
 
 //
 // Communication with the legacy part + content script
@@ -113,7 +94,7 @@ sdk_send_all_settings();
 function sdk_send_changed_setting(settingName)
 {
     sdk_send_all_settings();
-    
+
     get_setting(settingName).then(value => {
         sdk_sendMsg({
             type: "settings.post",
@@ -136,22 +117,6 @@ function sdk_replyHandler(message)
     {
         restore_default_settings();
     }
-
-    /*if(message.type == "css.get")
-    {
-        if(message.file == "none")
-        {
-            // Reset some saved CSS values
-            sdk_sendMsg({type: "css.post", name: message.name, value: ""});
-        }
-        else
-        {
-            css_load_file(message.file).then(css =>
-            {
-                sdk_sendMsg({type: "css.post", name: message.name, value: css});
-            });
-        }
-    }*/
 
     if(message.type == "debug.log")
     {
