@@ -35,7 +35,7 @@
 	height: var(--vtr-tabbar-height);
 	margin: 0 -3px -1px 0px !important;
 	box-shadow: none !important;
-	-moz-appearance: none !important;
+	appearance: none !important;
 	border-top: 1px solid rgb(160,160,160) !important;
 	border-right: 2px solid !important;
 	border-bottom-left-radius: 0px !important;

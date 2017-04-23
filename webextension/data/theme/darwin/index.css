@@ -30,7 +30,7 @@
 
 /* Use the splitter to display the border of .tabbrowser-tabs */
 #verticaltabs-splitter {
-    -moz-appearance: none;
+    appearance: none;
     background-image: none;
     background-color: none;
     border: 0;
@@ -49,7 +49,7 @@
 .tabbrowser-tab {
     -moz-box-pack: start;
     -moz-box-flex: 0;
-    -moz-appearance: none !important;
+    appearance: none !important;
     background: #333 !important;
     -moz-border-top-colors: none !important;
     -moz-border-bottom-colors: none !important;

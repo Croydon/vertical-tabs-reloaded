@@ -8,7 +8,7 @@
 .tabbrowser-tab {
 	-moz-box-pack: start;
 	-moz-box-flex: 0;
-	-moz-appearance: none !important;
+	appearance: none !important;
 	background: var(--vtr-tab-background) !important;
 	margin: 0 !important;
 	padding: 1px 0 !important;
