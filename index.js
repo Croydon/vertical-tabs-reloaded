@@ -276,10 +276,20 @@ exports.main = function (options, callbacks) {
                 preferencesService.set("browser.tabs.drawInTitlebar", false);
             }
 
-            // Back up 'browser.tabs.animate' pref before overwriting it
-            tabsAnimatePrefBackup = preferencesService.get("browser.tabs.animate");
+            // Back up browser.tabs.animate (FF54-) or toolkit.cosmeticAnimations.enabled (FF55+) pref before overwriting it
+			if(preferencesService.has("toolkit.cosmeticAnimations.enabled"))
+			{
+				tabsAnimatePrefBackup = preferencesService.get("toolkit.cosmeticAnimations.enabled");
 
-            preferencesService.set("browser.tabs.animate", false);
+				preferencesService.set("toolkit.cosmeticAnimations.enabled", false);
+			}
+			else
+			{
+				tabsAnimatePrefBackup = preferencesService.get("browser.tabs.animate");
+
+				preferencesService.set("browser.tabs.animate", false);
+			}
+
 
             if(sdk_inited == "prepared")
             {
@@ -303,7 +313,15 @@ exports.onUnload = function (reason) {
         deinitialize_window(window);
     }
 
-	preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
+	if(preferencesService.has("toolkit.cosmeticAnimations.enabled"))
+	{
+		preferencesService.set("toolkit.cosmeticAnimations.enabled", tabsAnimatePrefBackup);
+	}
+	else
+	{
+		preferencesService.set("browser.tabs.animate", tabsAnimatePrefBackup);
+	}
+
 
     if (reason == "uninstall")
     {
