@@ -1,5 +1,19 @@
 # Changelog
 
+### v0.8.3, 2017-04-23
+ * added: feature to display tab status (loaded, unloaded, unread, busy) (#67)
+ * added: possibility to show hidden settings in settings UI
+ * added: minimal changed version of the icons
+ * fixed: error when hotkey is invalid or non-existing (#72)
+ * fixed: use toolkit.cosmeticAnimations.enabled in FF55+ (#83)
+ * internal: continue rewriting add-on as a WebExtension (#13)
+   * make WebExtensions main settings manager
+   * removed: settings in the legacy storage
+
+
+***
+
+
 ### v0.8.2, 2017-03-30
  * change default hotkey for hiding the tabbrowser to Control+Shift+V (#13)
    * the former hotkey is not compatible with the WebExtension APIs
