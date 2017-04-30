@@ -1,6 +1,7 @@
 body
 {
     font: message-box !important;
+    height: 100vh;
 }
 
 /* FIXME: likely to be removed; Style the scrollbox for vertical arrangements. */

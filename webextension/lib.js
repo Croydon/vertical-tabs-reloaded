@@ -493,6 +493,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.toggleDisplayState();
         });
 
+        // Doubleclick on free space within the tabbrowser opens a new tab
+        this.document.getElementById("tabbrowser-tabs").addEventListener("dblclick", (e) =>
+        {
+            if(e.target == this.document.getElementById("tabbrowser-tabs"))
+            {
+                browser.tabs.create({
+                    active:true
+                });
+            }
+        });
+
         //Old event handler: case "popupshowing":
             //return;
     }
