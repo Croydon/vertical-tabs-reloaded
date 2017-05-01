@@ -1,4 +1,4 @@
-# ![](https://github.com/Croydon/vertical-tabs-reloaded/blob/master/data/icon.png) Vertical Tabs Reloaded for Firefox
+# ![](https://github.com/Croydon/vertical-tabs-reloaded/raw/0.8.0/data/icon.png) Vertical Tabs Reloaded for Firefox
 
 
 [![](https://img.shields.io/amo/v/vertical-tabs-reloaded.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/) [![](https://img.shields.io/amo/d/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/statistics/?last=365) [![](https://img.shields.io/amo/users/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/statistics/usage/?last=365) [![](https://img.shields.io/amo/rating/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
@@ -11,15 +11,16 @@ Source Code & Issue Tracker: https://github.com/Croydon/vertical-tabs-reloaded
 
 Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
 
+If you like my work you could [buy me a drink. ☕](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/developers)
 
 ## Features:
 
  * arranges tabs vertical
  * ships 5 different styles for the tab sidebar (+ option to use Firefox/thirdparty add-ons style)
- * hides tab sidebar in fullscreen mode (toggleable)
+ * hides tab sidebar in fullscreen mode (opt-out)
  * hide/display manually the tab sidebar at any time with a hotkey (customizable)
  * display the tab sidebar either on the left side (default) or on the right
- * display the tab toolbar at top (default) or at bottom
+ * display the tab toolbar at top or at bottom (default)
  * compact mode: hide text labels on tabs for a minimalistic tab sidebar (opt-in)
 
 ## Goals:
