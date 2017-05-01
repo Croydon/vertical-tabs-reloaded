@@ -40,6 +40,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.build_ui();
         this.initEventListeners();
         this.scroll_to_tab(this.selectedTabID);
+        this.toolbar_activate();
     }
 
     preferences(settingName)
@@ -562,6 +563,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.changeDisplayState("");
         }
+    }
+
+    toolbar_activate()
+    {
+        this.document.getElementById("toolbar-action-tab-new").addEventListener("click", () => {
+            browser.tabs.create({
+                active:true
+            });
+        });
     }
 
     unload()

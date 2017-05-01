@@ -7,6 +7,7 @@ body {
 
 /* Tab toolbar styling */
 #TabsToolbar:not(:-moz-lwtheme)  {
+	flex: 0 1 var(--vtr-tabbar-height) !important;
 	height: var(--vtr-tabbar-height);
 	border-bottom-left-radius: 0px !important;
 	box-shadow: none !important;

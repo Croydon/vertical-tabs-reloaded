@@ -17,6 +17,10 @@ body
     flex: 0 1 auto;
 }
 
+#TabsToolbar {
+    flex: 0 1 24px;
+}
+
 /* FIXME: likely to be removed; Style the scrollbox for vertical arrangements.
 .tabbrowser-arrowscrollbox > scrollbox {
     overflow-x: hidden !important;
