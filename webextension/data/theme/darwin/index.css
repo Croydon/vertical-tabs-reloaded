@@ -10,14 +10,14 @@
     height: 44px !important;
 }
 
-.tabbrowser-tabs {
+body {
     margin: 0 !important;
     padding: 0 !important;
     background: transparent !important;
     background-color: #333 !important;
 }
 
-.tabbrowser-tabs:-moz-window-inactive {
+body:-moz-window-inactive {
     background-color: #333 !important;
 }
 

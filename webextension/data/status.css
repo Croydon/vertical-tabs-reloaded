@@ -24,8 +24,3 @@
 {
     text-decoration: underline !important;
 }
-
-#TabsToolbar #tabbrowser-tab
-{
-    background-color: red !important;
-}

@@ -89,7 +89,7 @@ function build()
 
         if(setting.type == "menulist")
         {
-            settingsHTML = '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td><select id="' + setting.name + '"' + addition + '>';
+            settingsHTML += '<tr class="detail-row-complex ' + classHidden + '"><td>' + setting.title + description +'</td> <td><select id="' + setting.name + '"' + addition + '>';
             Object.keys(setting.options).forEach(function(key)
             {
                 let option = setting.options[key];
