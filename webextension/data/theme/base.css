@@ -5,6 +5,7 @@ body
     display: flex;
     flex-flow: column;
     overflow-y: hidden;
+    -moz-user-select: none;
 }
 
 #tabbrowser-tabs {
@@ -16,18 +17,24 @@ body
     flex: 0 1 auto;
 }
 
-/* FIXME: likely to be removed; Style the scrollbox for vertical arrangements. */
+/* FIXME: likely to be removed; Style the scrollbox for vertical arrangements.
 .tabbrowser-arrowscrollbox > scrollbox {
     overflow-x: hidden !important;
     overflow-y: auto !important;
 }
 
-/* FIXME: likely to be removed; Since we get an actual scrollbar in this vertical arrangement, we
-   don't need these extra scroll buttons. */
+FIXME: likely to be removed; Since we get an actual scrollbar in this vertical arrangement, we
+   don't need these extra scroll buttons.
 .tabbrowser-arrowscrollbox > .scrollbutton-up,
 .tabbrowser-arrowscrollbox > .scrollbutton-down {
     visibility: collapse !important;
 }
+
+ FIXME: likely to be removed
+.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
+    -moz-padding-end: 0px ! important;
+    -moz-padding-start: 0px ! important;
+} */
 
 /* Ensure the tab favicon doesn't stretch. */
 .tab-icon-image {
@@ -103,11 +110,6 @@ body
     text-overflow: ellipsis
 }
 
-/* FIXME: likely to be removed */
-.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
-    -moz-padding-end: 0px ! important;
-    -moz-padding-start: 0px ! important;
-}
 
 /* FIXME: likely to be removed; get rid of the tab separator from horizontal tabs */
 .tabbrowser-tab:after,

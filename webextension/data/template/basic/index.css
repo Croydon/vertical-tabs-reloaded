@@ -1,14 +1,2 @@
 @import "tab.css";
 @import "tabbrowser.css";
-
-/* Tab toolbar styling */
-#TabsToolbar:not(:-moz-lwtheme)  {
-	height: var(--vtr-tabbar-height);
-	border-bottom-left-radius: 0px !important;
-	box-shadow: none !important;
-	appearance: none !important;
-	border-top: 1px solid rgb(160,160,160) !important;
-	-moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
-	background-color: var(--vtr-tabbar-background-color) !important;
-	background-image: none !important;
-}

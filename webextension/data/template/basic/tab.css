@@ -1,3 +1,58 @@
+.tabbrowser-tab {
+	-moz-box-pack: start;
+	-moz-box-flex: 0;
+	appearance: none !important;
+	background: var(--vtr-tab-background) !important;
+	margin: 0 !important;
+	padding: 1px 0 !important;
+	height: var(--vtr-tab-height) !important;
+	min-height: var(--vtr-tab-min-height) !important;
+	max-height: var(--vtr-tab-max-height) !important;
+	color: var(--vtr-tab-text-color) !important;
+	border: var(--vtr-tab-border) !important;
+	border-radius: var(--vtr-tab-border-radius) !important;
+	border-left: var(--vtr-tab-border-left) !important;
+	border-bottom: var(--vtr-tab-border-bottom) !important;
+}
+
+.tabbrowser-tab[pinned] {
+	margin: 0 !important;
+	padding: 1px 0 !important;
+	color: var(--vtr-tab-pinned-text-color) !important;
+	background: var(--vtr-tab-pinned-background) !important;
+	font-weight: var(--vtr-tab-pinned-font-weight);
+	text-shadow: var(--vtr-tab-pinned-text-shadow);
+	border-left: var(--vtr-tab-pinned-border-left) !important;
+	border-radius: var(--vtr-tab-pinned-border-radius) !important;
+}
+
+.tabbrowser-tab[selected="true"] {
+	margin: 0 !important;
+	padding: 1px 0 !important;
+	color: var(--vtr-tab-selected-text-color) !important;
+	background: var(--vtr-tab-selected-background) !important;
+	font-weight: var(--vtr-tab-selected-font-weight);
+	text-shadow: var(--vtr-tab-selected-text-shadow);
+	border-left: var(--vtr-tab-selected-border-left) !important;
+	border-radius: var(--vtr-tab-selected-border-radius) !important;
+}
+
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
+	background-color: InactiveCaption !important;
+	color: InactiveCaptionText !important;
+/* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
+}
+
+.tabbrowser-tab:not([selected="true"]):hover {
+	margin: 0 !important;
+	padding: 1px 0 !important;
+	background: var(--vtr-tab-hover-background) !important;
+}
+
+.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
+	visibility: collapse !important;
+}
+
 /* Keep the close button at a safe distance from the tab label. */
 .tab-close-button {
 	position: absolute;
