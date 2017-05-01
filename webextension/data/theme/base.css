@@ -2,6 +2,18 @@ body
 {
     font: message-box !important;
     height: 100vh;
+    display: flex;
+    flex-flow: column;
+    overflow-y: hidden;
+}
+
+#tabbrowser-tabs {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+}
+
+#tabbrowser-tabs-pinned {
+    flex: 0 1 auto;
 }
 
 /* FIXME: likely to be removed; Style the scrollbox for vertical arrangements. */
@@ -85,7 +97,7 @@ body
 }
 
 .tab-label {
-    position: absolute;
+    /*position: absolute;*/
     white-space: nowrap;
     vertical-align: middle;
     text-overflow: ellipsis

@@ -243,9 +243,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             var selectedAttribute = '';
         }
 
-        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
-        this.tabbrowser.insertAdjacentHTML("beforeend", `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`);
+        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`;
 
+        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
+        if(pinned == true)
+        {
+            this.document.getElementById("tabbrowser-tabs-pinned").insertAdjacentHTML("beforeend", tabHTML);
+        }
+        else
+        {
+            this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
+        }
 
         this.document.getElementById("tab-"+id).addEventListener('click', (event) =>
         {
@@ -303,10 +311,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 if(value == true)
                 {
                     this.document.getElementById("tab-"+tabID).setAttribute("pinned", "true");
+                    this.document.getElementById("tabbrowser-tabs-pinned").appendChild(this.document.getElementById("tab-"+tabID));
                 }
                 else
                 {
                     this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
+                    this.document.getElementById("tabbrowser-tabs").appendChild(this.document.getElementById("tab-"+tabID));
                 }
             break;
 
