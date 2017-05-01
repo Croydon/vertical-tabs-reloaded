@@ -60,7 +60,7 @@
 		"name": "tabtoolbarPosition",
 		"type": "menulist",
 		"title": "Toolbar Position",
-		"value": "top",
+		"value": "bottom",
 		"options": [
 			{
 				"value": "top",
