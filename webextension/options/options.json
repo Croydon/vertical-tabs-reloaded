@@ -63,13 +63,17 @@
 		"value": "bottom",
 		"options": [
 			{
-				"value": "top",
-				"label": "Top"
-			},
-			{
 				"value": "bottom",
 				"label": "Bottom"
-			}
+			},
+            {
+                "value": "top",
+                "label": "Top"
+            },
+            {
+                "value": "hide",
+                "label": "Hide (only in experiment mode)"
+            }
 		]
 	},
 	"toggleDrawInTitlebar": {

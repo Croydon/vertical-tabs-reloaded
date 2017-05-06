@@ -377,10 +377,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 // Placeholder.
                 //break;
 
-            //case "tabtoolbarPosition":
-                //this.webExtPreferences = newValue;
-                // Placeholder.
-                //break;
+            case "tabtoolbarPosition":
+                this.webExtPreferences[prefName] = newValue;
+                let TabsToolbar = this.document.getElementById("TabsToolbar");
+
+                switch(newValue)
+                {
+                    case "hide":
+                        TabsToolbar.style.display = "none";
+                        break;
+
+                    case "top":
+                        TabsToolbar.style.display = "";
+                        this.document.body.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned") );
+                        break;
+
+                    case "bottom":
+                        TabsToolbar.style.display = "";
+                        this.document.appendChild(TabsToolbar);
+                        break;
+                }
+                break;
 
             case "theme":
                 this.removeThemeStylesheet();
@@ -567,6 +584,23 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     toolbar_activate()
     {
+        let TabsToolbar = this.document.getElementById("TabsToolbar");
+
+        switch(this.preferences("tabtoolbarPosition"))
+        {
+            case "hide":
+                TabsToolbar.style.display = "none";
+                break;
+
+            case "top":
+                this.document.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned") );
+                break;
+
+            case "bottom":
+                // Default position
+                break;
+        }
+
         this.document.getElementById("toolbar-action-tab-new").addEventListener("click", () => {
             browser.tabs.create({
                 active:true
