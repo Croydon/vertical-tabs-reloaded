@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.8.3.1, 2017-05-21
+ * fixed: fallback to default settings when no values saved by user (#86)
+ * this version is commit a137da8 + backported commit 87bf4f4
+
+
+***
+
+
 ### v0.8.3, 2017-04-23
  * added: feature to display tab status (loaded, unloaded, unread, busy) (#67)
  * added: possibility to show hidden settings in settings UI
