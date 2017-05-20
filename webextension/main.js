@@ -44,22 +44,61 @@ function save_setting(name, value)
     });
 }
 
+function get_all_settings()
+{
+    // This is necessary to not only get all actually saved values, but also the default values for unsaved attributes
+    return new Promise(function (fulfill, reject)
+    {
+        let allSettings = {};
+
+        let forEachSetting = (name) =>
+        {
+            return new Promise((fulfill) =>
+            {
+                get_setting(name).then(value =>
+                {
+                    let newValue = {};
+                    newValue[name] = value;
+                    Object.assign(allSettings, newValue);
+                    fulfill(true);
+                });
+            });
+        }
+
+        let allPromises = Object.keys(defaultSettings).map(forEachSetting);
+
+        Promise.all(allPromises).then(() =>
+        {
+            fulfill(allSettings);
+        });
+    }).catch(
+        function(reason) {
+            debug_log(reason);
+        }
+    );
+}
+
 function get_setting(name)
 {
+    if(name == undefined)
+    {
+        return get_all_settings();
+    }
+
     return new Promise(function (fulfill, reject)
     {
         browser.storage.local.get(name).then(results =>
         {
             if (!results.hasOwnProperty(name))
             {
-                debug_log("VTR WebExt setting '"+ name +"': not saved use default value.");
+                if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': not saved use default value."); }
                 if(defaultSettings.hasOwnProperty(name))
                 {
                     results[name] = defaultSettings[name];
                 }
                 else
                 {
-                    debug_log("VTR WebExt setting '"+ name +"': no default value found.");
+                    if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': no default value found."); }
                 }
             }
 
@@ -79,8 +118,11 @@ function get_setting(name)
 
 function sdk_send_all_settings()
 {
-    browser.storage.local.get().then(value => {
+    get_all_settings().then(value =>
+    {
+        // for legacy part FIXME: remove
         value["dataPath"] = browser.runtime.getURL("data/");
+
         sdk_sendMsg({
             type: "settings.post-all",
             value: value
@@ -88,9 +130,7 @@ function sdk_send_all_settings()
     });
 }
 
-sdk_send_all_settings();
-
-// Changed addon preferences, send to SDK
+// Changed addon preferences, send to SDK // FIXME: remove
 function sdk_send_changed_setting(settingName)
 {
     sdk_send_all_settings();
@@ -138,8 +178,11 @@ function sdk_sendMsg(message)
 }
 
 
-setTimeout(function() {
-    // Get all settings from the legacy part once
+setTimeout(function()
+{
+    sdk_send_all_settings();
+
+    // Get all settings from the legacy part once // FIXME: remove
     sdk_sendMsg({type: "settings.migrate"});
 
     // Set up listener
