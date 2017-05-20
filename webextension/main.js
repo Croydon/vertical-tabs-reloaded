@@ -10,19 +10,24 @@ var settings;
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function()
 {
-    settings = JSON.parse(xhr.responseText);
-
-    // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
-    // Right now it's possible to toggle so we toggeling on the base of good luck
-    // and just hoping to end up with an open sidebar
-    get_setting("experiment").then(value =>
+    if(xhr.readyState == 4) // 4 == DONE
     {
-        if(value == true)
+        settings = xhr.response;
+
+        // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
+        // Right now it's possible to toggle so we toggeling on the base of good luck
+        // and just hoping to end up with an open sidebar
+        get_setting("experiment").then(value =>
         {
-            // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
-        }
-    });
+            if(value == true)
+            {
+                // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
+            }
+        });
+    }
 }
+xhr.overrideMimeType("json");
+xhr.responseType = "json";
 xhr.open("GET", "options/options.json", true);
 xhr.send();
 
@@ -59,11 +64,45 @@ function save_setting(name, value)
     });
 }
 
+function get_all_settings()
+{
+    // This is necessary to not only get all actually saved values, but also the default values for unsaved attributes
+    return new Promise(function (fulfill, reject)
+    {
+        let allSettings = {};
+
+        let forEachSetting = (name) =>
+        {
+            return new Promise((fulfill) =>
+            {
+                get_setting(name).then(value =>
+                {
+                    let newValue = {};
+                    newValue[name] = value;
+                    Object.assign(allSettings, newValue);
+                    fulfill(true);
+                });
+            });
+        }
+
+        let allPromises = Object.keys(settings).map(forEachSetting);
+
+        Promise.all(allPromises).then(() =>
+        {
+            fulfill(allSettings);
+        });
+    }).catch(
+        function(reason) {
+            debug_log(reason);
+        }
+    );
+}
+
 function get_setting(name)
 {
     if(name == undefined)
     {
-        return browser.storage.local.get();
+        return get_all_settings();
     }
 
     return new Promise(function (fulfill, reject)
@@ -72,14 +111,16 @@ function get_setting(name)
         {
             if (!results.hasOwnProperty(name))
             {
-                debug_log("VTR WebExt setting '"+ name +"': not saved use default value.");
+                // Debug output for "debug" is causing potentially an endless loop to the extend that browser doesn't react anymore
+                if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': not saved use default value."); }
                 if(settings.hasOwnProperty(name))
                 {
+                    if(name != "debug") { debug_log("VTR default setting for '"+ name +"' is '"+ settings[name]["value"] + "'"); }
                     results[name] = settings[name]["value"];
                 }
                 else
                 {
-                    debug_log("VTR WebExt setting '"+ name +"': no default value found.");
+                    if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': no default value found."); }
                 }
             }
 
@@ -115,19 +156,16 @@ function css_get_full_path()
 
 function on_options_change()
 {
-    browser.storage.local.get().then(value =>
+    get_all_settings().then(value =>
     {
         // for legacy part FIXME: remove
         value["dataPath"] = "resource://verticaltabsreloaded-at-go-dev-dot-de/data/";
-        if(typeof value["theme"] === "undefined") { value["theme"] = "dark"; }
         sdk_sendMsg({
             type: "settings.post-all",
             value: value
         });
     });
 }
-
-on_options_change();
 
 // Changed addon preferences, send to SDK // FIXME: remove
 function sdk_send_changed_setting(settingName)
@@ -216,7 +254,10 @@ setInterval(function()
 }, 100);
 
 
-setTimeout(function() {
+setTimeout(function()
+{
+    on_options_change();
+
     // Get all settings from the legacy part once // FIXME: remove
     sdk_sendMsg({type: "settings.migrate"});
 
