@@ -2,6 +2,7 @@
 
 ### v0.8.3.1, 2017-05-21
  * fixed: fallback to default settings when no values saved by user (#86)
+ * fixed: potential endless spamming in the console
  * this version is commit a137da8 + backported commit 87bf4f4
 
 
