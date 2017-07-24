@@ -28,7 +28,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.windows.getCurrent({windowTypes: ['normal']}).then((windowObj) =>
         {
-            this.windowsID = windowObj.id;
+            this.windowID = windowObj.id;
             this.init();
         });
     }
@@ -356,8 +356,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     remove_tab(tabID)
     {
-        this.debug_log("remove tab: " + tabID);
-        this.document.getElementById("tab-"+tabID).remove();
+        if(this.document.getElementById("tab-"+tabID) !== null)
+        {
+            this.debug_log("remove tab: " + tabID);
+            this.document.getElementById("tab-"+tabID).remove();
+        }
     }
 
     setPinnedSizes()
@@ -461,7 +464,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onCreated.addListener((tab) =>
         {
-            if(tab.windowId == this.windowsID)
+            if(tab.windowId == this.windowID)
             {
                 this.create_tab(tab);
             }
@@ -507,18 +510,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onDetached.addListener((tabID, details) =>
         {
-            if(tab.windowId == this.windowsID)
-            {
-                this.remove_tab(tabID);
-            }
+            this.remove_tab(tabID);
         });
 
         browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
         {
-            if(tab.windowId == this.windowsID)
-            {
-                this.remove_tab(tabID);
-            }
+            this.remove_tab(tabID);
         });
 
         browser.commands.onCommand.addListener((command) =>
