@@ -26,7 +26,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
-        this.init();
+        browser.windows.getCurrent({windowTypes: ['normal']}).then((windowObj) =>
+        {
+            this.windowsID = windowObj.id;
+            this.init();
+        });
     }
 
     init()
@@ -457,7 +461,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onCreated.addListener((tab) =>
         {
-            this.create_tab(tab);
+            if(tab.windowId == this.windowsID)
+            {
+                this.create_tab(tab);
+            }
         });
 
         browser.tabs.onActivated.addListener((details) =>
@@ -500,12 +507,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onDetached.addListener((tabID, details) =>
         {
-            this.remove_tab(tabID);
+            if(tab.windowId == this.windowsID)
+            {
+                this.remove_tab(tabID);
+            }
         });
 
         browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
         {
-            this.remove_tab(tabID);
+            if(tab.windowId == this.windowsID)
+            {
+                this.remove_tab(tabID);
+            }
         });
 
         browser.commands.onCommand.addListener((command) =>
