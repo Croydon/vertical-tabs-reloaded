@@ -42,8 +42,8 @@ FIXME: likely to be removed; Since we get an actual scrollbar in this vertical a
 
 /* Ensure the tab favicon doesn't stretch. */
 .tab-icon-image {
-    max-width: 16px;
-    max-height: 16px;
+    max-width: 22px;
+    max-height: 22px;
 }
 
 /* Hide the original tab toolbar buttons. */
