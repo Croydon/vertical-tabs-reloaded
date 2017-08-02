@@ -56,7 +56,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     installStylesheet(uri, type)
     {
         this.debug_log("VTR install sheet: " + uri + " of type: " + type);
-        this.tabbrowser.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
+        this.document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
     }
 
     removeStylesheet(type)
@@ -248,7 +248,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             var selectedAttribute = '';
         }
 
-        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`;
+        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`;
 
         // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
         if(pinned == true)
@@ -351,6 +351,52 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             break;
 
+            case "index":
+                this.document.getElementById("tab-"+tabID).setAttribute("data-index", value);
+                this.document.getElementById("tab-title-"+tabID).innerHTML = value;
+            break;
+
+        }
+    }
+
+    move_tab(tabID, fromIndex, toIndex)
+    {
+        this.debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
+        this.debug_log(this.tabbrowser.lastElementChild.getAttribute("data-index"));
+        if(toIndex == this.tabbrowser.lastElementChild.getAttribute("data-index"))
+        {
+            // Move at the end
+            this.tabbrowser.append( this.document.getElementById("tab-"+tabID) );
+        }
+        else
+        {
+            let insertBeforeIndex;
+            if(fromIndex < toIndex)
+            {
+                // Move down
+                insertBeforeIndex = toIndex + 1;
+            }
+            else
+            {
+                // Move up
+                insertBeforeIndex = toIndex;
+            }
+
+            let insertBeforeTab = this.document.querySelector(`div[data-index="${insertBeforeIndex}"]`);
+            //this.debug_log(insertBeforeIndex);
+            //this.debug_log(insertBeforeTab.outerHTML);
+            insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-"+tabID), insertBeforeTab);
+        }
+    }
+
+    update_tab_indexes()
+    {
+        let index = 0;
+        for(let tab of this.document.getElementsByClassName("tabbrowser-tab"))
+        {
+            tab.setAttribute("data-index", index)
+            //tab.innerHTML = index + " " + tab.innerHTML;
+            index++;
         }
     }
 
@@ -506,6 +552,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
           if (changeInfo.status === 'complete') {
             sidetabs.setIcon(tab);
         }*/
+        });
+
+        browser.tabs.onMoved.addListener((tabID, moveInfo) =>
+        {
+            this.move_tab(tabID, moveInfo["fromIndex"], moveInfo["toIndex"]);
+            //this.update_tab(tabID, "index", moveInfo["toIndex"]);
+            this.update_tab_indexes();
         });
 
         browser.tabs.onDetached.addListener((tabID, details) =>
