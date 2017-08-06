@@ -1,5 +1,23 @@
 # Changelog
 
+### v0.8.4, 2017-08-06
+ * added: add toolbar button to toggle sidebar
+ * added: hidden experiment add-on flag
+   * enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+   * enforce debugging and hidden settings for Firefox Beta
+ * internal: continue rewriting add-on as a WebExtension (#13)
+   * manage hotkey by WebExtension
+   * manage window events by WebExtension
+   * implement correct sorting of tabs - keep it dynamically up to date on tab moves
+   * implement tab toolbar with a new tab button
+     * make it possible to place it at top, bottom and hide it completely (#57)
+   * create new tab by clicking on free space within the tab browser (#17)
+   * scroll selected tabs automatically into view
+
+
+***
+
+
 ### v0.8.3.1, 2017-05-21
  * fixed: fallback to default settings when no values saved by user (#86)
  * fixed: potential endless spamming in the console

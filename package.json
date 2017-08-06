@@ -15,7 +15,7 @@
 	},
 	"engines":
 	{
-		"firefox": "54.0a1 - 56.0"
+		"firefox": "55.0a1 - 57.0a1"
     },
     "hasEmbeddedWebExtension": true
 }
