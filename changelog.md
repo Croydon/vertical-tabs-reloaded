@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.8.4.1, 2017-08-14
+ * fixed: audio playing icons not visible (#97)
+ * fixed: tabbrowser didn't hide in fullscreen in Firefox stable (#110)
+
+
+***
+
+
 ### v0.8.4, 2017-08-06
  * added: add toolbar button to toggle sidebar
  * added: hidden experiment add-on flag
