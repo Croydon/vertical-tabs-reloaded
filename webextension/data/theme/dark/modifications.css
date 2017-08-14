@@ -7,15 +7,15 @@
 	.tabbrowser-tab:not([pinned]) .tab-close-button {
 		-moz-image-region: rect(0px, 20px, 20px, 0px) !important;
 	}
-	
+
 	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
 		-moz-image-region: rect(0px, 40px, 20px, 20px) !important;
 	}
-	
+
 	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
 		-moz-image-region: rect(0px, 60px, 20px, 40px) !important;
 	}
-	
+
 	@media (-moz-os-version: windows-xp),
        (-moz-os-version: windows-vista),
        (-moz-os-version: windows-win7) {
@@ -40,9 +40,15 @@
 }
 
 .tab-icon-sound[soundplaying] {
-	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-white") !important;
+	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-playing.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
 }
 
 .tab-icon-sound[muted] {
-	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-muted-white") !important;
+	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-muted.svg") !important;
+}
+
+.tab-icon-sound {
+	filter: drop-shadow(1px 1px 1px white) !important;
 }

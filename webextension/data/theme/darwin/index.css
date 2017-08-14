@@ -82,11 +82,17 @@ body:-moz-window-inactive {
 }
 
 .tab-icon-sound[soundplaying] {
-	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-white") !important;
+	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-playing.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
 }
 
 .tab-icon-sound[muted] {
-	list-style-image: url("chrome://browser/skin/tabbrowser/tab-audio.svg#tab-audio-muted-white") !important;
+	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-muted.svg") !important;
+}
+
+.tab-icon-sound {
+	filter: drop-shadow(1px 1px 1px white) !important;
 }
 
 /* remove curvy tab ends */

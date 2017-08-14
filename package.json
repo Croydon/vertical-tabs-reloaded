@@ -7,7 +7,7 @@
 	"icon": "resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/icon.png",
 	"author": "Croydon",
 	"license": "MPL-2.0",
-	"version": "0.8.4",
+	"version": "0.8.5-alpha",
 	"permissions":
 	{
 		"private-browsing": true,
