@@ -104,7 +104,7 @@ function webext_replyHandler(message)
 
 	if(message.type == "event.fullscreen")
 	{
-		let windowID = windowUtils.getOuterId(windowUtils.getFocusedWindow());
+		let windowID = windowUtils.getOuterId(windowUtils.getToplevelWindow(windowUtils.getFocusedWindow()));
 		GLOBAL_SCOPE["vt"+windowID].changeFullscreenMode(message.value);
 	}
 
