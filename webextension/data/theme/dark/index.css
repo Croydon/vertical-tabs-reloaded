@@ -5,7 +5,7 @@
 	/* Tabbrowser */
 	--vtr-tabbrowser-background-color: #424F5A;
 
-	/* Tabbar, only used if no Firefox Theme installed */
+    /* Tab Toolbar */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1;
 
@@ -22,7 +22,7 @@
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #fbfbfb;
-	--vtr-tab-selected-background: #343F48;
+	--vtr-tab-selected-background: #27323B;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
 	--vtr-tab-selected-border-left: 4px solid #ff9500;
@@ -30,7 +30,7 @@
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
-	--vtr-tab-pinned-background: #343F48;
+	--vtr-tab-pinned-background: #27323B;
 	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #2292D0;
@@ -40,10 +40,10 @@
 	--vtr-tab-hover-background: #5E6972;
 
 	/* Splitter/Separation between tabbar and website */
-	--vtr-splitter-background: #343F48;
+	--vtr-splitter-background: #27323B;
 	--vtr-splitter-width: 3px;
 	--vtr-splitter-border-left-size: 0;
-	--vtr-splitter-border-left-color: #343F48;
+	--vtr-splitter-border-left-color: #27323B;
 	--vtr-splitter-border-right-size: 0;
-	--vtr-splitter-border-right-color: #343F48;
+	--vtr-splitter-border-right-color: #27323B;
 }
