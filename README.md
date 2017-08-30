@@ -13,6 +13,9 @@ Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded
 
 If you like my work you could [buy me a drink. ☕](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/developers)
 
+## WebExtension version is in work!
+See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information.
+
 ## Features:
 
  * arranges tabs vertical
