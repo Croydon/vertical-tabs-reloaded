@@ -1,0 +1,74 @@
+/* Seperator between tabbar and website */
+#verticaltabs-splitter {
+	min-width: 3px !important;
+	width: 3px !important;
+	border-top: none !important;
+	border-bottom: none !important;
+	border-left: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+	border-right: var(--vtr-splitter-border-size) solid var(--vtr-splitter-border-color) !important;
+	background-color: var(--vtr-splitter-color) !important;
+	margin: 0 !important;
+	-moz-border-top-colors: none !important;
+	-moz-border-left-colors: none !important;
+	-moz-border-right-colors: none !important;
+	-moz-border-bottom-colors: none !important;
+}
+
+#main-window[sizemode=normal] #verticaltabs-splitter {
+	margin: 0 0 24px 0 !important;
+}
+
+
+#browser-border-start {
+	/* Todo: What's #browser-border-start? <-- Funny, thanks again. */
+	margin-bottom: 23px !important;
+}
+
+/* Tab toolbar, which is placed at the bottom of the tab sidebar */
+#TabsToolbar:not(:-moz-lwtheme)  {
+	/* Just overwrite the defaults when there is no theme selected */
+	height: var(--vtr-tabbar-height);
+	margin: 0 -3px -1px 0px !important;
+	box-shadow: none !important;
+	appearance: none !important;
+	border-top: 1px solid rgb(160,160,160) !important;
+	border-right: 2px solid !important;
+	border-bottom-left-radius: 0px !important;
+	-moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
+	background-color: var(--vtr-tabbar-bg-color) !important;
+	background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0)) !important;
+}
+
+#main-window[sizemode=normal] #TabsToolbar:not(:-moz-lwtheme) {
+	/* Just overwrite the defaults when there is no theme selected */
+	margin: 0 -3px 0 -1px !important;
+	border-bottom: 1px solid rgb(154,154,154) !important;
+	border-left: 1px solid rgb(154,154,154) !important;
+	border-bottom-left-radius: 4px !important;
+}
+
+/* Ensure that content area has a top border */
+#navigator-toolbox::after {
+	visibility: visible !important;
+}
+
+
+/*** Addon bar styling ***/
+#addon-bar {
+	height: calc(var(--vtr-tabbar-height) - 1px); /* make addonbar the same height as tab toolbar */
+}
+
+#browser-bottombox {
+	border-left: none !important; /* remove extra line between addon bar and tab toolbar */
+	margin-left: -1px !important;
+}
+
+#main-window[sizemode=normal] #browser-bottombox:not(:-moz-lwtheme),
+#main-window[sizemode=normal] #addon-bar:not(:-moz-lwtheme) {
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 4px !important;
+}
+
+#appcontent {
+	border-bottom-right-radius: 4px !important;
+}

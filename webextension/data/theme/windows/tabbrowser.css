@@ -31,11 +31,6 @@ body:not(:-moz-lwtheme) {
 	max-height: var(--vtr-tab-height) !important;
 }
 
-/* This is nonsense
-.tabbrowser-tab:-moz-lwtheme {
-	color: black;
-	text-shadow: none;
-}*/
 
 .tabbrowser-tab:hover:not(:-moz-lwtheme) {
 	border-color: gray;
