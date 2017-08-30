@@ -22,7 +22,7 @@
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #333333;
-	--vtr-tab-selected-background: #dadada;
+	--vtr-tab-selected-background: #CBCBCB;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
 	--vtr-tab-selected-border-left: 4px solid #ff9500;
@@ -30,7 +30,7 @@
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #333333;
-	--vtr-tab-pinned-background: #dadada;
+	--vtr-tab-pinned-background: #CBCBCB;
 	--vtr-tab-pinned-font-weight: 600;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #2292D0;
