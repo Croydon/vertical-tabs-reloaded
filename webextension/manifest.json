@@ -11,6 +11,7 @@
     },
     "homepage_url": "https://github.com/Croydon/vertical-tabs-reloaded",
     "permissions": ["storage", "tabs", "activeTab"],
+    "incognito": "spanning",
     "background":
     {
         "scripts": ["main.js"]
@@ -24,7 +25,8 @@
     {
         "default_title": "Vertical Tabs Reloaded",
         "default_icon": "data/icon-16.png",
-        "default_panel": "vtr.html"
+        "default_panel": "vtr.html",
+        "browser_style": true
     },
     "browser_action":
     {
