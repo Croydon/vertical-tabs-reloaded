@@ -2,6 +2,26 @@
 
 var port = browser.runtime.connect({name: "connection-to-legacy"});
 
+function manage_installation(details)
+{
+    if(details.reason == "install")
+    {
+        /// FIREFIX FIXME: not landed in stable yet
+        //browser.sidebarAction.open();
+        //browser.tabs.create({url: "install-notes.html"});
+    }
+
+    if(details.reason == "update")
+    {
+        /*if(details.previousVersion < 57)
+        {
+                // Update settings
+                browser.tabs.create({url: "update-notes.html"});
+        }*/
+    }
+}
+
+browser.runtime.onInstalled.addListener(manage_installation);
 
 //
 // Handle addon settings
@@ -22,10 +42,12 @@ xhr.onreadystatechange = function()
             if(value == true)
             {
                 // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
+                // browser.sidebarAction.open();
             }
         });
     }
 }
+
 xhr.overrideMimeType("json");
 xhr.responseType = "json";
 xhr.open("GET", "options/options.json", true);

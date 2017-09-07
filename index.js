@@ -197,7 +197,6 @@ exports.main = function (options, callbacks) {
         {
             webextPort = port; // make it global
 
-           	//debugOutput(options.loadReason);
             if (options.loadReason == "install")
 			{
                 preferencesService.set("browser.tabs.drawInTitlebar", false);
@@ -227,8 +226,6 @@ exports.main = function (options, callbacks) {
 
 exports.onUnload = function (reason)
 {
-	//debugOutput("onUnload:" + reason);
-
     for (let window of windows.browserWindows)
     {
         deinitialize_window(window);
