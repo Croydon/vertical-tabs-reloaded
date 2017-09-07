@@ -7,7 +7,13 @@ function manage_installation(details)
     if(details.reason == "install")
     {
         /// FIREFIX FIXME: not landed in stable yet
-        //browser.sidebarAction.open();
+        browser.runtime.getBrowserInfo().then((info) =>
+        {
+            if(info.version.includes("a1"))
+            {
+                browser.sidebarAction.open();
+            }
+        });
         //browser.tabs.create({url: "install-notes.html"});
     }
 

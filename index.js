@@ -184,10 +184,8 @@ function sdk_init()
 // Entry point of the add-on
 exports.main = function (options, callbacks) {
     // WebExtension startup + communication
-    webExtension.startup().then(api =>
+    webExtension.startup().then(browser =>
     {
-        const {browser} = api;
-
         browser.runtime.onMessage.addListener((msg, sender, sendResponse) =>
         {
             webext_replyHandler(msg);
