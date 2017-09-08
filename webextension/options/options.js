@@ -113,7 +113,8 @@ function load_value(input)
     // buttons don't have values
     if(input.type != "button")
     {
-        main.get_setting(input.id).then(value => {
+        main.get_setting(input.id).then(value =>
+        {
             if(input.type == "checkbox")
             {
                 document.getElementById(input.id).checked = value;

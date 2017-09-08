@@ -68,7 +68,6 @@ function webext_replyHandler(message)
     if(message.type == "settings.post")
     {
         // Get settings from WebExt
-        debugOutput(message.name + " new value SDK: " + message.value);
         observPrefs(message.name);
     }
 
@@ -184,7 +183,7 @@ function sdk_init()
 // Entry point of the add-on
 exports.main = function (options, callbacks) {
     // WebExtension startup + communication
-    webExtension.startup().then(browser =>
+    webExtension.startup().then(({browser}) =>
     {
         browser.runtime.onMessage.addListener((msg, sender, sendResponse) =>
         {

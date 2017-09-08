@@ -31,10 +31,6 @@
 		"value": "dark",
 		"options": [
 			{
-				"value": "none",
-				"label": "None / Firefox default"
-			},
-			{
 				"value": "dark",
 				"label": "Dark (recommended)"
 			},
@@ -92,9 +88,9 @@
     "showHiddenSettings": {
         "name": "showHiddenSettings",
         "type": "bool",
-        "title": "Display hidden settings",
+        "title": "Display advanced settings",
         "value": false,
-        "hidden": true
+        "hidden": false
     },
 	"width": {
 		"name": "width",

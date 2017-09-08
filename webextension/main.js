@@ -233,7 +233,8 @@ function sdk_sendMsg(message)
 {
     browser.runtime.sendMessage(message).then(reply =>
     {
-        if (reply) {
+        if (reply)
+        {
             sdk_replyHandler(reply);
         }
     });
@@ -312,7 +313,7 @@ setTimeout(function()
         let version = browserInfo.version;
 
         // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-        if(version.includes("a1"))
+        if(version.includes("a"))
         {
             save_setting("showHiddenSettings", true);
             save_setting("debug", true);
