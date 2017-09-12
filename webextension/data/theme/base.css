@@ -21,40 +21,18 @@ body
     flex: 0 1 24px;
 }
 
-/* FIXME: likely to be removed; Style the scrollbox for vertical arrangements.
-.tabbrowser-arrowscrollbox > scrollbox {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-}
-
-FIXME: likely to be removed; Since we get an actual scrollbar in this vertical arrangement, we
-   don't need these extra scroll buttons.
-.tabbrowser-arrowscrollbox > .scrollbutton-up,
-.tabbrowser-arrowscrollbox > .scrollbutton-down {
-    visibility: collapse !important;
-}
-
- FIXME: likely to be removed
-.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
-    -moz-padding-end: 0px ! important;
-    -moz-padding-start: 0px ! important;
-} */
-
 /* Ensure the tab favicon doesn't stretch. */
 .tab-icon-image {
     max-width: 22px;
     max-height: 22px;
 }
 
-/* Hide the original tab toolbar buttons. */
-.tabs-newtab-button {
-    visibility: collapse;
-}
 
 /* Undo a bunch of stuff for pinned tabs */
 .tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
     position: inherit !important;
 }
+
 .tabbrowser-tab[pinned] > .tab-text {
     display: inherit;
 }
@@ -101,14 +79,15 @@ FIXME: likely to be removed; Since we get an actual scrollbar in this vertical a
     min-width: 30px ! important;
     max-width: 100% ! important;
 	min-height: 20px;
-	height: 20px;
+	height: 20px !important;
 	max-height: 40px !important;
 	border-bottom: 1px solid #5E6972;
     overflow: hidden;
+     align-items: center;
 }
 
 .tab-label {
-    /*position: absolute;*/
+    /*position: relative;*/
     white-space: nowrap;
     vertical-align: middle;
     text-overflow: ellipsis
@@ -116,10 +95,10 @@ FIXME: likely to be removed; Since we get an actual scrollbar in this vertical a
 
 
 /* FIXME: likely to be removed; get rid of the tab separator from horizontal tabs */
-.tabbrowser-tab:after,
+/*.tabbrowser-tab:after,
 .tabbrowser-tab:before {
   content: none !important;
-}
+}*/
 
 /* Make sure that a placeholder favicon is getting displayed if there is none */
 .tabbrowser-tab:not([busy]) .tab-icon-image:not([src]):not([pinned]) {
@@ -130,11 +109,3 @@ FIXME: likely to be removed; Since we get an actual scrollbar in this vertical a
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
 	visibility: visible !important;
 }
-
-/* Make room for the close/max/min button on the right of the window */
-/* XXX this should probably be per-OS, yes? */
-/* XXX if I was smarter I'd find a way to make a swoop on the right side of the bar, under the window buttons */
-/* Maybe not - this conveniently leaves a hit target for dragging. */
-/*#nav-bar {
-  margin-right: 100px;
-}*/

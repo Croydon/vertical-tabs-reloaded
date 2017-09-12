@@ -18,7 +18,7 @@
 
 .tab-close-button {
   -moz-binding: url("chrome://browser/content/tabbrowser.xml#tabbrowser-close-tab-button");
-}*/
+}
 
 .tab-close-button[pinned],
 .tabbrowser-tabs[closebuttons="activetab"] > * > * > * > .tab-close-button:not([selected="true"]),
@@ -31,7 +31,7 @@
 .tab-sharing-icon-overlay,
 .tab-icon-overlay {
   display: none;
-}
+}*/
 
 .tab-sharing-icon-overlay[sharing]:not([selected]),
 .tab-icon-overlay[soundplaying][pinned],
@@ -95,7 +95,7 @@ tabpanels {
  * their browsers to 'display: none' as that will prevent them from having to
  * create a presentation and the like.
  */
-browser[pending] {
+/*browser[pending] {
   display: none;
 }
 
@@ -114,4 +114,4 @@ tabbrowser[pendingpaint] {
   background-position: center center;
   background-color: #f9f9f9 !important;
   background-size: 30px;
-}
+}*/

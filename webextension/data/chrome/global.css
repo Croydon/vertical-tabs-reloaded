@@ -34,66 +34,6 @@ prefwindow {
   font: message-box;
 }
 
-/* ::::: alert icons :::::*/
-
-.message-icon,
-.alert-icon,
-.error-icon,
-.question-icon {
-  width: 32px;
-  height: 32px;
-}
-
-.message-icon {
-  list-style-image: url("chrome://global/skin/icons/info.svg");
-}
-
-.alert-dialog #info\.icon,
-.alert-icon {
-  list-style-image: url("chrome://global/skin/icons/Warning.png");
-}
-
-.error-icon {
-  list-style-image: url("chrome://global/skin/icons/Error.png");
-}
-
-.question-icon {
-  list-style-image: url("chrome://global/skin/icons/Question.png");
-}
-
-/* ::::: iframe ::::: */
-
-iframe {
-  border: none;
-  width: 100px;
-  height: 100px;
-  min-width: 10px;
-  min-height: 10px;
-}
-
-/* XXXBlake yeah, shoot me -- these don't belong here.  I'll move them later. */
-
-sidebarheader {
-  height: 25px;
-  background-color: -moz-Dialog;
-  -moz-appearance: toolbox;
-  border-bottom: 1px solid ThreeDShadow;
-  border-top: 1px solid ThreeDHighlight;
-}
-
-sidebarheader > label {
-  padding-inline-start: 4px;
-}
-
-.toolbar-focustarget {
-  -moz-user-focus: ignore !important;
-}
-
-toolbar[mode="text"] .toolbarbutton-text {
-  padding: 0 !important;
-  margin: 3px 5px !important;
-}
-
 /* ::::: miscellaneous formatting ::::: */
 
 :root:-moz-lwtheme {
@@ -108,25 +48,6 @@ toolbar[mode="text"] .toolbarbutton-text {
   text-shadow: 1px 1px 1.5px black;
 }
 
-statusbar:-moz-lwtheme,
-sidebarheader:-moz-lwtheme {
-  -moz-appearance: none;
-  background: none;
-  border-style: none;
-}
-
-.inset {
-  border: 1px solid ThreeDShadow;
-  border-right-color: ThreeDHighlight;
-  border-bottom-color: ThreeDHighlight;
-  margin: 0 5px 5px;
-}
-
-.outset {
-  border: 1px solid ThreeDShadow;
-  border-left-color: ThreeDHighlight;
-  border-top-color: ThreeDHighlight;
-}
 
 /* separators */
 separator:not([orient="vertical"]) {
@@ -230,24 +151,6 @@ label[disabled="true"]:-moz-system-metric(windows-classic) {
 
 .text-link:-moz-focusring {
   outline: 1px dotted;
-}
-
-popupnotificationcontent {
-  margin-top: .5em;
-}
-
-.popup-notification-panel > .panel-arrowcontainer > .panel-arrowcontent {
-  /* In order to display the action buttons near the edge of the arrow panel we
-   * have to reset its default padding and specify the padding in the individual
-   * "popupnotification" elements instead. To keep the rounded borders of the
-   * panel, we also have to ensure the contents are clipped to the border box
-   * by hiding the overflow, and we have to override the "display" property so
-   * that the height of the contents is computed correctly in that case. */
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  /* Make multiple popupnotifications stack vertically. */
-  flex-direction: column;
 }
 
 /* :::::: Close button icons ::::: */
