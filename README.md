@@ -11,7 +11,7 @@ Source Code & Issue Tracker: https://github.com/Croydon/vertical-tabs-reloaded
 
 Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
 
-If you like my work you could [buy me a drink. ☕](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/developers)
+If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydon/4,99)
 
 ## WebExtension version is in work!
 See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information.
