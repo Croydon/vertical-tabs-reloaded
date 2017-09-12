@@ -27,6 +27,11 @@ body
     max-height: 22px;
 }
 
+/* FIXME: This works natively in FF but not here? */
+.tab-icon-image[src*="data/chrome/icon/"] {
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
+}
 
 /* Undo a bunch of stuff for pinned tabs */
 .tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
@@ -83,7 +88,8 @@ body
 	max-height: 40px !important;
 	border-bottom: 1px solid #5E6972;
     overflow: hidden;
-     align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .tab-label {

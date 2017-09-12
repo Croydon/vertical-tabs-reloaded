@@ -196,13 +196,16 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         switch (iconURL)
         {
+            // FIXME: Remove .png with FF >= 57
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.png":
-                return "data/chrome/icon/extensionGeneric-16.png"
-            break;
+            case "chrome://mozapps/skin/extensions/extensionGeneric-16.svg":
+                return "data/chrome/icon/extension-generic.svg"
+                break;
 
             case "chrome://mozapps/skin/places/defaultFavicon.png":
-                return "data/chrome/icon/defaultFavicon.png";
-            break;
+            case "chrome://mozapps/skin/places/defaultFavicon.svg":
+                return "data/chrome/icon/default-favicon.svg";
+                break;
 
             default:
                 return iconURL;
