@@ -669,6 +669,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 active:true
             });
         });
+
+        this.document.getElementById("toolbar-action-options").addEventListener("click", () => {
+            browser.runtime.openOptionsPage();
+        });
     }
 
     unload()

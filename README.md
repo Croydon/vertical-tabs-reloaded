@@ -16,6 +16,7 @@ If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydo
 ## WebExtension version is in work!
 See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information.
 
+
 ## Features:
 
  * arranges tabs vertical
@@ -25,6 +26,7 @@ See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more informa
  * display the tab sidebar either on the left side (default) or on the right
  * display the tab toolbar at top or at bottom (default)
  * compact mode: hide text labels on tabs for a minimalistic tab sidebar (opt-in)
+
 
 ## Goals:
 
