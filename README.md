@@ -19,8 +19,8 @@ See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more informa
 ## Features:
 
  * arranges tabs vertical
- * ships 5 different styles for the tab sidebar (+ option to use Firefox/thirdparty add-ons style)
- * hides tab sidebar in fullscreen mode (opt-out)
+ * ships 5 different styles for the tab sidebar
+ * hides tab sidebar in fullscreen mode
  * hide/display manually the tab sidebar at any time with a hotkey (customizable)
  * display the tab sidebar either on the left side (default) or on the right
  * display the tab toolbar at top or at bottom (default)
