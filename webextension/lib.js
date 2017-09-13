@@ -184,7 +184,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
     }
 
-    /* Firefox's security features prevents us from loading some default icons,
+    /* Firefox's security policy prevents us from loading some default icons,
     replace with local, exact-same icon versions
     - yes. that's kinda stupid  */
     normalize_tab_icon(iconURL)
@@ -217,7 +217,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         let id = tab.id;
         let url = tab.url;
-        let title = tab.title || "Connecting...";
+        let title = "Connecting...";
         let pinned = tab.pinned;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
@@ -251,7 +251,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             var selectedAttribute = '';
         }
 
-        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text">${title}</span> </div>`;
+        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span> </div>`;
 
         // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
         if(pinned == true)
@@ -275,6 +275,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.newOpenedTabSelectIt = undefined;
             this.update_tab(id, "selected", "true");
         }
+
+        this.update_tab(id, "title", tab.title);
+
+
         /*for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
           button.className = `button right ${method}`;
@@ -311,8 +315,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         switch(attribute)
         {
             case "title":
-                this.document.getElementById("tab-"+tabID).setAttribute("label", value);
-                this.document.getElementById("tab-title-"+tabID).innerHTML = value;
+                this.document.getElementById("tab-"+tabID).setAttribute("title", value);
+                this.document.getElementById("tab-title-"+tabID).innerText = value;
             break;
 
             case "pinned":

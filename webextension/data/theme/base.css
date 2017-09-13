@@ -96,7 +96,7 @@ body
     /*position: relative;*/
     white-space: nowrap;
     vertical-align: middle;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
 }
 
 
