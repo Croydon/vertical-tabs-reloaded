@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="data/chrome/intl.css" id="vtr-intl">
     <link rel="stylesheet" href="data/chrome/global.css" id="vtr-global">
     <link rel="stylesheet" href="data/chrome/tabbrowser.css" id="vtr-default">
+    <link rel="stylesheet" href="data/contextmenu.css" id="vtr-contextmenu">
 </head>
 
 <body>
@@ -17,6 +18,22 @@
     <div id="TabsToolbar">
         <span id="toolbar-action-tab-new"><img src="data/chrome/icon/newtab.svg" style="width:14px;height:14px;"></span>
         <span id="toolbar-action-options"><img src="data/chrome/icon/settings.svg" style="width:14px;height:14px;"></span>
+    </div>
+
+    <div id="contextmenu">
+        <ul id="contextmenu-items">
+            <li id="contextmenu-action-tab-reload">Reload Tab</li>
+            <li id="contextmenu-action-tab-mute">Mute Tab</li>
+            <li id="contextmenu-action-tab-pin">Pin Tab</li>
+            <li id="contextmenu-action-tab-close">Close Tab</li>
+        </ul>
+        <!--<hr>
+        <ul class="items">
+            <li>Move to New Window</li>
+            <li>Close All Tabs Below</li>
+            <li>Close All Other Tabs</li>
+            <li>Undo Close Tab (only last tab?)</li>
+        </ul>-->
     </div>
 
     <script src="lib.js"></script>

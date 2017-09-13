@@ -699,13 +699,51 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
 }
 
-document.addEventListener("DOMContentLoaded", function()
+var contextmenuTarget = undefined;
+
+function contextmenuHide()
+{
+    if(contextmenuTarget != undefined)
+    {
+        document.getElementById("contextmenu").style.display = "";
+        document.getElementById("contextmenu").removeEventListener("click", contextmenuHide);
+        //document.removeEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
+        document.removeEventListener("scroll", (e) => { contextmenuHide(); });
+    }
+}
+
+function contextmenuShow(e)
+{
+    e.preventDefault();
+
+    let target = e.target.id;
+    let targetArray = target.split("-");
+    contextmenuTarget = targetArray[targetArray.length - 1];
+
+    main.debug_log(contextmenuTarget);
+    main.debug_log(e.pageX + " y " + e.pageY);
+
+    document.getElementById("contextmenu").style.setProperty("left", e.pageX + "px");
+    document.getElementById("contextmenu").style.setProperty("top", e.pageY + "px");
+    document.getElementById("contextmenu").style.display = "block";
+
+    // FIXME: Prevent scrolling while the context menu is open // removing this event handler doesn't work for some reason
+    // Simply close the context menu for now on scrolling
+    // document.addEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
+    document.addEventListener("scroll", (e) => { contextmenuHide(); });
+
+    document.addEventListener("click", contextmenuHide);
+}
+
+document.addEventListener("DOMContentLoaded", () =>
 {
     main.get_setting().then(value =>
     {
         var VTR = new VerticalTabsReloaded(window, value);
     });
 
+    document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
+    document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));
 });
 
 //exports.VerticalTabsReloaded = VerticalTabsReloaded;
