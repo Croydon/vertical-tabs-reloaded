@@ -7,8 +7,20 @@
 
 "use strict";
 
-
 var main = browser.extension.getBackgroundPage();
+
+class tabutils
+{
+    static close(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.tabs.remove(tabID);
+    }
+}
 
 /* Object injected for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
@@ -36,7 +48,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     init()
     {
         this.debug_log(this.webExtPreferences);
-        this.window.VerticalTabsReloaded = this;
+        this.window.VerticalTabsReloaded = this; // FIXME: Likely not needed anymore
         //this.unloaders.push(function() {
             //delete this.window.VerticalTabsReloaded;
         //});
@@ -699,11 +711,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
 }
 
-var contextmenuTarget = undefined;
+var contextmenuTarget = "NOTARGET";
 
 function contextmenuHide()
 {
-    if(contextmenuTarget != undefined)
+    if(contextmenuTarget != "NOTARGET")
     {
         document.getElementById("contextmenu").style.display = "";
         document.getElementById("contextmenu").removeEventListener("click", contextmenuHide);
@@ -744,6 +756,8 @@ document.addEventListener("DOMContentLoaded", () =>
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
     document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));
+
+    document.getElementById("contextmenu-action-tab-close").addEventListener("click", (e) => { tabutils.close(contextmenuTarget); });
 });
 
 //exports.VerticalTabsReloaded = VerticalTabsReloaded;
