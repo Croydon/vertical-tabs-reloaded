@@ -20,9 +20,48 @@ class tabutils
 
         browser.tabs.remove(tabID);
     }
+
+    static reload(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.tabs.reload(tabID);
+    }
+
+    // Toggles pinning status
+    static pin(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.tabs.get(tabID).then((tabInfo) =>
+        {
+            browser.tabs.update(tabID, {"pinned": !tabInfo.pinned});
+        });
+    }
+
+    // Toggles muting status
+    static mute(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.tabs.get(tabID).then((tabInfo) =>
+        {
+            console.log("muted: " + !tabInfo.mutedInfo.muted);
+            browser.tabs.update(tabID, {"muted": !tabInfo.mutedInfo.muted});
+        });
+    }
 }
 
-/* Object injected for every window */
+/* Entry point for every VTR sidebar for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
 {
     constructor(window, preferences)
@@ -340,7 +379,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
-                    this.document.getElementById("tabbrowser-tabs").appendChild(this.document.getElementById("tab-"+tabID));
+                    //this.document.getElementById("tabbrowser-tabs").appendChild(this.document.getElementById("tab-"+tabID)); // unpinning triggers index update as well
                 }
             break;
 
@@ -758,6 +797,9 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));
 
     document.getElementById("contextmenu-action-tab-close").addEventListener("click", (e) => { tabutils.close(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { tabutils.reload(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { tabutils.pin(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { tabutils.mute(contextmenuTarget); });
 });
 
 //exports.VerticalTabsReloaded = VerticalTabsReloaded;
