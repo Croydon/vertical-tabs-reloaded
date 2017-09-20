@@ -115,3 +115,17 @@ body
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
 	visibility: visible !important;
 }
+
+.tab-icon-sound[soundplaying] {
+	list-style-image: url("../chrome/icon/tab-audio-playing.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("../chrome/icon/tab-audio-muted.svg") !important;
+}
+
+.tab-icon-sound {
+	filter: drop-shadow(1px 1px 1px currentColor) !important;
+}
