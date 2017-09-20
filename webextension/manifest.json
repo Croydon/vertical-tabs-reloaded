@@ -14,7 +14,11 @@
     "incognito": "spanning",
     "background":
     {
-        "scripts": ["main.js"]
+        "scripts":
+        [
+            "lib/browser-polyfill.js",
+            "main.js"
+        ]
     },
     "options_ui":
     {
@@ -58,6 +62,7 @@
         "96": "data/icon-96.png",
         "128": "data/icon-128.png"
     },
+    "minimum_opera_version": "47.0",
     "applications":
     {
         "gecko":
