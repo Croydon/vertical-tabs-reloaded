@@ -66,7 +66,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 {
     constructor(window, preferences)
     {
-        //this.main = main;
+        // this.main = main;
         this.window = window;
         this.document = window.document;
         this.webExtPreferences = preferences;
@@ -77,7 +77,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
-        browser.windows.getCurrent({windowTypes: ['normal']}).then((windowObj) =>
+        browser.windows.getCurrent({windowTypes: ["normal"]}).then((windowObj) =>
         {
             this.windowID = windowObj.id;
             this.init();
@@ -88,9 +88,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         this.debug_log(this.webExtPreferences);
         this.window.VerticalTabsReloaded = this; // FIXME: Likely not needed anymore
-        //this.unloaders.push(function() {
-            //delete this.window.VerticalTabsReloaded;
-        //});
+        // this.unloaders.push(() =>
+        // {
+        //     delete this.window.VerticalTabsReloaded;
+        // });
 
         this.build_ui();
         this.initEventListeners();
@@ -107,20 +108,20 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     installStylesheet(uri, type)
     {
         this.debug_log("VTR install sheet: " + uri + " of type: " + type);
-        this.document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
+        this.document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
     }
 
     removeStylesheet(type)
     {
         this.debug_log("VTR remove sheet of type: " + type);
-        this.document.getElementById("vtr-"+type).remove();
+        this.document.getElementById("vtr-" + type).remove();
     }
 
     applyThemeStylesheet()
     {
         if(this.preferences("theme") != "none")
         {
-            this.installStylesheet( this.getThemeStylesheet(this.preferences("theme")), "theme" );
+            this.installStylesheet(this.getThemeStylesheet(this.preferences("theme")), "theme");
         }
     }
 
@@ -139,7 +140,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         switch (theme)
         {
             default:
-                stylesheet = "data/theme/"+theme+"/index.css";
+                stylesheet = "data/theme/" + theme + "/index.css";
                 break;
         }
 
@@ -153,13 +154,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             return;
         }
 
-        let tabElement = this.document.getElementById("tab-"+tabID);
+        let tabElement = this.document.getElementById("tab-" + tabID);
 
         if(tabElement == null)
         {
             setTimeout(() =>
             {
-                tabElement = this.document.getElementById("tab-"+tabID);
+                tabElement = this.document.getElementById("tab-" + tabID);
                 if(tabElement == null)
                 {
                     return;
@@ -172,7 +173,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(rect.top >= 0
         && rect.left >= 0
         && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        &&  rect.right <= (window.innerWidth || document.documentElement.clientWidth))
+        && rect.right <= (window.innerWidth || document.documentElement.clientWidth))
         {
             // visible
         }
@@ -202,21 +203,21 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         // FIREFIX: Placeholder. Sidebars on the right are currently not suppoted by Firefox.
-        //if (this.preferences("right"))
+        // if (this.preferences("right"))
 
         // Placeholder. Restore width of tab bar from previous session
-        //tabs.setAttribute("width", this.preferences("width"));
+        // tabs.setAttribute("width", this.preferences("width"));
         // FIREFIX: Firefox doesn't support resizing the sidebar programmatically currently.
 
         // FIREFIX: Firefox doesn't supporting the moving of toolbars. https://bugzilla.mozilla.org/show_bug.cgi?id=1344959
-        //if (this.preferences("tabtoolbarPosition") == "top")
-        //{
-            //leftbox.insertBefore(toolbar, leftbox.firstChild);
-        //}
-        //else
-        //{
-            //leftbox.appendChild(toolbar);
-        //}
+        // if (this.preferences("tabtoolbarPosition") == "top")
+        // {
+        //     leftbox.insertBefore(toolbar, leftbox.firstChild);
+        // }
+        // else
+        // {
+        //     leftbox.appendChild(toolbar);
+        // }
 
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
@@ -231,7 +232,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             // FIXME: Put the tabs back up, unhide tabstrip
 
             // FIXME: Properly not necessary since sidebars are totally isolated and are just getting "deleted" on closing
-            //this.removeThemeStylesheet();
+            // this.removeThemeStylesheet();
         });
     }
 
@@ -250,56 +251,41 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             // FIXME: Remove .png with FF >= 57
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.png":
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.svg":
-                return "data/chrome/icon/extension-generic.svg"
-                break;
+                return "data/chrome/icon/extension-generic.svg";
 
             case "chrome://mozapps/skin/places/defaultFavicon.png":
             case "chrome://mozapps/skin/places/defaultFavicon.svg":
                 return "data/chrome/icon/default-favicon.svg";
-                break;
 
             default:
                 return iconURL;
         }
-
     }
 
     create_tab(tab)
     {
         let id = tab.id;
-        let url = tab.url;
+        // let url = tab.url;
         let title = "Connecting...";
         let pinned = tab.pinned;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        /*let div = document.createElement("div");
-        div.className = "tabbrowser-tab";
-        div.setAttribute('contextmenu', 'tabContextMenu');
-        div.id = id;*/
-
-        /*let a = document.createElement('a');
+        /* let a = document.createElement('a');
         a.className = 'tab';
         a.innerText = this.url;
         a.href = this.url;*/
 
+        var pinnedHTML = "", selectedAttribute = "";
+
         if(pinned == true)
         {
-            var pinnedHTML = 'pinned="true"';
+            pinnedHTML = 'pinned="true"';
         }
-        else
-        {
-            var pinnedHTML = '';
-        }
-
 
         if(tab.selected == true)
         {
-            var selectedAttribute = 'selected="true"';
+            selectedAttribute = 'selected="true"';
             this.selectedTabID = id;
-        }
-        else
-        {
-            var selectedAttribute = '';
         }
 
         var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span> </div>`;
@@ -314,7 +300,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
         }
 
-        this.document.getElementById("tab-"+id).addEventListener('click', (event) =>
+        this.document.getElementById("tab-" + id).addEventListener("click", (event) =>
         {
             browser.tabs.update(id, {active: true});
             event.preventDefault();
@@ -330,7 +316,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.update_tab(id, "title", tab.title);
 
 
-        /*for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
+        /* for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
           button.className = `button right ${method}`;
           button.href = '#';
@@ -340,22 +326,22 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
           div.appendChild(button);
       }*/
 
-        /*let icon = document.createElement('img');
+        /* let icon = document.createElement('img');
         icon.className = 'icon';
         icon.style.visibility = 'hidden';*/
 
-        //icon.addEventListener('error', handleImageError);
+        // icon.addEventListener('error', handleImageError);
 
-        /*let context = document.createElement('span');
+        /* let context = document.createElement('span');
         context.className = 'context';
         context.style.visibility = 'hidden';*/
 
-        /*div.appendChild(icon);
+        /* div.appendChild(icon);
         div.appendChild(context);
         div.appendChild(a);
         tabList.appendChild(div);*/
 
-        /*div.addEventListener('dragstart', handleDragStart, false);
+        /* div.addEventListener('dragstart', handleDragStart, false);
         div.addEventListener('dragover', handleDragOver, false);
         div.addEventListener('drop', handleDrop, false);*/
     }
@@ -366,38 +352,38 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         switch(attribute)
         {
             case "title":
-                this.document.getElementById("tab-"+tabID).setAttribute("title", value);
-                this.document.getElementById("tab-title-"+tabID).innerText = value;
-            break;
+                this.document.getElementById("tab-" + tabID).setAttribute("title", value);
+                this.document.getElementById("tab-title-" + tabID).innerText = value;
+                break;
 
             case "pinned":
                 if(value == true)
                 {
-                    this.document.getElementById("tab-"+tabID).setAttribute("pinned", "true");
-                    this.document.getElementById("tabbrowser-tabs-pinned").appendChild(this.document.getElementById("tab-"+tabID));
+                    this.document.getElementById("tab-" + tabID).setAttribute("pinned", "true");
+                    this.document.getElementById("tabbrowser-tabs-pinned").appendChild(this.document.getElementById("tab-" + tabID));
                 }
                 else
                 {
-                    this.document.getElementById("tab-"+tabID).removeAttribute("pinned");
-                    //this.document.getElementById("tabbrowser-tabs").appendChild(this.document.getElementById("tab-"+tabID)); // unpinning triggers index update as well
+                    this.document.getElementById("tab-" + tabID).removeAttribute("pinned");
+                    // this.document.getElementById("tabbrowser-tabs").appendChild(this.document.getElementById("tab-"+tabID)); // unpinning triggers index update as well
                 }
-            break;
+                break;
 
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
-                this.document.getElementById("tab-icon-"+tabID).setAttribute("src", value);
-            break;
+                this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+                break;
 
             case "selected":
                 if(this.selectedTabID != undefined)
                 {
-                    this.document.getElementById("tab-"+this.selectedTabID).removeAttribute("selected");
+                    this.document.getElementById("tab-" + this.selectedTabID).removeAttribute("selected");
                 }
 
-                let selectedTab = this.document.getElementById("tab-"+tabID);
+                let selectedTab = this.document.getElementById("tab-" + tabID);
                 if(selectedTab != null)
                 {
-                    this.document.getElementById("tab-"+tabID).setAttribute("selected", "true");
+                    this.document.getElementById("tab-" + tabID).setAttribute("selected", "true");
                     this.selectedTabID = tabID;
 
                     this.scroll_to_tab(tabID);
@@ -407,13 +393,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     this.newOpenedTabSelectIt = tabID;
                 }
 
-            break;
+                break;
 
             case "index":
-                this.document.getElementById("tab-"+tabID).setAttribute("data-index", value);
-                this.document.getElementById("tab-title-"+tabID).innerHTML = value;
-            break;
-
+                this.document.getElementById("tab-" + tabID).setAttribute("data-index", value);
+                this.document.getElementById("tab-title-" + tabID).innerHTML = value;
+                break;
         }
     }
 
@@ -424,7 +409,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(toIndex == this.tabbrowser.lastElementChild.getAttribute("data-index"))
         {
             // Move at the end
-            this.tabbrowser.append( this.document.getElementById("tab-"+tabID) );
+            this.tabbrowser.append(this.document.getElementById("tab-" + tabID));
         }
         else
         {
@@ -441,9 +426,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
 
             let insertBeforeTab = this.document.querySelector(`div[data-index="${insertBeforeIndex}"]`);
-            //this.debug_log(insertBeforeIndex);
-            //this.debug_log(insertBeforeTab.outerHTML);
-            insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-"+tabID), insertBeforeTab);
+            // this.debug_log(insertBeforeIndex);
+            // this.debug_log(insertBeforeTab.outerHTML);
+            insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-" + tabID), insertBeforeTab);
         }
     }
 
@@ -452,41 +437,41 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let index = 0;
         for(let tab of this.document.getElementsByClassName("tabbrowser-tab"))
         {
-            tab.setAttribute("data-index", index)
-            //tab.innerHTML = index + " " + tab.innerHTML;
+            tab.setAttribute("data-index", index);
+            // tab.innerHTML = index + " " + tab.innerHTML;
             index++;
         }
     }
 
     remove_tab(tabID)
     {
-        if(this.document.getElementById("tab-"+tabID) !== null)
+        if(this.document.getElementById("tab-" + tabID) !== null)
         {
             this.debug_log("remove tab: " + tabID);
-            this.document.getElementById("tab-"+tabID).remove();
+            this.document.getElementById("tab-" + tabID).remove();
         }
     }
 
     setPinnedSizes()
     {
-        //this.window.addEventListener("resize", this, false);
+        // this.window.addEventListener("resize", this, false);
 
-        //this.unloaders.push(function()
-        //{
-            //this.window.removeEventListener("resize", this, false);
-        //});
+        // this.unloaders.push(function()
+        // {
+        // this.window.removeEventListener("resize", this, false);
+        // });
 
-        //this.debug_log("set pinned sizes!");
+        // this.debug_log("set pinned sizes!");
     }
 
     onPreferenceChange(prefName, newValue)
     {
         switch (prefName)
         {
-            //case "right":
-                //this.webExtPreferences = newValue;
-                // Placeholder.
-                //break;
+            // case "right":
+            // this.webExtPreferences = newValue;
+            // Placeholder.
+            // break;
 
             case "tabtoolbarPosition":
                 this.webExtPreferences[prefName] = newValue;
@@ -500,7 +485,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
                     case "top":
                         TabsToolbar.style.display = "";
-                        this.document.body.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned") );
+                        this.document.body.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned"));
                         break;
 
                     case "bottom":
@@ -598,7 +583,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]);
             }
-            /*if (changeInfo.hasOwnProperty('mutedInfo')) {
+            /* if (changeInfo.hasOwnProperty('mutedInfo')) {
                 sidetabs.setMuted(tab, changeInfo.mutedInfo);
               }
           if (changeInfo.hasOwnProperty('audible')) {
@@ -615,7 +600,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>
         {
             this.move_tab(tabID, moveInfo["fromIndex"], moveInfo["toIndex"]);
-            //this.update_tab(tabID, "index", moveInfo["toIndex"]);
+            // this.update_tab(tabID, "index", moveInfo["toIndex"]);
             this.update_tab_indexes();
         });
 
@@ -648,13 +633,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if(e.target == this.document.getElementById("tabbrowser-tabs"))
             {
                 browser.tabs.create({
-                    active:true
+                    active: true,
                 });
             }
         });
 
-        //Old event handler: case "popupshowing":
-            //return;
+        // Old event handler: case "popupshowing":
+        // return;
     }
 
     toggleDisplayState()
@@ -714,7 +699,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "top":
-                this.document.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned") );
+                this.document.insertBefore(TabsToolbar, this.document.getElementById("tabbrowser-tabs-pinned"));
                 break;
 
             case "bottom":
@@ -722,13 +707,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
         }
 
-        this.document.getElementById("toolbar-action-tab-new").addEventListener("click", () => {
+        this.document.getElementById("toolbar-action-tab-new").addEventListener("click", () =>
+        {
             browser.tabs.create({
-                active:true
+                active: true,
             });
         });
 
-        this.document.getElementById("toolbar-action-options").addEventListener("click", () => {
+        this.document.getElementById("toolbar-action-options").addEventListener("click", () =>
+        {
             browser.runtime.openOptionsPage();
         });
     }
@@ -747,8 +734,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         main.debug_log(output);
     }
-
-}
+};
 
 var contextmenuTarget = "NOTARGET";
 
@@ -758,7 +744,7 @@ function contextmenuHide()
     {
         document.getElementById("contextmenu").style.display = "";
         document.getElementById("contextmenu").removeEventListener("click", contextmenuHide);
-        //document.removeEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
+        // document.removeEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
         document.removeEventListener("scroll", (e) => { contextmenuHide(); });
     }
 }
@@ -790,7 +776,7 @@ document.addEventListener("DOMContentLoaded", () =>
 {
     main.get_setting().then(value =>
     {
-        var VTR = new VerticalTabsReloaded(window, value);
+        new VerticalTabsReloaded(window, value);
     });
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
@@ -802,4 +788,4 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { tabutils.mute(contextmenuTarget); });
 });
 
-//exports.VerticalTabsReloaded = VerticalTabsReloaded;
+// exports.VerticalTabsReloaded = VerticalTabsReloaded;

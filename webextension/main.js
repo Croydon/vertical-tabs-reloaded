@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var port = browser.runtime.connect({name: "connection-to-legacy"});
 
@@ -6,25 +6,29 @@ function manage_installation(details)
 {
     if(details.reason == "install")
     {
-        /// FIREFIX FIXME: not landed in stable yet
+        // browser.tabs.create({url: "install-notes.html"});
+
         browser.runtime.getBrowserInfo().then((info) =>
         {
-            if(info.version.includes("a1"))
+            // / FIREFIX FIXME: not landed in stable yet
+            if(info.version >= 57)
             {
                 browser.sidebarAction.open();
             }
         });
-        //browser.tabs.create({url: "install-notes.html"});
     }
 
     if(details.reason == "update")
     {
-        /*if(details.previousVersion < 57)
+        /* if(details.previousVersion < 57)
         {
-                // Update settings
-                browser.tabs.create({url: "update-notes.html"});
+            // Update settings
+            browser.tabs.create({url: "update-notes.html"});
         }*/
     }
+
+    browser.sidebarAction.open();
+    console.log("manage_installation called");
 }
 
 browser.runtime.onInstalled.addListener(manage_installation);
@@ -52,7 +56,7 @@ xhr.onreadystatechange = function()
             }
         });
     }
-}
+};
 
 xhr.overrideMimeType("json");
 xhr.responseType = "json";
@@ -60,14 +64,16 @@ xhr.open("GET", "options/options.json", true);
 xhr.send();
 
 
+/* exported get_options_object */
 function get_options_object()
 {
     return settings;
 }
 
+/* exported restore_default_settings */
 function restore_default_settings()
 {
-    Object.keys(settings).forEach(function(optionsElement)
+    Object.keys(settings).forEach((optionsElement) =>
     {
         save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
         sdk_send_changed_setting(settings[optionsElement]["name"]);
@@ -95,7 +101,7 @@ function save_setting(name, value)
 function get_all_settings()
 {
     // This is necessary to not only get all actually saved values, but also the default values for unsaved attributes
-    return new Promise(function (fulfill, reject)
+    return new Promise((fulfill, reject) =>
     {
         let allSettings = {};
 
@@ -111,7 +117,7 @@ function get_all_settings()
                     fulfill(true);
                 });
             });
-        }
+        };
 
         let allPromises = Object.keys(settings).map(forEachSetting);
 
@@ -120,7 +126,8 @@ function get_all_settings()
             fulfill(allSettings);
         });
     }).catch(
-        function(reason) {
+        (reason) =>
+        {
             debug_log(reason);
         }
     );
@@ -133,47 +140,32 @@ function get_setting(name)
         return get_all_settings();
     }
 
-    return new Promise(function (fulfill, reject)
+    return new Promise((fulfill, reject) =>
     {
         browser.storage.local.get(name).then(results =>
         {
             if (!results.hasOwnProperty(name))
             {
                 // Debug output for "debug" is causing potentially an endless loop to the extend that browser doesn't react anymore
-                if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': not saved use default value."); }
+                if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': not saved use default value."); }
                 if(settings.hasOwnProperty(name))
                 {
-                    if(name != "debug") { debug_log("VTR default setting for '"+ name +"' is '"+ settings[name]["value"] + "'"); }
+                    if(name != "debug") { debug_log("VTR default setting for '" + name + "' is '" + settings[name]["value"] + "'"); }
                     results[name] = settings[name]["value"];
                 }
                 else
                 {
-                    if(name != "debug") { debug_log("VTR WebExt setting '"+ name +"': no default value found."); }
+                    if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': no default value found."); }
                 }
             }
 
             fulfill(results[name]);
         }).catch(
-            function(reason) {
+            (reason) =>
+            {
                 debug_log(reason);
             }
         );
-    });
-}
-
-//
-// CSS Mangament
-//
-
-function css_get_full_path()
-{
-    return new Promise(function (fulfill, reject)
-    {
-        get_setting("theme").then(theme =>
-        {
-            debug_log(browser.runtime.getURL("data/theme/"+theme+"/index.css"));
-            fulfill(browser.runtime.getURL("data/theme/"+theme+"/index.css"));
-        });
     });
 }
 
@@ -190,7 +182,7 @@ function on_options_change()
         value["dataPath"] = "resource://verticaltabsreloaded-at-go-dev-dot-de/data/";
         sdk_sendMsg({
             type: "settings.post-all",
-            value: value
+            value: value,
         });
     });
 }
@@ -200,11 +192,12 @@ function sdk_send_changed_setting(settingName)
 {
     on_options_change();
 
-    get_setting(settingName).then(value => {
+    get_setting(settingName).then(value =>
+    {
         sdk_sendMsg({
             type: "settings.post",
             name: settingName,
-            value: value
+            value: value,
         });
     });
 }
@@ -244,18 +237,36 @@ function sdk_sendMsg(message)
 // FIXME: Window Mangament missing
 setInterval(function()
 {
+    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    {
+        if(browserInfo.version >= 56)
+        {
+            debug_log(browserInfo.version);
+            debug_log(browserInfo.buildID);
+            debug_log(browserInfo.name);
+
+            let version = browserInfo.version;
+
+            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+            if(version.includes("a"))
+            {
+                debug_log("You are a Nightly user");
+            }
+        }
+    });
+
     browser.windows.getCurrent().then(currentWindow =>
     {
-        if(typeof this["vtr.windows.state."+currentWindow.id] == undefined)
+        if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
         {
-            this["vtr.windows.state."+currentWindow.id] = "init";
+            this["vtr.windows.state." + currentWindow.id] = "init";
         }
 
         if(currentWindow.state == "fullscreen")
         {
-            if(this["vtr.windows.state."+currentWindow.id] != "fullscreen")
+            if(this["vtr.windows.state." + currentWindow.id] != "fullscreen")
             {
-                this["vtr.windows.state."+currentWindow.id] = "fullscreen";
+                this["vtr.windows.state." + currentWindow.id] = "fullscreen";
                 get_setting("hideInFullscreen").then(value =>
                 {
                     if(value == true)
@@ -267,9 +278,9 @@ setInterval(function()
         }
         else
         {
-            if(this["vtr.windows.state."+currentWindow.id] == "fullscreen")
+            if(this["vtr.windows.state." + currentWindow.id] == "fullscreen")
             {
-                this["vtr.windows.state."+currentWindow.id] = currentWindow.state;
+                this["vtr.windows.state." + currentWindow.id] = currentWindow.state;
                 get_setting("hideInFullscreen").then(value =>
                 {
                     if(value == true)
@@ -283,7 +294,7 @@ setInterval(function()
 }, 100);
 
 
-setTimeout(function()
+setTimeout(() =>
 {
     on_options_change();
 
@@ -293,18 +304,24 @@ setTimeout(function()
     // Set up listener
     browser.storage.onChanged.addListener(on_options_change);
 
-    // FIXME: remove listener for legacy
+
     browser.commands.onCommand.addListener((command) =>
     {
         if (command == "toggleTabbrowser")
         {
+            browser.sidebarAction.open();
+
+            // FIXME: remove sendmsg for legacy
             sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
     });
 
-    // FIXME: remove listener for legacy
+
     browser.browserAction.onClicked.addListener(() =>
     {
+        browser.sidebarAction.open();
+
+        // FIXME: remove listener for legacy
         sdk_sendMsg({type: "event.toggleTabbrowser"});
     });
 
@@ -327,18 +344,17 @@ setTimeout(function()
             save_setting("debug", true);
         }
     });
-
 }, 100);
 
 
 // Utils
 function debug_log(output)
 {
-	get_setting("debug").then(value =>
+    get_setting("debug").then(value =>
     {
         if(value == true)
         {
             console.log(output);
         }
-	});
+    });
 }

@@ -1,0 +1,6 @@
+src/*
+lib/*
+data/*
+build/*
+webextension/lib/*
+index.js

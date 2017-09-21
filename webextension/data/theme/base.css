@@ -68,6 +68,7 @@ body
     -moz-transition-timing-function: ease-out;
 }
 
+/* FIXME: likely to be removed */
 .verticaltabs-collapsed {
     height: 0px !important;  /* animation shrinks height */
     min-height: 0px !important;
@@ -75,6 +76,7 @@ body
     visibility: collapse;
 }
 
+/* FIXME: likely to be removed */
 .tab-background {
     display: none ! important;
 }
