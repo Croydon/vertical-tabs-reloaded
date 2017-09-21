@@ -1,0 +1,12 @@
+sudo: false
+dist: trusty
+language: node_js
+# Always run the latest Node.js version
+node_js:
+  - "node"
+
+before_script:
+  - npm install -g eslint
+
+script:
+  - eslint .
