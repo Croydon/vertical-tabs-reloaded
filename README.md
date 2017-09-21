@@ -42,6 +42,17 @@ See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more informa
 Only the latest Firefox version is fully supported. Compatibility with the latest [ESR version](https://www.mozilla.org/en-US/firefox/organizations/faq/) will not get broken on purpose, but it might be necessary to do so sometimes. Pull requests fixing compatibility with the latest ESR version have a good chance to get accepted. Pull requests concerning other versions as the latest Firefox version or the latest Firefox ESR version will not be accepted.
 
 
+## Building
+For building the legacy version of the add-on:
+> npm install -g jpm
+jpm xpi
+
+For building the experimental WebExtension version:
+> npm install -g web-ext
+cd webextension
+web-ext build
+
+
 ## Contact
 
 If you want to have a chat with me you can join #vtr:matrix.org with every Matrix client, e.g. Riot:
