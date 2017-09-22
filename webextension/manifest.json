@@ -41,7 +41,7 @@
             "96": "data/icon-96.png",
             "128": "data/icon-128.png"
         },
-        "default_title": "Toggle Tabs Sidebar",
+        "default_title": "Toggle Tab Sidebar",
         "browser_style": true
     },
     "commands":
@@ -68,7 +68,7 @@
         "gecko":
         {
             "id": "verticaltabsreloaded@go-dev.de",
-            "strict_min_version": "55.0"
+            "strict_min_version": "56.0"
         }
     }
 }
