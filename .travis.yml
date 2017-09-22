@@ -2,6 +2,11 @@ sudo: false
 dist: trusty
 language: node_js
 # Always run the latest Node.js version
+
+notifications:
+  email:
+    on_success: never
+
 node_js:
   - "node"
 
