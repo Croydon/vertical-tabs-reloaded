@@ -377,7 +377,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             case "selected":
                 if(this.selectedTabID != undefined)
                 {
-                    this.document.getElementById("tab-" + this.selectedTabID).removeAttribute("selected");
+                    let tab = this.document.getElementById("tab-" + this.selectedTabID);
+                    if(tab) { tab.removeAttribute("selected"); }
                 }
 
                 let selectedTab = this.document.getElementById("tab-" + tabID);
