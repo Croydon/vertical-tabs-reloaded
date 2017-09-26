@@ -1,4 +1,16 @@
 {
+    "right": {
+		"name": "right",
+		"type": "bool",
+		"title": "Display tabs on the right",
+		"value": false
+	},
+	"hideInFullscreen": {
+		"name": "hideInFullscreen",
+		"type": "bool",
+		"title": "Hide tabs in fullscreen",
+		"value": true
+	},
 	"compact": {
 		"name": "compact",
 		"type": "bool",
@@ -56,9 +68,16 @@
             },
             {
                 "value": "hide",
-                "label": "Hide"
+                "label": "Hide (only in experiment mode)"
             }
 		]
+	},
+	"toggleDrawInTitlebar": {
+		"name": "toggleDrawInTitlebar",
+		"type": "control",
+		"title": "Enable/Disable titlebar",
+		"label": "Toggle titlebar",
+		"description": "Enable the titlebar if the window control buttons are overlapping with Firefox elements"
 	},
 	"setDefaultPrefs": {
 		"name": "setDefaultPrefs",
@@ -72,6 +91,22 @@
         "title": "Display advanced settings",
         "value": false,
         "hidden": false
+    },
+	"width": {
+		"name": "width",
+		"type": "integer",
+		"title": "Width of the tab sidebar",
+		"value": 250,
+		"hidden": true
+	},
+    "toggleDisplayHotkey": {
+        "name": "toggleDisplayHotkey",
+        "type": "string",
+        "title": "Hotkey for hiding/showing tabbar",
+        "value": "control-alt-v",
+        "hidden": true,
+        "readonly": true,
+        "description": "Is now editable in the respective Firefox user interface"
     },
     "debug": {
 		"name": "debug",

@@ -207,6 +207,11 @@ exports.main = function (options, callbacks) {
 				preferencesService.set("toolkit.cosmeticAnimations.enabled", false);
 			}
 
+            webext_sendMsg({
+                type: "legacy",
+                name: "legacy",
+                value: true
+            });
 
             if(sdk_inited == "prepared")
             {

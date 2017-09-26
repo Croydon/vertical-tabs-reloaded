@@ -1,6 +1,12 @@
 "use strict";
 
 var port = browser.runtime.connect({name: "connection-to-legacy"});
+var runningLegacy = false;
+
+function isLegacy()
+{
+    return runningLegacy;
+}
 
 function manage_installation(details)
 {
@@ -37,32 +43,48 @@ browser.runtime.onInstalled.addListener(manage_installation);
 // Handle addon settings
 //
 var settings;
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function()
+
+function get_options_file()
 {
-    if(xhr.readyState == 4) // 4 == DONE
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
     {
-        settings = xhr.response;
-
-        // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
-        // Right now it's possible to toggle so we toggeling on the base of good luck
-        // and just hoping to end up with an open sidebar
-        get_setting("experiment").then(value =>
+        if(xhr.readyState == 4) // 4 == DONE
         {
-            if(value == true)
+            settings = xhr.response;
+
+            // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
+            // Right now it's possible to toggle so we toggeling on the base of good luck
+            // and just hoping to end up with an open sidebar
+            get_setting("experiment").then(value =>
             {
-                // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
-                // browser.sidebarAction.open();
-            }
-        });
+                if(value == true)
+                {
+                    // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
+                    // browser.sidebarAction.open();
+                }
+            });
+        }
+    };
+
+    xhr.overrideMimeType("json");
+    xhr.responseType = "json";
+
+    let optionFile;
+    if(isLegacy())
+    {
+        optionFile = "options/legacy.json";
     }
-};
+    else
+    {
+        optionFile = "options/options.json";
+    }
 
-xhr.overrideMimeType("json");
-xhr.responseType = "json";
-xhr.open("GET", "options/options.json", true);
-xhr.send();
+    xhr.open("GET", optionFile, true);
+    xhr.send();
+}
 
+get_options_file();
 
 /* exported get_options_object */
 function get_options_object()
@@ -215,6 +237,12 @@ function sdk_replyHandler(message)
     if(message.type == "debug.log")
     {
         debug_log(message.value);
+    }
+
+    if(message.type == "legacy")
+    {
+        runningLegacy = true;
+        get_options_file();
     }
 }
 
