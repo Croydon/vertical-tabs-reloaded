@@ -4,6 +4,14 @@ var main = browser.extension.getBackgroundPage();
 
 class tabutils
 {
+    static getTargetID(e)
+    {
+        // This returns the tabID of a tab, which is always the last element in a HTML ID tag
+        let target = e.target.id;
+        let targetArray = target.split("-");
+        return targetArray[targetArray.length - 1];
+    }
+
     static close(tabID)
     {
         if(typeof tabID == "string")
@@ -225,7 +233,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             // FIXME: Put the tabs back up, unhide tabstrip
 
             // FIXME: Properly not necessary since sidebars are totally isolated and are just getting "deleted" on closing
-            // this.removeThemeStylesheet();
         });
     }
 
@@ -263,12 +270,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let pinned = tab.pinned;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        /* let a = document.createElement('a');
-        a.className = 'tab';
-        a.innerText = this.url;
-        a.href = this.url;*/
-
-        var pinnedHTML = "", selectedAttribute = "";
+        let pinnedHTML = "", selectedAttribute = "";
 
         if(pinned == true)
         {
@@ -281,9 +283,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.selectedTabID = id;
         }
 
-        var tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch" maxwidth="65000" minwidth="0"> <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span> <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span> </div>`;
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" align="stretch">
+        <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
+        <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
+        <span class="tab-buttons">
+            <span id="tab-close-button-${id}" class="tab-close-button close-icon"> <ul> <li> </li> </ul> </span>
+        </span>
+        </div>`;
 
-        // Check: fadein="true" context="tabContextMenu" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
+        // Check: fadein="true" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
         if(pinned == true)
         {
             this.document.getElementById("tabbrowser-tabs-pinned").insertAdjacentHTML("beforeend", tabHTML);
@@ -308,6 +316,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.update_tab(id, "title", tab.title);
 
+        this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
 
         /* for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
@@ -746,9 +755,7 @@ function contextmenuShow(e)
 {
     e.preventDefault();
 
-    let target = e.target.id;
-    let targetArray = target.split("-");
-    contextmenuTarget = targetArray[targetArray.length - 1];
+    contextmenuTarget = tabutils.getTargetID(e);
 
     main.debug_log(contextmenuTarget);
     main.debug_log(e.pageX + " y " + e.pageY);

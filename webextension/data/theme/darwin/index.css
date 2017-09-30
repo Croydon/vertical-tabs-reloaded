@@ -82,13 +82,13 @@ body:-moz-window-inactive {
 }
 
 .tab-icon-sound[soundplaying] {
-	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-playing.svg") !important;
+	list-style-image: url("../../chrome/icon/tab-audio-playing.svg") !important;
     -moz-context-properties: fill !important;
     fill: currentColor !important;
 }
 
 .tab-icon-sound[muted] {
-	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-muted.svg") !important;
+	list-style-image: url("../../chrome/icon/tab-audio-muted.svg") !important;
 }
 
 .tab-icon-sound {
@@ -228,7 +228,7 @@ body:-moz-window-inactive {
 }
 
 
-/* Personas */
+/* FIXME: likely to be removed; Personas */
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-start:-moz-lwtheme-brighttext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-brighttext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-brighttext:not([selected="true"]),

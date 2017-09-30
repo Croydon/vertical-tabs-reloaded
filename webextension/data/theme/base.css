@@ -5,7 +5,9 @@ body
     display: flex;
     flex-flow: column;
     overflow-y: hidden;
+    user-select: none;
     -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 #tabbrowser-tabs {
@@ -15,10 +17,49 @@ body
 
 #tabbrowser-tabs-pinned {
     flex: 0 1 auto;
+    z-index: 99;
 }
 
 #TabsToolbar {
     flex: 0 1 24px;
+}
+
+.tab-buttons {
+    position: absolute;
+    right: 36px;
+    padding: 0;
+    /*padding-left: 5px;*/
+
+    margin: 0;
+    height: 22px;
+    width: 22px;
+    z-index: 1:
+}
+
+.tab-buttons ul, .tab-buttons li {
+   margin: 0;
+    /* margin-top: -10px;
+
+    background-image: url("");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+
+
+    background-color: red !important;*/
+    /*padding: 0;
+    flex: 1 0 auto;*/
+
+}
+
+/* single buttons */
+.tab-buttons span {
+   /* height: 16px;
+    width: 16px;
+    margin: 0;
+        padding: 0;
+    margin-left: 5px;*/
+
 }
 
 /* Ensure the tab favicon doesn't stretch. */
@@ -33,7 +74,7 @@ body
     fill: currentColor !important;
 }
 
-/* Undo a bunch of stuff for pinned tabs */
+/* FIXME: remove? Undo a bunch of stuff for pinned tabs
 .tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
     position: inherit !important;
 }
@@ -45,41 +86,17 @@ body
 .tab-label[pinned] {
     width: auto !important;
     display: -moz-box !important;
-}
+} */
 
-/* Don't show close buttons for pinned tabs */
+/* FIXME: Likely not needed anymore, Don't show close buttons for pinned tabs */
 .tabbrowser-tab[pinned] .tab-close-button,
 .tabbrowser-tab[pinned] .tab-close-button:hover,
 .tabbrowser-tab[pinned] .tab-close-button:active {
     list-style-image: none !important;
 	background-image: none !important;
+    display: none !important;
 }
 
-/* Ensure the twisty image doesn't stretch. */
-.verticaltabs-twisty-container {
-    -moz-box-pack: start;
-    -moz-box-align: center;
-}
-
-/* Collapse/expand animation */
-.tabbrowser-tab[fadein]:not([pinned]) {
-    -moz-transition-property: visibility, height, min-height, max-height, padding-left;
-    -moz-transition-duration: .1s;
-    -moz-transition-timing-function: ease-out;
-}
-
-/* FIXME: likely to be removed */
-.verticaltabs-collapsed {
-    height: 0px !important;  /* animation shrinks height */
-    min-height: 0px !important;
-    max-height: 0px !important;
-    visibility: collapse;
-}
-
-/* FIXME: likely to be removed */
-.tab-background {
-    display: none ! important;
-}
 
 .tabbrowser-tab {
     pointer-events: auto ! important;
@@ -101,21 +118,9 @@ body
     text-overflow: ellipsis;
 }
 
-
-/* FIXME: likely to be removed; get rid of the tab separator from horizontal tabs */
-/*.tabbrowser-tab:after,
-.tabbrowser-tab:before {
-  content: none !important;
-}*/
-
 /* Make sure that a placeholder favicon is getting displayed if there is none */
 .tabbrowser-tab:not([busy]) .tab-icon-image:not([src]):not([pinned]) {
 	display: -moz-box;
-}
-
-/* Bug #97 */
-.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
-	visibility: visible !important;
 }
 
 .tab-icon-sound[soundplaying] {
@@ -126,6 +131,8 @@ body
 
 .tab-icon-sound[muted] {
 	list-style-image: url("../chrome/icon/tab-audio-muted.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
 }
 
 .tab-icon-sound {
