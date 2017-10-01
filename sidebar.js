@@ -410,6 +410,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.debug_log("remove tab: " + tabID);
 
+            if(tabID == this.selectedTabID)
+            {
+                this.selectedTabID = undefined;
+            }
+            
             this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
         }
