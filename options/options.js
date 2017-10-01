@@ -11,12 +11,6 @@ function setDefaultPrefs()
     main.restore_default_settings();
 }
 
-/* exported toggleDrawInTitlebar */
-function toggleDrawInTitlebar()
-{
-    main.sdk_sendMsg({type: "settings.toggleDrawInTitlebar"});
-}
-
 function save_setting(event)
 {
     if(blockSaveEvent == true) { return; }
@@ -47,7 +41,7 @@ function build()
     {
         let setting = settings[k];
 
-        var description = "", classHidden = "", addition = "";
+        let description = "", classHidden = "", addition = "";
 
         if(setting.description != undefined)
         {

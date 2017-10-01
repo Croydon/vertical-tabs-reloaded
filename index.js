@@ -1,13 +1,5 @@
 "use strict";
 
-var port = browser.runtime.connect({name: "connection-to-legacy"});
-var runningLegacy = false;
-
-function isLegacy()
-{
-    return runningLegacy;
-}
-
 function manage_installation(details)
 {
     if(details.reason == "install")
@@ -70,17 +62,7 @@ function get_options_file()
     xhr.overrideMimeType("json");
     xhr.responseType = "json";
 
-    let optionFile;
-    if(isLegacy())
-    {
-        optionFile = "options/legacy.json";
-    }
-    else
-    {
-        optionFile = "options/options.json";
-    }
-
-    xhr.open("GET", optionFile, true);
+    xhr.open("GET", "options/options.json", true);
     xhr.send();
 }
 
@@ -98,7 +80,6 @@ function restore_default_settings()
     Object.keys(settings).forEach((optionsElement) =>
     {
         save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
-        sdk_send_changed_setting(settings[optionsElement]["name"]);
     });
 }
 
@@ -192,74 +173,7 @@ function get_setting(name)
 }
 
 
-//
-// Communication with the legacy part + content script
-//
-
-function on_options_change()
-{
-    get_all_settings().then(value =>
-    {
-        // for legacy part FIXME: remove
-        value["dataPath"] = "resource://verticaltabsreloaded-at-go-dev-dot-de/data/";
-        sdk_sendMsg({
-            type: "settings.post-all",
-            value: value,
-        });
-    });
-}
-
-// Changed addon preferences, send to SDK // FIXME: remove
-function sdk_send_changed_setting(settingName)
-{
-    on_options_change();
-
-    get_setting(settingName).then(value =>
-    {
-        sdk_sendMsg({
-            type: "settings.post",
-            name: settingName,
-            value: value,
-        });
-    });
-}
-
-// FIXME: remove
-function sdk_replyHandler(message)
-{
-    if(message.type == "settings.post")
-    {
-        // the legacy part sent settings, save them
-        debug_log(message.name + " (from legacy) : " + message.value);
-        save_setting(message.name, message.value);
-    }
-
-    if(message.type == "debug.log")
-    {
-        debug_log(message.value);
-    }
-
-    if(message.type == "legacy")
-    {
-        runningLegacy = true;
-        get_options_file();
-    }
-}
-
-port.onMessage.addListener(sdk_replyHandler); // legacy listener FIXME: remove
-browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
-
-// FIXME: remove
-function sdk_sendMsg(message)
-{
-    browser.runtime.sendMessage(message).then(reply =>
-    {
-        if (reply)
-        {
-            sdk_replyHandler(reply);
-        }
-    });
-}
+// browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
 
 
 // FIXME: Window Mangament missing
@@ -324,33 +238,23 @@ setInterval(function()
 
 setTimeout(() =>
 {
-    on_options_change();
-
-    // Get all settings from the legacy part once // FIXME: remove
-    sdk_sendMsg({type: "settings.migrate"});
-
     // Set up listener
-    browser.storage.onChanged.addListener(on_options_change);
-
+    // browser.storage.onChanged.addListener(on_options_change);
 
     browser.commands.onCommand.addListener((command) =>
     {
         if (command == "toggleTabbrowser")
         {
+            // FIXME: not working
             browser.sidebarAction.open();
-
-            // FIXME: remove sendmsg for legacy
-            sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
     });
 
 
     browser.browserAction.onClicked.addListener(() =>
     {
+        // FIXME: Not working
         browser.sidebarAction.open();
-
-        // FIXME: remove listener for legacy
-        sdk_sendMsg({type: "event.toggleTabbrowser"});
     });
 
     browser.runtime.getBrowserInfo().then((browserInfo) =>

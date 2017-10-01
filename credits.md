@@ -3,7 +3,7 @@
 This project did already got a lot of contribution over time. In fact, this repository is a fork of a fork of a fork of the original project. In the following is a list of contributors, however, it's likely incomplete. Feel free to add your name here within your pull request.
 
  * [Philipp von Weitershausen](https://github.com/philikon) - Author of the original add-on
- * [Croydon](https://github.com/Croydon) - Owner of Vertical Tabs Reloaded
+ * [Croydon](https://github.com/Croydon) - Maintainer of Vertical Tabs Reloaded
  * [Vlad Vukicevic](https://github.com/vvuk) - Maintained a fork of the original add-on for some time
  * [Darrin Henein](https://github.com/darrinhenein) - Maintained a fork of the original add-on for some time
  * [bb10](https://github.com/bb10) - Linux and Windows theme contributions

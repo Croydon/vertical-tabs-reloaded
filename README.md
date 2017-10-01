@@ -14,7 +14,11 @@ Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded
 If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydon/4,99)
 
 ## WebExtension version is in work!
-See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information.
+See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information. [Opera support](https://github.com/Croydon/vertical-tabs-reloaded/issues/117) is also upcoming.
+
+
+## Firefox ESR v52 users
+Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addon/vertical-tabs-reloaded/versions/?page=1#version-0.8.2
 
 
 ## Features

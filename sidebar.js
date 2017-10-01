@@ -234,24 +234,21 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
     }
 
-    /* Firefox's security policy prevents us from loading some default icons,
+    /* FIREFIX: Firefox's security policy prevents us from loading some default icons,
     replace with local, exact-same icon versions
     - yes. that's kinda stupid  */
     normalize_tab_icon(iconURL)
     {
         if(typeof iconURL == "undefined")
         {
-            return "data/chrome/icon/defaultFavicon.png";
+            return "data/chrome/icon/default-favicon.svg";
         }
 
         switch (iconURL)
         {
-            // FIXME: Remove .png with FF >= 57
-            case "chrome://mozapps/skin/extensions/extensionGeneric-16.png":
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.svg":
                 return "data/chrome/icon/extension-generic.svg";
 
-            case "chrome://mozapps/skin/places/defaultFavicon.png":
             case "chrome://mozapps/skin/places/defaultFavicon.svg":
                 return "data/chrome/icon/default-favicon.svg";
 
