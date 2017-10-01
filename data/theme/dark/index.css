@@ -1,12 +1,11 @@
 @import "../../template/basic/index.css";
 @import "modifications.css";
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 :root {
 	/* Tabbrowser */
 	--vtr-tabbrowser-background-color: #424F5A;
 
-	/* Tabbar, only used if no Firefox Theme installed */
+    /* Tab Toolbar */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1;
 
@@ -32,7 +31,7 @@
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
 	--vtr-tab-pinned-background: #27323B;
-	--vtr-tab-pinned-font-weight: 600;
+	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #2292D0;
 	--vtr-tab-pinned-border-radius: 0;

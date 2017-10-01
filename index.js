@@ -1,248 +1,388 @@
-/* ***** BEGIN LICENSE BLOCK *****
- *
- * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
- * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- *
- * ***** END LICENSE BLOCK ***** */
-
 "use strict";
 
-// SDK
-var preferencesService = require("sdk/preferences/service");
-var windows = require("sdk/windows");
-var windowUtils = require("sdk/window/utils");
-var { viewFor } = require("sdk/view/core");
+var port = browser.runtime.connect({name: "connection-to-legacy"});
+var runningLegacy = false;
 
-// WebExtension
-const webExtension = require("sdk/webextension");
-var webextPort;
-var webextPreferences = {};
-var tabsAnimatePrefBackup = false;
-
-// Modules
-var { VerticalTabsReloaded } = require("./lib/verticaltabs.js");
-
-
-var GLOBAL_SCOPE = this;
-
-//
-// WebExtenions Communication
-//
-
-// Send message to WebExtension
-function webext_sendMsg(message)
+function isLegacy()
 {
-    webextPort.postMessage(message);
+    return runningLegacy;
+}
+
+function manage_installation(details)
+{
+    if(details.reason == "install")
+    {
+        // browser.tabs.create({url: "install-notes.html"});
+
+        browser.runtime.getBrowserInfo().then((info) =>
+        {
+            // / FIREFIX FIXME: not landed in stable yet
+            if(info.version >= 57)
+            {
+                browser.sidebarAction.open();
+            }
+        });
+    }
+
+    if(details.reason == "update")
+    {
+        /* if(details.previousVersion < 57)
+        {
+            // Update settings
+            browser.tabs.create({url: "update-notes.html"});
+        }*/
+    }
+
+    browser.sidebarAction.open();
+    console.log("manage_installation called");
+}
+
+browser.runtime.onInstalled.addListener(manage_installation);
+
+//
+// Handle addon settings
+//
+var settings;
+
+function get_options_file()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
+    {
+        if(xhr.readyState == 4) // 4 == DONE
+        {
+            settings = xhr.response;
+
+            // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
+            // Right now it's possible to toggle so we toggeling on the base of good luck
+            // and just hoping to end up with an open sidebar
+            get_setting("experiment").then(value =>
+            {
+                if(value == true)
+                {
+                    // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
+                    // browser.sidebarAction.open();
+                }
+            });
+        }
+    };
+
+    xhr.overrideMimeType("json");
+    xhr.responseType = "json";
+
+    let optionFile;
+    if(isLegacy())
+    {
+        optionFile = "options/legacy.json";
+    }
+    else
+    {
+        optionFile = "options/options.json";
+    }
+
+    xhr.open("GET", optionFile, true);
+    xhr.send();
+}
+
+get_options_file();
+
+/* exported get_options_object */
+function get_options_object()
+{
+    return settings;
+}
+
+/* exported restore_default_settings */
+function restore_default_settings()
+{
+    Object.keys(settings).forEach((optionsElement) =>
+    {
+        save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
+        sdk_send_changed_setting(settings[optionsElement]["name"]);
+    });
+}
+
+function save_setting(name, value)
+{
+    let settingsObject = {};
+    settingsObject[name] = value;
+
+    debug_log("save: " + name + " " + value);
+
+    browser.storage.local.set(settingsObject).then(error =>
+    {
+        if(error)
+        {
+            return false;
+        }
+
+        return true;
+    });
+}
+
+function get_all_settings()
+{
+    // This is necessary to not only get all actually saved values, but also the default values for unsaved attributes
+    return new Promise((fulfill, reject) =>
+    {
+        let allSettings = {};
+
+        let forEachSetting = (name) =>
+        {
+            return new Promise((fulfill) =>
+            {
+                get_setting(name).then(value =>
+                {
+                    let newValue = {};
+                    newValue[name] = value;
+                    Object.assign(allSettings, newValue);
+                    fulfill(true);
+                });
+            });
+        };
+
+        let allPromises = Object.keys(settings).map(forEachSetting);
+
+        Promise.all(allPromises).then(() =>
+        {
+            fulfill(allSettings);
+        });
+    }).catch(
+        (reason) =>
+        {
+            debug_log(reason);
+        }
+    );
+}
+
+function get_setting(name)
+{
+    if(name == undefined)
+    {
+        return get_all_settings();
+    }
+
+    return new Promise((fulfill, reject) =>
+    {
+        browser.storage.local.get(name).then(results =>
+        {
+            if (!results.hasOwnProperty(name))
+            {
+                // Debug output for "debug" is causing potentially an endless loop to the extend that browser doesn't react anymore
+                if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': not saved use default value."); }
+                if(settings.hasOwnProperty(name))
+                {
+                    if(name != "debug") { debug_log("VTR default setting for '" + name + "' is '" + settings[name]["value"] + "'"); }
+                    results[name] = settings[name]["value"];
+                }
+                else
+                {
+                    if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': no default value found."); }
+                }
+            }
+
+            fulfill(results[name]);
+        }).catch(
+            (reason) =>
+            {
+                debug_log(reason);
+            }
+        );
+    });
 }
 
 
-var sdk_inited = false;
-// Handle messages from WebExtension
-function webext_replyHandler(message)
+//
+// Communication with the legacy part + content script
+//
+
+function on_options_change()
 {
-    if(message.type == "settings.migrate")
+    get_all_settings().then(value =>
     {
-        if(preferencesService.get("extensions.@verticaltabsreloaded.animate") != undefined)
+        // for legacy part FIXME: remove
+        value["dataPath"] = "resource://verticaltabsreloaded-at-go-dev-dot-de/data/";
+        sdk_sendMsg({
+            type: "settings.post-all",
+            value: value,
+        });
+    });
+}
+
+// Changed addon preferences, send to SDK // FIXME: remove
+function sdk_send_changed_setting(settingName)
+{
+    on_options_change();
+
+    get_setting(settingName).then(value =>
+    {
+        sdk_sendMsg({
+            type: "settings.post",
+            name: settingName,
+            value: value,
+        });
+    });
+}
+
+// FIXME: remove
+function sdk_replyHandler(message)
+{
+    if(message.type == "settings.post")
+    {
+        // the legacy part sent settings, save them
+        debug_log(message.name + " (from legacy) : " + message.value);
+        save_setting(message.name, message.value);
+    }
+
+    if(message.type == "debug.log")
+    {
+        debug_log(message.value);
+    }
+
+    if(message.type == "legacy")
+    {
+        runningLegacy = true;
+        get_options_file();
+    }
+}
+
+port.onMessage.addListener(sdk_replyHandler); // legacy listener FIXME: remove
+browser.runtime.onMessage.addListener(sdk_replyHandler); // content script listener
+
+// FIXME: remove
+function sdk_sendMsg(message)
+{
+    browser.runtime.sendMessage(message).then(reply =>
+    {
+        if (reply)
         {
-           webext_sendChangedSetting("compact");
-           webext_sendChangedSetting("debug");
-           webext_sendChangedSetting("hideInFullscreen");
-           webext_sendChangedSetting("right");
-           webext_sendChangedSetting("tabtoolbarPosition");
-           webext_sendChangedSetting("theme");
-           webext_sendChangedSetting("toggleDisplayHotkey");
-           webext_sendChangedSetting("width");
-           preferencesService.reset("extensions.@verticaltabsreloaded.animate");
+            sdk_replyHandler(reply);
+        }
+    });
+}
+
+
+// FIXME: Window Mangament missing
+setInterval(function()
+{
+    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    {
+        if(browserInfo.version >= 56)
+        {
+            debug_log(browserInfo.version);
+            debug_log(browserInfo.buildID);
+            debug_log(browserInfo.name);
+
+            let version = browserInfo.version;
+
+            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+            if(version.includes("a"))
+            {
+                debug_log("You are a Nightly user");
+            }
+        }
+    });
+
+    browser.windows.getCurrent().then(currentWindow =>
+    {
+        if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
+        {
+            this["vtr.windows.state." + currentWindow.id] = "init";
+        }
+
+        if(currentWindow.state == "fullscreen")
+        {
+            if(this["vtr.windows.state." + currentWindow.id] != "fullscreen")
+            {
+                this["vtr.windows.state." + currentWindow.id] = "fullscreen";
+                get_setting("hideInFullscreen").then(value =>
+                {
+                    if(value == true)
+                    {
+                        sdk_sendMsg({type: "event.fullscreen", value: "true"});
+                    }
+                });
+            }
         }
         else
         {
-            // Delete all settings
-            var prefKeys = preferencesService.keys("extensions.@verticaltabsreloaded.");
-            for (var i = 0; i < prefKeys.length; i++)
+            if(this["vtr.windows.state." + currentWindow.id] == "fullscreen")
             {
-                preferencesService.reset(prefKeys[i]);
+                this["vtr.windows.state." + currentWindow.id] = currentWindow.state;
+                get_setting("hideInFullscreen").then(value =>
+                {
+                    if(value == true)
+                    {
+                        sdk_sendMsg({type: "event.fullscreen", value: "false"});
+                    }
+                });
             }
         }
-    }
+    });
+}, 100);
 
-    if(message.type == "settings.post")
-    {
-        // Get settings from WebExt
-        observPrefs(message.name);
-    }
 
-    if(message.type == "settings.post-all")
+setTimeout(() =>
+{
+    on_options_change();
+
+    // Get all settings from the legacy part once // FIXME: remove
+    sdk_sendMsg({type: "settings.migrate"});
+
+    // Set up listener
+    browser.storage.onChanged.addListener(on_options_change);
+
+
+    browser.commands.onCommand.addListener((command) =>
     {
-        // Get all settings from WebExt
-        webextPreferences = message.value;
-        if(sdk_inited == "prepared")
+        if (command == "toggleTabbrowser")
         {
-            sdk_inited = true;
-            sdk_init();
+            browser.sidebarAction.open();
+
+            // FIXME: remove sendmsg for legacy
+            sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
-        else if(sdk_inited == false)
+    });
+
+
+    browser.browserAction.onClicked.addListener(() =>
+    {
+        browser.sidebarAction.open();
+
+        // FIXME: remove listener for legacy
+        sdk_sendMsg({type: "event.toggleTabbrowser"});
+    });
+
+    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    {
+        let version = browserInfo.version;
+
+        // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+        if(version.includes("a"))
         {
-            sdk_inited = "prepared";
+            save_setting("showHiddenSettings", true);
+            save_setting("debug", true);
+            save_setting("experiment", true);
         }
 
-        observPrefs("");
-    }
-
-    if(message.type == "settings.toggleDrawInTitlebar")
-    {
-		// Toggle function of browser.tabs.drawInTitlebar for preference page
-		if(preferencesService.get("browser.tabs.drawInTitlebar", true))
-		{
-			preferencesService.set("browser.tabs.drawInTitlebar", false);
-		}
-		else
-		{
-			preferencesService.set("browser.tabs.drawInTitlebar", true);
-		}
-    }
-
-	if(message.type == "event.fullscreen")
-	{
-		let windowID = windowUtils.getOuterId(windowUtils.getToplevelWindow(windowUtils.getFocusedWindow()));
-		GLOBAL_SCOPE["vt"+windowID].changeFullscreenMode(message.value);
-	}
-
-	if(message.type == "event.toggleTabbrowser")
-	{
-		let windowID = windowUtils.getOuterId(windowUtils.getToplevelWindow(windowUtils.getFocusedWindow()));
-		GLOBAL_SCOPE["vt"+windowID].toggleDisplayState();
-	}
-}
-
-// Send setting to WebExtension
-function webext_sendSetting(settingName, value)
-{
-    webext_sendMsg({
-        type: "settings.post",
-        name: settingName,
-        value: value
-    });
-}
-// Changed addon preferences, send to WebExtension
-function webext_sendChangedSetting(settingName)
-{
-    webext_sendSetting(settingName, preferencesService.get("extensions.@verticaltabsreloaded." + settingName));
-}
-
-function observPrefs(settingName)
-{
-    for (let window of windows.browserWindows)
-    {
-        let lowLevelWindow = viewFor(window);
-        let windowID = windowUtils.getOuterId(lowLevelWindow);
-        debugOutput("observPrefs: " + settingName);
-        GLOBAL_SCOPE["vt"+windowID].onPreferenceChange(settingName, webextPreferences);
-    }
-}
-
-//
-// End of WebExtenions Communication
-//
-
-function initialize_window(window)
-{
-    let lowLevelWindow = viewFor(window);
-    let windowID = windowUtils.getOuterId(lowLevelWindow);
-
-    GLOBAL_SCOPE["vt"+windowID] = new VerticalTabsReloaded(lowLevelWindow, webextPort, webextPreferences);
-}
-
-function deinitialize_window(window)
-{
-    let lowLevelWindow = viewFor(window);
-    let windowID = windowUtils.getOuterId(lowLevelWindow);
-    GLOBAL_SCOPE["vt"+windowID].unload();
-    delete GLOBAL_SCOPE["vt"+windowID];
-}
-
-function sdk_init()
-{
-    // Initialize VerticalTabsReloaded object for each window.
-
-    for (let window of windows.browserWindows)
-    {
-        initialize_window(window);
-    }
-
-    windows.browserWindows.on('open', function(window)
-    {
-        initialize_window(window);
-    });
-
-    windows.browserWindows.on('close', function(window)
-    {
-        deinitialize_window(window)
-    });
-}
-
-// Entry point of the add-on
-exports.main = function (options, callbacks) {
-    // WebExtension startup + communication
-    webExtension.startup().then(({browser}) =>
-    {
-        browser.runtime.onMessage.addListener((msg, sender, sendResponse) =>
+        // Enforce debugging and hidden settings for Firefox Beta
+        if(version.includes("b"))
         {
-            webext_replyHandler(msg);
-        });
-
-        browser.runtime.onConnect.addListener((port) =>
-        {
-            webextPort = port; // make it global
-
-            if (options.loadReason == "install")
-			{
-                preferencesService.set("browser.tabs.drawInTitlebar", false);
-            }
-
-            // Backup toolkit.cosmeticAnimations.enabled (FF55+) pref before overwriting it
-			if(preferencesService.has("toolkit.cosmeticAnimations.enabled"))
-			{
-				tabsAnimatePrefBackup = preferencesService.get("toolkit.cosmeticAnimations.enabled");
-
-				preferencesService.set("toolkit.cosmeticAnimations.enabled", false);
-			}
-
-            webext_sendMsg({
-                type: "legacy",
-                name: "legacy",
-                value: true
-            });
-
-            if(sdk_inited == "prepared")
-            {
-                sdk_inited = true;
-                sdk_init();
-            }
-            else if(sdk_inited == false)
-            {
-                sdk_inited = "prepared";
-            }
-        });
+            save_setting("showHiddenSettings", true);
+            save_setting("debug", true);
+        }
     });
-}
+}, 100);
 
-exports.onUnload = function (reason)
+
+// Utils
+function debug_log(output)
 {
-    for (let window of windows.browserWindows)
+    get_setting("debug").then(value =>
     {
-        deinitialize_window(window);
-    }
-
-	if(preferencesService.has("toolkit.cosmeticAnimations.enabled"))
-	{
-		preferencesService.set("toolkit.cosmeticAnimations.enabled", tabsAnimatePrefBackup);
-	}
-}
-
-function debugOutput(output)
-{
-    webext_sendMsg({
-        type: "debug.log",
-        value: output
+        if(value == true)
+        {
+            console.log(output);
+        }
     });
 }

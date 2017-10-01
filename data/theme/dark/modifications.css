@@ -1,47 +1,27 @@
 @media (max-resolution: 1dppx) {
 	.tabbrowser-tab:not([pinned]) .tab-close-button {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/close-regular.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/close-regular.png") !important;
 	}
 
 	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/close-hover.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/close-hover.png") !important;
 	}
 
 	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/close-active.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/close-active.png") !important;
 	}
 }
 
 @media (min-resolution: 1.1dppx) {
 	.tabbrowser-tab:not([pinned]) .tab-close-button {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/high-res-close-regular.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/high-res-close-regular.png") !important;
 	}
 
 	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/high-res-close-hover.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/high-res-close-hover.png") !important;
 	}
 
 	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
-		list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/template/basic/icons/dark/high-res-close-active.png") !important;
-		-moz-image-region: auto !important;
+		list-style-image: url("../../template/basic/icons/dark/high-res-close-active.png") !important;
 	}
-}
-
-.tab-icon-sound[soundplaying] {
-	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-playing.svg") !important;
-    -moz-context-properties: fill !important;
-    fill: currentColor !important;
-}
-
-.tab-icon-sound[muted] {
-	list-style-image: url("resource://verticaltabsreloaded-at-go-dev-dot-de/webextension/data/chrome/icon/tab-audio-muted.svg") !important;
-}
-
-.tab-icon-sound {
-	filter: drop-shadow(1px 1px 1px white) !important;
 }

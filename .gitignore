@@ -1,7 +1,4 @@
 build
-webextension/web-ext-artifacts
-web-ext-artifacts/
+web-ext-artifacts
 *~
 *.DS_Store
-*.xpi
-install.rdf

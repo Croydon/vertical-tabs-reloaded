@@ -17,18 +17,17 @@ If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydo
 See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information.
 
 
-## Features:
+## Features
 
  * arranges tabs vertical
  * ships 5 different styles for the tab sidebar
- * hides tab sidebar in fullscreen mode
- * hide/display manually the tab sidebar at any time with a hotkey (customizable)
- * display the tab sidebar either on the left side (default) or on the right
- * display the tab toolbar at top or at bottom (default)
+ * hide/display manually the tab sidebar at any time with a hotkey (Ctrl+Shift+V)
+ * display the tab toolbar at top, bottom (default) or hide it completely
  * compact mode: hide text labels on tabs for a minimalistic tab sidebar (opt-in)
+ * show the tab status (unloaded, unready, busy) visually on the tabs
 
 
-## Goals:
+## Goals
 
  * Minimalist implementation.
 
@@ -43,14 +42,11 @@ Only the latest Firefox version is fully supported. Compatibility with the lates
 
 
 ## Building
-For building the legacy version of the add-on:
-> npm install -g jpm  
-jpm xpi
+You need Node.js and npm installed on your system. Then install web-ext:
+> npm install -g web-ext
 
-For building the experimental WebExtension version:
-> npm install -g web-ext  
-cd webextension  
-web-ext build
+After that you can build the add-on by executing in the project's root directory:
+> web-ext build
 
 
 ## Contact

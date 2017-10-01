@@ -11,4 +11,4 @@
 *.zip
 build
 src
-webextension/web-ext-artifacts
+web-ext-artifacts
