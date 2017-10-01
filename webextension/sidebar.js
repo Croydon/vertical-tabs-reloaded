@@ -230,8 +230,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.unloaders.push(() =>
         {
-            // FIXME: Put the tabs back up, unhide tabstrip
-
             // FIXME: Properly not necessary since sidebars are totally isolated and are just getting "deleted" on closing
         });
     }
@@ -327,21 +325,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
           button.addEventListener('click', buttonEvent);
           div.appendChild(button);
       }*/
-
-        /* let icon = document.createElement('img');
-        icon.className = 'icon';
-        icon.style.visibility = 'hidden';*/
-
-        // icon.addEventListener('error', handleImageError);
-
-        /* let context = document.createElement('span');
-        context.className = 'context';
-        context.style.visibility = 'hidden';*/
-
-        /* div.appendChild(icon);
-        div.appendChild(context);
-        div.appendChild(a);
-        tabList.appendChild(div);*/
 
         /* div.addEventListener('dragstart', handleDragStart, false);
         div.addEventListener('dragover', handleDragOver, false);

@@ -44,12 +44,12 @@ Only the latest Firefox version is fully supported. Compatibility with the lates
 
 ## Building
 For building the legacy version of the add-on:
-> npm install -g jpm
+> npm install -g jpm  
 jpm xpi
 
 For building the experimental WebExtension version:
-> npm install -g web-ext
-cd webextension
+> npm install -g web-ext  
+cd webextension  
 web-ext build
 
 

@@ -33,7 +33,7 @@ body
     margin: 0;
     height: 22px;
     width: 22px;
-    z-index: 1:
+    z-index: 1;
 }
 
 .tab-buttons ul, .tab-buttons li {

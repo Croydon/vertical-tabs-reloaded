@@ -1,6 +1,9 @@
+.eslintignore
+.eslintrc
 .git
 .github
 .gitignore
+.travis.yml
 .jpmignore
 *~
 *.DS_Store

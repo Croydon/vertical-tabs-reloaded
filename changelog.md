@@ -1,5 +1,25 @@
 # Changelog
 
+### v0.8.5, 2017-10-01
+ * themes improvements:
+   * Dark & Light theme:
+     * higher contrast between selected/pinned tabs and the rest of the tabs
+     * use included versions of the close buttons to prevent future breakages
+ * removed: don't offer the option anymore to select the "None/Firefox default" theme
+   * if selected previous to the update then it can still be used till Firefox v57
+ * internal: continue rewriting add-on as a WebExtension (#13)
+   * added basic support for Opera (#117)
+   * added tab close button
+   * added option icon to the tab toolbar (#115)
+   * added tab context menu with reload, mute, pin and close features
+   * show only the options which can actually be used
+     * previously even in the WebExtension-only version the legacy options were displayed
+   * fixing many layout issues, refactoring a lot of internals
+
+
+***
+
+
 ### v0.8.4.1, 2017-08-14
  * fixed: audio playing icons not visible (#97)
  * fixed: tabbrowser didn't hide in fullscreen in Firefox stable (#110)
@@ -73,7 +93,7 @@
 ### v0.8.0, 2017-01-09
  * internal: start rewriting add-on as a WebExtension (#13)
    * sync settings between the legacy SDK and the new WebExtension part
-     * this is critical to release as soon as possible, so that in the best case nobody will lose their settings in the end of 2017
+     * this is critical to release as soon as possible, so that in the best case nobody will lose their settings by the end of 2017
      * At the end of 2017 non-WebExtensions will stop working. Data migration won't be possible either afterwards
 
 
@@ -131,7 +151,7 @@
  * added: button to toggle `browser.tabs.drawInTitlebar` for the case that window control elements are overlappig with FF (#9)
    * note: this is set automatically to `true` once at installation
  * added: possibility to reset VTR preferences to default via button (#11)
- * fixed: hotkey to hide tabbar only works in the latest opened window (#30)
+ * fixed: hotkey to hide tab sidebar only works in the latest opened window (#30)
  * fixed: destroy references to closed windows, set memory free (#39)
  * themes improvements:
    * all themes (except Darwin):
