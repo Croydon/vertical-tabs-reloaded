@@ -1,6 +1,5 @@
-src/*
+dev/*
 lib/*
 data/*
 build/*
-webextension/lib/*
-index.js
+web-ext-artifacts/*

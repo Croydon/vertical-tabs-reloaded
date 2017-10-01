@@ -29,7 +29,6 @@ function save_setting(event)
 
     // main.debug_log(event.target.id + " new value: " + value);
     main.save_setting(event.target.id, value);
-    main.sdk_send_changed_setting(event.target.id);
 }
 
 function build()
@@ -143,14 +142,14 @@ function add_events(input)
         let funcObject = this[functionName];
         funcObject.apply(this, params);
     }
-}*/
+} */
 
 function update_all_inputs()
 {
     blockSaveEvent = true;
     // all_forms_helper(load_value);
 
-    var inputs = document.querySelectorAll("input, select, button");
+    var inputs = document.querySelectorAll("input, select");
     for (var i = 0; i < inputs.length; i++)
     {
         load_value(inputs[i]);
@@ -176,10 +175,10 @@ function update_all_inputs()
     });
 }
 
-function oncontentmenu_show_hidden_options()
+/* function oncontentmenu_show_hidden_options()
 {
     main.save_setting("showHiddenSettings", true);
-}
+} */
 
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -193,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () =>
         add_events(inputs[i]);
     }
 
-    document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
+    // document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
 
     browser.storage.onChanged.addListener(update_all_inputs);
 });

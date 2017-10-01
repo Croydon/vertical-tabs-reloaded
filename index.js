@@ -213,7 +213,7 @@ setInterval(function()
                 {
                     if(value == true)
                     {
-                        sdk_sendMsg({type: "event.fullscreen", value: "true"});
+                        // dummy
                     }
                 });
             }
@@ -227,7 +227,7 @@ setInterval(function()
                 {
                     if(value == true)
                     {
-                        sdk_sendMsg({type: "event.fullscreen", value: "false"});
+                        // dummy
                     }
                 });
             }
