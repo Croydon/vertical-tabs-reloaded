@@ -149,10 +149,10 @@ function update_all_inputs()
     blockSaveEvent = true;
     // all_forms_helper(load_value);
 
-    var inputs = document.querySelectorAll("input, select");
-    for (var i = 0; i < inputs.length; i++)
+    let inputs = document.querySelectorAll("input, select");
+    for (let anInput of inputs)
     {
-        load_value(inputs[i]);
+        load_value(anInput);
     }
 
     blockSaveEvent = false;
@@ -166,11 +166,11 @@ function update_all_inputs()
             newDisplay = "table-row";
         }
 
-        var elements = document.getElementsByClassName("hidden-setting");
-        for(let i = 0; i < elements.length; i++)
+        let elements = document.getElementsByClassName("hidden-setting");
+        for(let anElement of elements)
         {
             // main.debug_log(elements[i]);
-            elements[i].style.display = newDisplay;
+            anElement.style.display = newDisplay;
         }
     });
 }
@@ -186,10 +186,10 @@ document.addEventListener("DOMContentLoaded", () =>
 
     update_all_inputs();
 
-    var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++)
+    let inputs = document.querySelectorAll("input, select, button");
+    for (let anInput of inputs)
     {
-        add_events(inputs[i]);
+        add_events(anInput);
     }
 
     // document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;

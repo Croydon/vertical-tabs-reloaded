@@ -89,10 +89,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         this.debug_log(this.webExtPreferences);
         // this.window.VerticalTabsReloaded = this; // FIXME: Likely not needed anymore
-        // this.unloaders.push(() =>
-        // {
-        //     delete this.window.VerticalTabsReloaded;
-        // });
 
         this.build_ui();
         this.initEventListeners();
@@ -102,7 +98,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     preferences(settingName)
     {
-        this.debug_log(settingName + " (webext lib): " + this.webExtPreferences[settingName]);
+        this.debug_log(settingName + " (lib): " + this.webExtPreferences[settingName]);
         return this.webExtPreferences[settingName];
     }
 
@@ -202,23 +198,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.debug_log("style.tab.status true");
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
-
-        // FIREFIX: Placeholder. Sidebars on the right are currently not suppoted by Firefox.
-        // if (this.preferences("right"))
-
-        // Placeholder. Restore width of tab bar from previous session
-        // tabs.setAttribute("width", this.preferences("width"));
-        // FIREFIX: Firefox doesn't support resizing the sidebar programmatically currently.
-
-        // FIREFIX: Firefox doesn't supporting the moving of toolbars. https://bugzilla.mozilla.org/show_bug.cgi?id=1344959
-        // if (this.preferences("tabtoolbarPosition") == "top")
-        // {
-        //     leftbox.insertBefore(toolbar, leftbox.firstChild);
-        // }
-        // else
-        // {
-        //     leftbox.appendChild(toolbar);
-        // }
 
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
@@ -430,6 +409,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(this.document.getElementById("tab-" + tabID) !== null)
         {
             this.debug_log("remove tab: " + tabID);
+
+            this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
         }
     }
