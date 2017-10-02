@@ -12,7 +12,8 @@ body
 
 #tabbrowser-tabs {
     flex: 1 1 auto;
-    overflow-y: scroll;
+    overflow-y: auto;
+    /* margin-right: 2px; */
 }
 
 #tabbrowser-tabs-pinned {
@@ -22,44 +23,38 @@ body
 
 #TabsToolbar {
     flex: 0 1 24px;
+    z-index: 98;
+}
+
+.scrollbar-visible .tab-buttons {
+    right: 20px;
+}
+
+.no-scrollbar .tab-buttons {
+    right: 4px;
 }
 
 .tab-buttons {
     position: absolute;
-    right: 36px;
+    right: 7px;
+    /* background-color: lightgreen !important; */
     padding: 0;
-    /*padding-left: 5px;*/
-
     margin: 0;
+    padding-left: 5px;
     height: 22px;
-    width: 22px;
+    width: 24px;
     z-index: 1;
 }
 
-.tab-buttons ul, .tab-buttons li {
-   margin: 0;
-    /* margin-top: -10px;
-
-    background-image: url("");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 16px;
-
-
-    background-color: red !important;*/
-    /*padding: 0;
-    flex: 1 0 auto;*/
-
+.tab-buttons span {
+    /* padding-left: 18px; */
 }
 
-/* single buttons */
-.tab-buttons span {
-   /* height: 16px;
-    width: 16px;
-    margin: 0;
-        padding: 0;
-    margin-left: 5px;*/
-
+.tab-close-button {
+    display: block;
+    background-image: url("../../template/basic/icons/light/close-regular.png");
+    background-position: left;
+    background-repeat: no-repeat;
 }
 
 /* Ensure the tab favicon doesn't stretch. */
@@ -88,13 +83,13 @@ body
     display: -moz-box !important;
 } */
 
-/* FIXME: Likely not needed anymore, Don't show close buttons for pinned tabs */
+/* Don't show close buttons for pinned tabs */
 .tabbrowser-tab[pinned] .tab-close-button,
 .tabbrowser-tab[pinned] .tab-close-button:hover,
 .tabbrowser-tab[pinned] .tab-close-button:active {
-    list-style-image: none !important;
-	background-image: none !important;
-    display: none !important;
+    /* list-style-image: none !important; */
+	background-image: none;
+    display: none;
 }
 
 

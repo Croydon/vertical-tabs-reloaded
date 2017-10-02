@@ -213,6 +213,20 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
     }
 
+    check_scrollbar_status()
+    {
+        if(this.tabbrowser.scrollHeight > this.tabbrowser.clientHeight)
+        {
+            this.tabbrowser.classList.remove("no-scrollbar");
+            this.tabbrowser.classList.add("scrollbar-visible");
+        }
+        else
+        {
+            this.tabbrowser.classList.remove("scrollbar-visible");
+            this.tabbrowser.classList.add("no-scrollbar");
+        }
+    }
+
     /* FIREFIX: Firefox's security policy prevents us from loading some default icons,
     replace with local, exact-same icon versions
     - yes. that's kinda stupid  */
@@ -261,7 +275,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
-            <span id="tab-close-button-${id}" class="tab-close-button close-icon"> <ul> <li> </li> </ul> </span>
+            <span id="tab-close-button-${id}" class="tab-close-button close-icon" title="Close tab"> </span>
         </span>
         </div>`;
 
@@ -289,6 +303,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.update_tab(id, "title", tab.title);
+
+        this.check_scrollbar_status();
 
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
 
@@ -417,6 +433,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
+
+            this.check_scrollbar_status();
         }
     }
 

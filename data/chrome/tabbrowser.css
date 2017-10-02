@@ -8,6 +8,13 @@
    font: 3mm tahoma,arial,helvetica,sans-serif;
  }
 
+ /* Apply crisp rendering for favicons at exactly 2dppx resolution */
+ @media (resolution: 2dppx) {
+   .tab-icon-image {
+     image-rendering: -moz-crisp-edges;
+   }
+ }
+ 
  /*
 .tab-sharing-icon-overlay[sharing]:not([selected]),
 .tab-icon-overlay[soundplaying][pinned],
@@ -44,16 +51,8 @@ tabpanels {
 .tab-drop-indicator {
   position: relative;
   z-index: 2;
-}*/
-
-/* Apply crisp rendering for favicons at exactly 2dppx resolution */
-@media (resolution: 2dppx) {
-  .tab-icon-image {
-    image-rendering: -moz-crisp-edges;
-  }
 }
 
-/*
 .closing-tabs-spacer {
   pointer-events: none;
 }
