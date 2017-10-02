@@ -414,7 +414,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 this.selectedTabID = undefined;
             }
-            
+
             this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
         }
@@ -436,10 +436,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         switch (prefName)
         {
-            // case "right":
-            // this.webExtPreferences = newValue;
-            // Placeholder.
-            // break;
+            // Former options which have no effect anymore: "right" (sidebar position), "hideInFullscreen"
 
             case "tabtoolbarPosition":
                 this.webExtPreferences[prefName] = newValue;
