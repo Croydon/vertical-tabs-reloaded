@@ -8,37 +8,6 @@ function isLegacy()
     return runningLegacy;
 }
 
-function manage_installation(details)
-{
-    if(details.reason == "install")
-    {
-        // browser.tabs.create({url: "install-notes.html"});
-
-        browser.runtime.getBrowserInfo().then((info) =>
-        {
-            // / FIREFIX FIXME: not landed in stable yet
-            if(info.version >= 57)
-            {
-                browser.sidebarAction.open();
-            }
-        });
-    }
-
-    if(details.reason == "update")
-    {
-        /* if(details.previousVersion < 57)
-        {
-            // Update settings
-            browser.tabs.create({url: "update-notes.html"});
-        }*/
-    }
-
-    browser.sidebarAction.open();
-    console.log("manage_installation called");
-}
-
-browser.runtime.onInstalled.addListener(manage_installation);
-
 //
 // Handle addon settings
 //
@@ -56,14 +25,14 @@ function get_options_file()
             // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
             // Right now it's possible to toggle so we toggeling on the base of good luck
             // and just hoping to end up with an open sidebar
-            get_setting("experiment").then(value =>
+            /* get_setting("experiment").then(value =>
             {
                 if(value == true)
                 {
                     // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
                     // browser.sidebarAction.open();
                 }
-            });
+            }); */
         }
     };
 
@@ -265,24 +234,6 @@ function sdk_sendMsg(message)
 // FIXME: Window Mangament missing
 setInterval(function()
 {
-    browser.runtime.getBrowserInfo().then((browserInfo) =>
-    {
-        if(browserInfo.version >= 56)
-        {
-            debug_log(browserInfo.version);
-            debug_log(browserInfo.buildID);
-            debug_log(browserInfo.name);
-
-            let version = browserInfo.version;
-
-            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-            if(version.includes("a"))
-            {
-                debug_log("You are a Nightly user");
-            }
-        }
-    });
-
     browser.windows.getCurrent().then(currentWindow =>
     {
         if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
@@ -337,8 +288,6 @@ setTimeout(() =>
     {
         if (command == "toggleTabbrowser")
         {
-            browser.sidebarAction.open();
-
             // FIXME: remove sendmsg for legacy
             sdk_sendMsg({type: "event.toggleTabbrowser"});
         }
@@ -347,8 +296,6 @@ setTimeout(() =>
 
     browser.browserAction.onClicked.addListener(() =>
     {
-        browser.sidebarAction.open();
-
         // FIXME: remove listener for legacy
         sdk_sendMsg({type: "event.toggleTabbrowser"});
     });
@@ -372,6 +319,12 @@ setTimeout(() =>
             save_setting("debug", true);
         }
     });
+
+    setTimeout(() =>
+    {
+        sdk_send_changed_setting("width");
+    }, 500);
+
 }, 100);
 
 
