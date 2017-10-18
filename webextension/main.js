@@ -323,6 +323,7 @@ setTimeout(() =>
     setTimeout(() =>
     {
         sdk_send_changed_setting("width");
+        sdk_send_changed_setting("right");
     }, 500);
 
 }, 100);

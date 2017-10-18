@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.8.5.2, 2017-10-04
+ * fixed: workaround problem that sidebar position (left, right) is not set correctly (#129)
+
+
+***
+
+
 ### v0.8.5.1, 2017-10-03
  * fixed: workaround problem that sidebar width is not set correctly (#129)
 
