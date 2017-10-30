@@ -8,22 +8,24 @@ body
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    z-index: -4;
 }
 
 #tabbrowser-tabs {
     flex: 1 1 auto;
     overflow-y: auto;
     /* margin-right: 2px; */
+    z-index: -3;
 }
 
 #tabbrowser-tabs-pinned {
     flex: 0 1 auto;
-    z-index: 99;
+    z-index: -2;
 }
 
 #TabsToolbar {
     flex: 0 1 24px;
-    z-index: 98;
+    z-index: 1;
 }
 
 .scrollbar-visible .tab-buttons {
@@ -37,7 +39,6 @@ body
 .tab-buttons {
     position: absolute;
     right: 7px;
-    /* background-color: lightgreen !important; */
     padding: 0;
     margin: 0;
     padding-left: 5px;
@@ -114,7 +115,7 @@ body
 }
 
 /* Make sure that a placeholder favicon is getting displayed if there is none */
-.tabbrowser-tab:not([busy]) .tab-icon-image:not([src]):not([pinned]) {
+.tabbrowser-tab:not([status="loading"]) .tab-icon-image:not([src]):not([pinned]) {
 	display: -moz-box;
 }
 

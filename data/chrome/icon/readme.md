@@ -1,3 +1,5 @@
+chrome://browser/skin/tabbrowser/connnecting.png - FF56
+chrome://browser/skin/tabbrowser/connnecting@2px.png - FF56
 chrome://browser/skin/tabbrowser/newtab.svg
 chrome://browser/skin/tabbrowser/tab-audio-playing.svg - FF57
 chrome://browser/skin/tabbrowser/tab-audio-muted.svg - FF57

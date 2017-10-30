@@ -256,13 +256,19 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // let url = tab.url;
         let title = "Connecting...";
         let pinned = tab.pinned;
+        let status = tab.status;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let pinnedHTML = "", selectedAttribute = "";
+        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`;
+
+        if(status == "loading")
+        {
+            iconURL = "data/chrome/icon/connecting@2px.png";
+        }
 
         if(pinned == true)
         {
-            pinnedHTML = 'pinned="true"';
+            pinnedAttribute = 'pinned="true"';
         }
 
         if(tab.selected == true)
@@ -271,7 +277,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.selectedTabID = id;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" align="stretch">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tab.index}" align="stretch">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -348,7 +354,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
-                this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+
+                this.debug_log("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
+                this.debug_log("favIconUrl loaded: " + value);
+
+                this.document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
+
+                if(this.document.getElementById("tab-" + tabID).getAttribute("status") == "complete")
+                {
+                    this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+                }
+
                 break;
 
             case "selected":
@@ -370,6 +386,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     this.newOpenedTabSelectIt = tabID;
                 }
 
+                break;
+
+            case "status":
+                this.debug_log("new status: " + value);
+                this.document.getElementById("tab-" + tabID).setAttribute("status", value);
+
+                if(value == "complete")
+                {
+                    let newFavicon = this.document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
+                    if(newFavicon != "")
+                    {
+                        this.debug_log("new favicon: " + newFavicon);
+                        this.update_tab(tabID, "favIconUrl", newFavicon);
+                    }
+                }
+
+                if(value == "loading")
+                {
+                    // FIXME: Which icon is getting set should be really up to the theme
+                    this.document.getElementById("tab-icon-" + tabID).setAttribute("src", "data/chrome/icon/connecting@2x.png");
+                }
                 break;
 
             case "index":
@@ -566,18 +603,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]);
             }
+
+            if(changeInfo.hasOwnProperty("status"))
+            {
+                this.update_tab(tabID, "status", changeInfo["status"]);
+            }
+
             /* if (changeInfo.hasOwnProperty('mutedInfo')) {
                 sidetabs.setMuted(tab, changeInfo.mutedInfo);
-              }
-          if (changeInfo.hasOwnProperty('audible')) {
-            sidetabs.setAudible(tab, changeInfo.audible);
-          }
-          if (changeInfo.status === 'loading') {
-            sidetabs.setSpinner(tab);
-          }
-          if (changeInfo.status === 'complete') {
-            sidetabs.setIcon(tab);
-        }*/
+            }
+            if (changeInfo.hasOwnProperty('audible')) {
+                sidetabs.setAudible(tab, changeInfo.audible);
+            } */
         });
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>

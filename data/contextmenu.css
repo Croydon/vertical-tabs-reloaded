@@ -1,3 +1,15 @@
+#contextmenu
+{
+    display: none;
+    position: fixed;
+    border: 1px solid #B2B2B2;
+    width: 150px;
+    background: #F9F9F9;
+    box-shadow: 0px 1px 1px #E9E9E9;
+    border-radius: 4px;
+    z-index: 2;
+}
+
 #contextmenu #contextmenu-items
 {
     list-style: none;
@@ -16,17 +28,6 @@
     background-color: #E4E4E4;
     border-color: #E4E4E4;
     color: #E4E4E4;
-}
-
-#contextmenu
-{
-  display: none;
-  position: fixed;
-  border: 1px solid #B2B2B2;
-  width: 150px;
-  background: #F9F9F9;
-  box-shadow: 0px 1px 1px #E9E9E9;
-  border-radius: 4px;
 }
 
 #contextmenu li
