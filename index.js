@@ -18,15 +18,15 @@ function manage_installation(details)
 
     if(details.reason == "update")
     {
-        /* if(details.previousVersion < 57)
+        if(details.previousVersion < 57)
         {
+            browser.sidebarAction.open();
             // Update settings
             browser.tabs.create({url: "update-notes.html"});
-        }*/
+        }
     }
 
-    browser.sidebarAction.open();
-    console.log("manage_installation called");
+    debug_log("manage_installation called");
 }
 
 browser.runtime.onInstalled.addListener(manage_installation);
@@ -52,8 +52,7 @@ function get_options_file()
             {
                 if(value == true)
                 {
-                    // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
-                    // browser.sidebarAction.open();
+                    // keep-me
                 }
             });
         }
@@ -197,7 +196,7 @@ setInterval(function()
         }
     });
 
-    browser.windows.getCurrent().then(currentWindow =>
+    /* browser.windows.getCurrent().then(currentWindow =>
     {
         if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
         {
@@ -232,7 +231,7 @@ setInterval(function()
                 });
             }
         }
-    });
+    }); */
 }, 100);
 
 
