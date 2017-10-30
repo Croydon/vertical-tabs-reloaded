@@ -75,6 +75,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.unloaders = [];
         this.selectedTabID = undefined;
         this.newOpenedTabSelectIt = undefined;
+        this.initialized = false;
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
@@ -94,6 +95,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.initEventListeners();
         this.scroll_to_tab(this.selectedTabID);
         this.toolbar_activate();
+        this.check_scrollbar_status();
+        this.initialized = true;
     }
 
     preferences(settingName)
@@ -259,7 +262,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let status = tab.status;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`;
+        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
 
         if(status == "loading")
         {
@@ -277,7 +280,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.selectedTabID = id;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tab.index}" align="stretch">
+        if(this.initialized == false)
+        {
+            tabIndex = tab.index;
+        }
+        else
+        {
+            // Temporary index, we are updating it directly after creating the tab
+            // This improves performance at startup and complexity at runtime
+            tabIndex = this.get_last_tab_index() + 1;
+        }
+
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -285,7 +299,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         </span>
         </div>`;
 
-        // Check: fadein="true" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
+        // Check: fadein="true" linkedpanel="panel-3-77" pending="true" align="stretch"
         if(pinned == true)
         {
             this.document.getElementById("tabbrowser-tabs-pinned").insertAdjacentHTML("beforeend", tabHTML);
@@ -310,9 +324,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.update_tab(id, "title", tab.title);
 
-        this.check_scrollbar_status();
+        if(this.initialized == true)
+        {
+            // At startup we would check that for every single tab, which is nonsense
+            this.check_scrollbar_status();
+        }
 
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
+
+        if(this.initialized == true)
+        {
+            this.move_tab(id, tabIndex, tab.index);
+        }
 
         /* for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
@@ -419,8 +442,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     move_tab(tabID, fromIndex, toIndex)
     {
         this.debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
-        this.debug_log(this.tabbrowser.lastElementChild.getAttribute("data-index"));
-        if(toIndex == this.tabbrowser.lastElementChild.getAttribute("data-index"))
+
+        if(fromIndex == toIndex) { return; }
+
+        this.debug_log(this.get_last_tab_index());
+        if(toIndex == this.get_last_tab_index())
         {
             // Move at the end
             this.tabbrowser.append(this.document.getElementById("tab-" + tabID));
@@ -455,6 +481,16 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             // tab.innerHTML = index + " " + tab.innerHTML;
             index++;
         }
+    }
+
+    get_last_tab_index()
+    {
+        if(this.tabbrowser.lastElementChild === null)
+        {
+            return -1;
+        }
+
+        return parseInt(this.tabbrowser.lastElementChild.getAttribute("data-index"), 10);
     }
 
     remove_tab(tabID)
@@ -576,6 +612,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if(tab.windowId == this.windowID)
             {
                 this.create_tab(tab);
+                this.update_tab_indexes();
             }
         });
 
