@@ -161,20 +161,25 @@ function get_setting(name)
     {
         browser.storage.local.get(name).then(results =>
         {
+            let localDebugOutput = "VTR WebExt setting '" + name + "': ";
+            let localDebug = false;
+
             if (!results.hasOwnProperty(name))
             {
                 // Debug output for "debug" is causing potentially an endless loop to the extend that browser doesn't react anymore
-                if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': not saved use default value."); }
+                if(name != "debug") { localDebug = true; localDebugOutput += "No user value, use default value. "; }
                 if(settings.hasOwnProperty(name))
                 {
-                    if(name != "debug") { debug_log("VTR default setting for '" + name + "' is '" + settings[name]["value"] + "'"); }
+                    if(name != "debug") { localDebug = true; localDebugOutput += "Default value is '" + settings[name]["value"] + "'. "; }
                     results[name] = settings[name]["value"];
                 }
                 else
                 {
-                    if(name != "debug") { debug_log("VTR WebExt setting '" + name + "': no default value found."); }
+                    if(name != "debug") { localDebug = true; localDebugOutput += "No default value found."; }
                 }
             }
+
+            if(localDebug == true) { debug_log(localDebugOutput); }
 
             fulfill(results[name]);
         }).catch(
