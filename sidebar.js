@@ -235,7 +235,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     - yes. that's kinda stupid  */
     normalize_tab_icon(iconURL)
     {
-        if(typeof iconURL == "undefined" || iconURL == "")
+        if(typeof iconURL == "undefined" || iconURL == null || iconURL == "")
         {
             return "data/chrome/icon/default-favicon.svg";
         }
