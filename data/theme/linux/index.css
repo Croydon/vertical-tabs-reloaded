@@ -1,6 +1,4 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
-.tabbrowser-tabs {
+body {
     margin: 1px 0 0 0 !important;
     padding: 0 !important;
     background: transparent !important;
@@ -11,7 +9,7 @@
 .tabbrowser-tab {
     -moz-box-pack: start;
     -moz-box-flex: 0;
-    -moz-appearance: none !important;
+    appearance: none !important;
     background: transparent !important;
     margin: 0 !important;
     padding: 1px 0 !important;
@@ -32,7 +30,7 @@
     padding: 1px 0 !important;
 
     background-color: Highlight !important;
-    
+
     color: HighlightText !important;
     font-weight: normal;
     text-shadow: none;

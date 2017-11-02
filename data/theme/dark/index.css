@@ -1,17 +1,17 @@
 @import "../../template/basic/index.css";
 @import "modifications.css";
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 :root {
 	/* Tabbrowser */
 	--vtr-tabbrowser-background-color: #424F5A;
 
-	/* Tabbar, only used if no Firefox Theme installed */
+    /* Tab Toolbar */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1;
 
 	/* Single tab */
 	--vtr-tab-text-color: #fbfbfb;
+	--vtr-tab-background-color: transparent;
 	--vtr-tab-background: transparent;
 	--vtr-tab-height: 28px;
 	--vtr-tab-min-height: 28px;
@@ -23,6 +23,7 @@
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #fbfbfb;
+	--vtr-tab-selected-background-color: #27323B;
 	--vtr-tab-selected-background: #27323B;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
@@ -31,13 +32,15 @@
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
+	--vtr-tab-pinned-background-color: #27323B;
 	--vtr-tab-pinned-background: #27323B;
-	--vtr-tab-pinned-font-weight: 600;
+	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-left: 4px solid #2292D0;
 	--vtr-tab-pinned-border-radius: 0;
 
 	/* Single tab hover */
+	--vtr-tab-hover-background-color: #5E6972;
 	--vtr-tab-hover-background: #5E6972;
 
 	/* Splitter/Separation between tabbar and website */

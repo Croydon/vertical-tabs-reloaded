@@ -11,12 +11,6 @@ function setDefaultPrefs()
     main.restore_default_settings();
 }
 
-/* exported toggleDrawInTitlebar */
-function toggleDrawInTitlebar()
-{
-    main.sdk_sendMsg({type: "settings.toggleDrawInTitlebar"});
-}
-
 function save_setting(event)
 {
     if(blockSaveEvent == true) { return; }
@@ -35,7 +29,6 @@ function save_setting(event)
 
     // main.debug_log(event.target.id + " new value: " + value);
     main.save_setting(event.target.id, value);
-    main.sdk_send_changed_setting(event.target.id);
 }
 
 function build()
@@ -47,7 +40,7 @@ function build()
     {
         let setting = settings[k];
 
-        var description = "", classHidden = "", addition = "";
+        let description = "", classHidden = "", addition = "";
 
         if(setting.description != undefined)
         {
@@ -149,17 +142,17 @@ function add_events(input)
         let funcObject = this[functionName];
         funcObject.apply(this, params);
     }
-}*/
+} */
 
 function update_all_inputs()
 {
     blockSaveEvent = true;
     // all_forms_helper(load_value);
 
-    var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++)
+    let inputs = document.querySelectorAll("input, select");
+    for (let anInput of inputs)
     {
-        load_value(inputs[i]);
+        load_value(anInput);
     }
 
     blockSaveEvent = false;
@@ -173,19 +166,19 @@ function update_all_inputs()
             newDisplay = "table-row";
         }
 
-        var elements = document.getElementsByClassName("hidden-setting");
-        for(let i = 0; i < elements.length; i++)
+        let elements = document.getElementsByClassName("hidden-setting");
+        for(let anElement of elements)
         {
             // main.debug_log(elements[i]);
-            elements[i].style.display = newDisplay;
+            anElement.style.display = newDisplay;
         }
     });
 }
 
-function oncontentmenu_show_hidden_options()
+/* function oncontentmenu_show_hidden_options()
 {
     main.save_setting("showHiddenSettings", true);
-}
+} */
 
 document.addEventListener("DOMContentLoaded", () =>
 {
@@ -193,13 +186,13 @@ document.addEventListener("DOMContentLoaded", () =>
 
     update_all_inputs();
 
-    var inputs = document.querySelectorAll("input, select, button");
-    for (var i = 0; i < inputs.length; i++)
+    let inputs = document.querySelectorAll("input, select, button");
+    for (let anInput of inputs)
     {
-        add_events(inputs[i]);
+        add_events(anInput);
     }
 
-    document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
+    // document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
 
     browser.storage.onChanged.addListener(update_all_inputs);
 });

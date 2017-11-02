@@ -1,100 +1,136 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
-/* Style the scrollbox for vertical arrangements. */
-.tabbrowser-arrowscrollbox > scrollbox {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+body
+{
+    font: message-box !important;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    overflow-y: hidden;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    z-index: -4;
 }
 
-/* Since we get an actual scrollbar in this vertical arrangement, we
-   don't need these extra scroll buttons. */
-.tabbrowser-arrowscrollbox > .scrollbutton-up,
-.tabbrowser-arrowscrollbox > .scrollbutton-down {
-    visibility: collapse !important;
+#tabbrowser-tabs {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    /* margin-right: 2px; */
+    z-index: -3;
+}
+
+#tabbrowser-tabs-pinned {
+    flex: 0 1 auto;
+    z-index: -2;
+}
+
+#TabsToolbar {
+    flex: 0 1 24px;
+    z-index: 1;
+}
+
+.scrollbar-visible .tab-buttons {
+    right: 20px;
+}
+
+.no-scrollbar .tab-buttons {
+    right: 4px;
+}
+
+.tab-buttons {
+    position: absolute;
+    right: 7px;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+    height: 22px;
+    width: 24px;
+    z-index: 1;
+}
+
+.tab-buttons span {
+    /* padding-left: 18px; */
+}
+
+.tab-close-button {
+    display: block;
+    background-image: url("../../template/basic/icons/light/close-regular.png");
+    background-position: left;
+    background-repeat: no-repeat;
 }
 
 /* Ensure the tab favicon doesn't stretch. */
 .tab-icon-image {
-    max-width: 16px;
-    max-height: 16px;
+    max-width: 22px;
+    max-height: 22px;
 }
 
-/* Hide the original tab toolbar buttons. */
-.tabs-newtab-button {
-    visibility: collapse;
+/* FIXME: This works natively in FF but not here? */
+.tab-icon-image[src*="data/chrome/icon/"] {
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
 }
 
-/* Undo a bunch of stuff for pinned tabs */
+/* FIXME: remove? Undo a bunch of stuff for pinned tabs
 .tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
     position: inherit !important;
 }
+
 .tabbrowser-tab[pinned] > .tab-text {
     display: inherit;
 }
 
 .tab-label[pinned] {
     width: auto !important;
-}
+    display: -moz-box !important;
+} */
 
 /* Don't show close buttons for pinned tabs */
 .tabbrowser-tab[pinned] .tab-close-button,
 .tabbrowser-tab[pinned] .tab-close-button:hover,
 .tabbrowser-tab[pinned] .tab-close-button:active {
-    list-style-image: none !important;
-	background-image: none !important;
+    /* list-style-image: none !important; */
+	background-image: none;
+    display: none;
 }
 
-/* Ensure the twisty image doesn't stretch. */
-.verticaltabs-twisty-container {
-    -moz-box-pack: start;
-    -moz-box-align: center;
-}
-
-/* Collapse/expand animation */
-.tabbrowser-tab[fadein]:not([pinned]) {
-    -moz-transition-property: visibility, height, min-height, max-height, padding-left;
-    -moz-transition-duration: .1s;
-    -moz-transition-timing-function: ease-out;
-}
-
-.verticaltabs-collapsed {
-    height: 0px !important;  /* animation shrinks height */
-    min-height: 0px !important;
-    max-height: 0px !important;
-    visibility: collapse;
-}
-
-.tab-background {
-    display: none ! important;
-}
 
 .tabbrowser-tab {
     pointer-events: auto ! important;
     min-width: 30px ! important;
     max-width: 100% ! important;
 	min-height: 20px;
-	height: 20px;
+	height: 20px !important;
 	max-height: 40px !important;
 	border-bottom: 1px solid #5E6972;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
-    -moz-padding-end: 0px ! important;
-    -moz-padding-start: 0px ! important;
-}
-
-/* get rid of the tab separator from horizontal tabs */
-.tabbrowser-tab:after,
-.tabbrowser-tab:before {
-  content: none !important;
+.tab-label {
+    /*position: relative;*/
+    white-space: nowrap;
+    vertical-align: middle;
+    text-overflow: ellipsis;
 }
 
 /* Make sure that a placeholder favicon is getting displayed if there is none */
-.tabbrowser-tab:not([busy]) .tab-icon-image:not([src]):not([pinned]) {
+.tabbrowser-tab:not([status="loading"]) .tab-icon-image:not([src]):not([pinned]) {
 	display: -moz-box;
 }
 
-/* Bug #97 */
-.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
-	visibility: visible !important;
+.tab-icon-sound[soundplaying] {
+	list-style-image: url("../chrome/icon/tab-audio-playing.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("../chrome/icon/tab-audio-muted.svg") !important;
+    -moz-context-properties: fill !important;
+    fill: currentColor !important;
+}
+
+.tab-icon-sound {
+	filter: drop-shadow(1px 1px 1px currentColor) !important;
 }

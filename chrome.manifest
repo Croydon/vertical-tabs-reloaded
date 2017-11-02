@@ -1,3 +1,0 @@
-content verticaltabsreloaded /
-
-override  chrome://tabmixplus/content/tab/tabbrowser_proxy.xml      chrome://verticaltabsreloaded/content/lib/combat/tabbrowser_proxy.xml

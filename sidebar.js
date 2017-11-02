@@ -75,6 +75,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.unloaders = [];
         this.selectedTabID = undefined;
         this.newOpenedTabSelectIt = undefined;
+        this.initialized = false;
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
 
@@ -89,20 +90,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         this.debug_log(this.webExtPreferences);
         // this.window.VerticalTabsReloaded = this; // FIXME: Likely not needed anymore
-        // this.unloaders.push(() =>
-        // {
-        //     delete this.window.VerticalTabsReloaded;
-        // });
 
         this.build_ui();
         this.initEventListeners();
         this.scroll_to_tab(this.selectedTabID);
         this.toolbar_activate();
+        this.check_scrollbar_status();
+        this.initialized = true;
     }
 
     preferences(settingName)
     {
-        this.debug_log(settingName + " (webext lib): " + this.webExtPreferences[settingName]);
+        this.debug_log(settingName + " (lib): " + this.webExtPreferences[settingName]);
         return this.webExtPreferences[settingName];
     }
 
@@ -203,23 +202,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
-        // FIREFIX: Placeholder. Sidebars on the right are currently not suppoted by Firefox.
-        // if (this.preferences("right"))
-
-        // Placeholder. Restore width of tab bar from previous session
-        // tabs.setAttribute("width", this.preferences("width"));
-        // FIREFIX: Firefox doesn't support resizing the sidebar programmatically currently.
-
-        // FIREFIX: Firefox doesn't supporting the moving of toolbars. https://bugzilla.mozilla.org/show_bug.cgi?id=1344959
-        // if (this.preferences("tabtoolbarPosition") == "top")
-        // {
-        //     leftbox.insertBefore(toolbar, leftbox.firstChild);
-        // }
-        // else
-        // {
-        //     leftbox.appendChild(toolbar);
-        // }
-
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
             for(let tab of tabs)
@@ -234,24 +216,35 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         });
     }
 
-    /* Firefox's security policy prevents us from loading some default icons,
+    check_scrollbar_status()
+    {
+        if(this.tabbrowser.scrollHeight > this.tabbrowser.clientHeight)
+        {
+            this.tabbrowser.classList.remove("no-scrollbar");
+            this.tabbrowser.classList.add("scrollbar-visible");
+        }
+        else
+        {
+            this.tabbrowser.classList.remove("scrollbar-visible");
+            this.tabbrowser.classList.add("no-scrollbar");
+        }
+    }
+
+    /* FIREFIX: Firefox's security policy prevents us from loading some default icons,
     replace with local, exact-same icon versions
     - yes. that's kinda stupid  */
     normalize_tab_icon(iconURL)
     {
         if(typeof iconURL == "undefined")
         {
-            return "data/chrome/icon/defaultFavicon.png";
+            return "data/chrome/icon/default-favicon.svg";
         }
 
         switch (iconURL)
         {
-            // FIXME: Remove .png with FF >= 57
-            case "chrome://mozapps/skin/extensions/extensionGeneric-16.png":
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.svg":
                 return "data/chrome/icon/extension-generic.svg";
 
-            case "chrome://mozapps/skin/places/defaultFavicon.png":
             case "chrome://mozapps/skin/places/defaultFavicon.svg":
                 return "data/chrome/icon/default-favicon.svg";
 
@@ -266,13 +259,19 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // let url = tab.url;
         let title = "Connecting...";
         let pinned = tab.pinned;
+        let status = tab.status;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let pinnedHTML = "", selectedAttribute = "";
+        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
+
+        if(status == "loading")
+        {
+            iconURL = "data/chrome/icon/connecting@2px.png";
+        }
 
         if(pinned == true)
         {
-            pinnedHTML = 'pinned="true"';
+            pinnedAttribute = 'pinned="true"';
         }
 
         if(tab.selected == true)
@@ -281,15 +280,26 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.selectedTabID = id;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedHTML} ${selectedAttribute} data-index="${tab.index}" align="stretch">
+        if(this.initialized == false)
+        {
+            tabIndex = tab.index;
+        }
+        else
+        {
+            // Temporary index, we are updating it directly after creating the tab
+            // This improves performance at startup and complexity at runtime
+            tabIndex = this.get_last_tab_index() + 1;
+        }
+
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
-            <span id="tab-close-button-${id}" class="tab-close-button close-icon"> <ul> <li> </li> </ul> </span>
+            <span id="tab-close-button-${id}" class="tab-close-button close-icon" title="Close tab"> </span>
         </span>
         </div>`;
 
-        // Check: fadein="true" linkedpanel="panel-3-77" pending="true" image="" iconLoadingPrincipal="" align="stretch"
+        // Check: fadein="true" linkedpanel="panel-3-77" pending="true" align="stretch"
         if(pinned == true)
         {
             this.document.getElementById("tabbrowser-tabs-pinned").insertAdjacentHTML("beforeend", tabHTML);
@@ -314,7 +324,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.update_tab(id, "title", tab.title);
 
+        if(this.initialized == true)
+        {
+            // At startup we would check that for every single tab, which is nonsense
+            this.check_scrollbar_status();
+        }
+
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
+
+        if(this.initialized == true)
+        {
+            this.move_tab(id, tabIndex, tab.index);
+        }
 
         /* for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
           let button = document.createElement('a');
@@ -356,7 +377,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
-                this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+
+                this.debug_log("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
+                this.debug_log("favIconUrl loaded: " + value);
+
+                this.document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
+
+                if(this.document.getElementById("tab-" + tabID).getAttribute("status") == "complete")
+                {
+                    this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+                }
+
                 break;
 
             case "selected":
@@ -380,6 +411,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
                 break;
 
+            case "status":
+                this.debug_log("new status: " + value);
+                this.document.getElementById("tab-" + tabID).setAttribute("status", value);
+
+                if(value == "complete")
+                {
+                    let newFavicon = this.document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
+                    if(newFavicon != "")
+                    {
+                        this.debug_log("new favicon: " + newFavicon);
+                        this.update_tab(tabID, "favIconUrl", newFavicon);
+                    }
+                }
+
+                if(value == "loading")
+                {
+                    // FIXME: Which icon is getting set should be really up to the theme
+                    this.document.getElementById("tab-icon-" + tabID).setAttribute("src", "data/chrome/icon/connecting@2x.png");
+                }
+                break;
+
             case "index":
                 this.document.getElementById("tab-" + tabID).setAttribute("data-index", value);
                 this.document.getElementById("tab-title-" + tabID).innerHTML = value;
@@ -390,8 +442,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     move_tab(tabID, fromIndex, toIndex)
     {
         this.debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
-        this.debug_log(this.tabbrowser.lastElementChild.getAttribute("data-index"));
-        if(toIndex == this.tabbrowser.lastElementChild.getAttribute("data-index"))
+
+        if(fromIndex == toIndex) { return; }
+
+        this.debug_log(this.get_last_tab_index());
+        if(toIndex == this.get_last_tab_index())
         {
             // Move at the end
             this.tabbrowser.append(this.document.getElementById("tab-" + tabID));
@@ -428,12 +483,31 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
+    get_last_tab_index()
+    {
+        if(this.tabbrowser.lastElementChild === null)
+        {
+            return -1;
+        }
+
+        return parseInt(this.tabbrowser.lastElementChild.getAttribute("data-index"), 10);
+    }
+
     remove_tab(tabID)
     {
         if(this.document.getElementById("tab-" + tabID) !== null)
         {
             this.debug_log("remove tab: " + tabID);
+
+            if(tabID == this.selectedTabID)
+            {
+                this.selectedTabID = undefined;
+            }
+
+            this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
+
+            this.check_scrollbar_status();
         }
     }
 
@@ -453,10 +527,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         switch (prefName)
         {
-            // case "right":
-            // this.webExtPreferences = newValue;
-            // Placeholder.
-            // break;
+            // Former options which have no effect anymore: "right" (sidebar position), "hideInFullscreen"
 
             case "tabtoolbarPosition":
                 this.webExtPreferences[prefName] = newValue;
@@ -541,6 +612,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if(tab.windowId == this.windowID)
             {
                 this.create_tab(tab);
+                this.update_tab_indexes();
             }
         });
 
@@ -568,18 +640,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]);
             }
+
+            if(changeInfo.hasOwnProperty("status"))
+            {
+                this.update_tab(tabID, "status", changeInfo["status"]);
+            }
+
             /* if (changeInfo.hasOwnProperty('mutedInfo')) {
                 sidetabs.setMuted(tab, changeInfo.mutedInfo);
-              }
-          if (changeInfo.hasOwnProperty('audible')) {
-            sidetabs.setAudible(tab, changeInfo.audible);
-          }
-          if (changeInfo.status === 'loading') {
-            sidetabs.setSpinner(tab);
-          }
-          if (changeInfo.status === 'complete') {
-            sidetabs.setIcon(tab);
-        }*/
+            }
+            if (changeInfo.hasOwnProperty('audible')) {
+                sidetabs.setAudible(tab, changeInfo.audible);
+            } */
         });
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>

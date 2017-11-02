@@ -1,6 +1,5 @@
 @import "../../template/basic/index.css";
 @import "modifications.css";
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 :root {
 	/* Tabbrowser */
@@ -20,7 +19,7 @@
 	--vtr-tab-border-radius: 0;
 	--vtr-tab-border-left: 4px solid transparent;
 	--vtr-tab-border-bottom: 1px solid #bbc3cc;
-	
+
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #333333;
 	--vtr-tab-selected-background: #CBCBCB;

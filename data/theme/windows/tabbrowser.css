@@ -1,13 +1,13 @@
 /* The complete tab sidebar */
-.tabbrowser-tabs {
+body {
 	margin: 0 !important;
 	padding: 1px 0px 1px 1px !important;
 	background: transparent !important;
 }
 
 /* Style rules applied if there is no theme installed */
-.tabbrowser-tabs:not(:-moz-lwtheme) {
-	background-color: var(--vtr-tabbrowser-bg-color) !important; 
+body:not(:-moz-lwtheme) {
+	background-color: var(--vtr-tabbrowser-bg-color) !important;
 }
 
 /* Single tab */
@@ -31,11 +31,6 @@
 	max-height: var(--vtr-tab-height) !important;
 }
 
-/* This is nonsense
-.tabbrowser-tab:-moz-lwtheme {
-	color: black;
-	text-shadow: none;
-}*/
 
 .tabbrowser-tab:hover:not(:-moz-lwtheme) {
 	border-color: gray;
@@ -43,7 +38,7 @@
 }
 
 .tabbrowser-tab[pinned] {
-	position: inherit; 
+	position: inherit;
 	border-left: 4px solid #2292D0 !important;
 }
 
