@@ -96,6 +96,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.scroll_to_tab(this.selectedTabID);
         this.toolbar_activate();
         this.check_scrollbar_status();
+        main.windowutils.setSidebarOpenedStatus(this.windowID, true);
         this.initialized = true;
     }
 

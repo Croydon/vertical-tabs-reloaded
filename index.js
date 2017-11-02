@@ -195,46 +195,32 @@ function get_setting(name)
 // browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
 
 
-// FIXME: Window Mangament missing
-/* setInterval(() =>
+let managedWindows = {};
+// Windows Management
+var windowutils = class windowutils
 {
-     browser.windows.getCurrent().then(currentWindow =>
+    static add(windowID)
     {
-        if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
-        {
-            this["vtr.windows.state." + currentWindow.id] = "init";
-        }
+        debug_log("add window " + windowID);
+        managedWindows[windowID] = {"sidebarOpened": false};
+    }
 
-        if(currentWindow.state == "fullscreen")
-        {
-            if(this["vtr.windows.state." + currentWindow.id] != "fullscreen")
-            {
-                this["vtr.windows.state." + currentWindow.id] = "fullscreen";
-                get_setting("hideInFullscreen").then(value =>
-                {
-                    if(value == true)
-                    {
-                        // dummy
-                    }
-                });
-            }
-        }
-        else
-        {
-            if(this["vtr.windows.state." + currentWindow.id] == "fullscreen")
-            {
-                this["vtr.windows.state." + currentWindow.id] = currentWindow.state;
-                get_setting("hideInFullscreen").then(value =>
-                {
-                    if(value == true)
-                    {
-                        // dummy
-                    }
-                });
-            }
-        }
-    });
-}, 100); */
+    static remove(windowID)
+    {
+        delete managedWindows[windowID];
+    }
+
+    static setSidebarOpenedStatus(windowID, newSidebarOpenedStatus)
+    {
+        debug_log("set window status " + windowID);
+        managedWindows[windowID]["sidebarOpened"] = newSidebarOpenedStatus;
+    }
+
+    static getSidebarOpenedStatus(windowID)
+    {
+        return managedWindows[windowID]["sidebarOpened"];
+    }
+};
 
 
 setTimeout(() =>
@@ -242,20 +228,65 @@ setTimeout(() =>
     // Set up listener
     // browser.storage.onChanged.addListener(on_options_change);
 
+    browser.windows.onCreated.addListener((window) =>
+    {
+        windowutils.add(window.id);
+    });
+
+    browser.windows.onRemoved.addListener((windowID) =>
+    {
+        windowutils.remove(windowID);
+    });
+
+    browser.windows.getAll({windowTypes: ["normal", "popup"]}).then((windowInfoArray) =>
+    {
+        for (let windowInfo of windowInfoArray)
+        {
+            windowutils.add(windowInfo.id);
+        }
+    });
+
+    browser.windows.onFocusChanged.addListener((windowID) =>
+    {
+        managedWindows["currentWindow"] = windowID;
+    });
+
+    browser.windows.getCurrent({windowTypes: ["normal", "popup"]}).then((currentWindow) =>
+    {
+        managedWindows["currentWindow"] = currentWindow.id;
+    });
+
     browser.commands.onCommand.addListener((command) =>
     {
-        if (command == "toggleTabbrowser")
+        /* if (command == "toggleTabbrowser")
         {
-            // FIXME: not working
-            browser.sidebarAction.open();
-        }
+            // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
+             if(windowutils.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+            {
+                windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+                browser.sidebarAction.open();
+            }
+            else
+            {
+                windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+                browser.sidebarAction.close();
+            }
+        }  */
     });
 
 
     browser.browserAction.onClicked.addListener(() =>
     {
-        // FIXME: Not working
-        browser.sidebarAction.open();
+        if(windowutils.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+        {
+            windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+            browser.sidebarAction.open();
+        }
+        else
+        {
+            windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+            browser.sidebarAction.close();
+        }
     });
 
     browser.runtime.getBrowserInfo().then((browserInfo) =>
@@ -277,7 +308,7 @@ setTimeout(() =>
             save_setting("debug", true);
         }
     });
-}, 100);
+}, 50);
 
 
 // Utils
