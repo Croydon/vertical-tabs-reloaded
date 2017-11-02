@@ -235,7 +235,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     - yes. that's kinda stupid  */
     normalize_tab_icon(iconURL)
     {
-        if(typeof iconURL == "undefined")
+        if(typeof iconURL == "undefined" || iconURL == "")
         {
             return "data/chrome/icon/default-favicon.svg";
         }
@@ -292,7 +292,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch">
-        <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}"> </span>
+        <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
             <span id="tab-close-button-${id}" class="tab-close-button close-icon" title="Close tab"> </span>
@@ -336,16 +336,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.move_tab(id, tabIndex, tab.index);
         }
-
-        /* for (let method of ['close', 'reload', 'mute', 'pin', 'newWindow']) {
-          let button = document.createElement('a');
-          button.className = `button right ${method}`;
-          button.href = '#';
-          button.innerText = textMap[method];
-          button.title = method;
-          button.addEventListener('click', buttonEvent);
-          div.appendChild(button);
-      }*/
 
         /* div.addEventListener('dragstart', handleDragStart, false);
         div.addEventListener('dragover', handleDragOver, false);
