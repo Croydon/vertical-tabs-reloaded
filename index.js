@@ -13,6 +13,21 @@ function manage_installation(details)
             {
                 browser.sidebarAction.open();
             }
+
+            if(info.version >= 56)
+            {
+                debug_log(info.version);
+                debug_log(info.buildID);
+                debug_log(info.name);
+
+                let version = info.version;
+
+                // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+                if(version.includes("a"))
+                {
+                    debug_log("You are a Nightly user");
+                }
+            }
         });
     }
 
@@ -176,27 +191,9 @@ function get_setting(name)
 
 
 // FIXME: Window Mangament missing
-setInterval(function()
+/* setInterval(() =>
 {
-    browser.runtime.getBrowserInfo().then((browserInfo) =>
-    {
-        if(browserInfo.version >= 56)
-        {
-            debug_log(browserInfo.version);
-            debug_log(browserInfo.buildID);
-            debug_log(browserInfo.name);
-
-            let version = browserInfo.version;
-
-            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-            if(version.includes("a"))
-            {
-                debug_log("You are a Nightly user");
-            }
-        }
-    });
-
-    /* browser.windows.getCurrent().then(currentWindow =>
+     browser.windows.getCurrent().then(currentWindow =>
     {
         if(typeof this["vtr.windows.state." + currentWindow.id] == undefined)
         {
@@ -231,8 +228,8 @@ setInterval(function()
                 });
             }
         }
-    }); */
-}, 100);
+    });
+}, 100); */
 
 
 setTimeout(() =>
