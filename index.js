@@ -197,6 +197,7 @@ function get_setting(name)
 
 let managedWindows = {};
 // Windows Management
+// FIREFIX: FIXME: Not yet able to read the status of the sidebar. Try to workaround #134
 var windowutils = class windowutils
 {
     static add(windowID)

@@ -662,19 +662,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.remove_tab(tabID);
         });
 
-        browser.commands.onCommand.addListener((command) =>
-        {
-            if (command == "toggleTabbrowser")
-            {
-                this.toggleDisplayState();
-            }
-        });
-
-        browser.browserAction.onClicked.addListener(() =>
-        {
-            this.toggleDisplayState();
-        });
-
         // Doubleclick on free space within the tabbrowser opens a new tab
         this.document.getElementById("tabbrowser-tabs").addEventListener("dblclick", (e) =>
         {
@@ -688,52 +675,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         // Old event handler: case "popupshowing":
         // return;
-    }
-
-    toggleDisplayState()
-    {
-        // FIREFIX: Not yet able to read the status of the sidebar.
-
-        // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
-
-        /* if(sidebar visible == true)
-        {
-            this.changedDisplayState = true;
-        }
-        else
-        {
-            this.changedDisplayState = false;
-        }*/
-    }
-
-    changeDisplayState(display)
-    {
-        // FIREFIX: Not yet able to read the status of the sidebar.
-
-        /*
-        if((display == "none" && sidebar visible == true) || (display == "" && sidebar visible == false))
-        {
-            // browser.sidebarAction.toggleSidebar(); /// FIREFIX FIXME: not landed in Nightly yet
-        } */
-    }
-
-    /* Enter/Left fullscreen mode */
-    changeFullscreenMode(state)
-    {
-        if(this.changedDisplayState == true)
-        {
-            return;
-        }
-
-        this.debug_log("changeFullscreenMode " + state);
-        if(state == "true")
-        {
-            this.changeDisplayState("none");
-        }
-        else
-        {
-            this.changeDisplayState("");
-        }
     }
 
     toolbar_activate()
