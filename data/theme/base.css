@@ -54,6 +54,7 @@ body
 .tab-close-button {
     display: block;
     background-image: url("../../template/basic/icons/light/close-regular.png");
+    background-size: 22px 22px;
     background-position: left;
     background-repeat: no-repeat;
 }

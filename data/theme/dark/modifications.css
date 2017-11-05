@@ -1,27 +1,11 @@
-@media (max-resolution: 1dppx) {
-	.tabbrowser-tab:not([pinned]) .tab-close-button {
-		background-image: url("../../template/basic/icons/dark/close-regular.png");
-	}
-
-	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
-		background-image: url("../../template/basic/icons/dark/close-hover.png");
-	}
-
-	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
-		background-image: url("../../template/basic/icons/dark/close-active.png");
-	}
+.tabbrowser-tab:not([pinned]) .tab-close-button {
+	background-image: url("../../template/basic/icons/dark/close-regular.png");
 }
 
-@media (min-resolution: 1.1dppx) {
-	.tabbrowser-tab:not([pinned]) .tab-close-button {
-		background-image: url("../../template/basic/icons/dark/high-res-close-regular.png");
-	}
+.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
+	background-image: url("../../template/basic/icons/dark/close-hover.png");
+}
 
-	.tabbrowser-tab:not([pinned]) .tab-close-button:hover {
-		background-image: url("../../template/basic/icons/dark/high-res-close-hover.png");
-	}
-
-	.tabbrowser-tab:not([pinned]) .tab-close-button:active {
-		background-image: url("../../template/basic/icons/dark/high-res-close-active.png");
-	}
+.tabbrowser-tab:not([pinned]) .tab-close-button:active {
+	background-image: url("../../template/basic/icons/dark/close-active.png");
 }
