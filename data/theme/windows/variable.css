@@ -1,17 +1,16 @@
 :root {
 	/* Tabbrowser */
     --vtr-tabbrowser-bg-color: #fcfcfc; /* other Win7 apps seems to use this */
-	
+
 	/* Tabbar */
 	--vtr-tabbar-height: 24px;
-	--vtr-tabbar-bg-color: rgb(207,219,236); 
-	
+	--vtr-tabbar-bg-color: rgb(207,219,236);
+
 	/* Single tab */
-	--vtr-tab-height: 26px; 
-	
-	/* Splitter/Seperation between tabbar and website */
+	--vtr-tab-height: 26px;
+
+	/* Splitter/Seperation between tabbar and website
 	--vtr-splitter-color: #d6e5f5;
 	--vtr-splitter-border-size: 1px;
-	--vtr-splitter-border-color: #fcfcfc;
-
+	--vtr-splitter-border-color: #fcfcfc; */
 }

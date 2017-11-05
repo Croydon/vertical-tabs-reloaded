@@ -49,11 +49,11 @@
 	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/light/close-hover.png");
 	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/light/close-active.png");
 
-	/* Splitter/Separation between tabbar and website */
+	/* Splitter/Separation between tabbar and website
 	--vtr-splitter-background: #ebebeb;
 	--vtr-splitter-width: 3px;
 	--vtr-splitter-border-left-size: 0;
 	--vtr-splitter-border-left-color: #ebebeb;
 	--vtr-splitter-border-right-size: 0;
-	--vtr-splitter-border-right-color: #ebebeb;
+	--vtr-splitter-border-right-color: #ebebeb;  */
 }

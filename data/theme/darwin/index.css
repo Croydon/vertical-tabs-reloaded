@@ -26,7 +26,7 @@ body:-moz-window-inactive {
     padding: 0 !important;
 }
 
-/* Use the splitter to display the border of .tabbrowser-tabs */
+/* Use the splitter to display the border of .tabbrowser-tabs
 #verticaltabs-splitter {
     appearance: none;
     background-image: none;
@@ -41,7 +41,7 @@ body:-moz-window-inactive {
 
 #verticaltabs-splitter:-moz-window-inactive {
     background-color: transparent;
-}
+} */
 
 /* Style tabs themselves.  Get rid of most of the initial XUL styling */
 .tabbrowser-tab {
