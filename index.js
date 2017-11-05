@@ -33,6 +33,17 @@ function manage_installation(details)
 
     if(details.reason == "update")
     {
+        debug_log("VTR update!");
+
+        get_setting("theme").then(value =>
+        {
+            if(value == "none")
+            {
+                save_setting("theme", "dark"); // This is likely irrelvant, but could prevent some race conditions
+                restore_default_setting_of("theme");
+            }
+        });
+
         if(details.previousVersion < 57)
         {
             browser.sidebarAction.open();
@@ -93,8 +104,13 @@ function restore_default_settings()
 {
     Object.keys(settings).forEach((optionsElement) =>
     {
-        save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
+        restore_default_setting_of(optionsElement);
     });
+}
+
+function restore_default_setting_of(optionsElement)
+{
+    save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
 }
 
 function save_setting(name, value)
