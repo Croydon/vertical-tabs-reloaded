@@ -1,8 +1,8 @@
 body {
-	margin: 0 0 0 0 !important;
-	padding: 0 !important;
-	background: transparent !important;
-	background-color: var(--vtr-tabbrowser-background-color) !important;
+	margin: 0;
+	padding: 0;
+	background: transparen;
+	background-color: var(--vtr-tabbrowser-background-color);
 }
 
 /* Tab toolbar styling */

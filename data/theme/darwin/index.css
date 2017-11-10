@@ -1,239 +1,67 @@
-#nav-bar {
-    box-shadow: none;
-}
+@import "../../template/basic/index.css";
+@import "modifications.css";
 
-#nav-bar:-moz-window-inactive {
-    box-shadow: none;
-}
+:root {
+	/* Tabbrowser */
+	--vtr-tabbrowser-background-color: #333;
 
-#tab-view-deck {
-    height: 44px !important;
-}
+    /* Tab Toolbar */
+	--vtr-tabbar-height: 24px;
+	--vtr-tabbar-background-color: #f1f1f1;
 
-body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    background-color: #333 !important;
-}
+	/* Single tab */
+	--vtr-tab-text-color: #BBB;
+	--vtr-tab-background-color: transparent;
+	--vtr-tab-background: transparent;
+	--vtr-tab-height: 31px;
+	--vtr-tab-min-height: 31px;
+	--vtr-tab-max-height: 31px;
+	--vtr-tab-border: 0;
+	--vtr-tab-border-radius: 0;
+	--vtr-tab-border-left: 2px solid transparent;
+    --vtr-tab-border-top: 1px solid rgba(255, 255, 255,0.05);
+	--vtr-tab-border-bottom: 1px solid rgba(0,0,0,0.15);
+    --vtr-tab-margin: 7px 3px 6px;
 
-body:-moz-window-inactive {
-    background-color: #333 !important;
-}
+	/* Single tab selected */
+	--vtr-tab-selected-text-color: #DDD;
+	--vtr-tab-selected-background-color: #222;
+	--vtr-tab-selected-background: #222;
+	--vtr-tab-selected-font-weight: bold;
+	--vtr-tab-selected-text-shadow: 0 1px #404040;
+	--vtr-tab-selected-border-left: 3px solid #D47C00;
+	--vtr-tab-selected-border-radius: 0;
 
-.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
-    margin: 0 !important;
-    padding: 0 !important;
-}
+	/* Single tab pinned */
+	--vtr-tab-pinned-text-color: #fbfbfb;
+	--vtr-tab-pinned-background-color: #27323B;
+	--vtr-tab-pinned-background: #27323B;
+	--vtr-tab-pinned-font-weight: inherit;
+	--vtr-tab-pinned-text-shadow: none;
+	--vtr-tab-pinned-border-left: 3px solid #2292D0;
+	--vtr-tab-pinned-border-radius: 0;
 
-/* Use the splitter to display the border of .tabbrowser-tabs
-#verticaltabs-splitter {
-    appearance: none;
-    background-image: none;
-    background-color: none;
-    border: 0;
-    min-width: 3px;
-    width: 3px;
-    -moz-margin-start: -3px;
-    position: relative;
-    -moz-border-end: #404040;
-}
+	/* Single tab hover */
+	--vtr-tab-hover-background-color: rgba(0,0,0,0.15);
+	--vtr-tab-hover-background: rgba(0,0,0,0.15);
 
-#verticaltabs-splitter:-moz-window-inactive {
-    background-color: transparent;
-} */
+	/* Close buttons */
+	--vtr-tab-button-close-regular-background-image: url("../../theme/darwin/closetab.svg");
+	--vtr-tab-button-close-hover-background-image: url("../../theme/darwin/closetab-white.svg");
+	--vtr-tab-button-close-active-background-image: url("../../theme/darwin/closetab-white.svg");
 
-/* Style tabs themselves.  Get rid of most of the initial XUL styling */
-.tabbrowser-tab {
-    -moz-box-pack: start;
-    -moz-box-flex: 0;
-    appearance: none !important;
-    background: #333 !important;
-    -moz-border-top-colors: none !important;
-    -moz-border-bottom-colors: none !important;
-    -moz-border-right-colors: none !important;
-    -moz-border-left-colors: none !important;
-    -moz-border-radius: 0 !important;
-    -moz-box-align: stretch !important;
-    margin: 0 !important;
-    padding: 7px 3px 6px !important;
-    height: 31px !important;     /* height including border! */
-    min-height: 31px !important;
-    max-height: 31px !important;
-    width: 100% !important;
-    min-width: 100% !important;
-    max-width: 100% !important;
-    text-align: left !important;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255,0.05) !important;
-    border-bottom: 1px solid rgba(0,0,0,0.15) !important;
-}
-
-.tabbrowser-tab[selected="true"] {
-    background: #222 !important;
-
-}
-.tabbrowser-tab[selected="true"]:-moz-window-inactive {
-    background: #222 !important;
-}
-
-.tabbrowser-tab:not([selected="true"]):hover {
-	background-color: rgba(0,0,0,0.15) !important;
-}
-
-.tab-icon-sound[soundplaying] {
-	list-style-image: url("../../chrome/icon/tab-audio-playing.svg") !important;
-    -moz-context-properties: fill !important;
-    fill: currentColor !important;
-}
-
-.tab-icon-sound[muted] {
-	list-style-image: url("../../chrome/icon/tab-audio-muted.svg") !important;
-}
-
-.tab-icon-sound {
-	filter: drop-shadow(1px 1px 1px white) !important;
-}
-
-/* remove curvy tab ends */
-.tab-background-middle,
-.tab-background-start,
-.tab-background-end {
-  background-image: none !important;
-}
-
-.tab-background-start[selected=true]::after,
-.tab-background-start[selected=true]::before,
-.tab-background-start,
-.tab-background-end,
-.tab-background-end[selected=true]::after,
-.tab-background-end[selected=true]::before {
-  display: none;
-}
-
-/* remove curvy tab ends from hovered background tabs */
-.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true]),
-.tabs-newtab-button:hover {
-  background-image: none !important;
-}
-
-/* remove background tab separators */
-#tabbrowser-tabs[movingtab] > .tabbrowser-tab[beforeselected]:not([last-visible-tab])::after,
-.tabbrowser-tab:not([selected]):not([afterselected-visible]):not([afterhovered]):not([first-visible-tab]):not(:hover)::before,
-#tabbrowser-tabs:not([overflow]) > .tabbrowser-tab[last-visible-tab]:not([selected]):not([beforehovered]):not(:hover)::after {
-  background-image: none !important;
-}
-
-.tab-background-start, .tab-background-middle, .tab-background-end {
-    background-color: transparent !important;
-}
-
-.tab-content {
-    margin-top: -1px !important;
-    border-width: 0 3px 0 0 !important;
-    -moz-border-image: none !important;
-}
-
-/* Keep the close button at a safe distance from the tab label. */
-.tab-close-button {
-    -moz-image-region: auto !important;
-    display: -moz-box;
-    margin-left: 3px;
-    margin-top: 1px;
-    background-image: url("closetab.svg") !important;
-    background-position: center right;
-    background-size: contain;
-    background-repeat: no-repeat;
-    list-style-image: none !important;
-    width: 14px;
-    height: 14px;
-    opacity: 0.27;  /* turn black into #b9b9b9 */
-}
-.tab-close-button:active {
-    opacity: 0.46;  /* turn black into #8a8a8a */
-}
-.tabbrowser-tab[selected="true"] .tab-close-button {
-    background-image: url("closetab-white.svg");
-    opacity: 0.8;
-}
-
-.tabbrowser-tab[selected="true"] .tab-close-button:hover {
-    opacity: 1;
-}
-
-.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
-    visibility: collapse !important;
-}
-
-/* Always display the favicon at 100% opacity */
-.tabbrowser-tab .tab-icon-image {
-    opacity: 1.0 !important;
-}
-
-/* Ensure app tab labels are not too close to the icon. */
-.tab-label[pinned] {
-    margin: 2px 6px !important;
-    position: relative !important;
-}
-
-.tabbrowser-tab[pinned] {
-	border-left: 4px solid #2292D0 !important;
-}
-
-.tabbrowser-tab[pinned]:before {
-    position: relative !important;
-}
-
-.tabbrowser-tab[pinned][titlechanged] > .tab-stack > .tab-content {
-    background-image: none !important;
-}
-
-.tabbrowser-tab[pinned][titlechanged] .tab-text {
-    color: #F1F1F1 !important;
-}
-
-.tabbrowser-tab[pinned][titlechanged]:after {
-    content: '●' !important;
-    width: 18px;
-    height: 10px;
-    position: absolute !important;
-    color: #29B4FF;
-    line-height: 15px;
-    font-size: 150% !important;
-}
-
-/* Tab label is without special decoration except when selected: then
-   the text is white and bold. */
-.tab-text {
-    font-size: 11px;
-    font-weight: normal !important;
-    color: #BBB !important;
-    text-shadow: none !important;
-    margin-bottom: 1px;
-    text-align: left !important;
-}
-
-.tabbrowser-tab[selected="true"] .tab-text {
-    font-weight: bold !important;
-    color: #DDD !important;
-    text-shadow: 0 1px #404040 !important;
-}
+	/* Sound buttons */
+	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
+	--vtr-tab-button-sound-playing-fill: currentColor;
+	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
+	--vtr-tab-button-sound-muted-fill: currentColor;
 
 
-/* Drop indicator for drag'n'drop of tabs */
-.tab-drop-indicator {
-    list-style-image: url("dropmarker.png");
-    margin-top: -12px !important; /* height of the above image */
-    margin-bottom: 0 !important;
-}
-
-
-/* FIXME: likely to be removed; Personas */
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-start:-moz-lwtheme-brighttext:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-brighttext:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-brighttext:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-start:-moz-lwtheme-darktext:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-darktext:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-darktext:not([selected="true"]) {
-    background-image: none !important;
+	/* Splitter/Separation between tabbar and website
+	--vtr-splitter-background: none;
+	--vtr-splitter-width: 3px;
+	--vtr-splitter-border-left-size: 0;
+	--vtr-splitter-border-left-color: #404040;
+	--vtr-splitter-border-right-size: 0;
+	--vtr-splitter-border-right-color: #404040;  */
 }

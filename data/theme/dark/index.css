@@ -19,7 +19,9 @@
 	--vtr-tab-border: 0;
 	--vtr-tab-border-radius: 0;
 	--vtr-tab-border-left: 4px solid transparent;
+	--vtr-tab-border-top: 0;
 	--vtr-tab-border-bottom: 1px solid #5E6972;
+	--vtr-tab-margin: 1px 0;
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #fbfbfb;

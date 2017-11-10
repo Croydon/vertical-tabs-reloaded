@@ -5,7 +5,7 @@
 	background-color: var(--vtr-tab-background-color);
 	background: var(--vtr-tab-background) !important;
 	margin: 0 !important;
-	padding: 1px 0 !important;
+	padding: var(--vtr-tab-margin) !important;
 	height: var(--vtr-tab-height) !important;
 	min-height: var(--vtr-tab-min-height) !important;
 	max-height: var(--vtr-tab-max-height) !important;
@@ -13,6 +13,7 @@
 	border: var(--vtr-tab-border) !important;
 	border-radius: var(--vtr-tab-border-radius) !important;
 	border-left: var(--vtr-tab-border-left) !important;
+	border-top: var(--vtr-tab-border-bottom) !important;
 	border-bottom: var(--vtr-tab-border-bottom) !important;
 }
 
@@ -55,11 +56,12 @@
 	background-color: var(--vtr-tab-selected-background-color);
 }
 
-.tabbrowser-tab[selected="true"]:-moz-window-inactive {
+/* FIXME: Redo, remove? */
+/* .tabbrowser-tab[selected="true"]:-moz-window-inactive {
 	background-color: InactiveCaption !important;
-	color: InactiveCaptionText !important;
+	color: InactiveCaptionText !important; */
 /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
-}
+/* } */
 
 .tabbrowser-tab:not([selected="true"]):hover {
 	margin: 0 !important;
@@ -137,4 +139,17 @@
 
 .tabbrowser-tab:not([pinned]) .tab-close-button:active {
 	background-image: var(--vtr-tab-button-close-active-background-image);
+}
+
+/* FIXME: Implement sound button */
+.tab-icon-sound[soundplaying] {
+	backgron-image: var(--vtr-tab-button-sound-playing-background-image);
+    -moz-context-properties: fill;
+    fill: var(--vtr-tab-button-sound-playing-fill);
+}
+
+.tab-icon-sound[muted] {
+	background-image: var(--vtr-tab-button-sound-muted-background-image);
+    -moz-context-properties: fill;
+    fill: var(--vtr-tab-button-sound-muted-fill);
 }

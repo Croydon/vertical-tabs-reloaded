@@ -4,9 +4,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/*
  body {
    font: 3mm tahoma,arial,helvetica,sans-serif;
- }
+ } */
 
  /* Apply crisp rendering for favicons at exactly 2dppx resolution */
  @media (resolution: 2dppx) {
@@ -14,7 +15,7 @@
      image-rendering: -moz-crisp-edges;
    }
  }
- 
+
  /*
 .tab-sharing-icon-overlay[sharing]:not([selected]),
 .tab-icon-overlay[soundplaying][pinned],

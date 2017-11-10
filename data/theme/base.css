@@ -1,13 +1,13 @@
 body
 {
-    font: message-box !important;
+    /* font: message-box from the legacy VTR add-on, rest default in Firefox */
+    font: message-box, 3mm tahoma,arial,helvetica,sans-serif;
     height: 100vh;
     display: flex;
     flex-flow: column;
     overflow-y: hidden;
     user-select: none;
     -moz-user-select: none;
-    -webkit-user-select: none;
     z-index: -4;
 }
 
@@ -54,7 +54,7 @@ body
 .tab-close-button {
     display: block;
     background-image: url("../../template/basic/icons/light/close-regular.png");
-    background-size: 22px 22px;
+    background-size: 22px 22px; /* contain ? */
     background-position: left;
     background-repeat: no-repeat;
 }
@@ -115,23 +115,25 @@ body
     text-overflow: ellipsis;
 }
 
+/* FIXME: likely not necessary anymor? */
 /* Make sure that a placeholder favicon is getting displayed if there is none */
-.tabbrowser-tab:not([status="loading"]) .tab-icon-image:not([src]):not([pinned]) {
+/* .tabbrowser-tab:not([status="loading"]) .tab-icon-image:not([src]):not([pinned]) {
 	display: -moz-box;
-}
+} */
 
+/* FIXME: Implement sound button */
 .tab-icon-sound[soundplaying] {
-	list-style-image: url("../chrome/icon/tab-audio-playing.svg") !important;
-    -moz-context-properties: fill !important;
-    fill: currentColor !important;
+	list-style-image: url("../chrome/icon/tab-audio-playing.svg");
+    -moz-context-properties: fill;
+    fill: currentColor;
 }
 
 .tab-icon-sound[muted] {
-	list-style-image: url("../chrome/icon/tab-audio-muted.svg") !important;
-    -moz-context-properties: fill !important;
-    fill: currentColor !important;
+	list-style-image: url("../chrome/icon/tab-audio-muted.svg");
+    -moz-context-properties: fill;
+    fill: currentColor;
 }
 
 .tab-icon-sound {
-	filter: drop-shadow(1px 1px 1px currentColor) !important;
+	filter: drop-shadow(1px 1px 1px currentColor);
 }

@@ -19,7 +19,9 @@
 	--vtr-tab-border: 0;
 	--vtr-tab-border-radius: 0;
 	--vtr-tab-border-left: 4px solid transparent;
+	--vtr-tab-border-top: 0;
 	--vtr-tab-border-bottom: 1px solid #bbc3cc;
+	--vtr-tab-margin: 1px 0;
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #333333;
@@ -40,10 +42,16 @@
 	/* Single tab hover */
 	--vtr-tab-hover-background: #ebebeb;
 
-	/* Close button */
+	/* Close buttons */
 	--vtr-tab-button-close-regular-background-image: url("../../template/basic/icons/light/close-regular.png");
 	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/light/close-hover.png");
 	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/light/close-active.png");
+
+	/* Sound buttons */
+	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
+	--vtr-tab-button-sound-playing-fill: currentColor;
+	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
+	--vtr-tab-button-sound-muted-fill: currentColor;
 
 	/* Splitter/Separation between tabbar and website
 	--vtr-splitter-background: #ebebeb;
