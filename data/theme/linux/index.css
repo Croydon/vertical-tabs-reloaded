@@ -1,9 +1,9 @@
 body {
-    margin: 1px 0 0 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    background-color: -moz-Field !important;
-    border: 1px solid ButtonShadow !important;
+    margin: 1px 0 0 0;
+    padding: 0;
+    background: transparent;
+    background-color: -moz-Field;
+    border: 1px solid ButtonShadow;
 }
 
 .tabbrowser-tab {
@@ -36,11 +36,13 @@ body {
     text-shadow: none;
 }
 
+/* FIXME: redo, remove? */
+/*
 .tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background-color: InactiveCaption !important;
-    color: InactiveCaptionText !important;
+    color: InactiveCaptionText !important; */
    /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
-}
+/* } */
 
 .tabbrowser-tab:not([selected="true"]):hover {
     margin: 0 !important;
