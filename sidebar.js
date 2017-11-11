@@ -60,6 +60,21 @@ class tabutils
             browser.tabs.update(tabID, {"muted": !tabInfo.mutedInfo.muted});
         });
     }
+
+    static async isPinned(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        let pinnedInfo;
+        await browser.tabs.get(tabID).then((tabInfo) => {
+            pinnedInfo = tabInfo.pinned;
+        });
+
+        return pinnedInfo;
+    }
 }
 
 /* Entry point for every VTR sidebar for every window */
@@ -430,17 +445,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
-    move_tab(tabID, fromIndex, toIndex)
+    async move_tab(tabID, fromIndex, toIndex)
     {
+        if(fromIndex == toIndex) { return; }
+
         this.debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
-        if(fromIndex == toIndex) { return; }
+        let pinnedTab = await tabutils.isPinned(tabID);
+        let pinnedTabMoveDown = false;
 
         this.debug_log(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
         {
             // Move at the end
-            this.tabbrowser.append(this.document.getElementById("tab-" + tabID));
+            if(pinnedTab)
+            {
+                this.document.getElementById("tabbrowser-tabs-pinned").append(this.document.getElementById("tab-" + tabID));
+            }
+            else
+            {
+                this.tabbrowser.append(this.document.getElementById("tab-" + tabID));
+            }
         }
         else
         {
@@ -449,6 +474,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 // Move down
                 insertBeforeIndex = toIndex + 1;
+
+                // Check if this is a pinned tab moving down
+                // We need to prevent, that the pinned tab is placing in the regular tab section
+                if(pinnedTab)
+                {
+                    pinnedTabMoveDown = true;
+                }
             }
             else
             {
@@ -457,6 +489,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
 
             let insertBeforeTab = this.document.querySelector(`div[data-index="${insertBeforeIndex}"]`);
+
+            if(pinnedTabMoveDown == true)
+            {
+                if(insertBeforeTab.getAttribute("pinned") === null)
+                {
+                    // We want to move a pinned tab down to the last position of pinned tabs
+                    this.document.getElementById("tabbrowser-tabs-pinned").append(this.document.getElementById("tab-" + tabID));
+                    return;
+                }
+            }
+
             // this.debug_log(insertBeforeIndex);
             // this.debug_log(insertBeforeTab.outerHTML);
             insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-" + tabID), insertBeforeTab);
@@ -476,12 +519,32 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     get_last_tab_index()
     {
-        if(this.tabbrowser.lastElementChild === null)
+        /* if(this.tabbrowser.lastElementChild === null && this.document.getElementById("tabbrowser-tabs-pinned") === null)
         {
             return -1;
+        } */
+
+        let result;
+
+        if(this.tabbrowser.lastElementChild === null)
+        {
+            if(this.document.getElementById("tabbrowser-tabs-pinned").lastElementChild === null)
+            {
+                return -1;
+            }
+            else
+            {
+                result = this.document.getElementById("tabbrowser-tabs-pinned").lastElementChild.getAttribute("data-index");
+            }
+
+
+        }
+        else
+        {
+            result = this.tabbrowser.lastElementChild.getAttribute("data-index");
         }
 
-        return parseInt(this.tabbrowser.lastElementChild.getAttribute("data-index"), 10);
+        return parseInt(result, 10);
     }
 
     remove_tab(tabID)
