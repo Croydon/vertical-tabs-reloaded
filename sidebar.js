@@ -476,12 +476,32 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     get_last_tab_index()
     {
-        if(this.tabbrowser.lastElementChild === null)
+        /* if(this.tabbrowser.lastElementChild === null && this.document.getElementById("tabbrowser-tabs-pinned") === null)
         {
             return -1;
+        } */
+
+        let result;
+
+        if(this.tabbrowser.lastElementChild === null)
+        {
+            if(this.document.getElementById("tabbrowser-tabs-pinned").lastElementChild === null)
+            {
+                return -1;
+            }
+            else
+            {
+                result = this.document.getElementById("tabbrowser-tabs-pinned").lastElementChild.getAttribute("data-index");
+            }
+
+
+        }
+        else
+        {
+            result = this.tabbrowser.lastElementChild.getAttribute("data-index");
         }
 
-        return parseInt(this.tabbrowser.lastElementChild.getAttribute("data-index"), 10);
+        return parseInt(result, 10);
     }
 
     remove_tab(tabID)
