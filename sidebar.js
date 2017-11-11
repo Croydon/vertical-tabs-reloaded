@@ -2,6 +2,11 @@
 
 var main = browser.extension.getBackgroundPage();
 
+function debug_log(output)
+{
+    debug_log(output);
+}
+
 class tabutils
 {
     static getTargetID(e)
@@ -103,8 +108,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     init()
     {
-        this.debug_log(this.webExtPreferences);
-        // this.window.VerticalTabsReloaded = this; // FIXME: Likely not needed anymore
+        debug_log(this.webExtPreferences);
 
         this.build_ui();
         this.initEventListeners();
@@ -117,19 +121,19 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     preferences(settingName)
     {
-        this.debug_log(settingName + " (lib): " + this.webExtPreferences[settingName]);
+        debug_log(settingName + " (lib): " + this.webExtPreferences[settingName]);
         return this.webExtPreferences[settingName];
     }
 
     installStylesheet(uri, type)
     {
-        this.debug_log("VTR install sheet: " + uri + " of type: " + type);
+        debug_log("VTR install sheet: " + uri + " of type: " + type);
         this.document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
     }
 
     removeStylesheet(type)
     {
-        this.debug_log("VTR remove sheet of type: " + type);
+        debug_log("VTR remove sheet of type: " + type);
         this.document.getElementById("vtr-" + type).remove();
     }
 
@@ -145,7 +149,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(this.preferences("theme") != "none")
         {
-            this.debug_log("remove theme stylesheet!");
+            debug_log("remove theme stylesheet!");
             this.removeStylesheet("theme");
         }
     }
@@ -208,13 +212,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.applyThemeStylesheet();
         if (this.preferences("compact") == true)
         {
-            this.debug_log("compact true");
+            debug_log("compact true");
             this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
         }
 
         if (this.preferences("style.tab.status") == true)
         {
-            this.debug_log("style.tab.status true");
+            debug_log("style.tab.status true");
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
@@ -360,7 +364,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        this.debug_log("update tab: " + tabID + " " + attribute + " " + value);
+        debug_log("update tab: " + tabID + " " + attribute + " " + value);
         switch(attribute)
         {
             case "title":
@@ -384,8 +388,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
 
-                this.debug_log("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
-                this.debug_log("favIconUrl loaded: " + value);
+                debug_log("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
+                debug_log("favIconUrl loaded: " + value);
 
                 this.document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
 
@@ -418,7 +422,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "status":
-                this.debug_log("new status: " + value);
+                debug_log("new status: " + value);
                 this.document.getElementById("tab-" + tabID).setAttribute("status", value);
 
                 if(value == "complete")
@@ -426,7 +430,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     let newFavicon = this.document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
                     if(newFavicon != "")
                     {
-                        this.debug_log("new favicon: " + newFavicon);
+                        debug_log("new favicon: " + newFavicon);
                         this.update_tab(tabID, "favIconUrl", newFavicon);
                     }
                 }
@@ -449,12 +453,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(fromIndex == toIndex) { return; }
 
-        this.debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
+        debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
         let pinnedTab = await tabutils.isPinned(tabID);
         let pinnedTabMoveDown = false;
 
-        this.debug_log(this.get_last_tab_index());
+        debug_log(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
         {
             // Move at the end
@@ -500,8 +504,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
             }
 
-            // this.debug_log(insertBeforeIndex);
-            // this.debug_log(insertBeforeTab.outerHTML);
+            // debug_log(insertBeforeIndex);
+            // debug_log(insertBeforeTab.outerHTML);
             insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-" + tabID), insertBeforeTab);
         }
     }
@@ -551,7 +555,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(this.document.getElementById("tab-" + tabID) !== null)
         {
-            this.debug_log("remove tab: " + tabID);
+            debug_log("remove tab: " + tabID);
 
             if(tabID == this.selectedTabID)
             {
@@ -574,7 +578,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // this.window.removeEventListener("resize", this, false);
         // });
 
-        // this.debug_log("set pinned sizes!");
+        // debug_log("set pinned sizes!");
     }
 
     onPreferenceChange(prefName, newValue)
@@ -647,7 +651,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         Object.keys(changes).forEach(item =>
         {
-            this.debug_log("on_storage: " + item + " " + changes[item].newValue);
+            debug_log("on_storage: " + item + " " + changes[item].newValue);
             this.onPreferenceChange(item, changes[item].newValue);
         });
     }
@@ -781,11 +785,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         this.unloaders = [];
     }
-
-    debug_log(output)
-    {
-        main.debug_log(output);
-    }
 };
 
 var contextmenuTarget = "NOTARGET";
@@ -807,8 +806,8 @@ function contextmenuShow(e)
 
     contextmenuTarget = tabutils.getTargetID(e);
 
-    main.debug_log(contextmenuTarget);
-    main.debug_log(e.pageX + " y " + e.pageY);
+    debug_log(contextmenuTarget);
+    debug_log(e.pageX + " y " + e.pageY);
 
     document.getElementById("contextmenu").style.setProperty("left", e.pageX + "px");
     document.getElementById("contextmenu").style.setProperty("top", e.pageY + "px");
