@@ -17,5 +17,6 @@ This project did already got a lot of contribution over time. In fact, this repo
  * [myBestSoftAndPref](https://github.com/myBestSoftAndPref) - Show tab status (#67)
  * [Andy McKay](https://github.com/andymckay/sidebar-tabs) - Experimental WebExtensions Vertical Tabs implementation as a references
  * [joanbm](https://github.com/joanbm) - Fixing visibility of audio play symbol (#97)
+ * [unclechu](https://github.com/unclechu) - Redraw the VTR icons as actually svg files (#133)
 
 In addition to that a big thank you to all people who provided feedback, suggestions, ideas or who are simply using the add-on.

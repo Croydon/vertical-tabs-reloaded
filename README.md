@@ -1,4 +1,4 @@
-# ![](https://github.com/Croydon/vertical-tabs-reloaded/raw/0.8.0/data/icon.png) Vertical Tabs Reloaded for Firefox
+# ![](https://github.com/Croydon/vertical-tabs-reloaded/raw/master/data/icon/icon-48-white.png) Vertical Tabs Reloaded for Firefox
 
 
 [![](https://img.shields.io/amo/v/vertical-tabs-reloaded.svg?style=flat-square)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/) [![](https://img.shields.io/amo/d/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/statistics/?last=365) [![](https://img.shields.io/amo/users/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/statistics/usage/?last=365) [![](https://img.shields.io/amo/rating/vertical-tabs-reloaded.svg)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
