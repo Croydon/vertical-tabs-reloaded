@@ -137,3 +137,12 @@ body
 .tab-icon-sound {
 	filter: drop-shadow(1px 1px 1px currentColor);
 }
+
+/* FIXME: useful? */
+/* Taken from Firefox's original tabbrowser css */
+/* Apply crisp rendering for favicons at exactly 2dppx resolution */
+@media (resolution: 2dppx) {
+  .tab-icon-image {
+    image-rendering: -moz-crisp-edges;
+  }
+}

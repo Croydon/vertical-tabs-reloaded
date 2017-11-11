@@ -208,7 +208,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // FIREFIX: Placeholder. Firefox doesn't support hiding the default tabbrowser currently.
 
         // Injecting CSS
-        this.installStylesheet(browser.runtime.getURL("data/theme/base.css"), "base");
         this.applyThemeStylesheet();
         if (this.preferences("compact") == true)
         {
@@ -228,11 +227,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 this.create_tab(tab);
             }
-        });
-
-        this.unloaders.push(() =>
-        {
-            // FIXME: Properly not necessary since sidebars are totally isolated and are just getting "deleted" on closing
         });
     }
 
