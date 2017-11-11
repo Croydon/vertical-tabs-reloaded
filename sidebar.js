@@ -209,11 +209,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         // Injecting CSS
         this.applyThemeStylesheet();
-        if (this.preferences("compact") == true)
+        /* if (this.preferences("compact") == true)
         {
             debug_log("compact true");
             this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
-        }
+        } */
 
         if (this.preferences("style.tab.status") == true)
         {
@@ -579,7 +579,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         switch (prefName)
         {
-            // Former options which have no effect anymore: "right" (sidebar position), "hideInFullscreen"
+            // Former options which have no effect anymore: "right" (sidebar position), "hideInFullscreen", "compact" (favicon only tab sidebar)
 
             case "tabtoolbarPosition":
                 this.webExtPreferences[prefName] = newValue;
@@ -609,7 +609,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.applyThemeStylesheet();
                 break;
 
-            case "compact":
+            /* case "compact":
                 this.webExtPreferences[prefName] = newValue;
                 if (this.preferences("compact") == true)
                 {
@@ -619,7 +619,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 {
                     this.removeStylesheet("compact");
                 }
-                break;
+                break; */
 
             case "style.tab.status":
                 this.webExtPreferences[prefName] = newValue;

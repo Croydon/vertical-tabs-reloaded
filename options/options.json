@@ -1,10 +1,4 @@
 {
-	"compact": {
-		"name": "compact",
-		"type": "bool",
-		"title": "Compact Mode (hides text labels)",
-		"value": false
-	},
     "style.tab.status": {
         "name": "style.tab.status",
         "type": "bool",
