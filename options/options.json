@@ -33,14 +33,6 @@
 			{
 				"value": "feather",
 				"label": "Feather"
-			},
-			{
-				"value": "windows",
-				"label": "windows"
-			},
-			{
-				"value": "linux",
-				"label": "linux"
 			}
 		]
 	},
