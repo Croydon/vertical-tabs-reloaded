@@ -42,7 +42,13 @@ function manage_installation(details)
                 save_setting("theme", "dark"); // This is likely irrelvant, but could prevent some race conditions
                 restore_default_setting_of("theme");
             }
+
+            if(value == "windows" || value == "linux")
+            {
+                save_setting("theme", "feather");
+            }
         });
+
 
         if(details.previousVersion < 57)
         {

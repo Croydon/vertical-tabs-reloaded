@@ -1,0 +1,63 @@
+@import "../../template/basic/index.css";
+@import "modifications.css";
+
+:root {
+	/* Tabbrowser */
+	--vtr-tabbrowser-background-color: #F9F9FA;
+
+	/* Tab Toolbar */
+	--vtr-tabbar-height: 22px;
+	--vtr-tabbar-background-color: rgb(207,219,236);
+
+	/* Single tab */
+	--vtr-tab-text-color: #333333;
+	--vtr-tab-background-color: transparent;
+	--vtr-tab-background: transparent;
+	--vtr-tab-height: 25px;
+	--vtr-tab-min-height: 25px;
+	--vtr-tab-max-height: 25px;
+	--vtr-tab-border: 1px solid 5E6972;
+	--vtr-tab-border-radius: 2.67px 0 0 2.67px;
+	--vtr-tab-border-left: 4px solid transparent;
+	--vtr-tab-border-top: 0;
+	--vtr-tab-border-bottom: 1px solid #bbc3cc;
+	--vtr-tab-margin: 0;
+
+	/* Single tab selected */
+	--vtr-tab-selected-text-color: HighlightText;
+	--vtr-tab-selected-background: Highlight;
+	--vtr-tab-selected-font-weight: bold;
+	--vtr-tab-selected-text-shadow: none;
+	--vtr-tab-selected-border-left: 3px solid #002A8A;
+	--vtr-tab-selected-border-radius: 0;
+
+	/* Single tab pinned */
+	--vtr-tab-pinned-text-color: #333333;
+	--vtr-tab-pinned-background: rgb(207,219,236);
+	--vtr-tab-pinned-font-weight: normal;
+	--vtr-tab-pinned-text-shadow: none;
+	--vtr-tab-pinned-border-left: 2px solid #2292D0;
+	--vtr-tab-pinned-border-radius: 0;
+
+	/* Single tab hover */
+	--vtr-tab-hover-background: #ebebeb;
+
+	/* Close buttons */
+	--vtr-tab-button-close-regular-background-image: url("../../template/basic/icons/light/close-regular.png");
+	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/light/close-hover.png");
+	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/light/close-active.png");
+
+	/* Sound buttons */
+	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
+	--vtr-tab-button-sound-playing-fill: currentColor;
+	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
+	--vtr-tab-button-sound-muted-fill: currentColor;
+
+	/* Splitter/Separation between tabbar and website
+	--vtr-splitter-background: #d6e5f5;
+	--vtr-splitter-width: 3px;
+	--vtr-splitter-border-left-size: 1px;
+	--vtr-splitter-border-left-color: #fcfcfc;
+	--vtr-splitter-border-right-size: 1px;
+	--vtr-splitter-border-right-color: #fcfcfc;  */
+}

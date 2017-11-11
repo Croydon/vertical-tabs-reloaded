@@ -27,16 +27,20 @@
 				"label": "Light (recommended)"
 			},
 			{
-				"value": "windows",
-				"label": "Windows"
-			},
-			{
 				"value": "darwin",
 				"label": "Darwin"
 			},
 			{
+				"value": "feather",
+				"label": "Feather"
+			},
+			{
+				"value": "windows",
+				"label": "windows"
+			},
+			{
 				"value": "linux",
-				"label": "Linux"
+				"label": "linux"
 			}
 		]
 	},
