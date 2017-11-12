@@ -2,7 +2,7 @@
     "name": "Vertical Tabs Reloaded",
     "short_name": "VTR",
     "description": "This Firefox add-on arranges tabs in a vertical rather than horizontal fashion.",
-    "version": "0.8.6a9",
+    "version": "0.8.6a10",
     "manifest_version": 2,
     "author": "Michael 'Croydon' Keck",
     "developer":

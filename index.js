@@ -49,12 +49,17 @@ function manage_installation(details)
             }
         });
 
+        debug_log(details.previousVersion);
+        let previousVersion = details.previousVersion.split(".");
+        let major = parseInt(previousVersion[0], 10);
+        let minor = parseInt(previousVersion[1], 10);
+        let patch = parseInt(previousVersion[2], 10);
 
-        if(details.previousVersion < 57)
+
+        if(major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0))
         {
             browser.sidebarAction.open();
-            // Update settings
-            browser.tabs.create({url: "update-notes.html"});
+            browser.tabs.create({url: "notes/index.html"});
         }
     }
 
