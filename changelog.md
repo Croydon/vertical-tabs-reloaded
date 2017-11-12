@@ -1,5 +1,26 @@
 # Changelog
 
+### v0.9.0, 2017-11-13
+ * this is the first full WebExtension version (#13) 🤖
+ * added: landing page after update with changes explained (#13)
+   * shows once after update in a new tab automatically
+   * can be opened again from the option page
+ * added: asking for "unlimited storage" permission, because upcoming custom themes can be heavy
+ * removed: compact mode (#13)
+ * fixed: new tabs do not open correctly, when the tab browser is hidden (#42)
+ * fixed: disabling the add-on leaves a broken tab browser (#8)
+ * fixed: some clicks can close the tab unexpectedly (#102, #118)
+ * fixed: sometimes pinned tabs don't have a text label (#107)
+ * themes improvements:
+   * merged Windows and Linux themes into the new Feather theme (#91)
+     * Feather is a bright, minimalistic theme
+   * Darwin theme got some fine turning
+   * all themes got internal cleanups
+
+
+***
+
+
 ### v0.8.5.2, 2017-10-04
  * fixed: workaround problem that sidebar position (left, right) is not set correctly (#129)
 
