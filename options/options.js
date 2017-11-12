@@ -182,6 +182,11 @@ function update_all_inputs()
 
 document.addEventListener("DOMContentLoaded", () =>
 {
+    this.document.getElementById("options-actions-show-notes").addEventListener("click", () =>
+    {
+         browser.tabs.update({url: browser.runtime.getURL("notes/index.html")});
+    });
+
     build();
 
     update_all_inputs();
