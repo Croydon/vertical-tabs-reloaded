@@ -13,9 +13,6 @@ Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded
 
 If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydon/4,99)
 
-## WebExtension version is in work!
-See https://github.com/Croydon/vertical-tabs-reloaded/issues/13 for more information. [Opera support](https://github.com/Croydon/vertical-tabs-reloaded/issues/117) is also upcoming.
-
 
 ## Firefox ESR v52 users
 Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addon/vertical-tabs-reloaded/versions/?page=1#version-0.8.2
@@ -24,10 +21,9 @@ Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addo
 ## Features
 
  * arranges tabs vertical
- * ships 5 different styles for the tab sidebar
- * hide/display manually the tab sidebar at any time with a hotkey (Ctrl+Shift+V)
+ * ships 4 different styles for the tab sidebar
+ * hide/display manually the tab sidebar with a hotkey (Ctrl+Shift+V) or by clicking on the VTR icon
  * display the tab toolbar at top, bottom (default) or hide it completely
- * compact mode: hide text labels on tabs for a minimalistic tab sidebar (opt-in)
  * show the tab status (unloaded, unready, busy) visually on the tabs
 
 
