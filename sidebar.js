@@ -74,7 +74,8 @@ class tabutils
         }
 
         let pinnedInfo;
-        await browser.tabs.get(tabID).then((tabInfo) => {
+        await browser.tabs.get(tabID).then((tabInfo) =>
+        {
             pinnedInfo = tabInfo.pinned;
         });
 
@@ -359,7 +360,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     update_tab(tabID, attribute, value)
     {
         if(attribute != "title") { debug_log("update tab: " + tabID + " " + attribute + " " + value); }
-        
+
         switch(attribute)
         {
             case "title":
@@ -535,8 +536,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 result = this.document.getElementById("tabbrowser-tabs-pinned").lastElementChild.getAttribute("data-index");
             }
-
-
         }
         else
         {
