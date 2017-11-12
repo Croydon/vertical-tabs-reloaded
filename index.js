@@ -8,25 +8,18 @@ function manage_installation(details)
 
         browser.runtime.getBrowserInfo().then((info) =>
         {
-            // / FIREFIX FIXME: not landed in stable yet
-            if(info.version >= 57)
+            browser.sidebarAction.open();
+
+            debug_log(info.version);
+            debug_log(info.buildID);
+            debug_log(info.name);
+
+            let version = info.version;
+
+            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+            if(version.includes("a"))
             {
-                browser.sidebarAction.open();
-            }
-
-            if(info.version >= 56)
-            {
-                debug_log(info.version);
-                debug_log(info.buildID);
-                debug_log(info.name);
-
-                let version = info.version;
-
-                // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-                if(version.includes("a"))
-                {
-                    debug_log("You are a Nightly user");
-                }
+                debug_log("You are a Nightly user");
             }
         });
     }
@@ -49,19 +42,37 @@ function manage_installation(details)
             }
         });
 
-        debug_log(details.previousVersion);
-        let previousVersion = details.previousVersion.split(".");
-        let major = parseInt(previousVersion[0], 10);
-        let minor = parseInt(previousVersion[1], 10);
-        let patch = parseInt(previousVersion[2], 10);
-
-
-        if(major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0))
+        get_setting("runtime.vtr.installedVersion").then((installedVersion) =>
         {
-            browser.sidebarAction.open();
-            browser.tabs.create({url: "notes/index.html"});
-        }
+            let previousVersion;
+            if(installedVersion == undefined)
+            {
+
+                previousVersion = details.previousVersion.split(".");
+            }
+            else
+            {
+                previousVersion = installedVersion.split(".");
+            }
+
+            debug_log(previousVersion);
+            let major = parseInt(previousVersion[0], 10);
+            let minor = parseInt(previousVersion[1], 10);
+            let patch = parseInt(previousVersion[2], 10);
+
+            if(major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0))
+            {
+                browser.sidebarAction.open();
+                browser.tabs.create({url: "notes/index.html"});
+            }
+        });
     }
+
+    browser.runtime.getManifest().then((manifest) =>
+    {
+        save_setting("runtime.vtr.installedVersion", manifest.version);
+    });
+
 
     debug_log("manage_installation called");
 }

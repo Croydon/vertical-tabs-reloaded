@@ -4,7 +4,7 @@ var main = browser.extension.getBackgroundPage();
 
 function debug_log(output)
 {
-    debug_log(output);
+    main.debug_log(output);
 }
 
 class tabutils
