@@ -358,7 +358,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        debug_log("update tab: " + tabID + " " + attribute + " " + value);
+        if(attribute != "title") { debug_log("update tab: " + tabID + " " + attribute + " " + value); }
+        
         switch(attribute)
         {
             case "title":

@@ -47,8 +47,9 @@ function manage_installation(details)
             let previousVersion;
             if(installedVersion == undefined)
             {
-
                 previousVersion = details.previousVersion.split(".");
+                browser.sidebarAction.open();
+                browser.tabs.create({url: "notes/index.html"});
             }
             else
             {
@@ -60,7 +61,7 @@ function manage_installation(details)
             let minor = parseInt(previousVersion[1], 10);
             let patch = parseInt(previousVersion[2], 10);
 
-            if(major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0))
+            if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0)))
             {
                 browser.sidebarAction.open();
                 browser.tabs.create({url: "notes/index.html"});
@@ -68,11 +69,9 @@ function manage_installation(details)
         });
     }
 
-    browser.runtime.getManifest().then((manifest) =>
-    {
-        save_setting("runtime.vtr.installedVersion", manifest.version);
-    });
-
+    let manifest = browser.runtime.getManifest();
+    debug_log("manifest version" + manifest.version);
+    save_setting("runtime.vtr.installedVersion", manifest.version);
 
     debug_log("manage_installation called");
 }
