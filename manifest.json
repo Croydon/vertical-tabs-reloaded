@@ -10,7 +10,7 @@
         "name": "Michael 'Croydon' Keck"
     },
     "homepage_url": "https://github.com/Croydon/vertical-tabs-reloaded",
-    "permissions": ["storage", "tabs", "activeTab"],
+    "permissions": ["storage", "tabs", "activeTab", "unlimitedStorage"],
     "incognito": "spanning",
     "background":
     {
