@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: transparen;
+	background: transparent;
 	background-color: var(--vtr-tabbrowser-background-color);
 }
 

@@ -11,8 +11,8 @@
 
 	/* Single tab */
 	--vtr-tab-text-color: #fbfbfb;
-	--vtr-tab-background-color: transparent;
-	--vtr-tab-background: transparent;
+	--vtr-tab-background-color: #424F5A;
+	--vtr-tab-background: #424F5A;
 	--vtr-tab-height: 28px;
 	--vtr-tab-min-height: 28px;
 	--vtr-tab-max-height: 28px;
@@ -49,6 +49,10 @@
 	--vtr-tab-button-close-regular-background-image: url("../../template/basic/icons/dark/close-regular.png");
 	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/dark/close-hover.png");
 	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/dark/close-active.png");
+
+	/* Sound buttons */
+	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing-white.svg");
+	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted-white.svg");
 
 	/* Splitter/Separation between tabbar and website
 	--vtr-splitter-background: #27323B;

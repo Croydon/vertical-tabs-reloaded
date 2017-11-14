@@ -41,22 +41,66 @@ body
     right: 7px;
     padding: 0;
     margin: 0;
-    padding-left: 5px;
-    height: 22px;
-    width: 24px;
+    /* padding-left: 5px; */
+
     z-index: 1;
 }
 
 .tab-buttons span {
     /* padding-left: 18px; */
+
 }
 
 .tab-close-button {
-    display: block;
+    height: 22px;
+    width: 24px;
+    display: inline-block;
     background-image: url("../../template/basic/icons/light/close-regular.png");
     background-size: 22px 22px; /* contain ? */
     background-position: left;
     background-repeat: no-repeat;
+}
+
+.tab-sound-button {
+    display: inline-block;
+    background-size: 22px 22px;
+    background-position: left;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    /* mask-repeat: no-repeat;
+    mask-position: center center; */
+}
+
+.tab-sound-button-playing {
+    height: 22px;
+    width: 24px;
+    /* background-color: currentColor; */
+    background-image: url("../../data/chrome/icon/tab-audio-playing.svg");
+}
+
+.tab-sound-button-muted {
+    height: 22px;
+    width: 24px;
+    /* background-color: inherit; */
+    background-image: url("../../data/chrome/icon/tab-audio-muted.svg");
+}
+
+
+/* FIXME: Implement sound button */
+/* .tab-icon-sound[soundplaying] {
+	list-style-image: url("../chrome/icon/tab-audio-playing.svg");
+    -moz-context-properties: fill;
+    fill: currentColor;
+}
+
+.tab-icon-sound[muted] {
+	list-style-image: url("../chrome/icon/tab-audio-muted.svg");
+    -moz-context-properties: fill;
+    fill: currentColor;
+} */
+
+.tab-icon-sound {
+	filter: drop-shadow(1px 1px 1px currentColor);
 }
 
 /* Ensure the tab favicon doesn't stretch. */
@@ -121,22 +165,6 @@ body
 	display: -moz-box;
 } */
 
-/* FIXME: Implement sound button */
-.tab-icon-sound[soundplaying] {
-	list-style-image: url("../chrome/icon/tab-audio-playing.svg");
-    -moz-context-properties: fill;
-    fill: currentColor;
-}
-
-.tab-icon-sound[muted] {
-	list-style-image: url("../chrome/icon/tab-audio-muted.svg");
-    -moz-context-properties: fill;
-    fill: currentColor;
-}
-
-.tab-icon-sound {
-	filter: drop-shadow(1px 1px 1px currentColor);
-}
 
 /* FIXME: useful? */
 /* Taken from Firefox's original tabbrowser css */

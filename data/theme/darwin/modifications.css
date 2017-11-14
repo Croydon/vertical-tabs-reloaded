@@ -12,15 +12,16 @@
     /*margin-left: 3px;
     margin-top: 1px;
     background-position: center right;
-    background-size: contain;
-    */
+    background-size: contain; */
+
+    background-position: center center;
     background-size: 14px 14px;
-    opacity: 0.27;   /* turn black into #b9b9b9 */
+    /*opacity: 0.7;   turn black into #b9b9b9 */
 }
 
 
 .tab-close-button:active {
-     opacity: 0.46;   /* turn black into #8a8a8a */
+     opacity: 0.75;   /* turn black into #8a8a8a */
 }
 
 .tabbrowser-tab[selected="true"] .tab-close-button {
@@ -33,9 +34,9 @@
 
 
 /* Always display the favicon at 100% opacity */
-.tabbrowser-tab .tab-icon-image {
+/* .tabbrowser-tab .tab-icon-image {
     opacity: 1.0 !important;
-}
+} */
 
 /* Tab label is without special decoration except when selected: then
    the text is white and bold. */

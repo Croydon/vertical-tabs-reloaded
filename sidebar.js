@@ -337,10 +337,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
+            <span id="tab-sound-button-${id}" class="tab-sound-button tab-icon-sound" title="Mute/Unmute tab"></span>
             <span id="tab-close-button-${id}" class="tab-close-button close-icon" title="Close tab"> </span>
         </span>
         </div>`;
-
+//  <span id="tab-sound-button-image-${id}" class=""></span>
         // Check: fadein="true" linkedpanel="panel-3-77" pending="true" align="stretch"
         if(pinned == true)
         {
@@ -366,6 +367,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.update_tab(id, "title", tab.title);
+        this.update_tab(id, "mutedInfo", tab.mutedInfo);
+        this.update_tab(id, "audible", tab.audible);
 
         if(this.initialized == true)
         {
@@ -374,6 +377,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
+        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", () => { tabutils.mute(id); });
 
         if(this.initialized == true)
         {
@@ -459,6 +463,34 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 {
                     // FIXME: Which icon is getting set should be really up to the theme
                     this.document.getElementById("tab-icon-" + tabID).setAttribute("src", "data/chrome/icon/connecting@2x.png");
+                }
+                break;
+
+            case "mutedInfo":
+                if(value.muted == true)
+                {
+                    this.document.getElementById("tab-sound-button-" + tabID).classList.add("tab-sound-button-muted");
+                }
+                else
+                {
+                    this.document.getElementById("tab-sound-button-" + tabID).classList.remove("tab-sound-button-muted");
+                }
+                break;
+
+            case "audible":
+                if(this.document.getElementById("tab-sound-button-" + tabID).classList.contains("tab-sound-button-muted"))
+                {
+                    // If a tab is muted we want to show that at all times, no matter if a sound would be audible or not
+                    return;
+                }
+
+                if(value == true)
+                {
+                    this.document.getElementById("tab-sound-button-" + tabID).classList.add("tab-sound-button-playing");
+                }
+                else
+                {
+                    this.document.getElementById("tab-sound-button-" + tabID).classList.remove("tab-sound-button-playing");
                 }
                 break;
 
@@ -721,12 +753,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.update_tab(tabID, "status", changeInfo["status"]);
             }
 
-            /* if (changeInfo.hasOwnProperty('mutedInfo')) {
-                sidetabs.setMuted(tab, changeInfo.mutedInfo);
+            if (changeInfo.hasOwnProperty("mutedInfo"))
+            {
+                this.update_tab(tabID, "mutedInfo", changeInfo["mutedInfo"]);
             }
-            if (changeInfo.hasOwnProperty('audible')) {
-                sidetabs.setAudible(tab, changeInfo.audible);
-            } */
+
+            if (changeInfo.hasOwnProperty("audible"))
+            {
+                this.update_tab(tabID, "audible", changeInfo["audible"]);
+            }
         });
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>

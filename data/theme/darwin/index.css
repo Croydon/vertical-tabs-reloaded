@@ -11,8 +11,8 @@
 
 	/* Single tab */
 	--vtr-tab-text-color: #BBB;
-	--vtr-tab-background-color: transparent;
-	--vtr-tab-background: transparent;
+	--vtr-tab-background-color: #333;
+	--vtr-tab-background: #333;
 	--vtr-tab-height: 31px;
 	--vtr-tab-min-height: 31px;
 	--vtr-tab-max-height: 31px;
@@ -42,8 +42,9 @@
 	--vtr-tab-pinned-border-radius: 0;
 
 	/* Single tab hover */
-	--vtr-tab-hover-background-color: rgba(0,0,0,0.15);
-	--vtr-tab-hover-background: rgba(0,0,0,0.15);
+	 /* Transparent causes troubles with the way icon buttons are getting handled rgba(0,0,0,0.15); */
+	--vtr-tab-hover-background-color: #2b2b2b;
+	--vtr-tab-hover-background: #2b2b2b;
 
 	/* Close buttons */
 	--vtr-tab-button-close-regular-background-image: url("../../theme/darwin/closetab.svg");
@@ -51,10 +52,8 @@
 	--vtr-tab-button-close-active-background-image: url("../../theme/darwin/closetab-white.svg");
 
 	/* Sound buttons */
-	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
-	--vtr-tab-button-sound-playing-fill: currentColor;
-	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
-	--vtr-tab-button-sound-muted-fill: currentColor;
+	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing-white.svg");
+	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted-white.svg");
 
 
 	/* Splitter/Separation between tabbar and website

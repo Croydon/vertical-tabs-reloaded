@@ -24,6 +24,7 @@
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #333333;
+	--vtr-tab-selected-background-color: #CBCBCB;
 	--vtr-tab-selected-background: #CBCBCB;
 	--vtr-tab-selected-font-weight: 600;
 	--vtr-tab-selected-text-shadow: none;
@@ -32,6 +33,7 @@
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #333333;
+	--vtr-tab-pinned-background-color: #CBCBCB;
 	--vtr-tab-pinned-background: #CBCBCB;
 	--vtr-tab-pinned-font-weight: 600;
 	--vtr-tab-pinned-text-shadow: none;
@@ -39,6 +41,7 @@
 	--vtr-tab-pinned-border-radius: 0;
 
 	/* Single tab hover */
+	--vtr-tab-hover-background-color: #ebebeb;
 	--vtr-tab-hover-background: #ebebeb;
 
 	/* Close buttons */
@@ -48,7 +51,5 @@
 
 	/* Sound buttons */
 	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
-	--vtr-tab-button-sound-playing-fill: currentColor;
 	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
-	--vtr-tab-button-sound-muted-fill: currentColor;
 }
