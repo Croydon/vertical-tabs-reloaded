@@ -65,7 +65,7 @@ class tabutils
 
         browser.tabs.get(tabID).then((tabInfo) =>
         {
-            console.log("muted: " + !tabInfo.mutedInfo.muted);
+            debug_log("muted: " + !tabInfo.mutedInfo.muted);
             browser.tabs.update(tabID, {"muted": !tabInfo.mutedInfo.muted});
         });
     }
@@ -333,7 +333,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             tabIndex = this.get_last_tab_index() + 1;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -341,7 +341,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             <span id="tab-close-button-${id}" class="tab-close-button close-icon" title="Close tab"> </span>
         </span>
         </div>`;
-//  <span id="tab-sound-button-image-${id}" class=""></span>
+
         // Check: fadein="true" linkedpanel="panel-3-77" pending="true" align="stretch"
         if(pinned == true)
         {
@@ -369,6 +369,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.update_tab(id, "title", tab.title);
         this.update_tab(id, "mutedInfo", tab.mutedInfo);
         this.update_tab(id, "audible", tab.audible);
+        this.update_tab(id, "discarded", tab.discarded);
 
         if(this.initialized == true)
         {
@@ -417,7 +418,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
                 this.document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
 
-                if(this.document.getElementById("tab-" + tabID).getAttribute("status") == "complete")
+                if(this.document.getElementById("tab-" + tabID).getAttribute("status") != "loading")
                 {
                     this.document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
                 }
@@ -434,6 +435,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 if(selectedTab != null)
                 {
                     this.document.getElementById("tab-" + tabID).setAttribute("selected", "true");
+                    this.document.getElementById("tab-" + tabID).setAttribute("unread", "false");
                     this.selectedTabID = tabID;
 
                     this.scroll_to_tab(tabID);
@@ -447,15 +449,23 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             case "status":
                 debug_log("new status: " + value);
+                this.document.getElementById("tab-" + tabID).setAttribute("data-discarded", "false");
                 this.document.getElementById("tab-" + tabID).setAttribute("status", value);
 
                 if(value == "complete")
                 {
+                    this.document.getElementById("tab-" + tabID).setAttribute("status", "");
+
                     let newFavicon = this.document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
                     if(newFavicon != "")
                     {
                         debug_log("new favicon: " + newFavicon);
                         this.update_tab(tabID, "favIconUrl", newFavicon);
+                    }
+
+                    if(this.document.getElementById("tab-" + tabID).getAttribute("selected") != "true")
+                    {
+                        this.document.getElementById("tab-" + tabID).setAttribute("unread", "true");
                     }
                 }
 
@@ -491,6 +501,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     this.document.getElementById("tab-sound-button-" + tabID).classList.remove("tab-sound-button-playing");
+                }
+                break;
+
+            case "discarded":
+                if(value == true)
+                {
+                    this.document.getElementById("tab-" + tabID).setAttribute("data-discarded", "true");
+                }
+                else
+                {
+                    this.document.getElementById("tab-" + tabID).setAttribute("data-discarded", "false");
                 }
                 break;
 
@@ -761,6 +782,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if (changeInfo.hasOwnProperty("audible"))
             {
                 this.update_tab(tabID, "audible", changeInfo["audible"]);
+            }
+
+            if (changeInfo.hasOwnProperty("discarded"))
+            {
+                this.update_tab(tabID, "discarded", changeInfo["discarded"]);
             }
         });
 

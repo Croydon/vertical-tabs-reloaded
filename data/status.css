@@ -12,7 +12,7 @@
 
 
 /* unloaded */
-.tabbrowser-tab[pending="true"] .tab-label
+.tabbrowser-tab[data-discarded="true"] .tab-label
 {
     text-decoration: line-through !important;
 }
@@ -20,7 +20,7 @@
 
 /* unread or busy */
 .tabbrowser-tab[unread="true"] .tab-label,
-.tabbrowser-tab[busy] .tab-label
+.tabbrowser-tab[status="loading"] .tab-label
 {
     text-decoration: underline !important;
 }
