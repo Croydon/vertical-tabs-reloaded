@@ -188,7 +188,7 @@
     "comma-dangle": ["error", "only-multiline"],
 
     // Warn about cyclomatic complexity in functions.
-    "complexity": 1,
+    "complexity": ["error", { "max": 40 }],
 
     // Don't require a default case in switch statements. Avoid being forced to
     // add a bogus default when you know all possible cases are handled.
