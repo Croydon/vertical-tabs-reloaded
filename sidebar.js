@@ -302,7 +302,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let status = tab.status;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
+        let pinnedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
 
         if(status == "loading")
         {
