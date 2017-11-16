@@ -122,7 +122,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.document = window.document;
         this.webExtPreferences = preferences;
         this.changedDisplayState = false;
-        this.unloaders = [];
         this.selectedTabID = undefined;
         this.initialized = false;
 
@@ -633,12 +632,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     setPinnedSizes()
     {
         // this.window.addEventListener("resize", this, false);
-
-        // this.unloaders.push(function()
-        // {
-        // this.window.removeEventListener("resize", this, false);
-        // });
-
         // debug_log("set pinned sizes!");
     }
 
@@ -844,16 +837,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             browser.runtime.openOptionsPage();
         });
     }
-
-    unload()
-    {
-        this.unloaders.forEach(function(func)
-        {
-            func.call(this);
-        }, this);
-
-        this.unloaders = [];
-    }
 };
 
 var contextmenuTarget = "NOTARGET";
@@ -971,7 +954,7 @@ function handleDrop(e)
     // We are not doing anything if we drop the tab on itself
     if (dragndropElement.id != dropTarget.id)
     {
-        debug_log("aha: " + tabutils.getTargetID(e));
+        debug_log("dragndrop targetID: " + tabutils.getTargetID(e));
         debug_log(dropTarget);
         tabutils.setIndex(tabutils.getIDFromHTMLID(dragndropElement.id), dropTarget.getAttribute("data-index"));
     }
