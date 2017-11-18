@@ -370,7 +370,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
-        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", () => { tabutils.mute(id); });
+        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { tabutils.mute(id); e.stopPropagation(); });
 
         if(this.initialized == true)
         {

@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.9.3, 2017-11-19
+ * fixed: don't switch active tab when mute/unmute tabs via a click on the sound button
+
+
+***
+
+
 ### v0.9.2, 2017-11-16
  * fixed: when the sidebar gets first opened no tab is selected (#148)
 
