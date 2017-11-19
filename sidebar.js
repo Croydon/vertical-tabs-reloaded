@@ -130,14 +130,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         browser.windows.getCurrent({windowTypes: ["normal"]}).then((windowObj) =>
         {
             this.windowID = windowObj.id;
-            browser.tabs.query({currentWindow: true, active: true}).then((tabs) =>
-            {
-                if (tabs.length >= 1)
-                {
-                    this.selectedTabID = tabs[0].id;
-                }
-                this.init();
-            });
+            this.init();
         });
     }
 
@@ -199,7 +192,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         return browser.runtime.getURL(stylesheet);
     }
 
-    scroll_to_tab(tabID, retryCount = 0)
+    scroll_to_tab(tabID)
     {
         if(typeof tabID != "number")
         {
@@ -210,14 +203,14 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         if(tabElement == null)
         {
-            if (retryCount < 3)
+            setTimeout(() =>
             {
-                setTimeout(() =>
+                tabElement = this.document.getElementById("tab-" + tabID);
+                if(tabElement == null)
                 {
-                    this.scroll_to_tab(tabID, retryCount + 1);
-                }, 100);
-            }
-            return;
+                    return;
+                }
+            }, 10);
         }
 
         var rect = tabElement.getBoundingClientRect();
