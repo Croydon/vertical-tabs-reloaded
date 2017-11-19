@@ -122,9 +122,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.document = window.document;
         this.webExtPreferences = preferences;
         this.changedDisplayState = false;
-        this.unloaders = [];
         this.selectedTabID = undefined;
-        this.newOpenedTabSelectIt = undefined;
         this.initialized = false;
 
         this.tabbrowser = this.document.getElementById("tabbrowser-tabs");
@@ -147,7 +145,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         this.build_ui();
         this.initEventListeners();
-        this.scroll_to_tab(this.selectedTabID);
         this.toolbar_activate();
         this.check_scrollbar_status();
         main.windowutils.setSidebarOpenedStatus(this.windowID, true);
@@ -311,7 +308,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let status = tab.status;
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
-        let pinnedAttribute = "", selectedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
+        let pinnedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
 
         if(status == "loading")
         {
@@ -321,12 +318,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(pinned == true)
         {
             pinnedAttribute = 'pinned="true"';
-        }
-
-        if(tab.selected == true)
-        {
-            selectedAttribute = 'selected="true"';
-            this.selectedTabID = id;
         }
 
         if(this.initialized == false)
@@ -340,7 +331,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             tabIndex = this.get_last_tab_index() + 1;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${selectedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -367,10 +358,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         addDragndropHandlers(this.document.getElementById("tab-" + id));
 
-        if(this.newOpenedTabSelectIt == id)
+        if(tab.active == true)
         {
-            this.newOpenedTabSelectIt = undefined;
             this.update_tab(id, "selected", "true");
+            this.selectedTabID = id;
+            debug_log("select tab: " + this.selectedTabID);
         }
 
         this.update_tab(id, "title", tab.title);
@@ -385,7 +377,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
-        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", () => { tabutils.mute(id); });
+        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { tabutils.mute(id); e.stopPropagation(); });
 
         if(this.initialized == true)
         {
@@ -433,6 +425,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "selected":
+                if(value == false) { return; }
+
                 if(this.selectedTabID != undefined)
                 {
                     this.document.getElementById("tab-" + this.selectedTabID).removeAttribute("selected");
@@ -446,10 +440,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     this.selectedTabID = tabID;
 
                     this.scroll_to_tab(tabID);
-                }
-                else
-                {
-                    this.newOpenedTabSelectIt = tabID;
                 }
 
                 break;
@@ -649,12 +639,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     setPinnedSizes()
     {
         // this.window.addEventListener("resize", this, false);
-
-        // this.unloaders.push(function()
-        // {
-        // this.window.removeEventListener("resize", this, false);
-        // });
-
         // debug_log("set pinned sizes!");
     }
 
@@ -860,16 +844,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             browser.runtime.openOptionsPage();
         });
     }
-
-    unload()
-    {
-        this.unloaders.forEach(function(func)
-        {
-            func.call(this);
-        }, this);
-
-        this.unloaders = [];
-    }
 };
 
 var contextmenuTarget = "NOTARGET";
@@ -987,7 +961,7 @@ function handleDrop(e)
     // We are not doing anything if we drop the tab on itself
     if (dragndropElement.id != dropTarget.id)
     {
-        debug_log("aha: " + tabutils.getTargetID(e));
+        debug_log("dragndrop targetID: " + tabutils.getTargetID(e));
         debug_log(dropTarget);
         tabutils.setIndex(tabutils.getIDFromHTMLID(dragndropElement.id), dropTarget.getAttribute("data-index"));
     }
