@@ -213,19 +213,22 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }, 10);
         }
 
-        var rect = tabElement.getBoundingClientRect();
+        setTimeout(() =>
+        {
+            var rect = tabElement.getBoundingClientRect();
 
-        if(rect.top >= 0
-        && rect.left >= 0
-        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        && rect.right <= (window.innerWidth || document.documentElement.clientWidth))
-        {
-            // visible
-        }
-        else
-        {
-            tabElement.scrollIntoView({block: "end", behavior: "smooth"});
-        }
+            if(rect.top >= 0
+            && rect.left >= 0
+            && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+            && rect.right <= (window.innerWidth || document.documentElement.clientWidth))
+            {
+                // visible
+            }
+            else
+            {
+                tabElement.scrollIntoView({block: "end", behavior: "smooth"});
+            }
+        }, 200);
     }
 
     build_ui()
