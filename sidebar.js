@@ -101,6 +101,22 @@ class tabutils
         return pinnedInfo;
     }
 
+    static async isActive(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        let activeInfo;
+        await browser.tabs.get(tabID).then((tabInfo) =>
+        {
+            activeInfo = tabInfo.active;
+        });
+
+        return activeInfo;
+    }
+
     static isTabElement(HTMLElement)
     {
         if(HTMLElement.classList.contains("tabbrowser-tab"))
@@ -210,7 +226,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 {
                     return;
                 }
-            }, 10);
+            }, 20);
         }
 
         setTimeout(() =>
@@ -228,7 +244,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 tabElement.scrollIntoView({block: "end", behavior: "smooth"});
             }
-        }, 200);
+        }, 400);
+        // FIREFIX: FIXME: time could be reduced till ~200 when https://bugzilla.mozilla.org/show_bug.cgi?id=1387372 is fixed 
     }
 
     build_ui()
@@ -573,6 +590,14 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
 
         this.update_tab_indexes();
+
+        // When the current active tab is getting moved we are scrolling the tab browser, to keep the active tab in sight
+        // The main purpose of this should be the interference of third-party add-ons
+        if(tabutils.isActive(tabID))
+        {
+            debug_log("tab is active. scroll to it");
+            setTimeout(this.scroll_to_tab(tabID), 100);
+        }
     }
 
     update_tab_indexes()
