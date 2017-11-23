@@ -204,10 +204,10 @@ function get_setting(name)
             if (!results.hasOwnProperty(name))
             {
                 // Debug output for "debug" is causing potentially an endless loop to the extend that browser doesn't react anymore
-                if(name != "debug") { localDebug = true; localDebugOutput += "No user value, use default value. "; }
+                // if(name != "debug") { localDebug = true; localDebugOutput += "No user value, use default value. "; }
                 if(settings.hasOwnProperty(name))
                 {
-                    if(name != "debug") { localDebug = true; localDebugOutput += "Default value is '" + settings[name]["value"] + "'. "; }
+                    if(name != "debug") { localDebug = true; localDebugOutput += "No user value; default value is '" + settings[name]["value"] + "'. "; }
                     results[name] = settings[name]["value"];
                 }
                 else
@@ -294,9 +294,9 @@ setTimeout(() =>
         managedWindows["currentWindow"] = currentWindow.id;
     });
 
-    browser.commands.onCommand.addListener((command) =>
+    /* browser.commands.onCommand.addListener((command) =>
     {
-        /* if (command == "toggleTabbrowser")
+         if (command == "toggleTabbrowser")
         {
             // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
              if(windowutils.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
@@ -309,8 +309,8 @@ setTimeout(() =>
                 windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
                 browser.sidebarAction.close();
             }
-        }  */
-    });
+        }
+    }); */
 
 
     browser.browserAction.onClicked.addListener(() =>

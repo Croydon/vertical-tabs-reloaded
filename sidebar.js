@@ -245,7 +245,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 tabElement.scrollIntoView({block: "end", behavior: "smooth"});
             }
         }, 400);
-        // FIREFIX: FIXME: time could be reduced till ~200 when https://bugzilla.mozilla.org/show_bug.cgi?id=1387372 is fixed 
+        // FIREFIX: FIXME: time could be reduced till ~200 when https://bugzilla.mozilla.org/show_bug.cgi?id=1387372 is fixed
     }
 
     build_ui()
@@ -400,7 +400,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        if(attribute != "title") { debug_log("update tab: " + tabID + " " + attribute + " " + value); }
+        if(attribute != "title" && attribute != "audible") { debug_log("update tab: " + tabID + " " + attribute + " " + value); }
 
         switch(attribute)
         {
@@ -458,7 +458,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "status":
-                debug_log("new status: " + value);
                 this.document.getElementById("tab-" + tabID).setAttribute("data-discarded", "false");
                 this.document.getElementById("tab-" + tabID).setAttribute("status", value);
 

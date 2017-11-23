@@ -140,12 +140,12 @@ body
 
 
 .tabbrowser-tab {
-    pointer-events: auto ! important;
-    min-width: 30px ! important;
-    max-width: 100% ! important;
+    pointer-events: auto;
+    min-width: 30px;
+    max-width: 100vw;
 	min-height: 20px;
-	height: 20px !important;
-	max-height: 40px !important;
+	height: 20px;
+	max-height: 40px;
 	border-bottom: 1px solid #5E6972;
     overflow: hidden;
     display: flex;
