@@ -128,6 +128,24 @@ class tabutils
     }
 }
 
+class DomUtils
+{
+    static isElementInVisibleArea(DOMElement)
+    {
+        let rect = DOMElement.getBoundingClientRect();
+
+        if(rect.top >= 0
+        && rect.left >= 0
+        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+        && rect.right <= (window.innerWidth || document.documentElement.clientWidth))
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 /* Entry point for every VTR sidebar for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
 {
@@ -197,6 +215,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     getThemeStylesheet(theme)
     {
+        /* KEEP ME, placeholder for now, logic will grow in the future */
         let stylesheet;
         switch (theme)
         {
@@ -231,16 +250,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         setTimeout(() =>
         {
-            var rect = tabElement.getBoundingClientRect();
-
-            if(rect.top >= 0
-            && rect.left >= 0
-            && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-            && rect.right <= (window.innerWidth || document.documentElement.clientWidth))
-            {
-                // visible
-            }
-            else
+            if(DomUtils.isElementInVisibleArea(tabElement) == false)
             {
                 tabElement.scrollIntoView({block: "end", behavior: "smooth"});
             }
@@ -888,9 +898,30 @@ function contextmenuShow(e)
     debug_log(contextmenuTarget);
     debug_log(e.pageX + " y " + e.pageY);
 
-    document.getElementById("contextmenu").style.setProperty("left", e.pageX + "px");
-    document.getElementById("contextmenu").style.setProperty("top", e.pageY + "px");
-    document.getElementById("contextmenu").style.display = "block";
+    let contextmenuDomElement = document.getElementById("contextmenu");
+    contextmenuDomElement.style.setProperty("left", e.pageX + "px");
+    contextmenuDomElement.style.setProperty("top", e.pageY + "px");
+    contextmenuDomElement.style.display = "block";
+
+    if(DomUtils.isElementInVisibleArea(contextmenuDomElement) == false)
+    {
+        contextmenuDomElement.style.visibility = "hidden";
+        let rect = contextmenuDomElement.getBoundingClientRect();
+
+        if(document.documentElement.clientHeight - rect.bottom < 0)
+        {
+            // Context menu is hidden in height, adjust
+            contextmenuDomElement.style.setProperty("top", e.pageY + (document.documentElement.clientHeight - rect.bottom) + "px");
+        }
+
+        if(document.documentElement.clientWidth - rect.right < 0 )
+        {
+            // Context menu is hidden in width, adjust
+            contextmenuDomElement.style.setProperty("left", e.pageX + (document.documentElement.clientWidth - rect.right) + "px");
+        }
+
+        contextmenuDomElement.style.visibility = "";
+    }
 
     // FIXME: Prevent scrolling while the context menu is open // removing this event handler doesn't work for some reason
     // Simply close the context menu for now on scrolling
