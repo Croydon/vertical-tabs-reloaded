@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.9.4, 2017-11-24
+ * fixed: tab context menu can go off-screen when to close to sidebar borders (#147)
+ * internal: minor other improvements and cleanups
+
+
+***
+
+
 ### v0.9.3, 2017-11-19
  * fixed: don't switch active tab when mute/unmute tabs via a click on the sound button
 
