@@ -231,7 +231,6 @@ function get_setting(name)
 
 // browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
 
-
 setTimeout(() =>
 {
     // Set up listener

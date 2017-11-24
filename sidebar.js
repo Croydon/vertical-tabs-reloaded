@@ -1,13 +1,14 @@
 "use strict";
 
 var main = browser.extension.getBackgroundPage();
+var utils = main.utils;
 
 function debug_log(output)
 {
     main.debug_log(output);
 }
 
-class tabutils
+utils["tabs"] = class tabutils
 {
     static getTargetID(e)
     {
@@ -128,7 +129,7 @@ class tabutils
     }
 }
 
-class DomUtils
+utils["dom"] = class DomUtils
 {
     static isElementInVisibleArea(DOMElement)
     {
@@ -250,7 +251,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         setTimeout(() =>
         {
-            if(DomUtils.isElementInVisibleArea(tabElement) == false)
+            if(utils.dom.isElementInVisibleArea(tabElement) == false)
             {
                 tabElement.scrollIntoView({block: "end", behavior: "smooth"});
             }
@@ -399,8 +400,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.check_scrollbar_status();
         }
 
-        this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { tabutils.close(id); });
-        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { tabutils.mute(id); e.stopPropagation(); });
+        this.document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { utils.tabs.close(id); });
+        this.document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
 
         if(this.initialized == true)
         {
@@ -546,7 +547,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
-        let pinnedTab = await tabutils.isPinned(tabID);
+        let pinnedTab = await utils.tabs.isPinned(tabID);
         let pinnedTabMoveDown = false;
 
         debug_log(this.get_last_tab_index());
@@ -602,7 +603,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         // When the current active tab is getting moved we are scrolling the tab browser, to keep the active tab in sight
         // The main purpose of this should be the interference of third-party add-ons
-        if(tabutils.isActive(tabID))
+        if(utils.tabs.isActive(tabID))
         {
             debug_log("tab is active. scroll to it");
             setTimeout(this.scroll_to_tab(tabID), 100);
@@ -615,7 +616,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         for(let tab of this.document.getElementsByClassName("tabbrowser-tab"))
         {
             tab.setAttribute("data-index", index);
-            // this.document.getElementById("tab-title-" + tabutils.getIDFromHTMLID(tab.id)).innerHTML = index;
+            // this.document.getElementById("tab-title-" + utils.tabs.getIDFromHTMLID(tab.id)).innerHTML = index;
             index++;
         }
     }
@@ -659,7 +660,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.selectedTabID = undefined;
             }
 
-            this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { tabutils.close(tabID); });
+            this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { utils.tabs.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
 
             this.check_scrollbar_status();
@@ -907,7 +908,7 @@ function contextmenuShow(e)
 {
     e.preventDefault();
 
-    contextmenuTarget = tabutils.getTargetID(e);
+    contextmenuTarget = utils.tabs.getTargetID(e);
 
     debug_log(contextmenuTarget);
     debug_log(e.pageX + " y " + e.pageY);
@@ -917,7 +918,7 @@ function contextmenuShow(e)
     contextmenuDomElement.style.setProperty("top", e.pageY + "px");
     contextmenuDomElement.style.display = "block";
 
-    if(DomUtils.isElementInVisibleArea(contextmenuDomElement) == false)
+    if(utils.dom.isElementInVisibleArea(contextmenuDomElement) == false)
     {
         contextmenuDomElement.style.visibility = "hidden";
         let rect = contextmenuDomElement.getBoundingClientRect();
@@ -955,10 +956,10 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
     document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));
 
-    document.getElementById("contextmenu-action-tab-close").addEventListener("click", (e) => { tabutils.close(contextmenuTarget); });
-    document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { tabutils.reload(contextmenuTarget); });
-    document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { tabutils.pin(contextmenuTarget); });
-    document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { tabutils.mute(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-close").addEventListener("click", (e) => { utils.tabs.close(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { utils.tabs.reload(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { utils.tabs.pin(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
 });
 
 
@@ -967,11 +968,11 @@ let dragndropElement = undefined;
 function handleDragStart(e)
 {
     dragndropElement = e.target;
-    let isTabElement = tabutils.isTabElement(dragndropElement);
+    let isTabElement = utils.tabs.isTabElement(dragndropElement);
     while(isTabElement == false)
     {
         dragndropElement = dragndropElement.parentNode;
-        isTabElement = tabutils.isTabElement(dragndropElement);
+        isTabElement = utils.tabs.isTabElement(dragndropElement);
     }
 
     debug_log("this: " + dragndropElement);
@@ -1015,20 +1016,20 @@ function handleDrop(e)
     }
 
     let dropTarget = e.target;
-    let isTabElement = tabutils.isTabElement(dropTarget);
+    let isTabElement = utils.tabs.isTabElement(dropTarget);
     while(isTabElement == false)
     {
         dropTarget = dropTarget.parentNode;
-        isTabElement = tabutils.isTabElement(dropTarget);
+        isTabElement = utils.tabs.isTabElement(dropTarget);
     }
 
     debug_log("drag and drop, new tab index: " + dropTarget.getAttribute("data-index"));
     // We are not doing anything if we drop the tab on itself
     if (dragndropElement.id != dropTarget.id)
     {
-        debug_log("dragndrop targetID: " + tabutils.getTargetID(e));
+        debug_log("dragndrop targetID: " + utils.tabs.getTargetID(e));
         debug_log(dropTarget);
-        tabutils.setIndex(tabutils.getIDFromHTMLID(dragndropElement.id), dropTarget.getAttribute("data-index"));
+        utils.tabs.setIndex(utils.tabs.getIDFromHTMLID(dragndropElement.id), dropTarget.getAttribute("data-index"));
     }
 
     // this.dragndropElement.classList.remove("over");
