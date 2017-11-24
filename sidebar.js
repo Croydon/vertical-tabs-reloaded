@@ -2,11 +2,7 @@
 
 var main = browser.extension.getBackgroundPage();
 var utils = main.utils;
-
-function debug_log(output)
-{
-    main.debug_log(output);
-}
+var log = main.utils.log;
 
 utils["tabs"] = class tabutils
 {
@@ -66,9 +62,19 @@ utils["tabs"] = class tabutils
 
         browser.tabs.get(tabID).then((tabInfo) =>
         {
-            debug_log("muted: " + !tabInfo.mutedInfo.muted);
+            log.debug("muted: " + !tabInfo.mutedInfo.muted);
             browser.tabs.update(tabID, {"muted": !tabInfo.mutedInfo.muted});
         });
+    }
+
+    static moveToNewWindow(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.windows.create({"tabId": tabID});
     }
 
     static setIndex(tabID, newIndex)
@@ -127,7 +133,7 @@ utils["tabs"] = class tabutils
 
         return false;
     }
-}
+};
 
 utils["dom"] = class DomUtils
 {
@@ -145,7 +151,7 @@ utils["dom"] = class DomUtils
 
         return false;
     }
-}
+};
 
 /* Entry point for every VTR sidebar for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
@@ -181,19 +187,19 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     preferences(settingName)
     {
-        debug_log(settingName + " (lib): " + this.webExtPreferences[settingName]);
+        log.debug(settingName + " (lib): " + this.webExtPreferences[settingName]);
         return this.webExtPreferences[settingName];
     }
 
     installStylesheet(uri, type)
     {
-        debug_log("VTR install sheet: " + uri + " of type: " + type);
+        log.debug("VTR install sheet: " + uri + " of type: " + type);
         this.document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
     }
 
     removeStylesheet(type)
     {
-        debug_log("VTR remove sheet of type: " + type);
+        log.debug("VTR remove sheet of type: " + type);
         this.document.getElementById("vtr-" + type).remove();
     }
 
@@ -209,7 +215,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(this.preferences("theme") != "none")
         {
-            debug_log("remove theme stylesheet!");
+            log.debug("remove theme stylesheet!");
             this.removeStylesheet("theme");
         }
     }
@@ -267,13 +273,13 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.applyThemeStylesheet();
         /* if (this.preferences("compact") == true)
         {
-            debug_log("compact true");
+            log.debug("compact true");
             this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
         } */
 
         if (this.preferences("style.tab.status") == true)
         {
-            debug_log("style.tab.status true");
+            log.debug("style.tab.status true");
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
@@ -386,7 +392,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.update_tab(id, "selected", "true");
             this.selectedTabID = id;
-            debug_log("select tab: " + this.selectedTabID);
+            log.debug("select tab: " + this.selectedTabID);
         }
 
         this.update_tab(id, "title", tab.title);
@@ -411,7 +417,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        if(attribute != "title" && attribute != "audible") { debug_log("update tab: " + tabID + " " + attribute + " " + value); }
+        if(attribute != "title" && attribute != "audible") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
         switch(attribute)
         {
@@ -436,8 +442,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
 
-                debug_log("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
-                debug_log("favIconUrl loaded: " + value);
+                log.debug("status: " + this.document.getElementById("tab-" + tabID).getAttribute("status"));
+                log.debug("favIconUrl loaded: " + value);
 
                 this.document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
 
@@ -479,7 +485,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     let newFavicon = this.document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
                     if(newFavicon != "")
                     {
-                        debug_log("new favicon: " + newFavicon);
+                        log.debug("new favicon: " + newFavicon);
                         this.update_tab(tabID, "favIconUrl", newFavicon);
                     }
 
@@ -545,12 +551,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(fromIndex == toIndex) { return; }
 
-        debug_log("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
+        log.debug("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
         let pinnedTab = await utils.tabs.isPinned(tabID);
         let pinnedTabMoveDown = false;
 
-        debug_log(this.get_last_tab_index());
+        log.debug(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
         {
             // Move at the end
@@ -605,7 +611,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // The main purpose of this should be the interference of third-party add-ons
         if(utils.tabs.isActive(tabID))
         {
-            debug_log("tab is active. scroll to it");
+            log.debug("tab is active. scroll to it");
             setTimeout(this.scroll_to_tab(tabID), 100);
         }
     }
@@ -653,7 +659,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(this.document.getElementById("tab-" + tabID) !== null)
         {
-            debug_log("remove tab: " + tabID);
+            log.debug("remove tab: " + tabID);
 
             if(tabID == this.selectedTabID)
             {
@@ -670,7 +676,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     setPinnedSizes()
     {
         // this.window.addEventListener("resize", this, false);
-        // debug_log("set pinned sizes!");
+        // log.debug("set pinned sizes!");
     }
 
     onPreferenceChange(prefName, newValue)
@@ -743,7 +749,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         Object.keys(changes).forEach(item =>
         {
-            debug_log("on_storage: " + item + " " + changes[item].newValue);
+            log.debug("on_storage: " + item + " " + changes[item].newValue);
             this.onPreferenceChange(item, changes[item].newValue);
         });
     }
@@ -910,8 +916,8 @@ function contextmenuShow(e)
 
     contextmenuTarget = utils.tabs.getTargetID(e);
 
-    debug_log(contextmenuTarget);
-    debug_log(e.pageX + " y " + e.pageY);
+    log.debug(contextmenuTarget);
+    log.debug(e.pageX + " y " + e.pageY);
 
     let contextmenuDomElement = document.getElementById("contextmenu");
     contextmenuDomElement.style.setProperty("left", e.pageX + "px");
@@ -960,6 +966,7 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { utils.tabs.reload(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { utils.tabs.pin(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
 });
 
 
@@ -975,7 +982,7 @@ function handleDragStart(e)
         isTabElement = utils.tabs.isTabElement(dragndropElement);
     }
 
-    debug_log("this: " + dragndropElement);
+    log.debug("this: " + dragndropElement);
 
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/html", dragndropElement.outerHTML);
@@ -1003,8 +1010,8 @@ function handleDragEnter(e)
 
 function handleDragLeave(e)
 {
-    debug_log("drag leave: " + dragndropElement);
-    debug_log("drag leave id: " + dragndropElement.id);
+    log.debug("drag leave: " + dragndropElement);
+    log.debug("drag leave id: " + dragndropElement.id);
     // this.dragndropElement.classList.remove("over");
 }
 
@@ -1023,12 +1030,12 @@ function handleDrop(e)
         isTabElement = utils.tabs.isTabElement(dropTarget);
     }
 
-    debug_log("drag and drop, new tab index: " + dropTarget.getAttribute("data-index"));
+    log.debug("drag and drop, new tab index: " + dropTarget.getAttribute("data-index"));
     // We are not doing anything if we drop the tab on itself
     if (dragndropElement.id != dropTarget.id)
     {
-        debug_log("dragndrop targetID: " + utils.tabs.getTargetID(e));
-        debug_log(dropTarget);
+        log.debug("dragndrop targetID: " + utils.tabs.getTargetID(e));
+        log.debug(dropTarget);
         utils.tabs.setIndex(utils.tabs.getIDFromHTMLID(dragndropElement.id), dropTarget.getAttribute("data-index"));
     }
 

@@ -1,5 +1,7 @@
 "use strict";
 
+/* global utils log */
+
 function manage_installation(details)
 {
     if(details.reason == "install")
@@ -10,23 +12,23 @@ function manage_installation(details)
         {
             browser.sidebarAction.open();
 
-            debug_log(info.version);
-            debug_log(info.buildID);
-            debug_log(info.name);
+            log.debug(info.version);
+            log.debug(info.buildID);
+            log.debug(info.name);
 
             let version = info.version;
 
             // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
             if(version.includes("a"))
             {
-                debug_log("You are a Nightly user");
+                log.debug("You are a Nightly user");
             }
         });
     }
 
     if(details.reason == "update")
     {
-        debug_log("VTR update!");
+        log.debug("VTR update!");
 
         get_setting("theme").then(value =>
         {
@@ -56,7 +58,7 @@ function manage_installation(details)
                 previousVersion = installedVersion.split(".");
             }
 
-            debug_log(previousVersion);
+            log.debug(previousVersion);
             let major = parseInt(previousVersion[0], 10);
             let minor = parseInt(previousVersion[1], 10);
             let patch = parseInt(previousVersion[2], 10);
@@ -70,10 +72,10 @@ function manage_installation(details)
     }
 
     let manifest = browser.runtime.getManifest();
-    debug_log("manifest version" + manifest.version);
+    log.debug("manifest version" + manifest.version);
     save_setting("runtime.vtr.installedVersion", manifest.version);
 
-    debug_log("manage_installation called");
+    log.debug("manage_installation called");
 }
 
 browser.runtime.onInstalled.addListener(manage_installation);
@@ -139,7 +141,7 @@ function save_setting(name, value)
     let settingsObject = {};
     settingsObject[name] = value;
 
-    debug_log("save: " + name + " " + value);
+    log.debug("save: " + name + " " + value);
 
     browser.storage.local.set(settingsObject).then(error =>
     {
@@ -182,7 +184,7 @@ function get_all_settings()
     }).catch(
         (reason) =>
         {
-            debug_log(reason);
+            log.debug(reason);
         }
     );
 }
@@ -216,13 +218,13 @@ function get_setting(name)
                 }
             }
 
-            if(localDebug == true) { debug_log(localDebugOutput); }
+            if(localDebug == true) { log.debug(localDebugOutput); }
 
             fulfill(results[name]);
         }).catch(
             (reason) =>
             {
-                debug_log(reason);
+                log.debug(reason);
             }
         );
     });
@@ -256,12 +258,12 @@ setTimeout(() =>
 
     browser.windows.onFocusChanged.addListener((windowID) =>
     {
-        managedWindows["currentWindow"] = windowID;
+        utils.windows.setCurrentWindow(windowID);
     });
 
     browser.windows.getCurrent({windowTypes: ["normal", "popup"]}).then((currentWindow) =>
     {
-        managedWindows["currentWindow"] = currentWindow.id;
+        utils.windows.setCurrentWindow(currentWindow.id);
     });
 
     /* browser.commands.onCommand.addListener((command) =>
@@ -269,14 +271,14 @@ setTimeout(() =>
          if (command == "toggleTabbrowser")
         {
             // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
-             if(utils.windows.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+             if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
             {
-                utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+                utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
                 browser.sidebarAction.open();
             }
             else
             {
-                utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+                utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
                 browser.sidebarAction.close();
             }
         }
@@ -285,14 +287,14 @@ setTimeout(() =>
 
     browser.browserAction.onClicked.addListener(() =>
     {
-        if(utils.windows.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+        if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
         {
-            utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
             browser.sidebarAction.open();
         }
         else
         {
-            utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
             browser.sidebarAction.close();
         }
     });
@@ -317,16 +319,3 @@ setTimeout(() =>
         }
     });
 }, 50);
-
-
-// Utils
-function debug_log(output)
-{
-    get_setting("debug").then(value =>
-    {
-        if(value == true)
-        {
-            console.log(output);
-        }
-    });
-}

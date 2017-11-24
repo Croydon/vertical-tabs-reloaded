@@ -18,6 +18,7 @@
         [
             "lib/browser-polyfill.js",
             "utils/namespace.js",
+            "utils/log.js",
             "utils/windows.js",
             "index.js"
         ]
