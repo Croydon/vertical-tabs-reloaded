@@ -119,6 +119,24 @@ utils["tabs"] = class tabutils
         });
     }
 
+    static closeTabsRelativeTo(tabID, relativeTyp)
+    {
+        log.debug("Close tabs " + relativeTyp + " from " + tabID);
+
+        for(let tab of window.document.getElementsByClassName("tabbrowser-tab"))
+        {
+            let currentTabID = this.getIDFromHTMLID(tab.id);
+
+            if(relativeTyp == "below")
+            {
+                if(currentTabID > tabID)
+                {
+                    this.close(currentTabID);
+                }
+            }
+        }
+    }
+
     static async isActive(tabID)
     {
         if(typeof tabID == "string")
@@ -979,6 +997,7 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
+    document.getElementById("contextmenu-action-tab-close-below").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "below"); });
 });
 
 
