@@ -10,8 +10,15 @@ notifications:
 node_js:
   - "node"
 
+matrix:
+  include:
+    - env: RUN=addons-linter
+    - env: RUN=eslint
+
 before_script:
-  - npm install -g eslint
+  - npm install -g $RUN
+  - $RUN --version
+  - $RUN --help
 
 script:
-  - eslint .
+  - $RUN .

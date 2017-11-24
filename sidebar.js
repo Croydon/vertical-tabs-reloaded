@@ -914,7 +914,7 @@ function contextmenuShow(e)
             contextmenuDomElement.style.setProperty("top", e.pageY + (document.documentElement.clientHeight - rect.bottom) + "px");
         }
 
-        if(document.documentElement.clientWidth - rect.right < 0 )
+        if(document.documentElement.clientWidth - rect.right < 0)
         {
             // Context menu is hidden in width, adjust
             contextmenuDomElement.style.setProperty("left", e.pageX + (document.documentElement.clientWidth - rect.right) + "px");
