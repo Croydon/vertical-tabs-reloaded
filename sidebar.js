@@ -108,6 +108,17 @@ utils["tabs"] = class tabutils
         return pinnedInfo;
     }
 
+    static reloadAllVisibleTabs()
+    {
+        browser.windows.getCurrent({"windowTypes": ["normal"], "populate": true}).then((windowInfo) =>
+        {
+            for(let tab of windowInfo.tabs)
+            {
+                browser.tabs.reload(tab.id);
+            }
+        });
+    }
+
     static async isActive(tabID)
     {
         if(typeof tabID == "string")
@@ -967,6 +978,7 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { utils.tabs.pin(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
 });
 
 
