@@ -839,6 +839,20 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
         });
 
+        // Middle click on free space within the tabbrowser opens a new tab
+        this.document.getElementById("tabbrowser-tabs").addEventListener("mouseup", (e) =>
+        {
+            if(e.target == this.document.getElementById("tabbrowser-tabs"))
+            {
+                if(e.button == "1")
+                {
+                    browser.tabs.create({
+                        active: true,
+                    });
+                }
+            }
+        });
+
         // Old event handler: case "popupshowing":
         // return;
     }
