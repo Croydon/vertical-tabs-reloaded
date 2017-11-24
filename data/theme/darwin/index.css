@@ -61,7 +61,7 @@
 	--vtr-tab-selected-border-left-style: solid;
 	--vtr-tab-selected-border-left-color: #D47C00;
 	--vtr-tab-selected-margin-top: 0;
-	--vtr-tab-selected-margin-right: 0;
+	--vtr-tab-selected-margin-right: 3px;
 	--vtr-tab-selected-margin-bottom: 1px;
 	--vtr-tab-selected-margin-left: 0;
 	--vtr-tab-selected-padding-top: 0;
@@ -91,11 +91,11 @@
 	--vtr-tab-pinned-margin-top: 0;
 	--vtr-tab-pinned-margin-right: 3px;
 	--vtr-tab-pinned-margin-bottom: 0;
-	--vtr-tab-pinned-margin-left: 3px;
+	--vtr-tab-pinned-margin-left: 0;
 	--vtr-tab-pinned-padding-top: 0;
-	--vtr-tab-pinned-padding-right: 0;
+	--vtr-tab-pinned-padding-right: 3px;
 	--vtr-tab-pinned-padding-bottom: 0;
-	--vtr-tab-pinned-padding-left: 0;
+	--vtr-tab-pinned-padding-left: 3px;
 
 	/* Single tab hover */
 	/* Transparent causes troubles with the way icon buttons are getting handled rgba(0,0,0,0.15); */
