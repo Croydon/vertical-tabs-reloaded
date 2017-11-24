@@ -7,13 +7,13 @@ body {
 
 /* Tab toolbar styling */
 #TabsToolbar:not(:-moz-lwtheme)  {
-	flex: 0 1 var(--vtr-tabbar-height) !important;
+	flex: 0 1 var(--vtr-tabbar-height);
 	height: var(--vtr-tabbar-height);
-	border-bottom-left-radius: 0px !important;
-	box-shadow: none !important;
-	appearance: none !important;
-	border-top: 1px solid rgb(160,160,160) !important;
-	-moz-border-right-colors: #fcfcfc rgb(154,154,154) !important;
-	background-color: var(--vtr-tabbar-background-color) !important;
-	background-image: none !important;
+	border-bottom-left-radius: 0px;
+	box-shadow: none;
+	appearance: none;
+	border-top: 1px solid rgb(160,160,160);
+	-moz-border-right-colors: #fcfcfc rgb(154,154,154); /* FIXME: remove? */
+	background-color: var(--vtr-tabbar-background-color);
+	background-image: none;
 }

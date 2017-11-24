@@ -13,15 +13,33 @@
 	--vtr-tab-text-color: #BBB;
 	--vtr-tab-background-color: #333;
 	--vtr-tab-background: #333;
+	--vtr-tab-font-size: 11px;
+	--vtr-tab-font-weight: normal;
+	--vtr-tab-text-shadow: none;
 	--vtr-tab-height: 31px;
 	--vtr-tab-min-height: 31px;
 	--vtr-tab-max-height: 31px;
-	--vtr-tab-border: 0;
 	--vtr-tab-border-radius: 0;
-	--vtr-tab-border-left: 2px solid transparent;
-    --vtr-tab-border-top: 1px solid rgba(255, 255, 255,0.05);
-	--vtr-tab-border-bottom: 1px solid rgba(0,0,0,0.15);
-    --vtr-tab-margin: 7px 3px 6px;
+	--vtr-tab-border-top-width: 1px;
+	--vtr-tab-border-top-style: solid;
+	--vtr-tab-border-top-color: rgba(255, 255, 255,0.05);
+	--vtr-tab-border-right-width: 0;
+	--vtr-tab-border-right-style: solid;
+	--vtr-tab-border-right-color: transparent;
+	--vtr-tab-border-bottom-width: 1px;
+	--vtr-tab-border-bottom-style: solid;
+	--vtr-tab-border-bottom-color: rgba(0,0,0,0.15);
+	--vtr-tab-border-left-width: 2px;
+	--vtr-tab-border-left-style: solid;
+	--vtr-tab-border-left-color: transparent;
+	--vtr-tab-margin-top: 0;
+	--vtr-tab-margin-right: 3px;
+	--vtr-tab-margin-bottom: 0;
+	--vtr-tab-margin-left: 0;
+	--vtr-tab-padding-top: 0;
+	--vtr-tab-padding-right: 0;
+	--vtr-tab-padding-bottom: 0;
+	--vtr-tab-padding-left: 0;
 
 	/* Single tab selected */
 	--vtr-tab-selected-text-color: #DDD;
@@ -29,8 +47,27 @@
 	--vtr-tab-selected-background: #222;
 	--vtr-tab-selected-font-weight: bold;
 	--vtr-tab-selected-text-shadow: 0 1px #404040;
-	--vtr-tab-selected-border-left: 3px solid #D47C00;
 	--vtr-tab-selected-border-radius: 0;
+	--vtr-tab-selected-border-top-width: var(--vtr-tab-border-top-width);
+	--vtr-tab-selected-border-top-style: var(--vtr-tab-border-top-style);
+	--vtr-tab-selected-border-top-color: var(--vtr-tab-border-top-color);
+	--vtr-tab-selected-border-right-width: var(--vtr-tab-border-right-width);
+	--vtr-tab-selected-border-right-style: var(--vtr-tab-border-right-style);
+	--vtr-tab-selected-border-right-color: var(--vtr-tab-border-right-color);
+	--vtr-tab-selected-border-bottom-width: var(--vtr-tab-border-bottom-width);
+	--vtr-tab-selected-border-bottom-style: var(--vtr-tab-border-bottom-style);
+	--vtr-tab-selected-border-bottom-color: var(--vtr-tab-border-bottom-color);
+	--vtr-tab-selected-border-left-width: 3px;
+	--vtr-tab-selected-border-left-style: solid;
+	--vtr-tab-selected-border-left-color: #D47C00;
+	--vtr-tab-selected-margin-top: 0;
+	--vtr-tab-selected-margin-right: 0;
+	--vtr-tab-selected-margin-bottom: 1px;
+	--vtr-tab-selected-margin-left: 0;
+	--vtr-tab-selected-padding-top: 0;
+	--vtr-tab-selected-padding-right: 3px;
+	--vtr-tab-selected-padding-bottom: 0;
+	--vtr-tab-selected-padding-left: 3px;
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
@@ -38,20 +75,51 @@
 	--vtr-tab-pinned-background: #27323B;
 	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
-	--vtr-tab-pinned-border-left: 3px solid #2292D0;
 	--vtr-tab-pinned-border-radius: 0;
+	--vtr-tab-pinned-border-top-width: var(--vtr-tab-border-top-width);
+	--vtr-tab-pinned-border-top-style: var(--vtr-tab-border-top-style);
+	--vtr-tab-pinned-border-top-color: var(--vtr-tab-border-top-color);
+	--vtr-tab-pinned-border-right-width: var(--vtr-tab-border-right-width);
+	--vtr-tab-pinned-border-right-style: var(--vtr-tab-border-right-style);
+	--vtr-tab-pinned-border-right-color: var(--vtr-tab-border-right-color);
+	--vtr-tab-pinned-border-bottom-width: var(--vtr-tab-border-bottom-width);
+	--vtr-tab-pinned-border-bottom-style: var(--vtr-tab-border-bottom-style);
+	--vtr-tab-pinned-border-bottom-color: var(--vtr-tab-border-bottom-color);
+	--vtr-tab-pinned-border-left-width: 3px;
+	--vtr-tab-pinned-border-left-style: solid;
+	--vtr-tab-pinned-border-left-color: #2292D0;
+	--vtr-tab-pinned-margin-top: 0;
+	--vtr-tab-pinned-margin-right: 3px;
+	--vtr-tab-pinned-margin-bottom: 0;
+	--vtr-tab-pinned-margin-left: 3px;
+	--vtr-tab-pinned-padding-top: 0;
+	--vtr-tab-pinned-padding-right: 0;
+	--vtr-tab-pinned-padding-bottom: 0;
+	--vtr-tab-pinned-padding-left: 0;
 
 	/* Single tab hover */
-	 /* Transparent causes troubles with the way icon buttons are getting handled rgba(0,0,0,0.15); */
+	/* Transparent causes troubles with the way icon buttons are getting handled rgba(0,0,0,0.15); */
 	--vtr-tab-hover-background-color: #2b2b2b;
 	--vtr-tab-hover-background: #2b2b2b;
+	--vtr-tab-hover-padding-top: var(--vtr-tab-padding-top);
+	--vtr-tab-hover-margin-top: var(--vtr-tab-margin-top);
+	--vtr-tab-hover-margin-right: var(--vtr-tab-margin-right);
+	--vtr-tab-hover-margin-bottom: var(--vtr-tab-margin-bottom);
+	--vtr-tab-hover-margin-left: var(--vtr-tab-selected-margin-left);
+	--vtr-tab-hover-padding-right: var(--vtr-tab-padding-right);
+	--vtr-tab-hover-padding-bottom: var(--vtr-tab-padding-bottom);
+	--vtr-tab-hover-padding-left: var(--vtr-tab-selected-padding-left);
 
 	/* Close buttons */
+	--vtr-tab-button-close-width: 14px;
+	--vtr-tab-button-close-height: 14px;
 	--vtr-tab-button-close-regular-background-image: url("../../theme/darwin/closetab.svg");
 	--vtr-tab-button-close-hover-background-image: url("../../theme/darwin/closetab-white.svg");
 	--vtr-tab-button-close-active-background-image: url("../../theme/darwin/closetab-white.svg");
 
 	/* Sound buttons */
+	--vtr-tab-button-sound-width: 18px;
+	--vtr-tab-button-sound-height: 18px;
 	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing-white.svg");
 	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted-white.svg");
 

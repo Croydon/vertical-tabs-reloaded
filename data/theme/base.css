@@ -29,11 +29,11 @@ body
 }
 
 .scrollbar-visible .tab-buttons {
-    right: 20px;
+    right: 17px;
 }
 
 .no-scrollbar .tab-buttons {
-    right: 4px;
+    right: 1px;
 }
 
 .tab-buttons {
@@ -46,10 +46,9 @@ body
     z-index: 1;
 }
 
-.tab-buttons span {
-    /* padding-left: 18px; */
-
-}
+/*.tab-buttons span {
+     padding-left: 18px; 
+}*/
 
 .tab-close-button {
     height: 22px;
@@ -57,14 +56,14 @@ body
     display: inline-block;
     background-image: url("../../template/basic/icons/light/close-regular.png");
     background-size: 22px 22px; /* contain ? */
-    background-position: left;
+    background-position: center center;
     background-repeat: no-repeat;
 }
 
 .tab-sound-button {
     display: inline-block;
     background-size: 22px 22px;
-    background-position: left;
+    background-position: center center;
     background-repeat: no-repeat;
 
     /* mask-repeat: no-repeat;

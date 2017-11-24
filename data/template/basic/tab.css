@@ -1,20 +1,23 @@
 .tabbrowser-tab {
 	-moz-box-pack: start;
 	-moz-box-flex: 0;
-	appearance: none !important;
+	appearance: none;
 	background-color: var(--vtr-tab-background-color);
-	background: var(--vtr-tab-background) !important;
-	margin: 0 !important;
-	padding: var(--vtr-tab-margin) !important;
-	height: var(--vtr-tab-height) !important;
-	min-height: var(--vtr-tab-min-height) !important;
-	max-height: var(--vtr-tab-max-height) !important;
-	color: var(--vtr-tab-text-color) !important;
-	border: var(--vtr-tab-border) !important;
-	border-radius: var(--vtr-tab-border-radius) !important;
-	border-left: var(--vtr-tab-border-left) !important;
-	border-top: var(--vtr-tab-border-bottom) !important;
-	border-bottom: var(--vtr-tab-border-bottom) !important;
+	background: var(--vtr-tab-background);
+	font-size: var(--vtr-tab-font-size);
+	font-weight: var(--vtr-tab-font-weight);
+	text-shadow: var(--vtr-tab-text-shadow);
+	margin: var(--vtr-tab-margin-top) var(--vtr-tab-margin-right) var(--vtr-tab-margin-bottom) var(--vtr-tab-margin-left);
+	padding: var(--vtr-tab-padding-top) var(--vtr-tab-padding-right) var(--vtr-tab-padding-bottom) var(--vtr-tab-padding-left);
+	height: var(--vtr-tab-height);
+	min-height: var(--vtr-tab-min-height);
+	max-height: var(--vtr-tab-max-height);
+	color: var(--vtr-tab-text-color);
+	border-radius: var(--vtr-tab-border-radius);
+	border-top: var(--vtr-tab-border-top-width) var(--vtr-tab-border-top-style) var(--vtr-tab-border-top-color);
+	border-right: var(--vtr-tab-border-right-width) var(--vtr-tab-border-right-style) var(--vtr-tab-border-right-color);
+	border-bottom: var(--vtr-tab-border-bottom-width) var(--vtr-tab-border-bottom-style) var(--vtr-tab-border-bottom-color);
+	border-left: var(--vtr-tab-border-left-width) var(--vtr-tab-border-left-style) var(--vtr-tab-border-left-color);
 }
 
 .tabbrowser-tab .tab-buttons
@@ -23,15 +26,18 @@
 }
 
 .tabbrowser-tab[pinned] {
-	margin: 0 !important;
-	padding: 1px 0 !important;
-	color: var(--vtr-tab-pinned-text-color) !important;
+	margin: var(--vtr-tab-pinned-margin-top) var(--vtr-tab-pinned-margin-right) var(--vtr-tab-pinned-margin-bottom) var(--vtr-tab-pinned-margin-left);
+	padding: var(--vtr-tab-pinned-padding-top) var(--vtr-tab-pinned-padding-right) var(--vtr-tab-pinned-padding-bottom) var(--vtr-tab-pinned-padding-left);
+	color: var(--vtr-tab-pinned-text-color);
 	background-color: var(--vtr-tab-pinned-background-color);
-	background: var(--vtr-tab-pinned-background) !important;
+	background: var(--vtr-tab-pinned-background);
 	font-weight: var(--vtr-tab-pinned-font-weight);
 	text-shadow: var(--vtr-tab-pinned-text-shadow);
-	border-left: var(--vtr-tab-pinned-border-left) !important;
-	border-radius: var(--vtr-tab-pinned-border-radius) !important;
+	border-radius: var(--vtr-tab-pinned-border-radius);
+	border-top: var(--vtr-tab-pinned-border-top-width) var(--vtr-tab-pinned-border-top-style) var(--vtr-tab-pinned-border-top-color);
+	border-right: var(--vtr-tab-pinned-border-right-width) var(--vtr-tab-pinned-border-right-style) var(--vtr-tab-pinned-border-right-color);
+	border-bottom: var(--vtr-tab-pinned-border-bottom-width) var(--vtr-tab-pinned-border-bottom-style) var(--vtr-tab-pinned-border-bottom-color);
+	border-left: var(--vtr-tab-pinned-border-left-width) var(--vtr-tab-pinned-border-left-style) var(--vtr-tab-pinned-border-left-color);
 }
 
 .tabbrowser-tab[pinned] .tab-buttons
@@ -40,15 +46,18 @@
 }
 
 .tabbrowser-tab[selected="true"] {
-	margin: 0 !important;
-	padding: 1px 0 !important;
-	color: var(--vtr-tab-selected-text-color) !important;
+	margin: var(--vtr-tab-selected-margin-top) var(--vtr-tab-selected-margin-right) var(--vtr-tab-selected-margin-bottom) var(--vtr-tab-selected-margin-left);
+	padding: var(--vtr-tab-selected-padding-top) var(--vtr-tab-selected-padding-right) var(--vtr-tab-selected-padding-bottom) var(--vtr-tab-selected-padding-left);
+	color: var(--vtr-tab-selected-text-color);
 	background-color: var(--vtr-tab-selected-background-color);
-	background: var(--vtr-tab-selected-background) !important;
+	background: var(--vtr-tab-selected-background);
 	font-weight: var(--vtr-tab-selected-font-weight);
 	text-shadow: var(--vtr-tab-selected-text-shadow);
-	border-left: var(--vtr-tab-selected-border-left) !important;
-	border-radius: var(--vtr-tab-selected-border-radius) !important;
+	border-radius: var(--vtr-tab-selected-border-radius);
+	border-top: var(--vtr-tab-selected-border-top-width) var(--vtr-tab-selected-border-top-style) var(--vtr-tab-selected-border-top-color);
+	border-right: var(--vtr-tab-selected-border-right-width) var(--vtr-tab-selected-border-right-style) var(--vtr-tab-selected-border-right-color);
+	border-bottom: var(--vtr-tab-selected-border-bottom-width) var(--vtr-tab-selected-border-bottom-style) var(--vtr-tab-selected-border-bottom-color);
+	border-left: var(--vtr-tab-selected-border-left-width) var(--vtr-tab-selected-border-left-style) var(--vtr-tab-selected-border-left-color);
 }
 
 .tabbrowser-tab[selected="true"] .tab-buttons
@@ -64,10 +73,10 @@
 /* } */
 
 .tabbrowser-tab:not([selected="true"]):hover {
-	margin: 0 !important;
-	padding: 1px 0 !important;
+	margin: var(--vtr-tab-hover-margin-top) var(--vtr-tab-hover-margin-right) var(--vtr-tab-hover-margin-bottom) var(--vtr-tab-hover-margin-left);
+	padding: var(--vtr-tab-hover-padding-top) var(--vtr-tab-hover-padding-right) var(--vtr-tab-hover-padding-bottom) var(--vtr-tab-hover-padding-left);
 	background-color: var(--vtr-tab-hover-background-color);
-	background: var(--vtr-tab-hover-background) !important;
+	background: var(--vtr-tab-hover-background);
 }
 
 .tabbrowser-tab:not([selected="true"]):hover .tab-buttons
@@ -76,12 +85,12 @@
 }
 
 .tab-label {
-	text-align: left !important;
+	text-align: left;
 }
 
 .tab-label[pinned] {
-	margin-left: 6px !important;
-	position: relative !important;
+	margin-left: 6px;
+	position: relative;
 }
 
 .tab-content {
@@ -98,13 +107,13 @@
 .tab-icon,
 .tab-icon-image {
 	padding: 3px;
-	background-color: transparent !important; /* VT Original: f2f2f2 for Dark Theme */
+	background-color: transparent; /* VT Original: f2f2f2 for Dark Theme */
 	border-radius: 2px;
 	/*min-height: 22px !important;
 	min-width: 22px !important;
 	max-height: 22px;
 	max-width: 22px;*/
-	opacity: 1 !important;
+	opacity: 1;
 }
 
 /** Drop indicator for drag'n'drop of tabs - Works OOTB(TM)- Just needs a margin.
@@ -123,9 +132,10 @@
 	 margin-left: 3px !important;
 	 margin-right: 1px !important;
 	 background-color: red;*/
+	 background-position: center center;
 	 width: 22px;
 	 height: 22px;
-	 background-size: 22px 22px;
+	 background-size: var(--vtr-tab-button-close-width) var(--vtr-tab-button-close-height);
 }
 
 
@@ -153,6 +163,12 @@
     -moz-context-properties: fill;
     fill: var(--vtr-tab-button-sound-muted-fill);
 } */
+
+.tab-sound-button
+{
+	background-size: var(--vtr-tab-button-sound-width) var(--vtr-tab-button-sound-height);
+	background-position: center center;
+}
 
 .tab-sound-button-playing {
     background-image: var(--vtr-tab-button-sound-playing-background-image);
