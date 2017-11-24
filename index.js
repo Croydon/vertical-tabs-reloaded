@@ -232,35 +232,6 @@ function get_setting(name)
 // browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
 
 
-let managedWindows = {};
-// Windows Management
-// FIREFIX: FIXME: Not yet able to read the status of the sidebar. Try to workaround #134
-var windowutils = class windowutils
-{
-    static add(windowID)
-    {
-        debug_log("add window " + windowID);
-        managedWindows[windowID] = {"sidebarOpened": false};
-    }
-
-    static remove(windowID)
-    {
-        delete managedWindows[windowID];
-    }
-
-    static setSidebarOpenedStatus(windowID, newSidebarOpenedStatus)
-    {
-        debug_log("set window status " + windowID);
-        managedWindows[windowID]["sidebarOpened"] = newSidebarOpenedStatus;
-    }
-
-    static getSidebarOpenedStatus(windowID)
-    {
-        return managedWindows[windowID]["sidebarOpened"];
-    }
-};
-
-
 setTimeout(() =>
 {
     // Set up listener
@@ -268,19 +239,19 @@ setTimeout(() =>
 
     browser.windows.onCreated.addListener((window) =>
     {
-        windowutils.add(window.id);
+        utils.windows.add(window.id);
     });
 
     browser.windows.onRemoved.addListener((windowID) =>
     {
-        windowutils.remove(windowID);
+        utils.windows.remove(windowID);
     });
 
     browser.windows.getAll({windowTypes: ["normal", "popup"]}).then((windowInfoArray) =>
     {
         for (let windowInfo of windowInfoArray)
         {
-            windowutils.add(windowInfo.id);
+            utils.windows.add(windowInfo.id);
         }
     });
 
@@ -299,14 +270,14 @@ setTimeout(() =>
          if (command == "toggleTabbrowser")
         {
             // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
-             if(windowutils.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+             if(utils.windows.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
             {
-                windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+                utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
                 browser.sidebarAction.open();
             }
             else
             {
-                windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+                utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
                 browser.sidebarAction.close();
             }
         }
@@ -315,14 +286,14 @@ setTimeout(() =>
 
     browser.browserAction.onClicked.addListener(() =>
     {
-        if(windowutils.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
+        if(utils.windows.getSidebarOpenedStatus(managedWindows["currentWindow"]) == false)
         {
-            windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
+            utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], true);
             browser.sidebarAction.open();
         }
         else
         {
-            windowutils.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
+            utils.windows.setSidebarOpenedStatus(managedWindows["currentWindow"], false);
             browser.sidebarAction.close();
         }
     });

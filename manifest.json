@@ -17,6 +17,8 @@
         "scripts":
         [
             "lib/browser-polyfill.js",
+            "utils/namespace.js",
+            "utils/windows.js",
             "index.js"
         ]
     },

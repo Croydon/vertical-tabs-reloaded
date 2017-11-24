@@ -174,7 +174,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.initEventListeners();
         this.toolbar_activate();
         this.check_scrollbar_status();
-        main.windowutils.setSidebarOpenedStatus(this.windowID, true);
+        main.utils.windows.setSidebarOpenedStatus(this.windowID, true);
         this.initialized = true;
     }
 
