@@ -98,10 +98,9 @@
 	margin-top: 1px;
 }
 
-.tab-close-button {
-	/* border-right: 10px solid var(--vtr-tab-selected-background-color); */
-
-}
+/* .tab-close-button {
+	border-right: 10px solid var(--vtr-tab-selected-background-color);
+} */
 
 /* FIXME: tab-icon-image likely to be removed from this section */
 .tab-icon,
