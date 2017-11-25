@@ -2,8 +2,14 @@
     "style.tab.status": {
         "name": "style.tab.status",
         "type": "bool",
-        "title": "Show Tab Status on Text Label",
+        "title": "Show tab status on text label",
         "description": "Unloaded: strike-through; Unread/busy: underline",
+        "value": false
+    },
+    "events.tab.close.mouse.middleclick": {
+        "name": "events.tab.close.mouse.middleclick",
+        "type": "bool",
+        "title": "Close tabs with mouse middle click",
         "value": false
     },
 	"theme": {

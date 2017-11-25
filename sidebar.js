@@ -893,14 +893,43 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // Middle click on free space within the tabbrowser opens a new tab
         this.document.getElementById("tabbrowser-tabs").addEventListener("mouseup", (e) =>
         {
+            if(e.button != "1")
+            {
+                return;
+            }
+
             if(e.target == this.document.getElementById("tabbrowser-tabs"))
             {
-                if(e.button == "1")
+                browser.tabs.create({
+                    active: true,
+                });
+            }
+            else
+            {
+                main.get_setting("events.tab.close.mouse.middleclick").then((value) =>
                 {
-                    browser.tabs.create({
-                        active: true,
-                    });
-                }
+                    if(value == true)
+                    {
+                        let tryrun = 1;
+                        let tabElement = e.target;
+                        let isTabElement = utils.tabs.isTabElement(tabElement);
+                        while(isTabElement == false && tryrun < 5)
+                        {
+                            tabElement = tabElement.parentNode;
+                            isTabElement = utils.tabs.isTabElement(tabElement);
+                            tryrun++;
+                        }
+
+                        if(isTabElement == true)
+                        {
+                            utils.tabs.close(utils.tabs.getIDFromHTMLID(tabElement.id));
+                        }
+                    }
+                    else
+                    {
+                        log.debug("Tab closing with mouse middle click is disabled");
+                    }
+                });
             }
         });
 
