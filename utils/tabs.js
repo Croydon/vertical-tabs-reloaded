@@ -1,6 +1,6 @@
 "use strict";
 
-/* global utils */
+/* global utils log */
 
 utils["tabs"] = class tabutils
 {

@@ -1,5 +1,7 @@
 "use strict";
 
+/* global main utils log */
+
 /* Entry point for every VTR sidebar for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
 {
@@ -769,8 +771,8 @@ function contextmenuHide()
     {
         document.getElementById("contextmenu").style.display = "";
         document.getElementById("contextmenu").removeEventListener("click", contextmenuHide);
-        // document.removeEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
-        document.removeEventListener("scroll", (e) => { contextmenuHide(); });
+        document.removeEventListener("scroll", (e) => { contextmenuHide(); }, true);
+        document.removeEventListener("mouseout", (e) => { if(e.relatedTarget == null) { contextmenuHide(); } });
     }
 }
 
@@ -808,10 +810,9 @@ function contextmenuShow(e)
         contextmenuDomElement.style.visibility = "";
     }
 
-    // FIXME: Prevent scrolling while the context menu is open // removing this event handler doesn't work for some reason
-    // Simply close the context menu for now on scrolling
-    // document.addEventListener("DOMMouseScroll", (e) => { e.preventDefault(); } , false);
-    document.addEventListener("scroll", (e) => { contextmenuHide(); });
+    // Close context menu on scrolling as well on leaving the sidebar with the mouse
+    document.addEventListener("scroll", (e) => { contextmenuHide(); }, true);
+    document.addEventListener("mouseout", (e) => { if(e.relatedTarget == null) { contextmenuHide(); } });
 
     document.addEventListener("click", contextmenuHide);
 }
