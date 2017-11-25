@@ -152,9 +152,9 @@ utils["tabs"] = class tabutils
             let currentTabIndex = this.getIndexFrom(currentTabID);
 
             if((relativeTyp == "below" && currentTabIndex > tabIndex)
-            || (relativeTyp == "above" && currentTabIndex < tabIndex))
+            || (relativeTyp == "above" && currentTabIndex < tabIndex)
+            || (relativeTyp == "others" && currentTabID != tabID))
             {
-                // vtr.remove_tab(currentTabID);
                 closeTheseTabs.push(currentTabID);
             }
         }
@@ -1014,6 +1014,7 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
     document.getElementById("contextmenu-action-tab-close-below").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "below"); });
     document.getElementById("contextmenu-action-tab-close-above").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "above"); });
+    document.getElementById("contextmenu-action-tab-close-others").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "others"); });
 });
 
 
