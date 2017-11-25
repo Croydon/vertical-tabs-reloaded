@@ -9,13 +9,34 @@ utils["tabs"] = class tabutils
     static getTargetID(e)
     {
         // This returns the tabID of a tab, which is always the last element in a HTML ID tag
-        return this.getIDFromHTMLID(e.target.id);
+        return parseInt(this.getIDFromHTMLID(e.target.id), 10);
     }
 
     static getIDFromHTMLID(target)
     {
         let targetArray = target.split("-");
-        return targetArray[targetArray.length - 1];
+        return parseInt(targetArray[targetArray.length - 1], 10);
+    }
+
+    static getIndexFrom(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        return parseInt(window.document.querySelector(`div[id="tab-${tabID}"]`).getAttribute("data-index"), 10);
+    }
+
+    static updateTabIndexes()
+    {
+        let index = 0;
+        for(let tab of window.document.querySelectorAll(".tabbrowser-tab"))
+        {
+            tab.setAttribute("data-index", index);
+            // window.document.getElementById("tab-title-" + utils.tabs.getIDFromHTMLID(tab.id)).innerHTML = index;
+            index++;
+        }
     }
 
     static close(tabID)
@@ -121,20 +142,26 @@ utils["tabs"] = class tabutils
 
     static closeTabsRelativeTo(tabID, relativeTyp)
     {
-        log.debug("Close tabs " + relativeTyp + " from " + tabID);
+        let tabIndex = this.getIndexFrom(tabID);
+        log.debug("Close tabs " + relativeTyp + " from  tab index " + tabIndex);
 
-        for(let tab of window.document.getElementsByClassName("tabbrowser-tab"))
+        let closeTheseTabs = [];
+        for(let tab of window.document.querySelectorAll(".tabbrowser-tab"))
         {
             let currentTabID = this.getIDFromHTMLID(tab.id);
+            let currentTabIndex = this.getIndexFrom(currentTabID);
 
-            if(relativeTyp == "below")
+            if((relativeTyp == "below" && currentTabIndex > tabIndex)
+            || (relativeTyp == "above" && currentTabIndex < tabIndex))
             {
-                if(currentTabID > tabID)
-                {
-                    this.close(currentTabID);
-                }
+                // vtr.remove_tab(currentTabID);
+                closeTheseTabs.push(currentTabID);
             }
         }
+
+        this.updateTabIndexes();
+        log.debug(closeTheseTabs);
+        this.close(closeTheseTabs);
     }
 
     static async isActive(tabID)
@@ -446,7 +473,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        if(attribute != "title" && attribute != "audible") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
+        if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
         switch(attribute)
         {
@@ -634,7 +661,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             insertBeforeTab.parentNode.insertBefore(this.document.getElementById("tab-" + tabID), insertBeforeTab);
         }
 
-        this.update_tab_indexes();
+        utils.tabs.updateTabIndexes();
 
         // When the current active tab is getting moved we are scrolling the tab browser, to keep the active tab in sight
         // The main purpose of this should be the interference of third-party add-ons
@@ -642,17 +669,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             log.debug("tab is active. scroll to it");
             setTimeout(this.scroll_to_tab(tabID), 100);
-        }
-    }
-
-    update_tab_indexes()
-    {
-        let index = 0;
-        for(let tab of this.document.getElementsByClassName("tabbrowser-tab"))
-        {
-            tab.setAttribute("data-index", index);
-            // this.document.getElementById("tab-title-" + utils.tabs.getIDFromHTMLID(tab.id)).innerHTML = index;
-            index++;
         }
     }
 
@@ -695,7 +711,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.selectedTabID = undefined;
             }
 
-            this.document.getElementById(`tab-close-button-${tabID}`).removeEventListener("click", () => { utils.tabs.close(tabID); });
             this.document.getElementById("tab-" + tabID).remove();
 
             this.check_scrollbar_status();
@@ -797,7 +812,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if(tab.windowId == this.windowID)
             {
                 this.create_tab(tab);
-                this.update_tab_indexes();
+                utils.tabs.updateTabIndexes();
             }
         });
 
@@ -851,7 +866,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.move_tab(tabID, moveInfo["fromIndex"], moveInfo["toIndex"]);
             // this.update_tab(tabID, "index", moveInfo["toIndex"]);
-            // this.update_tab_indexes(); // moved to move_tab, because of async madness
+            // utils.tabs.updateTabIndexes(); // moved to move_tab, because of async madness
         });
 
         browser.tabs.onDetached.addListener((tabID, details) =>
@@ -945,8 +960,8 @@ function contextmenuShow(e)
 
     contextmenuTarget = utils.tabs.getTargetID(e);
 
-    log.debug(contextmenuTarget);
-    log.debug(e.pageX + " y " + e.pageY);
+    log.debug("context menu target tabID: " + contextmenuTarget);
+    log.debug("context menu target position: " + e.pageX + " y " + e.pageY);
 
     let contextmenuDomElement = document.getElementById("contextmenu");
     contextmenuDomElement.style.setProperty("left", e.pageX + "px");
@@ -998,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", () =>
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
     document.getElementById("contextmenu-action-tab-close-below").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "below"); });
+    document.getElementById("contextmenu-action-tab-close-above").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "above"); });
 });
 
 
