@@ -30,6 +30,7 @@
 
 
 ### v0.9.0, 2017-11-13
+ * Updated Compatibility: Firefox 57+
  * this is the first full WebExtension version (#13) 🤖
  * added: landing page after update with changes explained (#13)
    * shows once after update in a new tab automatically
@@ -51,6 +52,7 @@
 
 
 ### v0.8.5.2, 2017-10-04
+ * Compatibility: Firefox 55.0a1 - 56.*
  * fixed: workaround problem that sidebar position (left, right) is not set correctly (#129)
 
 
@@ -58,6 +60,7 @@
 
 
 ### v0.8.5.1, 2017-10-03
+ * Compatibility: Firefox 55.0a1 - 56.*
  * fixed: workaround problem that sidebar width is not set correctly (#129)
 
 
@@ -65,6 +68,7 @@
 
 
 ### v0.8.5, 2017-10-01
+ * Compatibility: Firefox 55.0a1 - 56.*
  * themes improvements:
    * Dark & Light theme:
      * higher contrast between selected/pinned tabs and the rest of the tabs
@@ -85,6 +89,7 @@
 
 
 ### v0.8.4.1, 2017-08-14
+ * Compatibility: Firefox 55.0a1 - 56.*
  * fixed: audio playing icons not visible (#97)
  * fixed: tabbrowser didn't hide in fullscreen in Firefox stable (#110)
 
@@ -93,6 +98,7 @@
 
 
 ### v0.8.4, 2017-08-06
+ * Compatibility: Firefox 55.0a1 - 56.*
  * added: add toolbar button to toggle sidebar
  * added: hidden experiment add-on flag
    * enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
@@ -111,6 +117,7 @@
 
 
 ### v0.8.3.1, 2017-05-21
+ * Compatibility: Firefox 53.0a1 - 54.*
  * fixed: fallback to default settings when no values saved by user (#86)
  * fixed: potential endless spamming in the console
  * this version is commit a137da8 + backported commit 87bf4f4
@@ -120,6 +127,7 @@
 
 
 ### v0.8.3, 2017-04-23
+ * Compatibility: Firefox 53.0a1 - 55.0
  * added: feature to display tab status (loaded, unloaded, unread, busy) (#67)
  * added: possibility to show hidden settings in settings UI
  * added: minimal changed version of the icons
@@ -134,6 +142,7 @@
 
 
 ### v0.8.2, 2017-03-30
+ * Compatibility: Firefox 52.0 - 55.0
  * change default hotkey for hiding the tabbrowser to Control+Shift+V (#13)
    * the former hotkey is not compatible with the WebExtension APIs
  * fixed: show checkboxes on the settings page
@@ -144,6 +153,7 @@
 
 
 ### v0.8.1, 2017-03-28
+ * Compatibility: Firefox 52.0 - 55.0
  * internal: continue rewriting add-on as a WebExtension (#13)
    * manage settings UI by WebExtension
    * move default settings restore function to WebExtension
@@ -155,6 +165,7 @@
 
 
 ### v0.8.0, 2017-01-09
+ * Compatibility: Firefox 51.0 - 53.*
  * internal: start rewriting add-on as a WebExtension (#13)
    * sync settings between the legacy SDK and the new WebExtension part
      * this is critical to release as soon as possible, so that in the best case nobody will lose their settings by the end of 2017
@@ -165,6 +176,7 @@
 
 
 ### v0.7.1, 2016-10-09
+ * Compatibility: Firefox 45.0 - 51.*
  * themes improvements:
    * Dark theme:
      * fixed: close button displayed wrong on low resolution displays running Windows 7
@@ -174,6 +186,7 @@
 
 
 ### v0.7.0, 2016-07-01
+ * Compatibility: Firefox 45.0 - 50.0
  * added: compact mode, hide text labels on tabs for a minimal tab sidebar (#55)
  * added: preference to display tab toolbar at top (new default) or at bottom (#46)
  * themes improvements:
@@ -191,6 +204,7 @@
 
 
 ### v0.6.2, 2016-05-31
+ * Compatibility: Firefox 45.0 - 49.*
  * added: compatibility to Tab Mix Plus v0.5 or newer (#19)
 
 
@@ -198,6 +212,7 @@
 
 
 ### v0.6.1, 2016-05-08
+ * Compatibility: Firefox 45.0 - 48.0
  * themes improvements:
    * the Dark (default) and Light themes are now official recommended
    * all themes:
@@ -212,6 +227,7 @@
 
 
 ### v0.6.0, 2016-05-06
+ * Compatibility: Firefox 45.0 - 48.0
  * added: button to toggle `browser.tabs.drawInTitlebar` for the case that window control elements are overlappig with FF (#9)
    * note: this is set automatically to `true` once at installation
  * added: possibility to reset VTR preferences to default via button (#11)
@@ -231,6 +247,7 @@
 
 
 ### v0.5.0, 2016-03-31
+ * Compatibility: Firefox 45.0 - 47.*
  * themes improvements:
    * all themes:
      * all themes have now a border between tabs (#24)
@@ -268,6 +285,7 @@
 
 
 ### v0.4.0, 2016-03-15
+ * Compatibility: Firefox 44.0 - 47.0
  * added possibility to hide/show the tab sidebar manually at any time with a hotkey (customizable) (#6)
  * migrated the add-on to package.json & JPM (#7)
  * added an icon (#3)
@@ -279,6 +297,7 @@
 
 
 ### v0.3.2, 2016-03-01
+ * Compatibility: Firefox 38.0 - 46.*
  * published on Mozilla's Add-on page for auto updates and user friendly installing (#5)
  * fixed: settings were not persistent (#1)
  * added credits
@@ -289,6 +308,7 @@
 
 
 ### v0.3.0, 2015-05-24
+ * Compatibility: Firefox 29.0a1 - 46.*
  * license updated to MPL 2.0 (from MPL 1.1)
  * tabs are getting hidden in fullscreen finally (toggleable)
  * fixed: style problem on Windows
