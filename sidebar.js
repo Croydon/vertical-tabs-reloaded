@@ -611,7 +611,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onActivated.addListener((details) =>
         {
-            this.update_tab(details.tabId, "selected", "true");
+            if(details.windowId == this.windowID)
+            {
+                this.update_tab(details.tabId, "selected", "true");
+            }
         });
 
         browser.tabs.onUpdated.addListener((tabID, changeInfo, tab) =>
