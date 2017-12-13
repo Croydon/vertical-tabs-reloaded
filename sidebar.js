@@ -619,6 +619,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onUpdated.addListener((tabID, changeInfo, tab) =>
         {
+            if(tab.windowId != this.windowId)
+            {
+                return;
+            }
+
             if (changeInfo.hasOwnProperty("title"))
             {
                 this.update_tab(tabID, "title", changeInfo["title"]);
@@ -660,6 +665,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>
         {
+            if(moveInfo.windowId != this.windowId)
+            {
+                return;
+            }
+
             this.move_tab(tabID, moveInfo["fromIndex"], moveInfo["toIndex"]);
             // this.update_tab(tabID, "index", moveInfo["toIndex"]);
             // utils.tabs.updateTabIndexes(); // moved to move_tab, because of async madness
@@ -667,11 +677,21 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onDetached.addListener((tabID, details) =>
         {
+            if(details.windowId != this.windowId)
+            {
+                return;
+            }
+
             this.remove_tab(tabID);
         });
 
         browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
         {
+            if(removeInfo.oldWindowId != this.windowId)
+            {
+                return;
+            }
+
             this.remove_tab(tabID);
         });
 
