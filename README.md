@@ -10,6 +10,7 @@ fashion. Vertical Tabs Reloaded is a fork of [Vertical Tabs](https://addons.mozi
 Source Code & Issue Tracker: https://github.com/Croydon/vertical-tabs-reloaded
 
 Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)](https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCroydon%2Fvertical-tabs-reloaded.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FCroydon%2Fvertical-tabs-reloaded?ref=badge_shield)
 
 If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydon/4,99)
 
@@ -61,3 +62,6 @@ or connect with an IRC client to #verticaltabsreloaded on chat.freenode.net
 This project is licensed under the terms of the [Mozilla Public License Version 2.0](LICENSE.md).
 
 Credits can be found in the [credits.md](credits.md) file.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCroydon%2Fvertical-tabs-reloaded.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FCroydon%2Fvertical-tabs-reloaded?ref=badge_large)
