@@ -5,7 +5,6 @@
 let managedWindows = {};
 
 // Windows Management
-// FIREFIX: FIXME: Not yet able to read the status of the sidebar. Try to workaround #134
 utils["windows"] = class windowsutils
 {
     static add(windowID)
@@ -19,17 +18,29 @@ utils["windows"] = class windowsutils
         delete managedWindows[windowID];
     }
 
+    /* This function is required for Opera, Firefox enables us to read the sidebar status directly */
     static setSidebarOpenedStatus(windowID, newSidebarOpenedStatus)
     {
         log.debug("set window status " + windowID);
         managedWindows[windowID]["sidebarOpened"] = newSidebarOpenedStatus;
     }
 
-    static getSidebarOpenedStatus(windowID)
+    static async getSidebarOpenedStatus(windowID)
     {
-        return managedWindows[windowID]["sidebarOpened"];
+        /* FIXME:
+        If Opera then
+            return managedWindows[windowID]["sidebarOpened"];
+        else */
+        let isOpen;
+        await browser.sidebarAction.isOpen({"windowId": windowID}).then((result) =>
+        {
+            isOpen = result;
+        });
+
+        return isOpen;
     }
 
+    /* FIXME: Necessary? Buggy as it's not getting set anywhere, when not manually? */
     static getCurrentWindow()
     {
         return managedWindows["currentWindow"];

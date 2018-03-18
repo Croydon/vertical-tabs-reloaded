@@ -284,18 +284,31 @@ setTimeout(() =>
         }
     }); */
 
-
-    browser.browserAction.onClicked.addListener(() =>
+    /* let isOpen;
+    isOpen
+    await utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()).then((result) =>
     {
-        if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
+        log.debug(typeof result);
+        isOpen = result;
+    }); */
+
+    browser.browserAction.onClicked.addListener(async () =>
+    {
+        let isOpen;
+        await browser.sidebarAction.isOpen({}).then((result) =>
         {
-            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
+            isOpen = result;
+        });
+
+        if(isOpen == false)
+        {
             browser.sidebarAction.open();
+            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
         }
         else
         {
-            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
             browser.sidebarAction.close();
+            utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
         }
     });
 
