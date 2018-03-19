@@ -44,6 +44,16 @@
             "96": "data/icon-96.png",
             "128": "data/icon-128.png"
         },
+        "theme_icons": [{
+            "light": "data/icon/icon-16-white.png",
+            "dark": "data/icon-16.png",
+            "size": 16
+        },
+        {
+            "light": "data/icon/icon-32-white.png",
+            "dark": "data/icon-32.png",
+            "size": 32
+        }],
         "default_title": "Toggle Tab Sidebar",
         "browser_style": true
     },
