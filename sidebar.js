@@ -206,7 +206,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         else
         {
             // Temporary index, we are updating it directly after creating the tab
-            // This improves performance at startup and complexity at runtime
+            // This improves performance at startup and reduces complexity at runtime
             tabIndex = this.get_last_tab_index() + 1;
         }
 
@@ -229,13 +229,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
         }
 
-        document.getElementById("tab-" + id).addEventListener("click", (event) =>
+        let tabElement = document.getElementById("tab-" + id);
+
+        tabElement.addEventListener("click", (event) =>
         {
             browser.tabs.update(id, {active: true});
             event.preventDefault();
         });
 
-        addDragndropHandlers(document.getElementById("tab-" + id));
+        addDragndropHandlers(tabElement);
 
         if(tab.active == true)
         {
@@ -255,7 +257,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.check_scrollbar_status();
         }
 
-        document.getElementById(`tab-close-button-${id}`).addEventListener("click", () => { utils.tabs.close(id); });
+        document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
         document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
 
         if(this.initialized == true)
@@ -268,35 +270,37 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
+        let tabElement = document.getElementById("tab-" + tabID);
+
         switch(attribute)
         {
             case "title":
-                document.getElementById("tab-" + tabID).setAttribute("title", value);
+                tabElement.setAttribute("title", value);
                 document.getElementById("tab-title-" + tabID).innerText = value;
                 break;
 
             case "pinned":
                 if(value == true)
                 {
-                    document.getElementById("tab-" + tabID).setAttribute("pinned", "true");
-                    document.getElementById("tabbrowser-tabs-pinned").appendChild(document.getElementById("tab-" + tabID));
+                    tabElement.setAttribute("pinned", "true");
+                    document.getElementById("tabbrowser-tabs-pinned").appendChild(tabElement);
                 }
                 else
                 {
-                    document.getElementById("tab-" + tabID).removeAttribute("pinned");
-                    // document.getElementById("tabbrowser-tabs").appendChild(document.getElementById("tab-"+tabID)); // unpinning triggers index update as well
+                    tabElement.removeAttribute("pinned");
+                    // tabElement.getElementById("tabbrowser-tabs").appendChild(tabElement.getElementById("tab-"+tabID)); // unpinning triggers index update as well
                 }
                 break;
 
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
 
-                log.debug("status: " + document.getElementById("tab-" + tabID).getAttribute("status"));
+                log.debug("status: " + tabElement.getAttribute("status"));
                 log.debug("favIconUrl loaded: " + value);
 
                 document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
 
-                if(document.getElementById("tab-" + tabID).getAttribute("status") != "loading")
+                if(tabElement.getAttribute("status") != "loading")
                 {
                     document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
                 }
@@ -324,12 +328,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "status":
-                document.getElementById("tab-" + tabID).setAttribute("data-discarded", "false");
-                document.getElementById("tab-" + tabID).setAttribute("status", value);
+                tabElement.setAttribute("data-discarded", "false");
+                tabElement.setAttribute("status", value);
 
                 if(value == "complete")
                 {
-                    document.getElementById("tab-" + tabID).setAttribute("status", "");
+                    tabElement.setAttribute("status", "");
 
                     let newFavicon = document.getElementById("tab-icon-" + tabID).getAttribute("data-src-after-loaded");
                     if(newFavicon != "")
@@ -338,9 +342,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                         this.update_tab(tabID, "favIconUrl", newFavicon);
                     }
 
-                    if(document.getElementById("tab-" + tabID).getAttribute("selected") != "true")
+                    if(tabElement.getAttribute("selected") != "true")
                     {
-                        document.getElementById("tab-" + tabID).setAttribute("unread", "true");
+                        tabElement.setAttribute("unread", "true");
                     }
                 }
 
@@ -382,16 +386,16 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             case "discarded":
                 if(value == true)
                 {
-                    document.getElementById("tab-" + tabID).setAttribute("data-discarded", "true");
+                    tabElement.setAttribute("data-discarded", "true");
                 }
                 else
                 {
-                    document.getElementById("tab-" + tabID).setAttribute("data-discarded", "false");
+                    tabElement.setAttribute("data-discarded", "false");
                 }
                 break;
 
             // case "index":
-                // document.getElementById("tab-" + tabID).setAttribute("data-index", value);
+                // tabElement.setAttribute("data-index", value);
                 // break;
         }
     }
@@ -404,6 +408,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         let pinnedTab = await utils.tabs.isPinned(tabID);
         let pinnedTabMoveDown = false;
+
 
         log.debug(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
@@ -619,7 +624,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onUpdated.addListener((tabID, changeInfo, tab) =>
         {
-            if(tab.windowId != this.windowId)
+            if(tab.windowId != this.windowID)
             {
                 return;
             }
@@ -665,7 +670,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>
         {
-            if(moveInfo.windowId != this.windowId)
+            if(moveInfo.windowId != this.windowID)
             {
                 return;
             }
@@ -677,7 +682,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onDetached.addListener((tabID, details) =>
         {
-            if(details.windowId != this.windowId)
+            if(details.oldWindowId != this.windowID)
             {
                 return;
             }
@@ -687,7 +692,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
         {
-            if(removeInfo.oldWindowId != this.windowId)
+            if(removeInfo.windowId != this.windowID)
             {
                 return;
             }
