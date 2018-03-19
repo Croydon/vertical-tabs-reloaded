@@ -132,6 +132,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
+        if (this.preferences("style.tab.button.close.displayalways") == true)
+        {
+            log.debug("style.tab.button.close.displayalways true");
+            this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
+        }
+
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
             for(let tab of tabs)
@@ -576,6 +582,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     this.removeStylesheet("status");
+                }
+                break;
+
+            case "style.tab.button.close.displayalways":
+                this.webExtPreferences[prefName] = newValue;
+                if (this.preferences("style.tab.button.close.displayalways") == true)
+                {
+                    this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
+                }
+                else
+                {
+                    this.removeStylesheet("alwaysdisplayclose");
                 }
                 break;
 

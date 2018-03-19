@@ -131,6 +131,17 @@ function restore_default_settings()
     });
 }
 
+function reset_experimental_features()
+{
+    Object.keys(settings).forEach((optionsElement) =>
+    {
+        if(settings[optionsElement]["experimental"] == true)
+        {
+            restore_default_setting_of(optionsElement);
+        }
+    });
+}
+
 function restore_default_setting_of(optionsElement)
 {
     save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
@@ -142,6 +153,11 @@ function save_setting(name, value)
     settingsObject[name] = value;
 
     log.debug("save: " + name + " " + value);
+
+    if(name == "experiment" && value == false)
+    {
+        reset_experimental_features();
+    }
 
     browser.storage.local.set(settingsObject).then(error =>
     {

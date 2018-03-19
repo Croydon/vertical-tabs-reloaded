@@ -52,6 +52,11 @@ function build()
             classHidden = "hidden-setting";
         }
 
+        if(setting.experimental == true)
+        {
+            classHidden += " experimental-setting";
+        }
+
         if(setting.readonly == true)
         {
             addition = " disabled";
@@ -159,7 +164,7 @@ function update_all_inputs()
 
     main.get_setting("showHiddenSettings").then(value =>
     {
-        var newDisplay = ""; // see default CSS
+        let newDisplay = ""; // see default CSS
 
         if(value != false)
         {
@@ -172,6 +177,27 @@ function update_all_inputs()
             // main.debug_log(elements[i]);
             anElement.style.display = newDisplay;
         }
+    });
+
+    main.get_setting("showHiddenSettings").then(value =>
+    {
+        if(value == false) { return; }
+
+        main.get_setting("experiment").then(value =>
+        {
+            let newDisplay = ""; // see default CSS
+
+            if(value != false)
+            {
+                newDisplay = "table-row";
+            }
+
+            let elements = document.getElementsByClassName("experimental-setting");
+            for(let anElement of elements)
+            {
+                anElement.style.display = newDisplay;
+            }
+        });
     });
 }
 
