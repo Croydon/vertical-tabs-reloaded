@@ -614,6 +614,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
         });
 
+        browser.tabs.onAttached.addListener((tabID, attachInfo) =>
+        {
+            if(attachInfo.newWindowId == this.windowID)
+            {
+                browser.tabs.get(tabID).then((tab) =>
+                {
+                    this.create_tab(tab);
+                    utils.tabs.updateTabIndexes();
+                });
+            }
+        });
+
         browser.tabs.onActivated.addListener((details) =>
         {
             if(details.windowId == this.windowID)
@@ -688,6 +700,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
 
             this.remove_tab(tabID);
+            utils.tabs.updateTabIndexes();
         });
 
         browser.tabs.onRemoved.addListener((tabID, removeInfo) =>
@@ -698,6 +711,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
 
             this.remove_tab(tabID);
+            utils.tabs.updateTabIndexes();
         });
 
         // Doubleclick on free space within the tabbrowser opens a new tab
