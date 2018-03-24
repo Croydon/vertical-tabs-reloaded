@@ -159,6 +159,11 @@ function save_setting(name, value)
         reset_experimental_features();
     }
 
+    if(name != "meta.options.time.lastsaved")
+    {
+        save_setting("meta.options.time.lastsaved", utils.time.getTimestamp());
+    }
+
     browser.storage.local.set(settingsObject).then(error =>
     {
         if(error)

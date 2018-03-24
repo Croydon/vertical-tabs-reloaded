@@ -90,5 +90,13 @@
         "value": false,
         "hidden": true,
         "experimental": true
+    },
+    "meta.options.time.lastsaved": {
+        "name": "meta.options.time.lastsaved",
+        "type": "integer",
+        "title": "Timestamp, last change of options",
+        "value": 0,
+        "hidden": true,
+        "readonly": true
     }
 }
