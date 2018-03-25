@@ -91,6 +91,14 @@
         "hidden": true,
         "experimental": true
     },
+    "options.sync.enabled": {
+        "name": "options.sync.enabled",
+        "type": "bool",
+        "title": "<b>Experimental:</b> Sync options across all devices via Firefox Sync",
+        "value": false,
+        "hidden": true,
+        "experimental": true
+    },
     "meta.options.time.lastsaved": {
         "name": "meta.options.time.lastsaved",
         "type": "integer",

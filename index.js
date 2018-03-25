@@ -147,6 +147,42 @@ function restore_default_setting_of(optionsElement)
     save_setting(settings[optionsElement]["name"], settings[optionsElement]["value"]);
 }
 
+function on_options_change(changes, area)
+{
+    if(area == "sync")
+    {
+        Object.keys(changes).forEach(name =>
+        {
+            if(name == "meta.options.time.lastsaved" || name == "options.sync.enabled") { return; }
+
+            browser.storage.sync.get("meta.options.time.lastsaved").then(results =>
+            {
+                if (results.hasOwnProperty("meta.options.time.lastsaved"))
+                {
+                    get_setting("meta.options.time.lastsaved").then(lastSavedLocal =>
+                    {
+                        if(results["meta.options.time.lastsaved"] > lastSavedLocal)
+                        {
+                            let settingsObject = {};
+                            settingsObject[name] = changes[name]["newValue"];
+                            browser.storage.local.set(settingsObject).then(error =>
+                            {
+                                if(error)
+                                {
+                                    log.debug("VTR received sync setting: Could not save option:" + name);
+                                    return false;
+                                }
+
+                                log.debug("received sync setting: " + name + " => " + changes[name]["newValue"]);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    }
+}
+
 function save_setting(name, value)
 {
     let settingsObject = {};
@@ -170,9 +206,84 @@ function save_setting(name, value)
         {
             return false;
         }
-
-        return true;
     });
+
+    if(name != "options.sync.enabled")
+    {
+        get_setting("options.sync.enabled").then(syncEnabled =>
+        {
+            if(syncEnabled != true) { return; }
+
+            browser.storage.sync.set(settingsObject).then(error =>
+            {
+                if(error)
+                {
+                    log.debug("VTR sync error!");
+                    return false;
+                }
+            });
+
+            log.debug("sync setting saved: " + name + " => " + value);
+        });
+    }
+
+    // If sync gets enabled, all values should be copied once
+    if(name == "options.sync.enabled" && value == true)
+    {
+        browser.storage.sync.get("meta.options.time.lastsaved").then(results =>
+        {
+            if (!results.hasOwnProperty("meta.options.time.lastsaved"))
+            {
+                results["meta.options.time.lastsaved"] = -1;
+                // No sync data exists, copy from local to sync
+            }
+
+            get_setting("meta.options.time.lastsaved").then(lastSavedLocal =>
+            {
+                log.debug("VTR sync: sync.lastsaved: " + results["meta.options.time.lastsaved"] + " local.lastsaved: " + lastSavedLocal);
+
+                let allStorageSettings;
+                // Sync is newer then local, copy from sync to local
+                if(results["meta.options.time.lastsaved"] > lastSavedLocal)
+                {
+                    allStorageSettings = browser.storage.sync.get(null);
+                }
+
+                // Local is newer then sync, copy from local to sync
+                if(results["meta.options.time.lastsaved"] < lastSavedLocal)
+                {
+                    allStorageSettings = browser.storage.local.get(null);
+                }
+
+                allStorageSettings.then(storageResults =>
+                {
+                    Object.keys(storageResults).forEach((storageName) =>
+                    {
+                        if(name == "meta.options.time.lastsaved" || name == "options.sync.enabled") { return; }
+
+                        let settingsObject = {};
+                        settingsObject[storageName] = storageResults[storageName];
+
+                        if(results["meta.options.time.lastsaved"] > lastSavedLocal)
+                        {
+                            browser.storage.local.set(settingsObject);
+
+                            log.debug("VTR sync inital setting from sync to local saved: " + name + " => " + value);
+                        }
+
+                        if(results["meta.options.time.lastsaved"] < lastSavedLocal)
+                        {
+                            browser.storage.sync.set(settingsObject);
+
+                            log.debug("VTR sync inital setting from local to sync saved: " + name + " => " + value);
+                        }
+                    });
+                });
+            });
+        });
+    }
+
+    return true;
 }
 
 function get_all_settings()
@@ -221,7 +332,7 @@ function get_setting(name)
     {
         browser.storage.local.get(name).then(results =>
         {
-            let localDebugOutput = "VTR WebExt setting '" + name + "': ";
+            let localDebugOutput = "VTR option '" + name + "': ";
             let localDebug = false;
 
             if (!results.hasOwnProperty(name))
@@ -257,7 +368,8 @@ function get_setting(name)
 setTimeout(() =>
 {
     // Set up listener
-    // browser.storage.onChanged.addListener(on_options_change);
+
+    browser.storage.onChanged.addListener(on_options_change);
 
     browser.windows.onCreated.addListener((window) =>
     {

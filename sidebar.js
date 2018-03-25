@@ -415,7 +415,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let pinnedTab = await utils.tabs.isPinned(tabID);
         let pinnedTabMoveDown = false;
 
-
         log.debug(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
         {
@@ -605,7 +604,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     on_storage_change_iterator(changes, area)
     {
-        /* area = placeholder FIXME */
+        /* (potential todo:) "managed" area isn't supported right now */
+        if(area != "local") { return; }
 
         Object.keys(changes).forEach(item =>
         {
