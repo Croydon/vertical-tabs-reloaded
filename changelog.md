@@ -1,5 +1,27 @@
 # Changelog
 
+### v0.10.0, 2018-03-26
+ * Updated Compatibility: Firefox 59+
+ * added: middle clicks on free space within the tab browser opens a new tab (#143)
+ * added: move to new window context menu option (#120)
+ * added: reload all tabs context menu option (#120)
+ * added: close tabs below context menu option (#120)
+ * added: close tabs above context menu option (#120)
+ * added: close all other tabs context menu option (#120)
+ * added: close tabs with mouse middle click (opt-in) (#143)
+ * added: close context menu on scrolling and leaving the sidebar (#149)
+ * added: support browser.tabs.onAttached event (better support for drag and drop of tabs)
+ * added: add a better version of the icon for dark Firefox themes (#133)
+ * added: experimental option to always display the close button (#106)
+ * added: experimental sync function for options (#73)
+ * fixed: only one active tab is highlighted across windows (#161)
+ * fixed: several potential multi-window issues
+ * internal: minor other improvements and cleanups
+
+
+***
+
+
 ### v0.9.4, 2017-11-24
  * fixed: tab context menu can go off-screen when to close to sidebar borders (#147)
  * internal: minor other improvements and cleanups
