@@ -19,6 +19,7 @@ env:
   - RUN=eslint
 
 before_script:
+  - set -e
   - npm install ${RUN} --global
   - ${RUN} --version
   - ${RUN} --help
@@ -28,12 +29,13 @@ script:
 
 jobs:
   include:
-    - stage: Deploy Developement Versions
+    - stage: Deploy
       before_script:
-        - if ! [[ "$(git diff --name-only ${TRAVIS_COMMIT}^ -- manifest.json)" == "" ]]; then NEWVERSION=true; else NEWVERSION=false; fi;
+        - set -e
+        - if [[ -z "$TRAVIS_TAG" ]] && [[ "$(git diff --name-only ${TRAVIS_COMMIT}^ -- manifest.json)" == "" ]]; then exit 0; fi;
         - npm install -g web-ext
-        - sed --in-place 's/verticaltabsreloaded/vtrbeta/' manifest.json
-        - sed --in-place 's/Vertical Tabs Reloaded/VTR (DEVELOPER VERSION)/' manifest.json
+        - if [[ -z "$TRAVIS_TAG" ]]; then sed --in-place 's/verticaltabsreloaded/vtrbeta/' manifest.json; fi;
+        - if [[ -z "$TRAVIS_TAG" ]]; then sed --in-place 's/Vertical Tabs Reloaded/VTR (DEVELOPER VERSION)/' manifest.json; fi;
       script:
         - web-ext --version
-        - if [[ "${NEWVERSION}" == "true" ]]; then web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET}; fi;
+        - web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET}
