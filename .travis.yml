@@ -38,4 +38,4 @@ jobs:
         - if [[ -z "$TRAVIS_TAG" ]]; then sed --in-place 's/Vertical Tabs Reloaded/VTR (DEVELOPER VERSION)/' manifest.json; fi;
       script:
         - web-ext --version
-        - web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET}
+        - web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} || true
