@@ -6,20 +6,34 @@ language: node_js
 notifications:
   email:
     on_success: change
-    on_failure: always
+    on_failure: change
+
+git:
+  depth: 5
 
 node_js:
   - "node"
 
-matrix:
-  include:
-    - env: RUN=addons-linter
-    - env: RUN=eslint
+env:
+  - RUN=addons-linter
+  - RUN=eslint
 
 before_script:
-  - npm install -g $RUN
-  - $RUN --version
-  - $RUN --help
+  - npm install ${RUN} --global
+  - ${RUN} --version
+  - ${RUN} --help
 
 script:
-  - $RUN .
+  - ${RUN} .
+
+jobs:
+  include:
+    - stage: Deploy Developement Versions
+      before_script:
+        - if ! [[ "$(git diff --name-only ${TRAVIS_COMMIT}^ -- manifest.json)" == "" ]]; then NEWVERSION=true; else NEWVERSION=false; fi;
+        - npm install -g web-ext
+        - sed --in-place 's/verticaltabsreloaded/vtrbeta/' manifest.json
+        - sed --in-place 's/Vertical Tabs Reloaded/VTR (DEVELOPER VERSION)/' manifest.json
+      script:
+        - web-ext --version
+        - if [[ "${NEWVERSION}" == "true" ]]; then web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET}; fi;
