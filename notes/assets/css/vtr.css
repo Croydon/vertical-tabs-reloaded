@@ -1,0 +1,17 @@
+.changelog ol li p {
+    padding: 8px;
+    font-style: normal;
+    color: rgb(136, 136, 136);
+    border-left: 1px solid #999;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 19pt;
+    font-weight: 300;
+    line-height: 1.75em;
+    text-align: left;
+}
+
+.changelog ol li p strong {
+    display: block;
+    font-weight: 400;
+    text-align: center;
+}
