@@ -63,7 +63,7 @@ function manage_installation(details)
             let minor = parseInt(previousVersion[1], 10);
             let patch = parseInt(previousVersion[2], 10);
 
-            if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 9) || (major == 0 && minor == 9 && patch < 0)))
+            if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 10) || (major == 0 && minor == 10 && patch < 0)))
             {
                 browser.sidebarAction.open();
                 browser.tabs.create({url: "notes/index.html"});
