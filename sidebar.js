@@ -200,7 +200,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         if(status == "loading")
         {
-            iconURL = "data/chrome/icon/connecting@2px.png";
+            iconURL = "data/chrome/icon/connecting.png";
         }
 
         if(pinned == true)
@@ -387,7 +387,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 if(value == "loading")
                 {
                     // FIXME: Which icon is getting set should be really up to the theme
-                    document.getElementById("tab-icon-" + tabID).setAttribute("src", "data/chrome/icon/connecting@2x.png");
+                    document.getElementById("tab-icon-" + tabID).setAttribute("src", "data/chrome/icon/connecting.png");
                 }
                 break;
 

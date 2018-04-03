@@ -47,14 +47,14 @@ body
 }
 
 /*.tab-buttons span {
-     padding-left: 18px; 
+     padding-left: 18px;
 }*/
 
 .tab-close-button {
     height: 22px;
     width: 24px;
     display: inline-block;
-    background-image: url("../../template/basic/icons/light/close-regular.png");
+    background-image: url("../../data/template/basic/icons/light/close-regular.png");
     background-size: 22px 22px; /* contain ? */
     background-position: center center;
     background-repeat: no-repeat;

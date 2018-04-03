@@ -35,7 +35,10 @@ function manage_installation(details)
             if(installedVersion == undefined)
             {
                 previousVersion = details.previousVersion.split(".");
-                browser.sidebarAction.open();
+                if(typeof browser.sidebarAction != "undefined" && typeof browser.sidebarAction.open != "undefined")
+                {
+                    browser.sidebarAction.open();
+                }
                 browser.tabs.create({url: "notes/index.html"});
             }
             else
@@ -58,7 +61,10 @@ function manage_installation(details)
 
             if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 10) || (major == 0 && minor == 10 && patch < 0)))
             {
-                browser.sidebarAction.open();
+                if(typeof browser.sidebarAction != "undefined" && typeof browser.sidebarAction.open != "undefined")
+                {
+                    browser.sidebarAction.open();
+                }
                 browser.tabs.create({url: "notes/index.html"});
             }
         });
@@ -439,11 +445,20 @@ setTimeout(() =>
         if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
         {
             utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
+            // FIXME: Create "does function exists utils module" to tackle different browsers+versions
+            if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.open == "undefined")
+            {
+                return;
+            }
             browser.sidebarAction.open();
         }
         else
         {
             utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
+            if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.close == "undefined")
+            {
+                return;
+            }
             browser.sidebarAction.close();
         }
     });

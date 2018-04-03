@@ -22,6 +22,10 @@ utils["windows"] = class windowsutils
     static setSidebarOpenedStatus(windowID, newSidebarOpenedStatus)
     {
         log.debug("set window status " + windowID);
+        if(typeof managedWindows[windowID] == "undefined")
+        {
+            this.add(windowID);
+        }
         managedWindows[windowID]["sidebarOpened"] = newSidebarOpenedStatus;
     }
 
