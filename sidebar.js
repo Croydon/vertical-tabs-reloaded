@@ -141,7 +141,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // Creating tabs
         this.finish_create_tab_event();
 
-        browser.tabs.query({currentWindow: true}).then((tabs) =>
+        browser.tabs.query({windowId: this.windowID}).then((tabs) =>
         {
             for(let tab of tabs)
             {
@@ -187,6 +187,26 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
+    get_tab_tooltip_value(title, url)
+    {
+        if(this.preferences("style.tab.showUrlInTooltip") == "url")
+        {
+            return url;
+        }
+        else if (this.preferences("style.tab.showUrlInTooltip") == "url-title")
+        {
+            return url + " - " + title;
+        }
+        else if (this.preferences("style.tab.showUrlInTooltip") == "title-url")
+        {
+            return title + " - " + url;
+        }
+        else
+        {
+            return title;
+        }
+    }
+
     create_tab(tab)
     {
         let id = tab.id;
@@ -200,6 +220,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
         let pinnedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
+        let toolbarTitle = this.get_tab_tooltip_value(tab.title, tab.url);
 
         if(status == "loading")
         {
@@ -222,7 +243,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             tabIndex = this.get_last_tab_index() + 1;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${toolbarTitle}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -324,8 +345,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         switch(attribute)
         {
             case "title":
-                tabElement.setAttribute("title", value);
                 document.getElementById("tab-title-" + tabID).innerText = value;
+                browser.tabs.get(tabID).then((tab) =>
+                {
+                    tabElement.setAttribute("title", this.get_tab_tooltip_value(tab.title, tab.url));
+                });
                 break;
 
             case "pinned":
@@ -641,6 +665,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
                 break;
 
+            case "style.tab.showUrlInTooltip":
+                this.webExtPreferences[prefName] = newValue;
+                browser.tabs.query({windowId: this.windowID}).then((tabs) =>
+                {
+                    for(let tab of tabs)
+                    {
+                        this.update_tab(tab.id, "title", tab.title);
+                    }
+                });
+                break;
+
             default:
                 this.webExtPreferences[prefName] = newValue;
                 break;
@@ -922,6 +957,8 @@ function contextmenuShow(e)
 
 window.addEventListener("load", () =>
 {
+    log.debug("load event fired!");
+
     new VerticalTabsReloaded();
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));

@@ -12,6 +12,30 @@
         "title": "Close tabs with mouse middle click",
         "value": false
     },
+    "style.tab.showUrlInTooltip": {
+        "name": "style.tab.showUrlInTooltip",
+        "type": "menulist",
+        "title": "Configure tab tooltip on mouse over",
+		"value": "title",
+		"options": [
+			{
+				"value": "title",
+				"label": "Title only"
+			},
+			{
+				"value": "title-url",
+				"label": "Title - URL"
+			},
+			{
+				"value": "url-title",
+				"label": "URL - Title"
+			},
+			{
+				"value": "url",
+				"label": "URL only"
+			}
+		]
+    },
 	"theme": {
 		"name": "theme",
 		"type": "menulist",
