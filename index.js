@@ -61,7 +61,15 @@ function manage_installation(details)
             log.debug(previousVersion);
             let major = parseInt(previousVersion[0], 10);
             let minor = parseInt(previousVersion[1], 10);
-            let patch = parseInt(previousVersion[2], 10);
+            let patch;
+            if(previousVersion[2].contains("a"))
+            {
+                patch = -1; // lets make alpha versions comparable in a more easy way
+            }
+            else
+            {
+                patch = parseInt(previousVersion[2], 10);
+            }
 
             if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 10) || (major == 0 && minor == 10 && patch < 0)))
             {
