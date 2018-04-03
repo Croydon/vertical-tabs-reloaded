@@ -23,7 +23,7 @@ utils["tabs"] = class tabutils
             tabID = parseInt(tabID, 10);
         }
 
-        return parseInt(window.document.querySelector(`div[id="tab-${tabID}"]`).getAttribute("data-index"), 10);
+        return parseInt(document.getElementById("tab-" + tabID).getAttribute("data-index"), 10);
     }
 
     static updateTabIndexes()
