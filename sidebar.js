@@ -578,7 +578,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
                     case "bottom":
                         TabsToolbar.style.display = "";
-                        document.appendChild(TabsToolbar);
+                        document.body.appendChild(TabsToolbar);
                         break;
                 }
                 break;
