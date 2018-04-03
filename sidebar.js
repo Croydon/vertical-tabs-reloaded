@@ -190,6 +190,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     create_tab(tab)
     {
         let id = tab.id;
+        log.debug("start tab creation of tab id: " + id);
+        console.time("start-tab-" + id);
+
         // let url = tab.url;
         let title = "Connecting...";
         let pinned = tab.pinned;
@@ -237,6 +240,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
         }
+
+        console.timeEnd("start-tab-" + id);
     }
 
     finish_create_tab_event()
@@ -244,6 +249,10 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         document.arrive(".tabbrowser-tab", (tabElement) =>
         {
             let id = utils.tabs.getIDFromHTMLID(tabElement.id);
+
+            log.debug("finish tab creation of tab id: " + id);
+            console.time("finish-tab-" + id);
+
             let tabIndex = utils.tabs.getIndexFrom(id);
 
             browser.tabs.get(id).then((tab) =>
@@ -281,6 +290,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 {
                     this.move_tab(id, tabIndex, tab.index);
                 }
+
+                console.timeEnd("finish-tab-" + id);
             });
         });
     }
@@ -288,6 +299,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     update_tab(tabID, attribute, value)
     {
         if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
+
+        console.time("update-tab-" + tabID);
 
         let tabElement = document.getElementById("tab-" + tabID);
         let tryrun = 1;
@@ -434,6 +447,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 // tabElement.setAttribute("data-index", value);
                 // break;
         }
+
+        console.timeEnd("update-tab-" + tabID);
     }
 
     async move_tab(tabID, fromIndex, toIndex)
