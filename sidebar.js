@@ -138,6 +138,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
         }
 
+        // Creating tabs
         this.finish_create_tab_event();
 
         browser.tabs.query({currentWindow: true}).then((tabs) =>
@@ -833,9 +834,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 document.insertBefore(TabsToolbar, document.getElementById("tabbrowser-tabs-pinned"));
                 break;
 
-            case "bottom":
-                // Default position
-                break;
+            // case "bottom": // Default position
         }
 
         document.getElementById("toolbar-action-tab-new").addEventListener("click", () =>
@@ -906,12 +905,9 @@ function contextmenuShow(e)
     document.addEventListener("click", contextmenuHide);
 }
 
-document.addEventListener("DOMContentLoaded", () =>
+window.addEventListener("load", () =>
 {
-    main.get_setting().then(value =>
-    {
-        new VerticalTabsReloaded();
-    });
+    new VerticalTabsReloaded();
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
     document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));

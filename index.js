@@ -6,24 +6,9 @@ function manage_installation(details)
 {
     if(details.reason == "install")
     {
+        // FIXME
         // browser.tabs.create({url: "install-notes.html"});
-
-        browser.runtime.getBrowserInfo().then((info) =>
-        {
-            browser.sidebarAction.open();
-
-            log.debug(info.version);
-            log.debug(info.buildID);
-            log.debug(info.name);
-
-            let version = info.version;
-
-            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-            if(version.includes("a"))
-            {
-                log.debug("You are a Nightly user");
-            }
-        });
+        // browser.sidebarAction.open();
     }
 
     if(details.reason == "update")
@@ -62,7 +47,7 @@ function manage_installation(details)
             let major = parseInt(previousVersion[0], 10);
             let minor = parseInt(previousVersion[1], 10);
             let patch;
-            if(previousVersion[2].contains("a"))
+            if(previousVersion[2].includes("a"))
             {
                 patch = -1; // lets make alpha versions comparable in a more easy way
             }
@@ -370,6 +355,20 @@ function get_setting(name)
     });
 }
 
+function set_alpha_settings()
+{
+    // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly / Opera
+    save_setting("showHiddenSettings", true);
+    save_setting("debug", true);
+    save_setting("experiment", true);
+}
+
+function set_beta_settings()
+{
+    // Enforce debugging and hidden settings for Firefox Beta
+    save_setting("showHiddenSettings", true);
+    save_setting("debug", true);
+}
 
 // browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
 
@@ -449,23 +448,28 @@ setTimeout(() =>
         }
     });
 
-    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    if(typeof browser.runtime.getBrowserInfo == "undefined")
     {
-        let version = browserInfo.version;
-
-        // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-        if(version.includes("a"))
+        // This likely means we are running in Opera, set same setting as in Firefox Nightly
+        set_alpha_settings();
+    }
+    else
+    {
+        browser.runtime.getBrowserInfo().then((browserInfo) =>
         {
-            save_setting("showHiddenSettings", true);
-            save_setting("debug", true);
-            save_setting("experiment", true);
-        }
+            let version = browserInfo.version;
 
-        // Enforce debugging and hidden settings for Firefox Beta
-        if(version.includes("b"))
-        {
-            save_setting("showHiddenSettings", true);
-            save_setting("debug", true);
-        }
-    });
+            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+            if(version.includes("a"))
+            {
+                set_alpha_settings();
+            }
+
+            // Enforce debugging and hidden settings for Firefox Beta
+            if(version.includes("b"))
+            {
+                set_beta_settings();
+            }
+        });
+    }
 }, 50);
