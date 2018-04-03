@@ -138,6 +138,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
         }
 
+        this.finish_create_tab_event();
+
         browser.tabs.query({currentWindow: true}).then((tabs) =>
         {
             for(let tab of tabs)
@@ -234,42 +236,52 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
         }
+    }
 
-        let tabElement = document.getElementById("tab-" + id);
-
-        tabElement.addEventListener("click", (event) =>
+    finish_create_tab_event()
+    {
+        document.arrive(".tabbrowser-tab", (tabElement) =>
         {
-            browser.tabs.update(id, {active: true});
-            event.preventDefault();
+            let id = utils.tabs.getIDFromHTMLID(tabElement.id);
+            let tabIndex = utils.tabs.getIndexFrom(id);
+
+            browser.tabs.get(id).then((tab) =>
+            {
+                tabElement.addEventListener("click", (event) =>
+                {
+                    browser.tabs.update(id, {active: true});
+                    event.preventDefault();
+                });
+
+                addDragndropHandlers(tabElement);
+
+                if(tab.active == true)
+                {
+                    this.update_tab(id, "selected", "true");
+                    this.selectedTabID = id;
+                    log.debug("select tab: " + this.selectedTabID);
+                }
+
+                this.update_tab(id, "title", tab.title);
+                this.update_tab(id, "mutedInfo", tab.mutedInfo);
+                this.update_tab(id, "audible", tab.audible);
+                this.update_tab(id, "discarded", tab.discarded);
+
+                if(this.initialized == true)
+                {
+                    // At startup we would check that for every single tab, which is nonsense
+                    this.check_scrollbar_status();
+                }
+
+                document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
+                document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
+
+                if(this.initialized == true)
+                {
+                    this.move_tab(id, tabIndex, tab.index);
+                }
+            });
         });
-
-        addDragndropHandlers(tabElement);
-
-        if(tab.active == true)
-        {
-            this.update_tab(id, "selected", "true");
-            this.selectedTabID = id;
-            log.debug("select tab: " + this.selectedTabID);
-        }
-
-        this.update_tab(id, "title", tab.title);
-        this.update_tab(id, "mutedInfo", tab.mutedInfo);
-        this.update_tab(id, "audible", tab.audible);
-        this.update_tab(id, "discarded", tab.discarded);
-
-        if(this.initialized == true)
-        {
-            // At startup we would check that for every single tab, which is nonsense
-            this.check_scrollbar_status();
-        }
-
-        document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
-        document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
-
-        if(this.initialized == true)
-        {
-            this.move_tab(id, tabIndex, tab.index);
-        }
     }
 
     update_tab(tabID, attribute, value)
@@ -277,6 +289,23 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
         let tabElement = document.getElementById("tab-" + tabID);
+        let tryrun = 1;
+
+        // We wait for max. 2250 ms for the tab element to exists in the current DOM, before we forget about the tab update
+        while(tabElement == null && tryrun < 9)
+        {
+            setTimeout(() =>
+            {
+                tabElement = document.getElementById("tab-" + tabID);
+            }, 50 * tryrun);
+
+            tryrun++;
+        }
+
+        if(tabElement == null)
+        {
+            return;
+        }
 
         switch(attribute)
         {
