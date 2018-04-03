@@ -5,20 +5,13 @@
 
 utils["log"] = {};
 var log = utils["log"];
+
+utils["log"]["debugEnabled"] = false;
+
 utils["log"]["debug"] = function debug_log(output)
 {
-    let debugSetting = false;
-
-    browser.storage.local.get("debug").then(results =>
+    if(utils["log"]["debugEnabled"] == true)
     {
-        if (results.hasOwnProperty("debug"))
-        {
-            debugSetting = results["debug"];
-        }
-
-        if(debugSetting == true)
-        {
-            console.log(output);
-        }
-    });
+        console.log(output);
+    }
 };

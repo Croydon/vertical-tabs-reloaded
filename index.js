@@ -93,17 +93,6 @@ function get_options_file()
         if(xhr.readyState == 4) // 4 == DONE
         {
             settings = xhr.response;
-
-            // FIREFIX: Placeholder. Firefox doesn't support the programmatically opening of sidebars SAFELY
-            // Right now it's possible to toggle so we toggeling on the base of good luck
-            // and just hoping to end up with an open sidebar
-            get_setting("experiment").then(value =>
-            {
-                if(value == true)
-                {
-                    // keep-me
-                }
-            });
         }
     };
 
@@ -179,6 +168,17 @@ function on_options_change(changes, area)
                     });
                 }
             });
+        });
+    }
+
+    if(area == "local")
+    {
+        Object.keys(changes).forEach(name =>
+        {
+            if(name == "debug")
+            {
+                utils.log.debugEnabled = changes[name]["newValue"];
+            }
         });
     }
 }
@@ -370,6 +370,15 @@ setTimeout(() =>
     // Set up listener
 
     browser.storage.onChanged.addListener(on_options_change);
+
+    // Set inital value for debug logging enabled
+    browser.storage.local.get("debug").then(results =>
+    {
+        if (results.hasOwnProperty("debug"))
+        {
+            utils.log.debugEnabled = results.debug;
+        }
+    });
 
     browser.windows.onCreated.addListener((window) =>
     {
