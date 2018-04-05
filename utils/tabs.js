@@ -18,10 +18,7 @@ utils["tabs"] = class tabutils
 
     static getIndexFrom(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         return parseInt(document.getElementById("tab-" + tabID).getAttribute("data-index"), 10);
     }
@@ -39,20 +36,14 @@ utils["tabs"] = class tabutils
 
     static close(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.tabs.remove(tabID);
     }
 
     static reload(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.tabs.reload(tabID);
     }
@@ -60,10 +51,7 @@ utils["tabs"] = class tabutils
     // Toggles pinning status
     static pin(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.tabs.get(tabID).then((tabInfo) =>
         {
@@ -74,10 +62,7 @@ utils["tabs"] = class tabutils
     // Toggles muting status
     static mute(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.tabs.get(tabID).then((tabInfo) =>
         {
@@ -89,30 +74,21 @@ utils["tabs"] = class tabutils
     // Discard a single tab
     static discard(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.tabs.discard(tabID);
     }
 
     static moveToNewWindow(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         browser.windows.create({"tabId": tabID});
     }
 
     static setIndex(tabID, newIndex)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         if(typeof newIndex == "string")
         {
@@ -189,10 +165,7 @@ utils["tabs"] = class tabutils
 
     static async _isTabSomething(tabID, key)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        tabID = this._convertIDtoInt(tabID);
 
         let somethingInfo;
 
@@ -219,5 +192,15 @@ utils["tabs"] = class tabutils
         });
 
         return somethingInfo;
+    }
+
+    static _convertIDtoInt(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        return tabID;
     }
 };
