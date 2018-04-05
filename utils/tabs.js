@@ -86,6 +86,17 @@ utils["tabs"] = class tabutils
         });
     }
 
+    // Discard a single tab
+    static discard(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        browser.tabs.discard(tabID);
+    }
+
     static moveToNewWindow(tabID)
     {
         if(typeof tabID == "string")
@@ -170,12 +181,30 @@ utils["tabs"] = class tabutils
         }
 
         let activeInfo;
+
         await browser.tabs.get(tabID).then((tabInfo) =>
         {
             activeInfo = tabInfo.active;
         });
 
         return activeInfo;
+    }
+
+    static async isDiscarded(tabID)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        let discardedInfo;
+
+        await browser.tabs.get(tabID).then((tabInfo) =>
+        {
+            discardedInfo = tabInfo.discarded;
+        });
+
+        return discardedInfo;
     }
 
     static isTabElement(HTMLElement)

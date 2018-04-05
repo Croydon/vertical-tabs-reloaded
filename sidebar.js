@@ -537,7 +537,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         // When the current active tab is getting moved we are scrolling the tab browser, to keep the active tab in sight
         // The main purpose of this should be the interference of third-party add-ons
-        if(utils.tabs.isActive(tabID))
+        if(await utils.tabs.isActive(tabID))
         {
             log.debug("tab is active. scroll to it");
             setTimeout(this.scroll_to_tab(tabID), 100);
@@ -914,7 +914,7 @@ function contextmenuHide()
     }
 }
 
-function contextmenuShow(e)
+async function contextmenuShow(e)
 {
     e.preventDefault();
 
@@ -922,6 +922,18 @@ function contextmenuShow(e)
 
     log.debug("context menu target tabID: " + contextmenuTarget);
     log.debug("context menu target position: " + e.pageX + " y " + e.pageY);
+
+    // -- Context aware context menu...
+    // Should the discard option be available?
+    log.debug(await utils.tabs.isDiscarded(contextmenuTarget));
+    if(await utils.tabs.isActive(contextmenuTarget) || await utils.tabs.isDiscarded(contextmenuTarget))
+    {
+        document.getElementById("contextmenu-action-tab-discard").style.display = "none";
+    }
+    else
+    {
+        document.getElementById("contextmenu-action-tab-discard").style.display = "block";
+    }
 
     let contextmenuDomElement = document.getElementById("contextmenu");
     contextmenuDomElement.style.setProperty("left", e.pageX + "px");
@@ -968,6 +980,7 @@ window.addEventListener("load", () =>
     document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { utils.tabs.reload(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { utils.tabs.pin(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-discard").addEventListener("click", (e) => { utils.tabs.discard(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
     document.getElementById("contextmenu-action-tab-close-below").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "below"); });
