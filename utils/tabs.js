@@ -124,18 +124,12 @@ utils["tabs"] = class tabutils
 
     static async isPinned(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
+        return await this._isTabSomething(tabID, "pinned");
+    }
 
-        let pinnedInfo;
-        await browser.tabs.get(tabID).then((tabInfo) =>
-        {
-            pinnedInfo = tabInfo.pinned;
-        });
-
-        return pinnedInfo;
+    static async isMuted(tabID)
+    {
+        return await this._isTabSomething(tabID, "mutedInfo.muted");
     }
 
     static reloadAllVisibleTabs()
@@ -175,36 +169,12 @@ utils["tabs"] = class tabutils
 
     static async isActive(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
-
-        let activeInfo;
-
-        await browser.tabs.get(tabID).then((tabInfo) =>
-        {
-            activeInfo = tabInfo.active;
-        });
-
-        return activeInfo;
+        return await this._isTabSomething(tabID, "active");
     }
 
     static async isDiscarded(tabID)
     {
-        if(typeof tabID == "string")
-        {
-            tabID = parseInt(tabID, 10);
-        }
-
-        let discardedInfo;
-
-        await browser.tabs.get(tabID).then((tabInfo) =>
-        {
-            discardedInfo = tabInfo.discarded;
-        });
-
-        return discardedInfo;
+        return await this._isTabSomething(tabID, "discarded");
     }
 
     static isTabElement(HTMLElement)
@@ -215,5 +185,39 @@ utils["tabs"] = class tabutils
         }
 
         return false;
+    }
+
+    static async _isTabSomething(tabID, key)
+    {
+        if(typeof tabID == "string")
+        {
+            tabID = parseInt(tabID, 10);
+        }
+
+        let somethingInfo;
+
+        await browser.tabs.get(tabID).then((tabInfo) =>
+        {
+            if(!key.includes("."))
+            {
+                somethingInfo = tabInfo[key];
+            }
+            else
+            {
+                for(let singleKey of key.split("."))
+                {
+                    if(somethingInfo == null)
+                    {
+                        somethingInfo = tabInfo[singleKey];
+                    }
+                    else
+                    {
+                        somethingInfo = somethingInfo[singleKey];
+                    }
+                }
+            }
+        });
+
+        return somethingInfo;
     }
 };

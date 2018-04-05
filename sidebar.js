@@ -925,7 +925,6 @@ async function contextmenuShow(e)
 
     // -- Context aware context menu...
     // Should the discard option be available?
-    log.debug(await utils.tabs.isDiscarded(contextmenuTarget));
     if(await utils.tabs.isActive(contextmenuTarget) || await utils.tabs.isDiscarded(contextmenuTarget))
     {
         document.getElementById("contextmenu-action-tab-discard").style.display = "none";
@@ -933,6 +932,26 @@ async function contextmenuShow(e)
     else
     {
         document.getElementById("contextmenu-action-tab-discard").style.display = "block";
+    }
+
+    // Pin or unpin?
+    if(await utils.tabs.isPinned(contextmenuTarget))
+    {
+        document.getElementById("contextmenu-action-tab-pin").innerText = "Unpin tab";
+    }
+    else
+    {
+        document.getElementById("contextmenu-action-tab-pin").innerText = "Pin tab";
+    }
+
+    // Mute or unmute?
+    if(await utils.tabs.isMuted(contextmenuTarget))
+    {
+        document.getElementById("contextmenu-action-tab-mute").innerText = "Unmute tab";
+    }
+    else
+    {
+        document.getElementById("contextmenu-action-tab-mute").innerText = "Mute tab";
     }
 
     let contextmenuDomElement = document.getElementById("contextmenu");
