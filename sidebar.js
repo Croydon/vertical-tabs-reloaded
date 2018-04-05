@@ -361,7 +361,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     tabElement.removeAttribute("pinned");
-                    // tabElement.getElementById("tabbrowser-tabs").appendChild(tabElement.getElementById("tab-"+tabID)); // unpinning triggers index update as well
+                    document.getElementById("tabbrowser-tabs").insertBefore(tabElement, document.getElementById("tabbrowser-tabs").firstChild); // tabs unpinned are getting moved at the beginning of all regular tabs
+                    // OLD: tabElement.getElementById("tabbrowser-tabs").appendChild(tabElement.getElementById("tab-"+tabID)); // unpinning triggers index update as well
                 }
                 break;
 
@@ -540,7 +541,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         if(await utils.tabs.isActive(tabID))
         {
             log.debug("tab is active. scroll to it");
-            setTimeout(this.scroll_to_tab(tabID), 100);
+            this.scroll_to_tab(tabID);
         }
     }
 
