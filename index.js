@@ -80,109 +80,126 @@ function manage_installation(details)
     });
 }
 
+// Set up listener
+
 browser.runtime.onInstalled.addListener(manage_installation);
 
-
-// browser.runtime.onMessage.addListener(message_handler); // sidebar script listener
-
-setTimeout(() =>
+browser.runtime.onConnect.addListener((port) =>
 {
-    // Set up listener
-
-    browser.storage.onChanged.addListener(utils.options.on_options_change);
-
-    browser.windows.onCreated.addListener((window) =>
+    if(port.sender.id == browser.runtime.id)
     {
-        utils.windows.add(window.id);
-    });
-
-    browser.windows.onRemoved.addListener((windowID) =>
-    {
-        utils.windows.remove(windowID);
-    });
-
-    browser.windows.getAll({windowTypes: ["normal", "popup"]}).then((windowInfoArray) =>
-    {
-        for (let windowInfo of windowInfoArray)
+        port.onDisconnect.addListener((port) =>
         {
-            utils.windows.add(windowInfo.id);
-        }
-    });
+            let portInfo = port.name.split("-");
+            if(portInfo[0] == "sidebarAction")
+            {
+                utils.windows.setSidebarOpenedStatus(portInfo[1], false);
+            }
+        });
 
-    browser.windows.onFocusChanged.addListener((windowID) =>
-    {
-        utils.windows.setCurrentWindow(windowID);
-    });
-
-    browser.windows.getCurrent({windowTypes: ["normal", "popup"]}).then((currentWindow) =>
-    {
-        utils.windows.setCurrentWindow(currentWindow.id);
-    });
-
-    /* browser.commands.onCommand.addListener((command) =>
-    {
-         if (command == "toggleTabbrowser")
+        port.onMessage.addListener((message) =>
         {
-            // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
-             if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
+            if(message["message"]["type"] == "sidebarAction")
             {
-                utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
-                browser.sidebarAction.open();
+                utils.windows.setSidebarOpenedStatus(message["message"]["windowID"], true);
             }
-            else
-            {
-                utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
-                browser.sidebarAction.close();
-            }
-        }
-    }); */
+        });
+    }
+});
 
+browser.storage.onChanged.addListener(utils.options.on_options_change);
 
-    browser.browserAction.onClicked.addListener(() =>
+browser.windows.onCreated.addListener((window) =>
+{
+    utils.windows.add(window.id);
+});
+
+browser.windows.onRemoved.addListener((windowID) =>
+{
+    utils.windows.remove(windowID);
+});
+
+browser.windows.getAll({windowTypes: ["normal", "popup"]}).then((windowInfoArray) =>
+{
+    for (let windowInfo of windowInfoArray)
     {
-        if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
+        utils.windows.add(windowInfo.id);
+    }
+});
+
+browser.windows.onFocusChanged.addListener((windowID) =>
+{
+    utils.windows.setCurrentWindow(windowID);
+});
+
+browser.windows.getCurrent({windowTypes: ["normal", "popup"]}).then((currentWindow) =>
+{
+    utils.windows.setCurrentWindow(currentWindow.id);
+});
+
+/* browser.commands.onCommand.addListener((command) =>
+{
+     if (command == "toggleTabbrowser")
+    {
+        // FIREFIX: FIXME: Firefox dones't count hotkeys as "user input" therefore dones't allow us here to toggle the sidebar... stupid.
+         if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
         {
             utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
-            // FIXME: Create "does function exists utils module" to tackle different browsers+versions
-            if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.open == "undefined")
-            {
-                return;
-            }
             browser.sidebarAction.open();
         }
         else
         {
             utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
-            if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.close == "undefined")
-            {
-                return;
-            }
             browser.sidebarAction.close();
         }
-    });
+    }
+}); */
 
-    if(typeof browser.runtime.getBrowserInfo == "undefined")
+
+browser.browserAction.onClicked.addListener(() =>
+{
+    if(utils.windows.getSidebarOpenedStatus(utils.windows.getCurrentWindow()) == false)
     {
-        // This likely means we are running in Opera, set same setting as in Firefox Nightly
-        utils.options.set_alpha_settings();
+        utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), true);
+        // FIXME: Create "does function exists utils module" to tackle different browsers+versions
+        if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.open == "undefined")
+        {
+            return;
+        }
+        browser.sidebarAction.open();
     }
     else
     {
-        browser.runtime.getBrowserInfo().then((browserInfo) =>
+        utils.windows.setSidebarOpenedStatus(utils.windows.getCurrentWindow(), false);
+        if(typeof browser.sidebarAction == "undefined" || typeof browser.sidebarAction.close == "undefined")
         {
-            let version = browserInfo.version;
-
-            // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
-            if(version.includes("a"))
-            {
-                utils.options.set_alpha_settings();
-            }
-
-            // Enforce debugging and hidden settings for Firefox Beta
-            if(version.includes("b"))
-            {
-                utils.options.set_beta_settings();
-            }
-        });
+            return;
+        }
+        browser.sidebarAction.close();
     }
-}, 50);
+});
+
+if(typeof browser.runtime.getBrowserInfo == "undefined")
+{
+    // This likely means we are running in Opera, set same setting as in Firefox Nightly
+    utils.options.set_alpha_settings();
+}
+else
+{
+    browser.runtime.getBrowserInfo().then((browserInfo) =>
+    {
+        let version = browserInfo.version;
+
+        // Enforce debugging, hidden settings and experiment flag to true for Firefox Nightly
+        if(version.includes("a"))
+        {
+            utils.options.set_alpha_settings();
+        }
+
+        // Enforce debugging and hidden settings for Firefox Beta
+        if(version.includes("b"))
+        {
+            utils.options.set_beta_settings();
+        }
+    });
+}

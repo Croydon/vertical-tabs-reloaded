@@ -1,6 +1,6 @@
 "use strict";
 
-/* global main utils log */
+/* global utils log */
 
 var options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
 
@@ -31,8 +31,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.initEventListeners();
         this.toolbar_activate();
         this.check_scrollbar_status();
-        // Set sidebar status in non-private windows
-        if(typeof main != "undefined") { main.utils.windows.setSidebarOpenedStatus(this.windowID, true); }
+
+        let connectName = "sidebarAction-" + this.windowID;
+        let port = browser.runtime.connect({"name": connectName});
+        port.postMessage({"message": {type: "sidebarAction", windowID: this.windowID}});
+
         this.initialized = true;
     }
 
@@ -988,8 +991,6 @@ async function contextmenuShow(e)
 
 window.addEventListener("load", () =>
 {
-    log.debug("load event fired!");
-
     options.get_options_file().then(() =>
     {
         new VerticalTabsReloaded();
