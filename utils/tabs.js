@@ -143,6 +143,15 @@ utils["tabs"] = class tabutils
         this.close(closeTheseTabs);
     }
 
+    static async restoreLastClosedTab()
+    {
+        let lastSession = await browser.sessions.getRecentlyClosed({maxResults: 1});
+        if(typeof lastSession[0].tab != "undefined")
+        {
+            browser.sessions.restore(lastSession[0].tab.sessionId);
+        }
+    }
+
     static async isActive(tabID)
     {
         return await this._isTabSomething(tabID, "active");
