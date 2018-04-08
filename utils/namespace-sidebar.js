@@ -11,8 +11,8 @@ if(browser.extension.getBackgroundPage() != null)
 {
     // REGULAR WINDOWS
     main = browser.extension.getBackgroundPage();
-    utils = main.utils;
-    log = main.utils.log;
+    utils = {};
+    log = utils.log;
     // options = main.utils.options; // see sidebar.js
 }
 else

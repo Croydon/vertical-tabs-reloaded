@@ -91,15 +91,6 @@ setTimeout(() =>
 
     browser.storage.onChanged.addListener(utils.options.on_options_change);
 
-    // Set inital value for debug logging enabled
-    browser.storage.local.get("debug").then(results =>
-    {
-        if (results.hasOwnProperty("debug"))
-        {
-            utils.log.debugEnabled = results.debug;
-        }
-    });
-
     browser.windows.onCreated.addListener((window) =>
     {
         utils.windows.add(window.id);
