@@ -14,10 +14,6 @@ Installation: [![https://addons.mozilla.org/firefox/addon/vertical-tabs-reloaded
 If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydon/4,99)
 
 
-## Firefox ESR v52 users
-Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addon/vertical-tabs-reloaded/versions/?page=1#version-0.8.2
-
-
 ## Features
 
  * arranges tabs vertical
@@ -39,6 +35,14 @@ Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addo
 ## Platform Support
 
 Only the latest Firefox version is fully supported. Compatibility with the latest [ESR version](https://www.mozilla.org/en-US/firefox/organizations/faq/) will not get broken on purpose, but it might be necessary to do so sometimes. Pull requests fixing compatibility with the latest ESR version have a good chance to get accepted. Pull requests concerning other versions as the latest Firefox version or the latest Firefox ESR version will not be accepted.
+
+### Firefox ESR 60 support
+Vertical Tabs Reloaded will actively support (i.e. feature updates) ESR 60 for at least 12 weeks (around Firefox 62) up to 18 weeks (around Firefox 63) and bug fixing only support for additional ~ 6 weeks.
+
+While full support for a year would be nice, it would mean freezing features for too long as the WebExtension API is still rather immature and actively developing.
+
+### Firefox ESR 52 users
+Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addon/vertical-tabs-reloaded/versions/?page=1#version-0.8.2
 
 
 ## Building
