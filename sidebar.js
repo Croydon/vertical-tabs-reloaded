@@ -2,15 +2,16 @@
 
 /* global main utils log */
 
+var options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
+
 /* Entry point for every VTR sidebar for every window */
 var VerticalTabsReloaded = class VerticalTabsReloaded
 {
     constructor()
     {
-        main.get_setting().then((value) =>
+        options.get_all_settings().then((value) =>
         {
             this.webExtPreferences = value;
-            this.changedDisplayState = false;
             this.selectedTabID = undefined;
             this.initialized = false;
 
@@ -30,7 +31,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.initEventListeners();
         this.toolbar_activate();
         this.check_scrollbar_status();
-        main.utils.windows.setSidebarOpenedStatus(this.windowID, true);
+        // Set sidebar status in non-private windows
+        if(typeof main != "undefined") { main.utils.windows.setSidebarOpenedStatus(this.windowID, true); }
         this.initialized = true;
     }
 
@@ -211,7 +213,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         let id = tab.id;
         log.debug("start tab creation of tab id: " + id);
-        console.time("start-tab-" + id);
+        // console.time("start-tab-" + id);
 
         // let url = tab.url;
         let title = "Connecting...";
@@ -262,7 +264,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.tabbrowser.insertAdjacentHTML("beforeend", tabHTML);
         }
 
-        console.timeEnd("start-tab-" + id);
+        // console.timeEnd("start-tab-" + id);
     }
 
     finish_create_tab_event()
@@ -272,7 +274,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             let id = utils.tabs.getIDFromHTMLID(tabElement.id);
 
             log.debug("finish tab creation of tab id: " + id);
-            console.time("finish-tab-" + id);
+            // console.time("finish-tab-" + id);
 
             let tabIndex = utils.tabs.getIndexFrom(id);
 
@@ -312,7 +314,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                     this.move_tab(id, tabIndex, tab.index);
                 }
 
-                console.timeEnd("finish-tab-" + id);
+                // console.timeEnd("finish-tab-" + id);
             });
         });
     }
@@ -321,7 +323,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     {
         if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
-        console.time("update-tab-" + tabID);
+        // console.time("update-tab-" + tabID);
 
         let tabElement = document.getElementById("tab-" + tabID);
         let tryrun = 1;
@@ -473,7 +475,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 // break;
         }
 
-        console.timeEnd("update-tab-" + tabID);
+        // console.timeEnd("update-tab-" + tabID);
     }
 
     async move_tab(tabID, fromIndex, toIndex)
@@ -840,30 +842,27 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
             else
             {
-                main.get_setting("events.tab.close.mouse.middleclick").then((value) =>
+                if(this.preferences("events.tab.close.mouse.middleclick") == true)
                 {
-                    if(value == true)
+                    let tryrun = 1;
+                    let tabElement = e.target;
+                    let isTabElement = utils.tabs.isTabElement(tabElement);
+                    while(isTabElement == false && tryrun < 5)
                     {
-                        let tryrun = 1;
-                        let tabElement = e.target;
-                        let isTabElement = utils.tabs.isTabElement(tabElement);
-                        while(isTabElement == false && tryrun < 5)
-                        {
-                            tabElement = tabElement.parentNode;
-                            isTabElement = utils.tabs.isTabElement(tabElement);
-                            tryrun++;
-                        }
+                        tabElement = tabElement.parentNode;
+                        isTabElement = utils.tabs.isTabElement(tabElement);
+                        tryrun++;
+                    }
 
-                        if(isTabElement == true)
-                        {
-                            utils.tabs.close(utils.tabs.getIDFromHTMLID(tabElement.id));
-                        }
-                    }
-                    else
+                    if(isTabElement == true)
                     {
-                        log.debug("Tab closing with mouse middle click is disabled");
+                        utils.tabs.close(utils.tabs.getIDFromHTMLID(tabElement.id));
                     }
-                });
+                }
+                else
+                {
+                    log.debug("Tab closing with mouse middle click is disabled");
+                }
             }
         });
 
@@ -938,21 +937,21 @@ async function contextmenuShow(e)
     // Pin or unpin?
     if(await utils.tabs.isPinned(contextmenuTarget))
     {
-        document.getElementById("contextmenu-action-tab-pin").innerText = "Unpin tab";
+        document.getElementById("contextmenu-action-tab-pin").innerText = "Unpin Tab";
     }
     else
     {
-        document.getElementById("contextmenu-action-tab-pin").innerText = "Pin tab";
+        document.getElementById("contextmenu-action-tab-pin").innerText = "Pin Tab";
     }
 
     // Mute or unmute?
     if(await utils.tabs.isMuted(contextmenuTarget))
     {
-        document.getElementById("contextmenu-action-tab-mute").innerText = "Unmute tab";
+        document.getElementById("contextmenu-action-tab-mute").innerText = "Unmute Tab";
     }
     else
     {
-        document.getElementById("contextmenu-action-tab-mute").innerText = "Mute tab";
+        document.getElementById("contextmenu-action-tab-mute").innerText = "Mute Tab";
     }
 
     let contextmenuDomElement = document.getElementById("contextmenu");
@@ -991,7 +990,10 @@ window.addEventListener("load", () =>
 {
     log.debug("load event fired!");
 
-    new VerticalTabsReloaded();
+    options.get_options_file().then(() =>
+    {
+        new VerticalTabsReloaded();
+    });
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
     document.getElementById("tabbrowser-tabs").addEventListener("contextmenu", (e) => contextmenuShow(e));
@@ -1002,6 +1004,7 @@ window.addEventListener("load", () =>
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-discard").addEventListener("click", (e) => { utils.tabs.discard(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
+
     document.getElementById("contextmenu-action-tab-reload-all").addEventListener("click", (e) => { utils.tabs.reloadAllVisibleTabs(); });
     document.getElementById("contextmenu-action-tab-close-below").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "below"); });
     document.getElementById("contextmenu-action-tab-close-above").addEventListener("click", (e) => { utils.tabs.closeTabsRelativeTo(contextmenuTarget, "above"); });

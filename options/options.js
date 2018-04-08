@@ -1,14 +1,23 @@
 "use strict";
 
+if(browser.extension.getBackgroundPage() == null)
+{
+    document.getElementById("settings").insertAdjacentHTML("beforebegin", "<h1>Please open the options page in a regular, non-private window.</h1>");
+}
+
 var main = browser.extension.getBackgroundPage();
+var utils = main.utils;
+var log = utils.log; /* exported log */
+var options = utils.options;
+
 var blockSaveEvent = false;
 
-var settings = main.get_options_object();
+var settings = options.get_options_object();
 
 /* exported setDefaultPrefs */
 function setDefaultPrefs()
 {
-    main.restore_default_settings();
+    options.restore_default_settings();
 }
 
 function save_setting(event)
@@ -28,7 +37,7 @@ function save_setting(event)
     }
 
     // main.debug_log(event.target.id + " new value: " + value);
-    main.save_setting(event.target.id, value);
+    options.save_setting(event.target.id, value);
 }
 
 function build()
@@ -108,7 +117,7 @@ function load_value(input)
     // buttons don't have values
     if(input.type != "button")
     {
-        main.get_setting(input.id).then(value =>
+        options.get_setting(input.id).then(value =>
         {
             if(input.type == "checkbox")
             {
@@ -162,7 +171,7 @@ function update_all_inputs()
 
     blockSaveEvent = false;
 
-    main.get_setting("showHiddenSettings").then(value =>
+    options.get_setting("showHiddenSettings").then(value =>
     {
         let newDisplay = ""; // see default CSS
 
@@ -179,11 +188,11 @@ function update_all_inputs()
         }
     });
 
-    main.get_setting("showHiddenSettings").then(value =>
+    options.get_setting("showHiddenSettings").then(value =>
     {
         if(value == false) { return; }
 
-        main.get_setting("experiment").then(value =>
+        options.get_setting("experiment").then(value =>
         {
             let newDisplay = ""; // see default CSS
 
@@ -203,27 +212,30 @@ function update_all_inputs()
 
 /* function oncontentmenu_show_hidden_options()
 {
-    main.save_setting("showHiddenSettings", true);
+    options.save_setting("showHiddenSettings", true);
 } */
 
 document.addEventListener("DOMContentLoaded", () =>
 {
-    this.document.getElementById("options-actions-show-notes").addEventListener("click", () =>
+    document.getElementById("options-actions-show-notes").addEventListener("click", () =>
     {
         browser.tabs.update({url: browser.runtime.getURL("notes/index.html")});
     });
 
-    build();
-
-    update_all_inputs();
-
-    let inputs = document.querySelectorAll("input, select, button");
-    for (let anInput of inputs)
+    options.get_options_file().then(() =>
     {
-        add_events(anInput);
-    }
+        build();
 
-    // document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
+        update_all_inputs();
 
-    browser.storage.onChanged.addListener(update_all_inputs);
+        let inputs = document.querySelectorAll("input, select, button");
+        for (let anInput of inputs)
+        {
+            add_events(anInput);
+        }
+
+        // document.getElementById("contextmenu-show-hidden-options").onclick = oncontentmenu_show_hidden_options;
+
+        browser.storage.onChanged.addListener(update_all_inputs);
+    });
 });
