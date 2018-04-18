@@ -132,7 +132,7 @@
 	 margin-right: 1px !important;
 	 background-color: red;*/
 	 background-position: center center;
-	 width: 22px;
+	 width: 24px;
 	 height: 22px;
 	 background-size: var(--vtr-tab-button-close-width) var(--vtr-tab-button-close-height);
 }
