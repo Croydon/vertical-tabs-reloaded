@@ -30,7 +30,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         this.build_ui();
         this.initEventListeners();
         this.toolbar_activate();
-        this.check_scrollbar_status();
 
         let connectName = "sidebarAction-" + this.windowID;
         let port = browser.runtime.connect({"name": connectName});
@@ -153,20 +152,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.create_tab(tab);
             }
         });
-    }
-
-    check_scrollbar_status()
-    {
-        if(this.tabbrowser.scrollHeight > this.tabbrowser.clientHeight)
-        {
-            this.tabbrowser.classList.remove("no-scrollbar");
-            this.tabbrowser.classList.add("scrollbar-visible");
-        }
-        else
-        {
-            this.tabbrowser.classList.remove("scrollbar-visible");
-            this.tabbrowser.classList.add("no-scrollbar");
-        }
     }
 
     /* FIREFIX: Firefox's security policy prevents us from loading some default icons,
@@ -302,12 +287,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
                 this.update_tab(id, "discarded", tab.discarded);
-
-                if(this.initialized == true)
-                {
-                    // At startup we would check that for every single tab, which is nonsense
-                    this.check_scrollbar_status();
-                }
 
                 document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
                 document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
@@ -590,8 +569,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
 
             document.getElementById("tab-" + tabID).remove();
-
-            this.check_scrollbar_status();
         }
     }
 

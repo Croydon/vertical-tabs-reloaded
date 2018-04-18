@@ -131,7 +131,7 @@ body
 
 
 .tabbrowser-tab {
-	position: relative;
+    position: relative;
     pointer-events: auto;
     min-width: 30px;
     max-width: 100vw;
