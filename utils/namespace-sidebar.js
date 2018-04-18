@@ -11,14 +11,14 @@ if(browser.extension.getBackgroundPage() != null)
 {
     // REGULAR WINDOWS
     main = browser.extension.getBackgroundPage();
-    utils = {};
-    log = utils.log;
     // options = main.utils.options; // see sidebar.js
 }
 else
 {
     // PRIVATE WINDOWS
-    utils = {};
-    log = utils.log;
     // options = utils.options; // see sidebar.js
 }
+
+// for all windows
+utils = {};
+log = utils.log;
