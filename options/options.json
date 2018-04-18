@@ -12,6 +12,12 @@
         "title": "Close tabs with mouse middle click",
         "value": false
     },
+    "style.tab.button.close.displayalways": {
+        "name": "style.tab.button.close.displayalways",
+        "type": "bool",
+        "title": "Display the close button on all tabs (except pinned tabs)",
+        "value": false
+    },
     "style.tab.showUrlInTooltip": {
         "name": "style.tab.showUrlInTooltip",
         "type": "menulist",
@@ -107,14 +113,6 @@
 		"value": false,
 		"hidden": true
 	},
-    "style.tab.button.close.displayalways": {
-        "name": "style.tab.button.close.displayalways",
-        "type": "bool",
-        "title": "<b>Experimental:</b> Display the close button on all tabs (except pinned tabs)",
-        "value": false,
-        "hidden": true,
-        "experimental": true
-    },
     "options.sync.enabled": {
         "name": "options.sync.enabled",
         "type": "bool",
