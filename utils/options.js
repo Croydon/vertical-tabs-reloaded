@@ -133,7 +133,7 @@ var OptionsUtils = class OptionsUtils
             this.reset_experimental_features();
         }
 
-        if(name != "meta.options.time.lastsaved")
+        if(name != "meta.options.time.lastsaved" && name != "options.sync.enabled")
         {
             this.save_setting("meta.options.time.lastsaved", utils.time.getTimestamp());
         }
