@@ -92,6 +92,12 @@
 		"title": "Reset preferences of VTR",
 		"label": "Restore default preferences"
 	},
+    "options.sync.enabled": {
+        "name": "options.sync.enabled",
+        "type": "bool",
+        "title": "Sync options across all devices via Firefox Sync (you need to have Firefox Sync enabled)",
+        "value": true
+    },
     "showHiddenSettings": {
         "name": "showHiddenSettings",
         "type": "bool",
@@ -113,14 +119,6 @@
 		"value": false,
 		"hidden": true
 	},
-    "options.sync.enabled": {
-        "name": "options.sync.enabled",
-        "type": "bool",
-        "title": "<b>Experimental:</b> Sync options across all devices via Firefox Sync",
-        "value": false,
-        "hidden": true,
-        "experimental": true
-    },
     "meta.options.time.lastsaved": {
         "name": "meta.options.time.lastsaved",
         "type": "integer",
