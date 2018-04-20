@@ -95,7 +95,8 @@
     "options.sync.enabled": {
         "name": "options.sync.enabled",
         "type": "bool",
-        "title": "Sync options across all devices via Firefox Sync (you need to have Firefox Sync enabled)",
+        "title": "Sync options across all devices via Firefox Sync",
+        "description": "You need to have Firefox Sync enabled",
         "value": true
     },
     "showHiddenSettings": {
