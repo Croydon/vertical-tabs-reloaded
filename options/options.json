@@ -15,7 +15,8 @@
     "style.tab.button.close.displayalways": {
         "name": "style.tab.button.close.displayalways",
         "type": "bool",
-        "title": "Display the close button on all tabs (except pinned tabs)",
+        "title": "Display the close button on all tabs",
+        "description": "All tabs except pinned tabs",
         "value": false
     },
     "style.tab.showUrlInTooltip": {
