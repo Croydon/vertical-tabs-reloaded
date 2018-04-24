@@ -78,7 +78,7 @@ var OptionsUtils = class OptionsUtils
     {
         if(area == "sync")
         {
-            Object.keys(changes).forEach(name =>
+            Object.keys(changes).forEach((name) =>
             {
                 if(name == "meta.options.time.lastsaved" || name == "options.sync.enabled") { return; }
 
@@ -86,7 +86,8 @@ var OptionsUtils = class OptionsUtils
                 {
                     if (results.hasOwnProperty("meta.options.time.lastsaved"))
                     {
-                        this.get_setting("meta.options.time.lastsaved").then(lastSavedLocal =>
+                        // This entire function is a callback, use the globally acccessible utils.options call instead of this
+                        utils.options.get_setting("meta.options.time.lastsaved").then(lastSavedLocal =>
                         {
                             if(results["meta.options.time.lastsaved"] > lastSavedLocal)
                             {
