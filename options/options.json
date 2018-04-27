@@ -121,6 +121,29 @@
 		"value": false,
 		"hidden": true
 	},
+    "events.tab.change.on": {
+        "name": "events.tab.change.on",
+        "type": "menulist",
+        "title": "<b>Experimental</b>: Change the active tab on...",
+        "value": "click",
+        "hidden": true,
+        "experimental": true,
+        "options": [
+            {
+                "value": "click",
+                "label": "Click only"
+            },
+            {
+                "value": "hover",
+                "label": "Hover over tabs"
+            },
+            {
+                "value": "click-scroll",
+                "label": "Click or scroll wheel"
+            }
+        ]
+    },
+
     "meta.options.time.lastsaved": {
         "name": "meta.options.time.lastsaved",
         "type": "integer",

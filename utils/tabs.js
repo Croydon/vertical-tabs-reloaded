@@ -119,6 +119,28 @@ utils["tabs"] = class tabutils
         });
     }
 
+    static selectNextToActiveTab(windowID, direction)
+    {
+        browser.tabs.query({"windowId": windowID, "active": true}).then((tabs) =>
+        {
+            let newActiveIndex;
+
+            if(direction == "down")
+            {
+                newActiveIndex = tabs[0].index + 1;
+            }
+            else if(direction == "up")
+            {
+                newActiveIndex = tabs[0].index - 1;
+            }
+
+            browser.tabs.query({"windowId": windowID, "index": newActiveIndex}).then((tabs) =>
+            {
+                browser.tabs.update(tabs[0].id, {active: true});
+            });
+        });
+    }
+
     static closeTabsRelativeTo(tabID, relativeTyp)
     {
         let tabIndex = this.getIndexFrom(tabID);

@@ -15,6 +15,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.selectedTabID = undefined;
             this.initialized = false;
 
+            this.documentY = 0;
+
             this.tabbrowser = document.getElementById("tabbrowser-tabs");
 
             browser.windows.getCurrent({windowTypes: ["normal"]}).then((windowObj) =>
@@ -40,7 +42,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     preferences(settingName)
     {
-        log.debug(settingName + " (lib): " + this.webExtPreferences[settingName]);
         return this.webExtPreferences[settingName];
     }
 
@@ -578,7 +579,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         // log.debug("set pinned sizes!");
     }
 
-    onPreferenceChange(prefName, newValue)
+    onPreferenceChange(prefName, newValue, oldValue)
     {
         switch (prefName)
         {
@@ -659,6 +660,40 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 });
                 break;
 
+            case "events.tab.change.on":
+                this.webExtPreferences[prefName] = newValue;
+
+                switch (oldValue)
+                {
+                    case "hover":
+                        document.getElementById("tabbrowser-tabs-pinned").removeEventListener("mouseover", this.on_hover_tabbrowser);
+                        document.getElementById("tabbrowser-tabs").removeEventListener("mouseover", this.on_hover_tabbrowser);
+                        break;
+
+                    case "click-scroll":
+                        // FIXME
+                        // log.debug("remove scroll event!");
+                        // document.removeEventListener("wheel", this.on_scroll_tabbrowser.call(this, event));
+                        break;
+                }
+
+                switch(newValue)
+                {
+                    case "hover":
+                        document.getElementById("tabbrowser-tabs-pinned").addEventListener("mouseover", this.on_hover_tabbrowser);
+                        document.getElementById("tabbrowser-tabs").addEventListener("mouseover", this.on_hover_tabbrowser);
+                        break;
+
+                    case "click-scroll":
+                        document.addEventListener("wheel", (e) => { this.on_scroll_tabbrowser(e); });
+                        break;
+
+                    default:
+                        log.debug("new value:" + newValue);
+                        break;
+                }
+                break;
+
             default:
                 this.webExtPreferences[prefName] = newValue;
                 break;
@@ -673,7 +708,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         Object.keys(changes).forEach(item =>
         {
             log.debug("on_storage: " + item + " " + changes[item].newValue);
-            this.onPreferenceChange(item, changes[item].newValue);
+            this.onPreferenceChange(item, changes[item].newValue, changes[item].oldValue);
         });
     }
 
@@ -846,8 +881,60 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             }
         });
 
+        /* window.setInterval(() =>
+        {
+            utils.self.documentY = this.tabbrowser.scrollTopscrollTop;
+        }, 800); */
+
+        if(this.preferences("events.tab.change.on") == "hover")
+        {
+            this.onPreferenceChange("events.tab.change.on", "hover", "NOVALUE");
+        }
+        else if(this.preferences("events.tab.change.on") == "click-scroll")
+        {
+            this.onPreferenceChange("events.tab.change.on", "click-scroll", "NOVALUE");
+        }
+
         // Old event handler: case "popupshowing":
         // return;
+    }
+
+    on_scroll_tabbrowser(e)
+    {
+        if(this.preferences("events.tab.change.on") != "click-scroll") { return; }
+
+        let direction;
+        if(e.deltaY > 0)
+        {
+            direction = "down";
+        }
+        else if(e.deltaY < 0)
+        {
+            direction = "up";
+        }
+        else
+        {
+            return;
+        }
+        utils.tabs.selectNextToActiveTab(utils.self.windowID, direction);
+    }
+
+    on_hover_tabbrowser(e)
+    {
+        let tryrun = 1;
+        let tabElement = e.target;
+        let isTabElement = utils.tabs.isTabElement(tabElement);
+        while(isTabElement == false && tryrun < 5)
+        {
+            tabElement = tabElement.parentNode;
+            isTabElement = utils.tabs.isTabElement(tabElement);
+            tryrun++;
+        }
+
+        if(isTabElement == true)
+        {
+            browser.tabs.update(utils.tabs.getIDFromHTMLID(tabElement.id), {active: true});
+        }
     }
 
     toolbar_activate()
@@ -970,7 +1057,7 @@ window.addEventListener("load", () =>
 {
     options.get_options_file().then(() =>
     {
-        new VerticalTabsReloaded();
+        utils["self"] = new VerticalTabsReloaded();
     });
 
     document.getElementById("tabbrowser-tabs-pinned").addEventListener("contextmenu", (e) => contextmenuShow(e));
