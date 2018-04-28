@@ -21,6 +21,7 @@ If you like my work you could [buy me a drink. ☕](https://www.paypal.me/cr0ydo
  * hide/display manually the tab sidebar with a hotkey (Ctrl+Shift+V) or by clicking on the VTR icon
  * display the tab toolbar at top, bottom (default) or hide it completely
  * show the tab status (unloaded, unready, busy) visually on the tabs
+ * sync settings across all devices
 
 
 ## Goals
