@@ -461,7 +461,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
                 else
                 {
-                    tabElement.style.display = "block";
+                    tabElement.style.display = "flex";
                 }
                 break;
             // case "index":
