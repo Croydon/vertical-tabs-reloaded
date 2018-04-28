@@ -114,6 +114,8 @@ utils["tabs"] = class tabutils
         {
             for(let tab of windowInfo.tabs)
             {
+                if(tab.hidden == true) { continue; }
+
                 browser.tabs.reload(tab.id);
             }
         });
@@ -149,6 +151,8 @@ utils["tabs"] = class tabutils
         let closeTheseTabs = [];
         for(let tab of window.document.querySelectorAll(".tabbrowser-tab"))
         {
+            if(tab.style.display == "none") { continue; }
+
             let currentTabID = this.getIDFromHTMLID(tab.id);
             let currentTabIndex = this.getIndexFrom(currentTabID);
 
