@@ -288,6 +288,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
                 this.update_tab(id, "discarded", tab.discarded);
+                this.update_tab(id, "hidden", tab.hidden);
 
                 document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
                 document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
@@ -453,6 +454,16 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
                 break;
 
+            case "hidden":
+                if(value == true)
+                {
+                    tabElement.style.display = "none";
+                }
+                else
+                {
+                    tabElement.style.display = "block";
+                }
+                break;
             // case "index":
                 // tabElement.setAttribute("data-index", value);
                 // break;
@@ -793,6 +804,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if (changeInfo.hasOwnProperty("discarded"))
             {
                 this.update_tab(tabID, "discarded", changeInfo["discarded"]);
+            }
+
+            if (changeInfo.hasOwnProperty("hidden"))
+            {
+                this.update_tab(tabID, "hidden", changeInfo["hidden"]);
             }
         });
 
