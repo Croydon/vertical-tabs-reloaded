@@ -31,6 +31,14 @@ function manage_installation(details)
                 }
             });
 
+            // Migrate toggleDisplayHotkey from legacy (pre-WebExtension format) to WebExtension FF60+ format
+            utils.options.get_setting("toggleDisplayHotkey").then(value =>
+            {
+                // While this only replaces the - with + it triggers an option change which in turns triggers the default
+                // hotkey validation check in utils/options.js; if it's invalid we reset to default hotkey
+                utils.options.save_setting("toggleDisplayHotkey", value.replace(/-/g, "+"));
+            });
+
             utils.options.get_setting("runtime.vtr.installedVersion").then((installedVersion) =>
             {
                 let previousVersion;
@@ -203,3 +211,10 @@ else
         }
     });
 }
+
+// FIXME: Once we are removing FF 60 (ESR) support and the legacy hotkey import, we can just use utils.options.update_hotkey() here
+// Setting hotkey for toggeling the sidebar
+utils.options.get_setting("toggleDisplayHotkey").then((value) =>
+{
+    browser.commands.update({"name": "_execute_sidebar_action", "shortcut": value});
+});

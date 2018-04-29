@@ -87,6 +87,13 @@
             }
 		]
 	},
+	"toggleDisplayHotkey": {
+		"name": "toggleDisplayHotkey",
+		"type": "string",
+		"title": "Hotkey for hiding/showing tab sidebar",
+        "description": "Learn which values are excepted <a href='https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/commands#Shortcut_values' target='_blank'>here</a>",
+		"value": "Ctrl+Shift+V"
+	},
 	"setDefaultPrefs": {
 		"name": "setDefaultPrefs",
 		"type": "control",

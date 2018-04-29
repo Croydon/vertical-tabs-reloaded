@@ -1,0 +1,65 @@
+body {
+    font-size: 1.25em;
+}
+table {
+    border-collapse: collapse;
+}
+
+tr td {
+    border-top: 1px solid #c1c1c1;
+}
+
+.preferences-description {
+    font-size: 90.9%;
+    color: graytext;
+    /*margin-top: -3px;*/
+    white-space: pre-wrap;
+}
+
+a, a:visited, a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: rgb(10, 141, 255);
+    text-decoration: underline;
+}
+
+.hidden-setting,
+.experimental-setting {
+    display: none;
+}
+
+/*
+select, input {
+    margin-left: 2px;
+}
+
+button {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+ select {
+    padding: 0.1em 3.5em 0.1em 1em !important;
+    background-image: url("chrome://global/skin/arrow/arrow-dn.gif") !important;
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        100% 0 !important;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.5em 2.5em !important;
+    background-repeat: no-repeat !important;
+    box-sizing: border-box !important;
+}
+
+select option {
+    font-size: 1em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-inline-start: 10px;
+    padding-inline-end: 30px;
+}*/

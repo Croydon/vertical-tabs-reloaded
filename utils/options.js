@@ -118,6 +118,11 @@ var OptionsUtils = class OptionsUtils
                 {
                     utils.log.debugEnabled = changes[name]["newValue"];
                 }
+
+                if(name == "toggleDisplayHotkey")
+                {
+                    utils.options.update_hotkey("sidebar.toggling", changes[name]["newValue"]);
+                }
             });
         }
     }
@@ -273,6 +278,7 @@ var OptionsUtils = class OptionsUtils
             {
                 let localDebugOutput = "VTR option '" + name + "': ";
                 let localDebug = false;
+                let localDebugWorthwhile = false;
 
                 if (!results.hasOwnProperty(name))
                 {
@@ -285,11 +291,12 @@ var OptionsUtils = class OptionsUtils
                     }
                     else
                     {
+                        localDebugWorthwhile = true;
                         if(name != "debug") { localDebug = true; localDebugOutput += "No default value found."; }
                     }
                 }
 
-                if(localDebug == true) { log.debug(localDebugOutput); }
+                if(localDebug == true && localDebugWorthwhile == true) { log.debug(localDebugOutput); }
 
                 fulfill(results[name]);
             }).catch(
@@ -314,6 +321,22 @@ var OptionsUtils = class OptionsUtils
         // Enforce debugging and hidden settings for Firefox Beta
         this.save_setting("showHiddenSettings", true);
         this.save_setting("debug", true);
+    }
+
+    async update_hotkey(name, value)
+    {
+        if(name == "sidebar.toggling")
+        {
+            try
+            {
+                await browser.commands.update({"name": "_execute_sidebar_action", "shortcut": value});
+            }
+            catch (error)
+            {
+                this.restore_default_setting_of("toggleDisplayHotkey");
+                log.debug(error);
+            }
+        }
     }
 };
 
