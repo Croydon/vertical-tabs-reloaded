@@ -190,6 +190,11 @@ utils["tabs"] = class tabutils
 
     static isTabElement(HTMLElement)
     {
+        if(HTMLElement == null || typeof HTMLElement.classList == "undefined")
+        {
+            return false;
+        }
+
         if(HTMLElement.classList.contains("tabbrowser-tab"))
         {
             return true;

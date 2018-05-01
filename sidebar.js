@@ -986,22 +986,48 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
 var contextmenuTarget = "NOTARGET";
 
-function contextmenuHide()
+function contextmenuMouseoutHelper(e)
 {
+    if(e.relatedTarget == null) { contextmenuHide(e); }
+}
+
+function contextmenuScrollHelper(e)
+{
+    contextmenuHide(e);
+}
+
+function contextmenuHide(e)
+{
+    e.stopPropagation();
+    e.preventDefault();
+
     if(contextmenuTarget != "NOTARGET")
     {
         document.getElementById("contextmenu").style.display = "";
-        document.getElementById("contextmenu").removeEventListener("click", contextmenuHide);
-        document.removeEventListener("scroll", (e) => { contextmenuHide(); }, true);
-        document.removeEventListener("mouseout", (e) => { if(e.relatedTarget == null) { contextmenuHide(); } });
+        document.getElementById("contextmenu").removeEventListener("click", contextmenuClickHelper);
+        document.removeEventListener("scroll", contextmenuScrollHelper, true);
+        document.removeEventListener("mouseout", contextmenuMouseoutHelper, true);
     }
 }
 
 async function contextmenuShow(e)
 {
     e.preventDefault();
+    e.stopPropagation();
 
-    contextmenuTarget = utils.tabs.getTargetID(e);
+    let tryrun = 1;
+    let tabElement = e.target;
+    let isTabElement = utils.tabs.isTabElement(tabElement);
+    while(isTabElement == false && tryrun < 10)
+    {
+        tabElement = tabElement.parentNode;
+        isTabElement = utils.tabs.isTabElement(tabElement);
+        tryrun++;
+    }
+
+    if(isTabElement != true) { return; }
+
+    contextmenuTarget = utils.tabs.getIDFromHTMLID(tabElement.id);
 
     log.debug("context menu target tabID: " + contextmenuTarget);
     log.debug("context menu target position: " + e.pageX + " y " + e.pageY);
@@ -1063,10 +1089,18 @@ async function contextmenuShow(e)
     }
 
     // Close context menu on scrolling as well on leaving the sidebar with the mouse
-    document.addEventListener("scroll", (e) => { contextmenuHide(); }, true);
-    document.addEventListener("mouseout", (e) => { if(e.relatedTarget == null) { contextmenuHide(); } });
+    document.addEventListener("scroll", contextmenuScrollHelper, true);
+    document.addEventListener("mouseout", contextmenuMouseoutHelper, true);
 
-    document.addEventListener("click", contextmenuHide);
+    document.addEventListener("click", contextmenuClickHelper);
+}
+
+function contextmenuClickHelper(e)
+{
+    // Catch the right click so we do not directly close the context menu again in some environments (FreeBSD, some Linux setups, ..?)
+    if(e.button == "2") { return; }
+
+    contextmenuHide(e);
 }
 
 window.addEventListener("load", () =>
@@ -1115,10 +1149,7 @@ function handleDragStart(e)
 
 function handleDragOver(e)
 {
-    if (e.preventDefault)
-    {
-        e.preventDefault(); // Necessary. Allows us to drop
-    }
+    e.preventDefault(); // Necessary. Allows us to drop
     // this.dragndropElement.classList.add("over");
 
     e.dataTransfer.dropEffect = "move"; // See the section on the DataTransfer object
@@ -1140,10 +1171,7 @@ function handleDragLeave(e)
 
 function handleDrop(e)
 {
-    if (e.stopPropagation)
-    {
-        e.stopPropagation(); // Stops from redirecting
-    }
+    e.stopPropagation(); // Stops from redirecting
 
     let dropTarget = e.target;
     let isTabElement = utils.tabs.isTabElement(dropTarget);
