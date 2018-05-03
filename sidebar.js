@@ -285,10 +285,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
 
                 this.update_tab(id, "title", tab.title);
+                this.update_tab(id, "favIconUrl", tab.favIconUrl);
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
                 this.update_tab(id, "discarded", tab.discarded);
                 this.update_tab(id, "hidden", tab.hidden);
+                this.update_tab(id, "status", tab.status);
 
                 document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
                 document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
