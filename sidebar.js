@@ -357,15 +357,15 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             case "favIconUrl":
                 value = this.normalize_tab_icon(value);
 
-                log.debug("status: " + tabElement.getAttribute("status"));
-                log.debug("favIconUrl loaded: " + value);
-
                 document.getElementById("tab-icon-" + tabID).setAttribute("data-src-after-loaded", value);
 
                 if(tabElement.getAttribute("status") != "loading")
                 {
                     document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
                 }
+
+                log.debug("status: " + tabElement.getAttribute("status"));
+                log.debug("favIconUrl loaded: " + value);
 
                 break;
 
