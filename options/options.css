@@ -1,6 +1,7 @@
 body {
     font-size: 1.25em;
 }
+
 table {
     border-collapse: collapse;
 }
@@ -29,6 +30,15 @@ a:hover {
 .hidden-setting,
 .experimental-setting {
     display: none;
+}
+
+button, input, select {
+    font-size: 0.9em;
+    min-width: 160px;
+}
+
+input[type="checkbox"], #options-actions-show-notes {
+    min-width: unset;
 }
 
 /*
