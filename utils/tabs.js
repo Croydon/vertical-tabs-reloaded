@@ -83,7 +83,10 @@ utils["tabs"] = class tabutils
     {
         tabID = this._convertIDtoInt(tabID);
 
-        browser.windows.create({"tabId": tabID});
+        browser.tabs.update(tabID, {active: true}).then(() =>
+        {
+            browser.windows.create({"tabId": tabID});
+        });
     }
 
     static setIndex(tabID, newIndex)
