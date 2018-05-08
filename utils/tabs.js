@@ -125,6 +125,8 @@ utils["tabs"] = class tabutils
     {
         browser.tabs.query({"windowId": windowID, "active": true}).then((tabs) =>
         {
+            if(tabs.length == 0) { return; }
+
             let newActiveIndex;
 
             if(direction == "down")
@@ -136,10 +138,18 @@ utils["tabs"] = class tabutils
                 newActiveIndex = tabs[0].index - 1;
             }
 
-            browser.tabs.query({"windowId": windowID, "index": newActiveIndex}).then((tabs) =>
+            let foundNextVisibleTab = false;
+            while(foundNextVisibleTab == false)
             {
-                browser.tabs.update(tabs[0].id, {active: true});
-            });
+                browser.tabs.query({"windowId": windowID, "index": newActiveIndex}).then((tabs) =>
+                {
+                    if(tabs.length == 0) { return; }
+
+                    if(tabs[0].hidden == false) { foundNextVisibleTab = true; }
+
+                    browser.tabs.update(tabs[0].id, {active: true});
+                });
+            }
         });
     }
 
