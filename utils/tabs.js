@@ -124,6 +124,42 @@ utils["tabs"] = class tabutils
         });
     }
 
+    static bookmarkAllVisibleTabs(e, name)
+    {
+        if(typeof name == "null")
+        {
+            name = "tabs";
+        }
+
+        browser.permissions.contains(["boomarks"]).then((result) =>
+        {
+            if(result == false)
+            {
+                browser.permissions.request("permissions": ["bookmarks"]).then((granted) =>
+                {
+                    if(granted == true)
+                    {
+                        bookmarkAllVisibleTabs(e, name);
+                    }
+                });
+            }
+            else
+            {
+                browser.bookmarks.create({"title": name, "type": "folder"}).then((bookmarkTreeNode) =>
+                {
+                    browser.windows.getCurrent({"windowTypes": ["normal"], "populate": true}).then((windowInfo) =>
+                    {
+                        for(let tab of windowInfo.tabs)
+                        {
+                            browser.tabs.reload(tab.id);
+                        }
+                    });
+                });
+
+            }
+        });
+    }
+
     static selectNextToActiveTab(windowID, direction)
     {
         browser.tabs.query({"windowId": windowID, "active": true}).then((tabs) =>
