@@ -126,20 +126,20 @@ utils["tabs"] = class tabutils
 
     static bookmarkAllVisibleTabs(e, name)
     {
-        if(typeof name == "null")
+        if(name == null)
         {
             name = "tabs";
         }
 
-        browser.permissions.contains(["boomarks"]).then((result) =>
+        browser.permissions.contains({"permissions": ["bookmarks"]}).then((result) =>
         {
             if(result == false)
             {
-                browser.permissions.request("permissions": ["bookmarks"]).then((granted) =>
+                browser.permissions.request({"permissions": ["bookmarks"]}).then((granted) =>
                 {
                     if(granted == true)
                     {
-                        bookmarkAllVisibleTabs(e, name);
+                        this.bookmarkAllVisibleTabs(e, name);
                     }
                 });
             }
@@ -155,7 +155,6 @@ utils["tabs"] = class tabutils
                         }
                     });
                 });
-
             }
         });
     }
