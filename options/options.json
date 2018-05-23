@@ -43,6 +43,22 @@
 			}
 		]
     },
+    "menu.context.bookmarks.create.place": {
+        "name": "menu.context.bookmarks.create.place",
+        "type": "menulist",
+        "title": "Choose place for bookmark folders",
+		"value": "toolbar_____",
+		"options": [
+			{
+				"value": "toolbar_____",
+				"label": "Bookmark toolbar"
+			},
+			{
+				"value": "unfiled_____",
+				"label": "Unfiled Bookmarks"
+            }
+		]
+    },
 	"theme": {
 		"name": "theme",
 		"type": "menulist",

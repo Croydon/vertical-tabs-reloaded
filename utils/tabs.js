@@ -131,31 +131,21 @@ utils["tabs"] = class tabutils
             name = "tabs";
         }
 
-        browser.permissions.contains({"permissions": ["bookmarks"]}).then((result) =>
+        utils.options.get_setting("menu.context.bookmarks.create.place").then((bookmarkCreatePlace) =>
         {
-            if(result == false)
+            browser.bookmarks.create({"title": name, "type": "folder", "parentId": bookmarkCreatePlace}).then((bookmarkTreeNode) =>
             {
-                browser.permissions.request({"permissions": ["bookmarks"]}).then((granted) =>
+                browser.windows.getCurrent({"windowTypes": ["normal"], "populate": true}).then((windowInfo) =>
                 {
-                    if(granted == true)
+                    let index = 0;
+                    for(let tab of windowInfo.tabs.reverse())
                     {
-                        this.bookmarkAllVisibleTabs(e, name);
+                        if(tab.hidden == true) { return; }
+                        browser.bookmarks.create({"title": tab.title, "url": tab.url, "index": index, "type": "bookmark", "parentId": bookmarkTreeNode.id});
+                        index++;
                     }
                 });
-            }
-            else
-            {
-                browser.bookmarks.create({"title": name, "type": "folder"}).then((bookmarkTreeNode) =>
-                {
-                    browser.windows.getCurrent({"windowTypes": ["normal"], "populate": true}).then((windowInfo) =>
-                    {
-                        for(let tab of windowInfo.tabs)
-                        {
-                            browser.tabs.reload(tab.id);
-                        }
-                    });
-                });
-            }
+            });
         });
     }
 
