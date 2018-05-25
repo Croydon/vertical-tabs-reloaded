@@ -14,6 +14,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             this.webExtPreferences = value;
             this.selectedTabID = undefined;
             this.initialized = false;
+            this.openedtabs = 0;
 
             this.documentY = 0;
 
@@ -301,6 +302,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
 
                 // console.timeEnd("finish-tab-" + id);
+                this.openedtabs++;
+                if(this.openedtabs == "2000") { console.timeEnd("sidebar"); }
             });
         });
     }
@@ -1107,6 +1110,7 @@ function contextmenuClickHelper(e)
 
 window.addEventListener("load", () =>
 {
+    console.time("sidebar");
     options.get_options_file().then(() =>
     {
         utils["self"] = new VerticalTabsReloaded();
