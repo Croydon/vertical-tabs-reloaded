@@ -303,7 +303,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
                 // console.timeEnd("finish-tab-" + id);
                 this.openedtabs++;
-                if(this.openedtabs == "2000") { console.timeEnd("sidebar"); }
+                if(this.openedtabs == "200") { console.timeEnd("sidebar"); }
             });
         });
     }
