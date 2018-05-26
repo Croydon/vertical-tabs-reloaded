@@ -1,5 +1,27 @@
 # Changelog
 
+### v0.11.0, 2018-06-26
+ * Updated Compatibility: Firefox 60+
+ * added: sync setting across devices via Firefox Sync (#73)
+ * added: compatibility to tab.hide API (#183)
+ * added: make the sidebar toggling hotkey editable again (#176)
+ * added: unload tab context menu option (#120)
+ * added: restore closed tab context menu option (#120)
+ * added: bookmark visible tabs context menu option (#120)
+ * added: option to display close button on every tab (#106)
+ * added: make the tab toolbar configurable (#163)
+ * fixed: major performance improvements (#158, #175)
+ * fixed: pinned tabs always display busy favicon after browser restart (#156)
+ * fixed: toggling of tab sidebar doesn't always work (#134)
+ * fixed: sidebar doesn't work in private mode (#167)
+ * fixed: tab context menu disappears instantly when right clicking on title or favicon (#171)
+ * fixed: sometimes the wrong tab gets closed (#177)
+ * internal: other improvements and cleanups
+
+
+***
+
+
 ### v0.10.0, 2018-03-26
  * Updated Compatibility: Firefox 59+
  * added: middle clicks on free space within the tab browser opens a new tab (#143)
