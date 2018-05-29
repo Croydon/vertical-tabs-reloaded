@@ -15,17 +15,18 @@ node_js:
   - "node"
 
 env:
-  - RUN=addons-linter
-  - RUN=eslint
+  - MANAGER=npm FLAGS="--global" RUN=addons-linter RUNFLAGS=""
+  - MANAGER=npm FLAGS="--global" RUN=eslint RUNFLAGS=""
+  - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings --root"
 
 before_script:
   - set -e
-  - npm install ${RUN} --global
+  - ${MANAGER} install ${RUN} ${FLAGS}
   - ${RUN} --version
   - ${RUN} --help
 
 script:
-  - ${RUN} .
+  - ${RUN} ${RUNFLAGS} .
 
 jobs:
   include:

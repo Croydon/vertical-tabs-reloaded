@@ -10,7 +10,7 @@
     z-index: 2;
 }
 
-#contextmenu #contextmenu-items
+#contextmenu .contextmenu-items
 {
     list-style: none;
     margin: 0px;
@@ -32,20 +32,20 @@
     margin-top: -1px;
 }
 
-#contextmenu #contextmenu-items li
+#contextmenu .contextmenu-items li
 {
     padding: 2px;
     padding-left: 10px;
     border-bottom: 1px solid #B2B2B2;
 }
 
-#contextmenu #contextmenu-items li:last-child
+#contextmenu .contextmenu-items li:last-child
 {
     border-bottom: none;
 }
 
 
-#contextmenu #contextmenu-items :hover
+#contextmenu .contextmenu-items :hover
 {
     color: white;
     background: #284570;

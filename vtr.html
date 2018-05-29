@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <title>Vertical Tabs Reloaded</title>
     <link rel="stylesheet" href="data/theme/base.css" id="vtr-base">
     <link rel="stylesheet" href="data/contextmenu.css" id="vtr-contextmenu">
 </head>
@@ -14,12 +15,12 @@
     </div>
 
     <div id="TabsToolbar">
-        <span id="toolbar-action-tab-new" title="Open New Tab"><img src="data/chrome/icon/newtab.svg" style="width:14px;height:14px;"></span>
-        <span id="toolbar-action-options" title="Vertical Tabs Reloaded Options"><img src="data/chrome/icon/settings.svg" style="width:14px;height:14px;"></span>
+        <span id="toolbar-action-tab-new" title="Open New Tab"><img src="data/chrome/icon/newtab.svg" alt="➕" style="width:14px;height:14px;"></span>
+        <span id="toolbar-action-options" title="Vertical Tabs Reloaded Options"><img src="data/chrome/icon/settings.svg" alt="⚙️"  style="width:14px;height:14px;"></span>
     </div>
 
     <div id="contextmenu">
-        <ul id="contextmenu-items">
+        <ul class="contextmenu-items">
             <li id="contextmenu-action-tab-reload">Reload Tab</li>
             <li id="contextmenu-action-tab-discard">Unload Tab</li>
             <li id="contextmenu-action-tab-pin">Pin/Unpin Tab</li>
@@ -27,7 +28,7 @@
             <li id="contextmenu-action-tab-move-new-window">Move to New Window</li>
         </ul>
         <hr>
-        <ul id="contextmenu-items">
+        <ul class="contextmenu-items">
             <li id="contextmenu-action-tab-reload-all">Reload All Tabs</li>
             <li id="contextmenu-action-tab-bookmark-all">Bookmark All Tabs</li>
             <li id="contextmenu-action-tab-close-above">Close All Tabs Above</li>
@@ -35,7 +36,7 @@
             <li id="contextmenu-action-tab-close-others">Close All Other Tabs</li>
         </ul>
         <hr>
-        <ul id="contextmenu-items">
+        <ul class="contextmenu-items">
             <li id="contextmenu-action-tab-restore-closed">Restore Closed Tab</li>
             <li id="contextmenu-action-tab-close">Close Tab</li>
         </ul>
