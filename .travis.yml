@@ -18,6 +18,8 @@ env:
   - MANAGER=npm FLAGS="--global" RUN=addons-linter RUNFLAGS=""
   - MANAGER=npm FLAGS="--global" RUN=eslint RUNFLAGS=""
   - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings --root"
+  - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings --skip-non-css --root"
+  - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings --skip-non-svg --root" ALLOWFAILURE="true"
 
 before_script:
   - set -e
@@ -26,7 +28,9 @@ before_script:
   - ${RUN} --help
 
 script:
-  - ${RUN} ${RUNFLAGS} .
+  - if [[ -z "${ALLOWFAILURE}" ]]; then ${RUN} ${RUNFLAGS} . ; fi;
+  - if [[ -n "${ALLOWFAILURE}" ]]; then ${RUN} ${RUNFLAGS} . || true ; fi;
+
 
 jobs:
   include:
