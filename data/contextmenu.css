@@ -10,8 +10,13 @@
     z-index: 2;
 }
 
++ad {
+
+}
 #contextmenu .contextmenu-items
 {
+    nonsense: bla;
+    
     list-style: none;
     margin: 0px;
     margin-top: 2px;

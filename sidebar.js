@@ -532,7 +532,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             insertBeforeTab.parentNode.insertBefore(document.getElementById("tab-" + tabID), insertBeforeTab);
         }
 
-        utils.tabs.updateTabIndexes();
+        utils.tabs.updateTabInddexes();
 
         // When the current active tab is getting moved we are scrolling the tab browser, to keep the active tab in sight
         // The main purpose of this should be the interference of third-party add-ons
