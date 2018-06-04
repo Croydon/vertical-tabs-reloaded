@@ -18,6 +18,8 @@ env:
   - MANAGER=npm FLAGS="--global" RUN=addons-linter RUNFLAGS=""
   - MANAGER=npm FLAGS="--global" RUN=eslint RUNFLAGS=""
   - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings --root"
+  - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings -skip-non-css --root"
+  - MANAGER=pip FLAGS="--user" RUN="html5validator" RUNFLAGS="--show-warnings -skip-non-svg --root"
 
 before_script:
   - set -e
