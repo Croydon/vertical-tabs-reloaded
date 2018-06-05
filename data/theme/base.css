@@ -1,7 +1,7 @@
 body
 {
-    /* font: message-box from the legacy VTR add-on, rest default in Firefox */
-    font: message-box, 3mm tahoma,arial,helvetica,sans-serif;
+    /* font-family: message-box from the legacy VTR add-on, rest default in Firefox */
+    font-family: sans-serif,serif,helvetica;
     height: 100vh;
     display: flex;
     flex-flow: column;
