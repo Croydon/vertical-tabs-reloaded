@@ -1,4 +1,11 @@
 {
+    "style.tab.font.size": {
+        "name": "style.tab.font.size",
+        "type": "integer",
+        "title": "Tab title font size in px",
+        "description": "TODO",
+        "value": 0
+    },
     "style.tab.status": {
         "name": "style.tab.status",
         "type": "bool",
