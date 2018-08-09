@@ -285,6 +285,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
 
                 this.update_tab(id, "title", tab.title);
+                this.update_tab(id, "font-size", tab.fontsize);
                 this.update_tab(id, "favIconUrl", tab.favIconUrl);
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
@@ -332,6 +333,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
         switch(attribute)
         {
+            case "font-size":
+                document.getElementById("tab-title-" + tabID).style['font-size'] = value.toString() + "px";
+                break;
             case "title":
                 document.getElementById("tab-title-" + tabID).innerText = value;
                 browser.tabs.get(tabID).then((tab) =>
@@ -662,6 +666,17 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 }
                 break;
 
+            case "style.tab.font.size":
+                this.webExtPreferences[prefName] = newValue;
+                browser.tabs.query({windowId: this.windowID}).then((tabs) =>
+                {
+                    for(let tab of tabs)
+                    {
+                        this.update_tab(tab.id, "font-size", newValue);
+                    }
+                });
+                break;
+
             case "style.tab.showUrlInTooltip":
                 this.webExtPreferences[prefName] = newValue;
                 browser.tabs.query({windowId: this.windowID}).then((tabs) =>
@@ -773,6 +788,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             if (changeInfo.hasOwnProperty("title"))
             {
                 this.update_tab(tabID, "title", changeInfo["title"]);
+            }
+
+            if (changeInfo.hasOwnProperty("fontsize"))
+            {
+                this.update_tab(tabID, "font-size", changeInfo["fontsize"]);
             }
 
             if (changeInfo.hasOwnProperty("pinned"))
