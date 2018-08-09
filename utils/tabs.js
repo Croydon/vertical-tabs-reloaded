@@ -59,6 +59,14 @@ utils["tabs"] = class tabutils
         });
     }
 
+    // Duplicates a tab
+    static duplicate(tabID)
+    {
+        tabID = this._convertIDtoInt(tabID);
+
+        browser.tabs.duplicate(tabID);
+    }
+
     // Toggles muting status
     static mute(tabID)
     {

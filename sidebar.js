@@ -626,7 +626,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.applyThemeStylesheet();
                 break;
 
-            /* case "compact":
+                /* case "compact":
                 this.webExtPreferences[prefName] = newValue;
                 if (this.preferences("compact") == true)
                 {
@@ -1118,6 +1118,7 @@ window.addEventListener("load", () =>
     document.getElementById("contextmenu-action-tab-close").addEventListener("click", (e) => { utils.tabs.close(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-reload").addEventListener("click", (e) => { utils.tabs.reload(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-pin").addEventListener("click", (e) => { utils.tabs.pin(contextmenuTarget); });
+    document.getElementById("contextmenu-action-tab-duplicate").addEventListener("click", (e) => { utils.tabs.duplicate(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-mute").addEventListener("click", (e) => { utils.tabs.mute(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-discard").addEventListener("click", (e) => { utils.tabs.discard(contextmenuTarget); });
     document.getElementById("contextmenu-action-tab-move-new-window").addEventListener("click", (e) => { utils.tabs.moveToNewWindow(contextmenuTarget); });
