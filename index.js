@@ -140,7 +140,7 @@ browser.windows.onFocusChanged.addListener((windowID) =>
     utils.windows.setCurrentWindow(windowID);
 });
 
-browser.windows.getCurrent({windowTypes: ["normal", "popup"]}).then((currentWindow) =>
+browser.windows.getCurrent().then((currentWindow) =>
 {
     utils.windows.setCurrentWindow(currentWindow.id);
 });

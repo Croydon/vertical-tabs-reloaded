@@ -19,7 +19,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             this.tabbrowser = document.getElementById("tabbrowser-tabs");
 
-            browser.windows.getCurrent({windowTypes: ["normal"]}).then((windowObj) =>
+            browser.windows.getCurrent().then((windowObj) =>
             {
                 this.windowID = windowObj.id;
                 this.init();
