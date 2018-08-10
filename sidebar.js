@@ -618,6 +618,8 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                         document.body.appendChild(TabsToolbar);
                         break;
                 }
+
+                TabsToolbar.setAttribute("data-position", newValue);
                 break;
 
             case "theme":

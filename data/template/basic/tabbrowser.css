@@ -12,8 +12,17 @@ body {
 	border-bottom-left-radius: 0px;
 	box-shadow: none;
 	appearance: none;
-	border-top: 1px solid rgb(160,160,160);
 	-moz-border-right-colors: #fcfcfc rgb(154,154,154); /* FIXME: remove? */
 	background-color: var(--vtr-tabbar-background-color);
 	background-image: none;
+}
+
+#TabsToolbar[data-position="bottom"]
+{
+	border-top: 1px solid rgb(160,160,160);
+}
+
+#TabsToolbar[data-position="top"]
+{
+	border-bottom: 1px solid rgb(160,160,160);
 }
