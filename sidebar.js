@@ -959,20 +959,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     toolbar_activate()
     {
-        let TabsToolbar = document.getElementById("TabsToolbar");
-
-        switch(this.preferences("tabtoolbarPosition"))
-        {
-            case "hide":
-                TabsToolbar.style.display = "none";
-                break;
-
-            case "top":
-                document.insertBefore(TabsToolbar, document.getElementById("tabbrowser-tabs-pinned"));
-                break;
-
-            // case "bottom": // Default position
-        }
+        this.onPreferenceChange("tabtoolbarPosition", "top", this.preferences("tabtoolbarPosition"));
 
         document.getElementById("toolbar-action-tab-new").addEventListener("click", () =>
         {
@@ -1107,7 +1094,7 @@ function contextmenuClickHelper(e)
     contextmenuHide(e);
 }
 
-window.addEventListener("load", () =>
+document.addEventListener("DOMContentLoaded", () =>
 {
     options.get_options_file().then(() =>
     {
