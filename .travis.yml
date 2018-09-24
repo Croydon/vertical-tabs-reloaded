@@ -1,7 +1,6 @@
 sudo: false
-dist: trusty
+dist: xenial
 language: node_js
-# Always run the latest Node.js version
 
 notifications:
   email:
@@ -11,6 +10,7 @@ notifications:
 git:
   depth: 5
 
+# Always run the latest Node.js version
 node_js:
   - "node"
 
