@@ -1153,6 +1153,25 @@ function handleDragOver(e)
 function handleDragEnter(e)
 {
     // e.target is the current hover target.
+
+    const target = e.target;
+
+    if(utils.tabs.isTabElement(target))
+    {
+        utils.tabs.removeClassAll("hover-before");
+        utils.tabs.removeClassAll("hover-after");
+
+        const targetIndex = parseInt(target.getAttribute("data-index"), 10);
+        const dragndropElementIndex = parseInt(dragndropElement.getAttribute("data-index"), 10);
+        if(targetIndex < dragndropElementIndex)
+        {
+            target.classList.add("hover-before");
+        }
+        else
+        {
+            target.classList.add("hover-after");
+        }
+    }
 }
 
 function handleDragLeave(e)
@@ -1190,6 +1209,9 @@ function handleDrop(e)
 function handleDragEnd(e)
 {
     // remove over for all elements
+
+    utils.tabs.removeClassAll("hover-before");
+    utils.tabs.removeClassAll("hover-after");
 }
 
 function addDragndropHandlers(tabElement)

@@ -84,6 +84,15 @@
 	background-color: var(--vtr-tab-hover-background-color);
 }
 
+.tabbrowser-tab.hover-before
+{
+	border-top: var(--vtr-tab-hover-border-top);
+}
+.tabbrowser-tab.hover-after
+{
+	border-bottom: var(--vtr-tab-hover-border-bottom);
+}
+
 .tab-label {
 	text-align: left;
 }
