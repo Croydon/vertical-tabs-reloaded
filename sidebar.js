@@ -1165,7 +1165,15 @@ function handleDragEnter(e)
         const dragndropElementIndex = parseInt(dragndropElement.getAttribute("data-index"), 10);
         if(targetIndex < dragndropElementIndex)
         {
-            target.classList.add("hover-before");
+            const prevTarget = target.previousSibling;
+            if (utils.tabs.isTabElement(prevTarget))
+            {
+                prevTarget.classList.add("hover-after");
+            }
+            else
+            {
+                target.classList.add("hover-before");
+            }
         }
         else
         {

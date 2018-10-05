@@ -108,8 +108,8 @@
 	--vtr-tab-hover-padding-right: var(--vtr-tab-padding-right);
 	--vtr-tab-hover-padding-bottom: var(--vtr-tab-padding-bottom);
 	--vtr-tab-hover-padding-left: var(--vtr-tab-padding-left);
-	--vtr-tab-hover-border-top: thin solid #000000;
-	--vtr-tab-hover-border-bottom: thin solid #000000;
+	--vtr-tab-hover-border-top: 2px solid #000000;
+	--vtr-tab-hover-border-bottom: 2px solid #000000;
 
 	/* Close buttons */
 	--vtr-tab-button-close-width: 18px;
