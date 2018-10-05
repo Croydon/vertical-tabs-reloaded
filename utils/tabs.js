@@ -292,7 +292,7 @@ utils["tabs"] = class tabutils
 
     static removeClassAll(className)
     {
-        const elements = document.querySelectorAll(`.${className}`);
+        const elements = document.querySelectorAll(`.tabbrowser-tab.${className}`);
         Array.from(elements).forEach(element => element.classList.remove(className));
     }
 };
