@@ -2,3 +2,6 @@ build
 web-ext-artifacts
 *~
 *.DS_Store
+
+# IDEs
+.idea/
