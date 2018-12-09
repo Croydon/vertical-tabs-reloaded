@@ -2,10 +2,10 @@
 
 /* global utils log */
 
-var options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
+let options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
 
 /* Entry point for every VTR sidebar for every window */
-var VerticalTabsReloaded = class VerticalTabsReloaded
+let VerticalTabsReloaded = class VerticalTabsReloaded
 {
     constructor()
     {
@@ -288,9 +288,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.update_tab(id, "favIconUrl", tab.favIconUrl);
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
-                this.update_tab(id, "discarded", tab.discarded);
-                this.update_tab(id, "hidden", tab.hidden);
                 this.update_tab(id, "status", tab.status);
+                this.update_tab(id, "hidden", tab.hidden);
+                this.update_tab(id, "discarded", tab.discarded);
 
                 document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
                 document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
@@ -390,7 +390,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "status":
-                tabElement.setAttribute("data-discarded", "false");
                 tabElement.setAttribute("status", value);
 
                 if(value == "complete")
@@ -586,11 +585,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
-    setPinnedSizes()
-    {
-        // window.addEventListener("resize", this, false);
-        // log.debug("set pinned sizes!");
-    }
+    // setPinnedSizes()
+    // {
+    // window.addEventListener("resize", this, false);
+    // log.debug("set pinned sizes!");
+    // }
 
     onPreferenceChange(prefName, newValue, oldValue)
     {
@@ -975,7 +974,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     }
 };
 
-var contextmenuTarget = "NOTARGET";
+let contextmenuTarget = "NOTARGET";
 
 function contextmenuMouseoutHelper(e)
 {
