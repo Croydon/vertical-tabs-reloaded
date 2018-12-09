@@ -480,7 +480,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         log.debug("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
         let pinnedTab = await utils.tabs.isPinned(tabID);
-        let pinnedTabMoveDown = false;
 
         log.debug(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
@@ -502,13 +501,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 // Move down
                 insertBeforeIndex = toIndex + 1;
-
-                // Check if this is a pinned tab moving down
-                // We need to prevent, that the pinned tab is placing in the regular tab section
-                if(pinnedTab)
-                {
-                    pinnedTabMoveDown = true;
-                }
             }
             else
             {
@@ -518,14 +510,14 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
             let insertBeforeTab = document.querySelector(`div[data-index="${insertBeforeIndex}"]`);
 
-            if(pinnedTabMoveDown == true)
+            // We want to move a pinned tab down to the last position of pinned tabs
+            // We need to prevent, that the pinned tab is placing in the regular tab section
+            // And we need to make sure that it is actually in the pinned tab section
+            // when the tab is newly pinned
+            if(pinnedTab && insertBeforeTab.getAttribute("pinned") === null)
             {
-                if(insertBeforeTab.getAttribute("pinned") === null)
-                {
-                    // We want to move a pinned tab down to the last position of pinned tabs
-                    document.getElementById("tabbrowser-tabs-pinned").append(document.getElementById("tab-" + tabID));
-                    return;
-                }
+                document.getElementById("tabbrowser-tabs-pinned").append(document.getElementById("tab-" + tabID));
+                return;
             }
 
             insertBeforeTab.parentNode.insertBefore(document.getElementById("tab-" + tabID), insertBeforeTab);
