@@ -137,6 +137,12 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
         }
 
+        if (this.preferences("style.tab.pinned.minified") == true)
+        {
+            log.debug("style.tab.pinned.minified true");
+            this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
+        }
+
         if (this.preferences("style.tab.button.close.displayalways") == true)
         {
             log.debug("style.tab.button.close.displayalways true");
@@ -640,6 +646,18 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     this.removeStylesheet("status");
+                }
+                break;
+
+            case "style.tab.pinned.minified":
+                this.webExtPreferences[prefName] = newValue;
+                if (this.preferences("style.tab.pinned.minified") == true)
+                {
+                    this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
+                }
+                else
+                {
+                    this.removeStylesheet("minifiedpinnedtabs");
                 }
                 break;
 
