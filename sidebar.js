@@ -968,7 +968,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
     toolbar_activate()
     {
-        this.onPreferenceChange("tabtoolbarPosition", "top", this.preferences("tabtoolbarPosition"));
+        this.onPreferenceChange("tabtoolbarPosition", this.preferences("tabtoolbarPosition"), "top");
 
         document.getElementById("toolbar-action-tab-new").addEventListener("click", () =>
         {
