@@ -42,17 +42,10 @@ body
 }
 
 .tab-buttons {
-    /*position: absolute;
-    right: 0px;
-    padding-left: 5px;
-    z-index: 1;*/
-
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
-
-/*.tab-buttons span {
-     padding-left: 18px;
-}*/
 
 .tab-close-button {
     height: 20px;
@@ -134,12 +127,13 @@ body[data-tab-buttons-position="left"] .tabbrowser-tab                  { grid-t
 body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-buttons     { order: 1; padding-left: 3px; }
 body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-icon        { order: 2; }
 body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-label       { order: 3; }
+body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-buttons .tab-close-button   { order: -1; }
 
 body[data-tab-buttons-position="right"] .tabbrowser-tab                 { grid-template-columns: 22px auto min-content; }
 body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-icon       { order: 1; }
 body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-label      { order: 2; }
 body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons    { order: 3; padding-right: 3px; }
-
+body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons .tab-close-button   { order: 999; }
 
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button { display: none; }
 
