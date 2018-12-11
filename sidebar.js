@@ -149,6 +149,8 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
         }
 
+        this.onPreferenceChange("style.tab.buttons.position", this.preferences("style.tab.buttons.position"), "right");
+
         // Creating tabs
         this.finish_create_tab_event();
 
@@ -617,6 +619,11 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 }
 
                 TabsToolbar.setAttribute("data-position", newValue);
+                break;
+
+            case "style.tab.buttons.position":
+                this.webExtPreferences[prefName] = newValue;
+                document.getElementsByTagName("body")[0].setAttribute("data-tab-buttons-position", newValue);
                 break;
 
             case "theme":
