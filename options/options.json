@@ -19,6 +19,23 @@
         "description": "All tabs except pinned tabs",
         "value": false
     },
+    "style.tab.buttons.position": {
+        "name": "style.tab.buttons.position",
+        "type": "menulist",
+        "title": "Position of tab buttons",
+        "description": "Sound control and close button",
+        "value": "right",
+        "options": [
+			{
+				"value": "right",
+				"label": "Right"
+			},
+			{
+				"value": "left",
+				"label": "Left"
+			}
+		]
+    },
     "style.tab.showUrlInTooltip": {
         "name": "style.tab.showUrlInTooltip",
         "type": "menulist",
