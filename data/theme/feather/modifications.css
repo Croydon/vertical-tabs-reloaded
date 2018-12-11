@@ -17,21 +17,7 @@ body {
 /* } */
 
 
-/** Drop indicator for drag'n'drop of tabs - Works OOTB(TM)- Just needs a margin.
-.tab-drop-indicator {
-    margin-top: -11px !important;
-    margin-bottom: 0 !important;
-} **/
-
-
 /* From the former Windows theme: */
-
-/* Drop indicator for drag'n'drop of tabs
-.tab-drop-indicator {
-	list-style-image: url("dropmarker.png");
-	margin-top: -13px !important; */ /* height of the above image */
-	/* margin-bottom: 0 !important;
-} */
 
 /* .tabbrowser-tab:hover:not(:-moz-lwtheme) {
 	border-color: gray;

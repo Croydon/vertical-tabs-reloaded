@@ -111,15 +111,15 @@
 	--vtr-tab-hover-border-bottom: 2px solid #000000;
 
 	/* Close buttons */
-	--vtr-tab-button-close-width: 20px;
-	--vtr-tab-button-close-height: 20px;
+	--vtr-tab-button-close-width: 18px;
+	--vtr-tab-button-close-height: 18px;
 	--vtr-tab-button-close-regular-background-image: url("../../template/basic/icons/light/close-regular.png");
 	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/light/close-hover.png");
 	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/light/close-active.png");
 
 	/* Sound buttons */
-	--vtr-tab-button-sound-width: 19px;
-	--vtr-tab-button-sound-height: 19px;
+	--vtr-tab-button-sound-width: 18px;
+	--vtr-tab-button-sound-height: 18px;
 	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
 	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
 
