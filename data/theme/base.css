@@ -92,20 +92,6 @@ body
     background-image: url("../../data/chrome/icon/tab-audio-muted.svg");
 }
 
-
-/* FIXME: Implement sound button */
-/* .tab-icon-sound[soundplaying] {
-	list-style-image: url("../chrome/icon/tab-audio-playing.svg");
-    -moz-context-properties: fill;
-    fill: currentColor;
-}
-
-.tab-icon-sound[muted] {
-	list-style-image: url("../chrome/icon/tab-audio-muted.svg");
-    -moz-context-properties: fill;
-    fill: currentColor;
-} */
-
 .tab-icon-sound {
 	filter: drop-shadow(1px 1px 1px currentColor);
 }
@@ -116,32 +102,17 @@ body
     max-height: 22px;
 }
 
-/* FIXME: This works natively in FF but not here? */
+/* FIXME: This works natively in FF but not here?
 .tab-icon-image[src*="data/chrome/icon/"] {
     -moz-context-properties: fill !important;
     fill: currentColor !important;
-}
+}*/
 
-/* FIXME: remove? Undo a bunch of stuff for pinned tabs
-.tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
-    position: inherit !important;
-}
-
-.tabbrowser-tab[pinned] > .tab-text {
-    display: inherit;
-}
-
-.tab-label[pinned] {
-    width: auto !important;
-    display: -moz-box !important;
-} */
 
 /* Don't show close buttons for pinned tabs */
 .tabbrowser-tab[pinned] .tab-close-button,
 .tabbrowser-tab[pinned] .tab-close-button:hover,
 .tabbrowser-tab[pinned] .tab-close-button:active {
-    /* list-style-image: none !important; */
-	background-image: none;
     display: none;
 }
 
@@ -167,11 +138,6 @@ body
     text-overflow: ellipsis;
 }
 
-/* FIXME: likely not necessary anymor? */
-/* Make sure that a placeholder favicon is getting displayed if there is none */
-/* .tabbrowser-tab:not([status="loading"]) .tab-icon-image:not([src]):not([pinned]) {
-	display: -moz-box;
-} */
 
 
 /* FIXME: useful? */
