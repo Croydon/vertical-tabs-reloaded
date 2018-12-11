@@ -5,27 +5,23 @@ body
     height: 100vh;
     display: flex;
     flex-flow: column;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
     user-select: none;
     -moz-user-select: none;
-    z-index: -4;
 }
 
 #tabbrowser-tabs {
     flex: 1 1 auto;
     overflow-y: auto;
     /* margin-right: 2px; */
-    z-index: -3;
 }
 
 #tabbrowser-tabs-pinned {
     flex: 0 1 auto;
-    z-index: -2;
 }
 
 #TabsToolbar {
     flex: 0 1 24px;
-    z-index: 1;
     display: flex;
     align-items: center;
 }
@@ -45,13 +41,12 @@ body
 }
 
 .tab-buttons {
-    position: absolute;
+    /*position: absolute;
     right: 0px;
-    padding: 0;
-    margin: 0;
-    /* padding-left: 5px; */
+    padding-left: 5px;
+    z-index: 1;*/
 
-    z-index: 1;
+    white-space: nowrap;
 }
 
 /*.tab-buttons span {
@@ -59,34 +54,33 @@ body
 }*/
 
 .tab-close-button {
-    height: 22px;
+    height: 20px;
     width: 24px;
     display: inline-block;
     background-image: url("../../data/template/basic/icons/light/close-regular.png");
-    background-size: 22px 22px; /* contain ? */
+    background-size: 20px 20px; /* contain ? */
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 .tab-sound-button {
     display: inline-block;
-    background-size: 22px 22px;
+    background-size: 20px 20px;
     background-position: center center;
     background-repeat: no-repeat;
-
     /* mask-repeat: no-repeat;
     mask-position: center center; */
 }
 
 .tab-sound-button-playing {
-    height: 22px;
+    height: 18px;
     width: 24px;
     /* background-color: currentColor; */
     background-image: url("../../data/chrome/icon/tab-audio-playing.svg");
 }
 
 .tab-sound-button-muted {
-    height: 22px;
+    height: 18px;
     width: 24px;
     /* background-color: inherit; */
     background-image: url("../../data/chrome/icon/tab-audio-muted.svg");
@@ -98,7 +92,7 @@ body
 
 /* Ensure the tab favicon doesn't stretch. */
 .tab-icon-image {
-    max-width: 22px;
+    max-width: 20px;
     max-height: 22px;
 }
 
@@ -116,29 +110,37 @@ body
     display: none;
 }
 
-
 .tabbrowser-tab {
-    position: relative;
-    pointer-events: auto;
-    min-width: 30px;
-    max-width: 100vw;
 	min-height: 20px;
 	height: 20px;
 	max-height: 40px;
 	border-bottom: 1px solid #5E6972;
-    overflow: hidden;
-    display: flex;
+
+    display: grid !important;
+    grid-gap: 4px;
+    /* margin: 0.5rem; */
     align-items: center;
 }
 
 .tab-label {
-    /*position: relative;*/
     white-space: nowrap;
     vertical-align: middle;
-    text-overflow: ellipsis;
+    text-overflow: clip;
+    overflow: hidden;
 }
 
+body[data-tab-buttons-position="left"] .tabbrowser-tab                  { grid-template-columns: min-content 22px auto; }
+body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-buttons     { order: 1; padding-left: 3px; }
+body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-icon        { order: 2; }
+body[data-tab-buttons-position="left"] .tabbrowser-tab .tab-label       { order: 3; }
 
+body[data-tab-buttons-position="right"] .tabbrowser-tab                 { grid-template-columns: 22px auto min-content; }
+body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-icon       { order: 1; }
+body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-label      { order: 2; }
+body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons    { order: 3; padding-right: 3px; }
+
+
+.tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button { display: none; }
 
 /* FIXME: useful? */
 /* Taken from Firefox's original tabbrowser css */
