@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.12.1, 2018-12-12
+ * fixed: initial tab toolbar position (#215)
+
+
+ ***
+
+
 ### v0.12.0, 2018-12-10
  * added: show a border line when dragging tabs around to move them up/down (#141, #199)
  * added: duplicate tab context menu option (#189)
