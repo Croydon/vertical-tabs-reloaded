@@ -48,13 +48,34 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
     installStylesheet(uri, type)
     {
         log.debug("VTR install sheet: " + uri + " of type: " + type);
-        document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
+        let existingStylesheet = document.getElementById(`vtr-${type}`);
+        if(existingStylesheet)
+        {
+            existingStylesheet.setAttribute("href", uri);
+        }
+        else
+        {
+            document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${uri}" id="vtr-${type}">`);
+        }
     }
 
     removeStylesheet(type)
     {
         log.debug("VTR remove sheet of type: " + type);
-        document.getElementById("vtr-" + type).remove();
+        let existingStylesheet = document.getElementById(`vtr-${type}`);
+        if(existingStylesheet) { document.getElementById(`vtr-${type}`).remove(); }
+    }
+
+    toggleStylesheet(uri, type, activate)
+    {
+        if(activate)
+        {
+            this.installStylesheet(uri, type);
+        }
+        else
+        {
+            this.removeStylesheet(type);
+        }
     }
 
     applyThemeStylesheet()
@@ -62,15 +83,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         if(this.preferences("theme") != "none")
         {
             this.installStylesheet(this.getThemeStylesheet(this.preferences("theme")), "theme");
-        }
-    }
-
-    removeThemeStylesheet()
-    {
-        if(this.preferences("theme") != "none")
-        {
-            log.debug("remove theme stylesheet!");
-            this.removeStylesheet("theme");
         }
     }
 
@@ -124,31 +136,10 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         // FIREFIX: Placeholder. Firefox doesn't support hiding the default tabbrowser currently.
 
         // Injecting CSS
-        this.applyThemeStylesheet();
-        /* if (this.preferences("compact") == true)
-        {
-            log.debug("compact true");
-            this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
-        } */
-
-        if (this.preferences("style.tab.status") == true)
-        {
-            log.debug("style.tab.status true");
-            this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
-        }
-
-        if (this.preferences("style.tab.pinned.minified") == true)
-        {
-            log.debug("style.tab.pinned.minified true");
-            this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
-        }
-
-        if (this.preferences("style.tab.button.close.displayalways") == true)
-        {
-            log.debug("style.tab.button.close.displayalways true");
-            this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
-        }
-
+        this.onPreferenceChange("theme", this.preferences("theme"), "dark");
+        this.onPreferenceChange("style.tab.status", this.preferences("style.tab.status"), false);
+        this.onPreferenceChange("style.tab.pinned.minified", this.preferences("style.tab.pinned.minified"), false);
+        this.onPreferenceChange("style.tab.button.close.displayalways", this.preferences("style.tab.button.close.displayalways"), false);
         this.onPreferenceChange("style.tab.buttons.position", this.preferences("style.tab.buttons.position"), "right");
 
         // Creating tabs
@@ -588,12 +579,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
-    // setPinnedSizes()
-    // {
-    // window.addEventListener("resize", this, false);
-    // log.debug("set pinned sizes!");
-    // }
-
     onPreferenceChange(prefName, newValue, oldValue)
     {
         switch (prefName)
@@ -630,57 +615,23 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "theme":
-                this.removeThemeStylesheet();
                 this.webExtPreferences[prefName] = newValue;
                 this.applyThemeStylesheet();
                 break;
 
-                /* case "compact":
-                this.webExtPreferences[prefName] = newValue;
-                if (this.preferences("compact") == true)
-                {
-                    this.installStylesheet(browser.runtime.getURL("data/compact.css"), "compact");
-                }
-                else
-                {
-                    this.removeStylesheet("compact");
-                }
-                break; */
-
             case "style.tab.status":
                 this.webExtPreferences[prefName] = newValue;
-                if (this.preferences("style.tab.status") == true)
-                {
-                    this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
-                }
-                else
-                {
-                    this.removeStylesheet("status");
-                }
+                this.toggleStylesheet(browser.runtime.getURL("data/status.css"), "status", newValue);
                 break;
 
             case "style.tab.pinned.minified":
                 this.webExtPreferences[prefName] = newValue;
-                if (this.preferences("style.tab.pinned.minified") == true)
-                {
-                    this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
-                }
-                else
-                {
-                    this.removeStylesheet("minifiedpinnedtabs");
-                }
+                this.toggleStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs", newValue);
                 break;
 
             case "style.tab.button.close.displayalways":
                 this.webExtPreferences[prefName] = newValue;
-                if (this.preferences("style.tab.button.close.displayalways") == true)
-                {
-                    this.installStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose");
-                }
-                else
-                {
-                    this.removeStylesheet("alwaysdisplayclose");
-                }
+                this.toggleStylesheet(browser.runtime.getURL("data/alwaysdisplayclose.css"), "alwaysdisplayclose", newValue);
                 break;
 
             case "style.tab.showUrlInTooltip":
