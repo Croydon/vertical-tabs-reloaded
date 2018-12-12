@@ -212,7 +212,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         log.debug("start tab creation of tab id: " + id);
         // console.time("start-tab-" + id);
 
-        // let url = tab.url;
         let title = "Connecting...";
         let pinned = tab.pinned;
         let status = tab.status;
@@ -242,7 +241,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             tabIndex = this.get_last_tab_index() + 1;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${toolbarTitle}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${toolbarTitle}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true" data-href="${tab.url}">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
@@ -315,7 +314,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
     update_tab(tabID, attribute, value)
     {
-        if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
+        if(attribute != "title" && attribute != "audible" && attribute != "mutedInfo" && attribute != "discarded" && attribute != "url") { log.debug("update tab: " + tabID + " " + attribute + " " + value); }
 
         // console.time("update-tab-" + tabID);
 
@@ -473,6 +472,10 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                     tabElement.style.display = "flex";
                 }
                 break;
+
+            case "url":
+                tabElement.setAttribute("data-href", value);
+
             // case "index":
                 // tabElement.setAttribute("data-index", value);
                 // break;
@@ -788,11 +791,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 return;
             }
 
-            if (changeInfo.hasOwnProperty("title"))
-            {
-                this.update_tab(tabID, "title", changeInfo["title"]);
-            }
-
             if (changeInfo.hasOwnProperty("pinned"))
             {
                 if (changeInfo.pinned === true || changeInfo.pinned === false)
@@ -801,35 +799,14 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 }
             }
 
-            if(changeInfo.hasOwnProperty("favIconUrl"))
-            {
-                this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]);
-            }
-
-            if(changeInfo.hasOwnProperty("status"))
-            {
-                this.update_tab(tabID, "status", changeInfo["status"]);
-            }
-
-            if (changeInfo.hasOwnProperty("mutedInfo"))
-            {
-                this.update_tab(tabID, "mutedInfo", changeInfo["mutedInfo"]);
-            }
-
-            if (changeInfo.hasOwnProperty("audible"))
-            {
-                this.update_tab(tabID, "audible", changeInfo["audible"]);
-            }
-
-            if (changeInfo.hasOwnProperty("discarded"))
-            {
-                this.update_tab(tabID, "discarded", changeInfo["discarded"]);
-            }
-
-            if (changeInfo.hasOwnProperty("hidden"))
-            {
-                this.update_tab(tabID, "hidden", changeInfo["hidden"]);
-            }
+            if (changeInfo.hasOwnProperty("title")) { this.update_tab(tabID, "title", changeInfo["title"]); }
+            if (changeInfo.hasOwnProperty("favIconUrl")) { this.update_tab(tabID, "favIconUrl", changeInfo["favIconUrl"]); }
+            if (changeInfo.hasOwnProperty("status")) { this.update_tab(tabID, "status", changeInfo["status"]); }
+            if (changeInfo.hasOwnProperty("mutedInfo")) { this.update_tab(tabID, "mutedInfo", changeInfo["mutedInfo"]); }
+            if (changeInfo.hasOwnProperty("audible")) { this.update_tab(tabID, "audible", changeInfo["audible"]); }
+            if (changeInfo.hasOwnProperty("discarded")) { this.update_tab(tabID, "discarded", changeInfo["discarded"]); }
+            if (changeInfo.hasOwnProperty("hidden")) { this.update_tab(tabID, "hidden", changeInfo["hidden"]); }
+            if (changeInfo.hasOwnProperty("url")) { this.update_tab(tabID, "url", changeInfo["url"]); }
         });
 
         browser.tabs.onMoved.addListener((tabID, moveInfo) =>
@@ -1142,18 +1119,22 @@ function handleDragStart(e)
 {
     dragndropElement = e.target;
     let isTabElement = utils.tabs.isTabElement(dragndropElement);
-    while(isTabElement == false)
+    let i = 0;
+    while(isTabElement == false && i < 50)
     {
         dragndropElement = dragndropElement.parentNode;
         isTabElement = utils.tabs.isTabElement(dragndropElement);
+        i++;
     }
 
-    log.debug("this: " + dragndropElement);
-
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", dragndropElement.outerHTML);
+    let tabUrl = dragndropElement.getAttribute("data-href");
 
-    // this.dragndropElement.classList.add("tab-dragging");
+    log.debug("this: " + dragndropElement);
+    log.debug(tabUrl + "\n" + dragndropElement.getElementsByClassName("tab-label")[0].innerText);
+
+    e.dataTransfer.setData("text/x-moz-url", tabUrl + "\n" + dragndropElement.getElementsByClassName("tab-label")[0].innerText);
+    e.dataTransfer.setData("text/html", dragndropElement.outerHTML);
 }
 
 function handleDragOver(e)
