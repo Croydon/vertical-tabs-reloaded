@@ -2,10 +2,10 @@
 
 /* global utils log */
 
-var options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
+let options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
 
 /* Entry point for every VTR sidebar for every window */
-var VerticalTabsReloaded = class VerticalTabsReloaded
+let VerticalTabsReloaded = class VerticalTabsReloaded
 {
     constructor()
     {
@@ -135,6 +135,12 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         {
             log.debug("style.tab.status true");
             this.installStylesheet(browser.runtime.getURL("data/status.css"), "status");
+        }
+
+        if (this.preferences("style.tab.pinned.minified") == true)
+        {
+            log.debug("style.tab.pinned.minified true");
+            this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
         }
 
         if (this.preferences("style.tab.button.close.displayalways") == true)
@@ -288,9 +294,9 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 this.update_tab(id, "favIconUrl", tab.favIconUrl);
                 this.update_tab(id, "mutedInfo", tab.mutedInfo);
                 this.update_tab(id, "audible", tab.audible);
-                this.update_tab(id, "discarded", tab.discarded);
-                this.update_tab(id, "hidden", tab.hidden);
                 this.update_tab(id, "status", tab.status);
+                this.update_tab(id, "hidden", tab.hidden);
+                this.update_tab(id, "discarded", tab.discarded);
 
                 document.getElementById(`tab-close-button-${id}`).addEventListener("click", (e) => { utils.tabs.close(id); e.stopPropagation(); });
                 document.getElementById(`tab-sound-button-${id}`).addEventListener("click", (e) => { utils.tabs.mute(id); e.stopPropagation(); });
@@ -390,7 +396,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 break;
 
             case "status":
-                tabElement.setAttribute("data-discarded", "false");
                 tabElement.setAttribute("status", value);
 
                 if(value == "complete")
@@ -481,7 +486,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         log.debug("move tab " + tabID + " from " + fromIndex + " to " + toIndex);
 
         let pinnedTab = await utils.tabs.isPinned(tabID);
-        let pinnedTabMoveDown = false;
 
         log.debug(this.get_last_tab_index());
         if(toIndex == this.get_last_tab_index())
@@ -503,13 +507,6 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
             {
                 // Move down
                 insertBeforeIndex = toIndex + 1;
-
-                // Check if this is a pinned tab moving down
-                // We need to prevent, that the pinned tab is placing in the regular tab section
-                if(pinnedTab)
-                {
-                    pinnedTabMoveDown = true;
-                }
             }
             else
             {
@@ -519,14 +516,14 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
             let insertBeforeTab = document.querySelector(`div[data-index="${insertBeforeIndex}"]`);
 
-            if(pinnedTabMoveDown == true)
+            // We want to move a pinned tab down to the last position of pinned tabs
+            // We need to prevent, that the pinned tab is placing in the regular tab section
+            // And we need to make sure that it is actually in the pinned tab section
+            // when the tab is newly pinned
+            if(pinnedTab && insertBeforeTab.getAttribute("pinned") === null)
             {
-                if(insertBeforeTab.getAttribute("pinned") === null)
-                {
-                    // We want to move a pinned tab down to the last position of pinned tabs
-                    document.getElementById("tabbrowser-tabs-pinned").append(document.getElementById("tab-" + tabID));
-                    return;
-                }
+                document.getElementById("tabbrowser-tabs-pinned").append(document.getElementById("tab-" + tabID));
+                return;
             }
 
             insertBeforeTab.parentNode.insertBefore(document.getElementById("tab-" + tabID), insertBeforeTab);
@@ -586,11 +583,11 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
         }
     }
 
-    setPinnedSizes()
-    {
-        // window.addEventListener("resize", this, false);
-        // log.debug("set pinned sizes!");
-    }
+    // setPinnedSizes()
+    // {
+    // window.addEventListener("resize", this, false);
+    // log.debug("set pinned sizes!");
+    // }
 
     onPreferenceChange(prefName, newValue, oldValue)
     {
@@ -649,6 +646,18 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
                 else
                 {
                     this.removeStylesheet("status");
+                }
+                break;
+
+            case "style.tab.pinned.minified":
+                this.webExtPreferences[prefName] = newValue;
+                if (this.preferences("style.tab.pinned.minified") == true)
+                {
+                    this.installStylesheet(browser.runtime.getURL("data/minifiedpinnedtabs.css"), "minifiedpinnedtabs");
+                }
+                else
+                {
+                    this.removeStylesheet("minifiedpinnedtabs");
                 }
                 break;
 
@@ -959,7 +968,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
 
     toolbar_activate()
     {
-        this.onPreferenceChange("tabtoolbarPosition", "top", this.preferences("tabtoolbarPosition"));
+        this.onPreferenceChange("tabtoolbarPosition", this.preferences("tabtoolbarPosition"), "top");
 
         document.getElementById("toolbar-action-tab-new").addEventListener("click", () =>
         {
@@ -975,7 +984,7 @@ var VerticalTabsReloaded = class VerticalTabsReloaded
     }
 };
 
-var contextmenuTarget = "NOTARGET";
+let contextmenuTarget = "NOTARGET";
 
 function contextmenuMouseoutHelper(e)
 {

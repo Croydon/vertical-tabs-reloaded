@@ -1,5 +1,25 @@
 # Changelog
 
+### v0.12.1, 2018-12-12
+ * fixed: initial tab toolbar position (#215)
+
+
+ ***
+
+
+### v0.12.0, 2018-12-10
+ * added: show a border line when dragging tabs around to move them up/down (#141, #199)
+ * added: duplicate tab context menu option (#189)
+ * changed: new default tab toolbar position is top (#193)
+ * fixed: pinning tabs don't move them always in the pinned tab section (#198)
+ * fixed: tab status for unloaded tabs uses underline instead of strike-through (#201)
+ * fixed: toolbar activation of click events (ebb9bc5)
+ * internal: other improvements and cleanups
+
+
+***
+
+
 ### v0.11.0, 2018-06-26
  * Updated Compatibility: Firefox 60+
  * added: sync setting across devices via Firefox Sync (#73)

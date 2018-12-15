@@ -55,25 +55,19 @@
 				<div class="container">
 
 					<header>
-						<h2>Changelog Summary for 0.11.0</h2>
+						<h2>Changelog Summary for 0.12.0 - Current release</h2>
 					</header>
 					<div class="row">
-						<div class="4u 12u$(mobile) changelog">
+						<div class="6u 12u$(mobile) changelog">
 							<ol>
-								<li><p><strong>Better Interoperability</strong>
-								Support of the tab hide API empowers you to use tab group add-ons or similar add-ons seamless with VTR. Also, VTR settings are getting synchronized via Firefox Sync across devices (opt-out). </p></li>
+								<li><p><strong>New improvements</strong>
+								While sorting your tabs by dragging them around you now get a visual help where the tab will actually be placed when you release the mouse. You will notice a highlighted border. To help you further manage your tabs the tab context menu got now a duplicate tab feature.</p></li>
 							</ol>
 						</div>
-						<div class="4u 12u$(mobile) changelog">
+						<div class="6u 12u$(mobile) changelog">
 							<ol>
-								<li><p><strong>Extrem Performance Improvements</strong>
-								Opening the sidebar with several thousand tabs could take several minutes with previous versions, now we are talking about several seconds. You can look at some benchmark results <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/158#issuecomment-392229148">here</a>.</p></li>
-							</ol>
-						</div>
-						<div class="4u 12u$(mobile) changelog">
-							<ol>
-								<li><p><strong>Further improvements</strong>
-								The context menu now includes: Bookmark all (visible) tabs, unload tab and restore last closed tab. The close button can be displayed now on every tab. Tab tooltip can be configured. Many fixes regarding the private mode, tab closing, context menu and sidebar toggling. Also, it is possible again to change the hotkey which toggles the sidebar.</p></li>
+								<li><p><strong>Bug fixes</strong>
+								In some cases, the toolbar buttons weren't activated correctly and a click on them had no effect. When you pinning new tabs they didn't always end up in the pinned tab section. The tab status for unloaded tabs used underline instead of strike-through. All of these errors should be fixed now.</p></li>
 							</ol>
 						</div>
 					</div>
@@ -84,17 +78,23 @@
 				<div class="container">
 
 					<header>
-						<h2>Changelog Summary for 0.10.0</h2>
+						<h2>Changelog Summary for 0.10.0 - 0.11.0</h2>
 					</header>
 					<div class="row">
 						<div class="4u 12u$(mobile) changelog">
 							<ol>
 								<li><p><strong>New Context Menu Choices</strong>
-								The context menu now includes: Move tab to new window, reload all tabs, close all tabs below, close all tabs above, close all other tabs.</p></li>
+								The context menu now includes: Move tab to new window, reload all tabs, close all tabs below, close all tabs above, close all other tabs, bookmark all (visible) tabs, unload tab and restore last closed tab.</p></li>
+
+								<li><p><strong>Better Interoperability</strong>
+								Support of the tab hide API empowers you to use tab group add-ons or similar add-ons seamless with VTR. Also, VTR settings are getting synchronized via Firefox Sync across devices (opt-out). </p></li>
 							</ol>
 						</div>
 						<div class="4u 12u$(mobile) changelog">
 							<ol>
+								<li><p><strong>Extrem Performance Improvements</strong>
+								Opening the sidebar with several thousand tabs could take several minutes with previous versions, now we are talking about several seconds. You can look at some benchmark results <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/158#issuecomment-392229148">here</a>.</p></li>
+
 								<li><p><strong>More Mouse Gestures</strong>
 								Middle clicks on free space within the sidebar opens now a new tab. There is also a new option which enables to close tabs by middle clicking them (opt-in).</p></li>
 							</ol>
@@ -102,7 +102,7 @@
 						<div class="4u 12u$(mobile) changelog">
 							<ol>
 								<li><p><strong>Further improvements</strong>
-								The tab context menu closes now automatically, when leaving the sidebar with the mouse and on scrolling. Also several problems, which accurred with multiple windows, are fixed.</p></li>
+								The tab context menu closes now automatically, when leaving the sidebar with the mouse and on scrolling. The close button can be displayed now on every tab. Tab tooltip can be configured. Many fixes regarding the private mode, multiple windows, tab closing, context menu and sidebar toggling. Also, it is possible again to change the hotkey which toggles the sidebar.</p></li>
 							</ol>
 						</div>
 					</div>
@@ -147,7 +147,7 @@
 									<h2>Lost features</h2>
 								</header>
 								<p>Some features are not available anymore, <strong>due to technical limitations from Firefox</strong>: <br>
-								 * <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/138" target="_blank">compact mode</a> (tab label only) <br>
+								 * <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/135" target="_blank">compact mode</a> (tab icon only) <br>
 								 * tab sidebar can't be shown when in fullscreen <br>
 								 * horizontal <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/128" target="_blank">tab browser can't be hidden</a> <br>
 								 * no <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/138" target="_blank">"native" theme</a> <br>

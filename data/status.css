@@ -11,16 +11,15 @@
  */
 
 
+/* unread or busy */
+.tabbrowser-tab[unread="true"]:not([data-discarded="true"]) .tab-label,
+.tabbrowser-tab[status="loading"] .tab-label
+{
+    text-decoration: underline !important;
+}
+
 /* unloaded */
 .tabbrowser-tab[data-discarded="true"] .tab-label
 {
     text-decoration: line-through !important;
-}
-
-
-/* unread or busy */
-.tabbrowser-tab[unread="true"] .tab-label,
-.tabbrowser-tab[status="loading"] .tab-label
-{
-    text-decoration: underline !important;
 }

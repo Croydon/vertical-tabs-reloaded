@@ -1,0 +1,15 @@
+/**
+  * Minified pinned tabs
+**/
+.tabbrowser-tab[pinned] .tab-label {
+    display: none;
+}
+
+#tabbrowser-tabs-pinned {
+    display: flex;
+    flex-wrap: wrap
+}
+
+:root {
+	--vtr-tab-pinned-border-left-width: 2px !important;
+}
