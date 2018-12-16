@@ -182,3 +182,7 @@ body
     image-rendering: -moz-crisp-edges;
   }
 }
+
+.invert {
+    filter: invert(1);
+}
