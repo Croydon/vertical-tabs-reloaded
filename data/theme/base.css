@@ -145,3 +145,7 @@ body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons .tab-close-
     image-rendering: -moz-crisp-edges;
   }
 }
+
+.invert {
+    filter: invert(1);
+}

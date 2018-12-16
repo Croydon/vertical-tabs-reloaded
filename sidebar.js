@@ -359,7 +359,21 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
                 if(tabElement.getAttribute("status") != "loading")
                 {
-                    document.getElementById("tab-icon-" + tabID).setAttribute("src", value);
+                    const imgEl = document.getElementById("tab-icon-" + tabID);
+                    imgEl.setAttribute("src", value);
+
+                    const theme = this.preferences("theme");
+                    if(theme === "dark" || theme === "darwin")
+                    {
+                        const fac = new FastAverageColor();
+                        fac.getColorAsync(imgEl, (color) => {
+                            if(color.isDark)
+                            {
+                                imgEl.classList.add("invert");
+                            }
+                            fac.destroy();
+                        });
+                    }
                 }
 
                 log.debug("status: " + tabElement.getAttribute("status"));
