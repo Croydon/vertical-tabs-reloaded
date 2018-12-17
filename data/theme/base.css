@@ -90,6 +90,8 @@ body
     max-height: 22px;
 }
 
+/* Placeholder: .tab-icon-image-light .tab-icon-image-dark */
+
 /* FIXME: This works natively in FF but not here?
 .tab-icon-image[src*="data/chrome/icon/"] {
     -moz-context-properties: fill !important;
@@ -144,8 +146,4 @@ body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons .tab-close-
   .tab-icon-image {
     image-rendering: -moz-crisp-edges;
   }
-}
-
-.invert {
-    filter: invert(1);
 }

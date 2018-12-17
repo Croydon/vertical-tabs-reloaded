@@ -1,6 +1,6 @@
 "use strict";
 
-/* global utils log */
+/* global utils log FastAverageColor */
 
 let options = utils.options; // FIXME: Why can't this be for private windows within namespace-sidebar.js?
 
@@ -362,18 +362,22 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                     const imgEl = document.getElementById("tab-icon-" + tabID);
                     imgEl.setAttribute("src", value);
 
-                    const theme = this.preferences("theme");
-                    if(theme === "dark" || theme === "darwin")
+                    const fac = new FastAverageColor();
+                    fac.getColorAsync(imgEl, (color) =>
                     {
-                        const fac = new FastAverageColor();
-                        fac.getColorAsync(imgEl, (color) => {
-                            if(color.isDark)
-                            {
-                                imgEl.classList.add("invert");
-                            }
-                            fac.destroy();
-                        });
-                    }
+                        if(color.isDark)
+                        {
+                            imgEl.classList.remove("tab-icon-image-light");
+                            imgEl.classList.add("tab-icon-image-dark");
+                        }
+                        else
+                        {
+                            imgEl.classList.remove("tab-icon-image-dark");
+                            imgEl.classList.add("tab-icon-image-light");
+                        }
+                        log.debug(color);
+                        fac.destroy();
+                    });
                 }
 
                 log.debug("status: " + tabElement.getAttribute("status"));
