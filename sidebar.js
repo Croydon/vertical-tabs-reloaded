@@ -209,7 +209,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         let iconURL = this.normalize_tab_icon(tab.favIconUrl);
 
         let pinnedAttribute = "", statusAttribute = `status="${status}"`, tabIndex = 0;
-        let toolbarTitle = this.get_tab_tooltip_value(tab.title, tab.url);
 
         if(status == "loading")
         {
@@ -232,7 +231,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             tabIndex = this.get_last_tab_index() + 1;
         }
 
-        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${toolbarTitle}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true" data-href="${tab.url}">
+        let tabHTML = `<div id="tab-${id}" class="tabbrowser-tab" title="${title}" ${pinnedAttribute} ${statusAttribute} data-index="${tabIndex}" align="stretch" draggable="true" data-discarded="true" data-href="${tab.url}">
         <span class="tab-icon"> <img id="tab-icon-${id}" class="tab-icon-image" src="${iconURL}" data-src-after-loaded="${iconURL}"> </span>
         <span id="tab-title-${id}" class="tab-label tab-text"> ${title} </span>
         <span class="tab-buttons">
