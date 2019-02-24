@@ -638,7 +638,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
             case "style.tab.status":
                 this.webExtPreferences[prefName] = newValue;
-                this.toggleStylesheet(browser.runtime.getURL("data/status.css"), "status", newValue);
+                document.getElementsByTagName("body")[0].setAttribute("data-style-tab-status", newValue);
                 break;
 
             case "style.tab.pinned.minified":

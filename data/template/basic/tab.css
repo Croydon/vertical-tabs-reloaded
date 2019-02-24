@@ -153,7 +153,7 @@
 
 /*
 .tab-icon-sound[soundplaying] {
-	backgron-image: var(--vtr-tab-button-sound-playing-background-image);
+	background-image: var(--vtr-tab-button-sound-playing-background-image);
     -moz-context-properties: fill;
     fill: var(--vtr-tab-button-sound-playing-fill);
 }
@@ -176,4 +176,28 @@
 
 .tab-sound-button-muted {
     background-image: var(--vtr-tab-button-sound-muted-background-image);
+}
+
+
+/*
+ *	Tab Status
+ */
+
+
+/* unread */
+body[data-style-tab-status="true"] .tabbrowser-tab[unread="true"]:not([data-discarded="true"]) .tab-label
+{
+	text-decoration: var(--vtr-tab-status-unread-text-decoration) !important;
+}
+
+/* busy */
+body[data-style-tab-status="true"] .tabbrowser-tab[status="loading"] .tab-label
+{
+	text-decoration: var(--vtr-tab-status-busy-text-decoration) !important;
+}
+
+/* unloaded */
+body[data-style-tab-status="true"] .tabbrowser-tab[data-discarded="true"] .tab-label
+{
+	text-decoration: var(--vtr-tab-status-discarded-text-decoration) !important;
 }
