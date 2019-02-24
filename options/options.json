@@ -19,6 +19,12 @@
         "description": "All tabs except pinned tabs",
         "value": false
     },
+    "style.tab.pinned.minified": {
+        "name": "style.tab.pinned.minified",
+        "type": "bool",
+        "title": "Enable minified pinned tabs (icon only)",
+        "value": true
+    },
     "style.tab.buttons.position": {
         "name": "style.tab.buttons.position",
         "type": "menulist",
@@ -161,14 +167,6 @@
 		"value": false,
 		"hidden": true
 	},
-    "style.tab.pinned.minified": {
-        "name": "style.tab.pinned.minified",
-        "type": "bool",
-        "title": "<b>Experimental</b>: Enable minified pinned tabs (icon only)",
-        "value": false,
-        "hidden": true,
-        "experimental": true
-    },
     "events.tab.change.on": {
         "name": "events.tab.change.on",
         "type": "menulist",
