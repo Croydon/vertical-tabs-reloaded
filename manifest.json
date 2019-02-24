@@ -16,7 +16,6 @@
     {
         "scripts":
         [
-            "lib/browser-polyfill.js",
             "utils/namespace.js",
             "utils/log.js",
             "utils/options.js",
