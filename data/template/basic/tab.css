@@ -187,7 +187,7 @@
 /* unread */
 body[data-style-tab-status="true"] .tabbrowser-tab[unread="true"]:not([data-discarded="true"]) .tab-label
 {
-	text-decoration: var(--vtr-tab-status-unread-text-decoration) !important;
+	text-decoration: var(--vtr-tab-status-unread-text-decoration);
 }
 
 /* busy */
