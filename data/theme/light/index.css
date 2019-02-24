@@ -123,6 +123,11 @@
 	--vtr-tab-button-sound-playing-background-image: url("../../chrome/icon/tab-audio-playing.svg");
 	--vtr-tab-button-sound-muted-background-image: url("../../chrome/icon/tab-audio-muted.svg");
 
+	/* Tab status, default: color blind variant */
+	--vtr-tab-status-unread-text-decoration: underline;
+	--vtr-tab-status-busy-text-decoration: underline;
+	--vtr-tab-status-discarded-text-decoration: line-through;
+
 	/* Splitter/Separation between tabbar and website
 	--vtr-splitter-background: #ebebeb;
 	--vtr-splitter-width: 3px;
