@@ -23,6 +23,9 @@
 	background-color: var(--vtr-tab-background-color);
 }
 
+/*
+ * 	Pinned tabs
+ */
 .tabbrowser-tab[pinned] {
 	margin: var(--vtr-tab-pinned-margin-top) var(--vtr-tab-pinned-margin-right) var(--vtr-tab-pinned-margin-bottom) var(--vtr-tab-pinned-margin-left);
 	padding: var(--vtr-tab-pinned-padding-top) var(--vtr-tab-pinned-padding-right) var(--vtr-tab-pinned-padding-bottom) var(--vtr-tab-pinned-padding-left);
@@ -43,6 +46,50 @@
 	background-color: var(--vtr-tab-pinned-background-color);
 }
 
+.tabbrowser-tab[pinned][selected="true"] {
+	margin: var(--vtr-tab-pinned-selected-margin-top) var(--vtr-tab-pinned-selected-margin-right) var(--vtr-tab-pinned-selected-margin-bottom) var(--vtr-tab-pinned-selected-margin-left);
+	padding: var(--vtr-tab-pinned-selected-padding-top) var(--vtr-tab-pinned-selected-padding-right) var(--vtr-tab-pinned-selected-padding-bottom) var(--vtr-tab-pinned-selected-padding-left);
+	color: var(--vtr-tab-pinned-selected-text-color);
+	background-color: var(--vtr-tab-pinned-selected-background-color);
+	background: var(--vtr-tab-pinned-selected-background);
+	font-weight: var(--vtr-tab-pinned-selected-font-weight);
+	text-shadow: var(--vtr-tab-pinned-selected-text-shadow);
+	border-radius: var(--vtr-tab-pinned-selected-border-radius);
+	border-top: var(--vtr-tab-pinned-selected-border-top-width) var(--vtr-tab-pinned-selected-border-top-style) var(--vtr-tab-pinned-selected-border-top-color);
+	border-right: var(--vtr-tab-pinned-selected-border-right-width) var(--vtr-tab-pinned-selected-border-right-style) var(--vtr-tab-pinned-selected-border-right-color);
+	border-bottom: var(--vtr-tab-pinned-selected-border-bottom-width) var(--vtr-tab-pinned-selected-border-bottom-style) var(--vtr-tab-pinned-selected-border-bottom-color);
+	border-left: var(--vtr-tab-pinned-selected-border-left-width) var(--vtr-tab-pinned-selected-border-left-style) var(--vtr-tab-pinned-selected-border-left-color);
+}
+
+.tabbrowser-tab[pinned][selected="true"] .tab-buttons
+{
+	background-color: var(--vtr-tab-pinned-selected-background-color);
+}
+
+.tabbrowser-tab[pinned]:not([selected="true"]):hover {
+	margin: var(--vtr-tab-pinned-hover-margin-top) var(--vtr-tab-pinned-hover-margin-right) var(--vtr-tab-pinned-hover-margin-bottom) var(--vtr-tab-pinned-hover-margin-left);
+	padding: var(--vtr-tab-pinned-hover-padding-top) var(--vtr-tab-pinned-hover-padding-right) var(--vtr-tab-pinned-hover-padding-bottom) var(--vtr-tab-pinned-hover-padding-left);
+	background-color: var(--vtr-tab-pinned-hover-background-color);
+	background: var(--vtr-tab-pinned-hover-background);
+}
+
+.tabbrowser-tab[pinned]:not([selected="true"]):hover .tab-buttons
+{
+	background-color: var(--vtr-tab-pinned-hover-background-color);
+}
+
+.tabbrowser-tab[pinned].hover-before
+{
+	border-top: var(--vtr-tab-hover-border-top);
+}
+.tabbrowser-tab[pinned].hover-after
+{
+	border-bottom: var(--vtr-tab-hover-border-bottom);
+}
+
+/*
+ * 	Selected tabs
+ */
 .tabbrowser-tab[selected="true"] {
 	margin: var(--vtr-tab-selected-margin-top) var(--vtr-tab-selected-margin-right) var(--vtr-tab-selected-margin-bottom) var(--vtr-tab-selected-margin-left);
 	padding: var(--vtr-tab-selected-padding-top) var(--vtr-tab-selected-padding-right) var(--vtr-tab-selected-padding-bottom) var(--vtr-tab-selected-padding-left);
@@ -70,6 +117,9 @@
 /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
 /* } */
 
+/*
+ * 	Hover tabs
+ */
 .tabbrowser-tab:not([selected="true"]):hover {
 	margin: var(--vtr-tab-hover-margin-top) var(--vtr-tab-hover-margin-right) var(--vtr-tab-hover-margin-bottom) var(--vtr-tab-hover-margin-left);
 	padding: var(--vtr-tab-hover-padding-top) var(--vtr-tab-hover-padding-right) var(--vtr-tab-hover-padding-bottom) var(--vtr-tab-hover-padding-left);
@@ -91,6 +141,9 @@
 	border-bottom: var(--vtr-tab-hover-border-bottom);
 }
 
+/*
+ * 	Elementary stuff
+ */
 .tab-label {
 	text-align: left;
 }

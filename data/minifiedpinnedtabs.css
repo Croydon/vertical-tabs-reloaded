@@ -11,5 +11,7 @@
 }
 
 :root {
-	--vtr-tab-pinned-border-left-width: 2px !important;
+    --vtr-tab-pinned-border-left-width: 2px !important;
+    --vtr-tab-pinned-selected-border-left-width: 2px !important;
+    --vtr-tab-pinned-hover-border-left-width: 2px !important;
 }
