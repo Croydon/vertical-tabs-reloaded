@@ -65,7 +65,7 @@ jobs:
           if [[ ! "${{ github.ref }}" == "refs/tags"* ]]; then 
             python dev/script/prepare_dev_release.py ;
             web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} --channel unlisted --artifacts-dir "artifacts" ;
-            git clone https://${GITHUB_BOT_USERNAME}:${GITHUB_BOT_TOKEN}@github.com/croydon/vtr-releases.git vtr-releases ;
+            git clone https://${GITHUB_BOT_USERNAME}:${GITHUB_BOT_TOKEN}@github.com/Croydon/vtr-releases.git vtr-releases ;
             mv -v artifacts/* vtr-releases/files/ ;
             python dev/script/create_dev_release.py ;
             cd vtr-releases ;
