@@ -1,3 +1,6 @@
+# VTR specific
+vtr-releases/*
+
 build
 web-ext-artifacts
 *~
