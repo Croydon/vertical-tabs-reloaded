@@ -1,0 +1,79 @@
+on: [push, pull_request, create]
+
+jobs:
+  tests:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { MANAGER: "npm", FLAGS: "--global", RUN: "web-ext", RUNFLAGS: "lint" }
+          - { MANAGER: "npm", FLAGS: "--global", RUN: "eslint", RUNFLAGS: "." }
+          - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --root ." }
+          - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-css --root ." }
+          - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-svg --root .", ALLOWFAILURE: "true" }
+    name: ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Install ${{ matrix.config.RUN }}
+        run: |
+          set -e
+          ${{ matrix.config.MANAGER }} install ${{ matrix.config.RUN }} ${{ matrix.config.FLAGS }}
+          ${{ matrix.config.RUN }} --version
+          ${{ matrix.config.RUN }} --help
+      - name: Run tests
+        run: |
+          set -e
+          if [[ -z "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} ; fi;
+          if [[ -n "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} || true ; fi;
+  deploy:
+    runs-on: ubuntu-18.04
+    name: Deploy
+    needs: tests
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "50"
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Install web-ext
+        run: |
+          set -e
+          npm install -g web-ext
+          web-ext --version
+      - name: Deploy
+        env:
+          GITHUB_BOT_USERNAME: ${{ secrets.GITHUB_BOT_USERNAME }}
+          GITHUB_BOT_TOKEN: ${{ secrets.GITHUB_BOT_TOKEN }}
+          GITHUB_BOT_NAME: ${{ secrets.GITHUB_BOT_NAME }}
+          GITHUB_BOT_EMAIL: ${{ secrets.GITHUB_BOT_EMAIL }}
+          AMO_API_USER: ${{ secrets.AMO_API_USER }}
+          AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+        run: |
+          set -e
+          if [[ ! "${{ github.ref }}" == "refs/tags"* ]] && [[ "$(git diff --name-only ${{ github.sha }}^ -- manifest.json)" == "" ]]; then echo "Neither tag nor dev release. Exiting ..."; exit 0; fi;
+          if [[ ! "${{ github.ref }}" == "refs/tags"* ]]; then 
+            python dev/script/prepare_dev_release.py ;
+            web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} --channel unlisted --artifacts-dir "artifacts" ;
+            git clone https://${GITHUB_BOT_USERNAME}:${GITHUB_BOT_TOKEN}@github.com/croydon/vtr-releases.git vtr-releases ;
+            mv -v artifacts/* vtr-releases/files/ ;
+            python dev/script/create_dev_release.py ;
+            cd vtr-releases ;
+            git config --global user.name ${GITHUB_BOT_NAME} ; 
+            git config --global user.email ${GITHUB_BOT_EMAIL} ;
+            git add -A ;
+            git commit -am "Automatically publish new version" ;
+            git push ;
+          else
+            web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} || true ;
+          fi
