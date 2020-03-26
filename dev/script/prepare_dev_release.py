@@ -11,6 +11,7 @@ with open(manifestfile, "r") as manifest_file:
 
 with open(manifestfile, "w") as manifest_file:
     manifest["name"] = "VTR (DEVELOPER VERSION)"
+    manifest["sidebar_action"]["default_title"] = "VTR (DEVELOPER VERSION)"
     manifest["applications"]["gecko"]["id"] = "vtrbeta@go-dev.de"
     manifest["applications"]["gecko"]["update_url"] = "https://croydon.github.io/vtr-releases/updates.json"
 
