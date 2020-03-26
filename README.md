@@ -55,6 +55,10 @@ After that you can build the add-on by executing in the project's root directory
 > web-ext build
 
 
+## Developer Version
+You can also install the pre-built [developer version here](https://croydon.github.io/vtr-releases/). By using it you can help me testing new versions before they are getting shipped to everyone.
+
+
 ## Contact
 
 If you want to have a chat with me you can join #vtr:matrix.org with every Matrix client, e.g. Riot:
