@@ -167,6 +167,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         switch (iconURL)
         {
             case "chrome://mozapps/skin/extensions/extensionGeneric-16.svg":
+            case "chrome://mozapps/skin/extensions/extension.svg":
                 return "data/chrome/icon/extension-generic.svg";
 
             case "chrome://mozapps/skin/places/defaultFavicon.svg":
