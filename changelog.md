@@ -1,5 +1,23 @@
 # Changelog
 
+### v0.13.0, 2020-04-20
+ * added: minified pinned tabs - pinned tabs are displayed as favicon-only (opt-out) (#20)
+ * added: invert dark favicons in dark themes to increase visibility (#114, #222)
+ * added: allow drag&drop of tabs to bookmarks (#140)
+ * added: option to display tab buttons on the left (#192)
+ * fixed: tab status "busy" should have higher prio than "unread" (096de79)
+ * fixed: a distributed developer version of VTR is again available (#241)
+ * fixed: displaying of addons manager's favicon in newer Firefox versions (7041f1e)
+ * theme improvements:
+   * bigger font size for the tab title (598dcd6)
+   * bigger toolbar icon size (6234cc5)
+   * further internal improvements for upcoming updates
+ * internal: other improvements and cleanups
+
+
+ ***
+
+
 ### v0.12.1, 2018-12-12
  * fixed: initial tab toolbar position (#215)
 
