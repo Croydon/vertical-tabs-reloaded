@@ -69,7 +69,7 @@ function manage_installation(details)
                     patch = parseInt(previousVersion[2], 10);
                 }
 
-                if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 12) || (major == 0 && minor == 12 && patch < 0)))
+                if(installedVersion != undefined && (major < 0 || (major == 0 && minor < 13) || (major == 0 && minor == 13 && patch < 0)))
                 {
                     if(typeof browser.sidebarAction != "undefined" && typeof browser.sidebarAction.open != "undefined")
                     {

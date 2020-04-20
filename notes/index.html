@@ -44,8 +44,6 @@
 
 					<header>
 						<h2 class="alt">Hi! <strong>Vertical Tabs Reloaded</strong> just got updated.</h2>
-						<p>With the release of <strong>Firefox Quantum 57</strong> all add-ons were required to be re-written from scratch.</p>
-						<p>Due to technical changes, Vertical Tabs Reloaded may <strong>look and behave differently</strong> now.</p>
 						<p>You can <strong>open the tab sidebar</strong> via hotkey (default: Ctrl+Shift+V) or the VTR icon next to the navigation bar.</p>
 					</header>
 				</div>
@@ -55,19 +53,52 @@
 				<div class="container">
 
 					<header>
-						<h2>Changelog Summary for 0.12.0 - Current release</h2>
+						<h2>Changelog Summary for 0.13.0 - Current release</h2>
 					</header>
 					<div class="row">
-						<div class="6u 12u$(mobile) changelog">
+						<div class="8u 12u$(mobile) changelog">
 							<ol>
-								<li><p><strong>New improvements</strong>
-								While sorting your tabs by dragging them around you now get a visual help where the tab will actually be placed when you release the mouse. You will notice a highlighted border. To help you further manage your tabs the tab context menu got now a duplicate tab feature.</p></li>
+								<li>
+									<p><strong>Minified pinned tabs</strong>
+									Pinned tabs are now getting displayed as favicon-only (opt-out). This saves a lot of space for people with many pinned tabs.</p>
+								</li>
 							</ol>
+
+							<ol>
+								<li>
+									<p><strong>Improved visibility of favicons</strong>
+									While using a dark theme, dark favicons are now getting inverted for better accessibility.</p>
+								</li>
+							</ol>
+						</div>
+						<div class="4u 12u$(mobile) changelog">
+							<ol>
+								<li>
+									<p><strong>Further improvements</strong>
+									Tabs can now be dragged & dropped to the bookmark bar to create a new bookmark.<br>
+									Tab icons, like the sound indication and the close button, can now be displayed on the left instead of the right.</p>
+								</li>
+							</ol>
+						</div>
+					</div> 
+					<div class="row">
+						<div class="2u 12u$(mobile) changelog">
+							<!-- dummy -->
 						</div>
 						<div class="6u 12u$(mobile) changelog">
 							<ol>
-								<li><p><strong>Bug fixes</strong>
-								In some cases, the toolbar buttons weren't activated correctly and a click on them had no effect. When you pinning new tabs they didn't always end up in the pinned tab section. The tab status for unloaded tabs used underline instead of strike-through. All of these errors should be fixed now.</p></li>
+								<li>
+									<p><img alt="Visual comparision between version 0.13.0 and 0.12.1"
+											src="https://croydon.github.io/vtr-releases/images/2020/0-13-0-vs-0-12-1.png"></p>
+								</li>
+							</ol>
+						</div>
+						<div class="4u 12u$(mobile) changelog">
+							<ol>
+								<li>
+									<p><img alt="Visual comparision between version 0.13.0 and 0.12.1"
+											src="https://croydon.github.io/vtr-releases/images/2020/0-13-0-bookmark-drag-and-drop.gif"></p>
+								</li>
 							</ol>
 						</div>
 					</div>
@@ -78,13 +109,13 @@
 				<div class="container">
 
 					<header>
-						<h2>Changelog Summary for 0.10.0 - 0.11.0</h2>
+						<h2>Changelog Summary for 0.10.0 - 0.12.1</h2>
 					</header>
 					<div class="row">
 						<div class="4u 12u$(mobile) changelog">
 							<ol>
 								<li><p><strong>New Context Menu Choices</strong>
-								The context menu now includes: Move tab to new window, reload all tabs, close all tabs below, close all tabs above, close all other tabs, bookmark all (visible) tabs, unload tab and restore last closed tab.</p></li>
+								The context menu now includes: Move tab to new window, reload all tabs, close all tabs below, close all tabs above, close all other tabs, bookmark all (visible) tabs, unload tab, duplicate tab and restore last closed tab.</p></li>
 
 								<li><p><strong>Better Interoperability</strong>
 								Support of the tab hide API empowers you to use tab group add-ons or similar add-ons seamless with VTR. Also, VTR settings are getting synchronized via Firefox Sync across devices (opt-out). </p></li>
@@ -102,7 +133,7 @@
 						<div class="4u 12u$(mobile) changelog">
 							<ol>
 								<li><p><strong>Further improvements</strong>
-								The tab context menu closes now automatically, when leaving the sidebar with the mouse and on scrolling. The close button can be displayed now on every tab. Tab tooltip can be configured. Many fixes regarding the private mode, multiple windows, tab closing, context menu and sidebar toggling. Also, it is possible again to change the hotkey which toggles the sidebar.</p></li>
+								The tab context menu closes now automatically, when leaving the sidebar with the mouse and on scrolling. The close button can be displayed now on every tab. Tab tooltip can be configured. Many fixes regarding the private mode, multiple windows, tab closing, context menu and sidebar toggling. Also, it is possible again to change the hotkey which toggles the sidebar. Visual help for drag & drop got added.</p></li>
 							</ol>
 						</div>
 					</div>
@@ -116,7 +147,8 @@
 						<h2>Important changes in 0.9</h2>
 					</header>
 
-					<p>While many things did improve with this update, unfortunately, some functionality was required to be left behind, due to limitations from Firefox itself. <br> Luckily, most <strong>lost features will come back</strong> in the future.</p>
+					<p>With the release of <strong>Firefox Quantum 57</strong> all add-ons were required to be re-written from scratch.</p>
+					<p>Due to technical changes, Vertical Tabs Reloaded may <strong>look and behave differently</strong> now. While many things did improve with this update, unfortunately, some functionality was required to be left behind, due to limitations from Firefox itself. <br> Luckily, most <strong>lost features will come back</strong> in the future.</p>
 
 					<div class="row">
 						<div class="4u 12u$(mobile)">
@@ -175,7 +207,7 @@
 						<li>custom <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/40" target="_blank">tab sidebar themes</a></li>
 						<li>a <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/139" target="_blank">gallery</a> for custom themes</li>
 						<li>new <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/138" target="_blank">native theme</a></li>
-						<li>new  <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/135" target="_blank">compact tabs</a> option and <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/20" target="_blank">minified pinned tabs</a></li>
+						<li>new  <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/135" target="_blank">compact tabs</a> option</li>
 						<li><a href="https://github.com/Croydon/vertical-tabs-reloaded/issues/74" target="_blank">create an API</a> to work nicely together with other add-ons (e. g. tab group add-ons and add-ons similar to Tab Mix Plus)</li>
 						<li>fixing bugs, all of these changes have for sure introduced new ones :)</li>
 						<li>and many, many <a href="https://github.com/Croydon/vertical-tabs-reloaded/issues" target="_blank">other improvements</a>...</li>
