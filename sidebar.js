@@ -478,7 +478,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 }
                 else
                 {
-                    tabElement.style.display = "flex";
+                    tabElement.style.display = "grid";
                 }
                 break;
 
