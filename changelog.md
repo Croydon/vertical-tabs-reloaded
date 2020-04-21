@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.13.1, 2020-04-21
+ * fixed: tab hiding was broken due to recent tab layout changes (#246)
+
+
+ ***
+
+
 ### v0.13.0, 2020-04-20
  * added: minified pinned tabs - pinned tabs are displayed as favicon-only (opt-out) (#20)
  * added: invert dark favicons in dark themes to increase visibility (#114, #222)
