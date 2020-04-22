@@ -1,4 +1,4 @@
-on: [push, pull_request, create]
+on: [push, pull_request]
 
 jobs:
   tests:
