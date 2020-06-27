@@ -829,6 +829,15 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             }
         });
 
+        // Prevent auto-scrolling with middle click if enabled
+        document.getElementById("tabbrowser-tabs").addEventListener("mousedown", (e) =>
+        {
+            if(e.button == "1")
+            {
+                e.preventDefault();
+            }
+        });
+
         // Middle click on free space within the tabbrowser opens a new tab
         document.getElementById("tabbrowser-tabs").addEventListener("mouseup", (e) =>
         {
