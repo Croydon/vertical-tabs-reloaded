@@ -34,9 +34,15 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
         this.toolbar_activate();
 
         let connectName = "sidebarAction-" + this.windowID;
-        let port = browser.runtime.connect({"name": connectName});
-        port.postMessage({"message": {type: "sidebarAction", windowID: this.windowID}});
-
+        let sidebarPort = browser.runtime.connect({"name": connectName});
+        sidebarPort.postMessage({"message": {type: "sidebarAction", windowID: this.windowID}});
+        sidebarPort.onMessage.addListener((message) =>
+        {
+            if(message["message"]["type"] == "temporaryOptionChange")
+            {
+                this.onPreferenceChange(message["message"]["optionName"], message["message"]["optionNewValue"], message["message"]["optionOldValue"]);
+            }
+        });
         this.initialized = true;
     }
 

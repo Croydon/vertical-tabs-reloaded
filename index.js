@@ -2,6 +2,8 @@
 
 /* global utils */
 
+var sidebarPorts = {};
+
 function manage_installation(details)
 {
     utils.options.get_options_file().then(() =>
@@ -94,10 +96,13 @@ browser.runtime.onInstalled.addListener(manage_installation);
 
 browser.runtime.onConnect.addListener((port) =>
 {
+    sidebarPorts[port.name] = port;
+
     if(port.sender.id == browser.runtime.id)
     {
         port.onDisconnect.addListener((port) =>
         {
+            delete sidebarPorts[port.name];
             let portInfo = port.name.split("-");
             if(portInfo[0] == "sidebarAction")
             {
