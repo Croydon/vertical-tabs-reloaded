@@ -150,7 +150,7 @@
     "no-unused-expressions": 2,
 
     // No declaring variables that are never used
-    "no-unused-vars": [2, {"args": "none", "varsIgnorePattern": "^(Cc|Ci|Cr|Cu|EXPORTED_SYMBOLS)$"}],
+    "no-unused-vars": [2, {"args": "none", "varsIgnorePattern": "^(Cc|Ci|Cr|Cu|EXPORTED_SYMBOLS)$|^_"}],
 
     // No using variables and classes before defined
     "no-use-before-define": ["error", {"functions": false, "classes": true, "variables": true }],
