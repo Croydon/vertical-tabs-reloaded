@@ -62,6 +62,7 @@ jobs:
         run: |
           set -e
           if [[ ! "${{ github.ref }}" == "refs/tags"* ]] && [[ "$(git diff --name-only ${{ github.sha }}^ -- manifest.json)" == "" ]]; then echo "Neither tag nor dev release. Exiting ..."; exit 0; fi;
+          python dev/script/check_manifest_version_values.py ;
           if [[ ! "${{ github.ref }}" == "refs/tags"* ]]; then 
             python dev/script/prepare_dev_release.py ;
             web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} --channel unlisted --artifacts-dir "artifacts" ;

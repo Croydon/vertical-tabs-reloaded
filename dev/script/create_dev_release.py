@@ -15,7 +15,14 @@ with open(manifestfile, "r") as manifest_file:
 with open(updatefile, "r") as update_file:
     updates = json.load(update_file)
 
-download_url = "https://croydon.github.io/vtr-releases/files/vtr_developer_version-{}-an+fx.xpi".format(manifest["version"])
+new_version_filename = f"vtr_developer_version-{manifest['version']}_{manifest['version_name']}.xpi"
+
+os.rename(
+    os.path.join("vtr-releases", "files", f"vtr_developer_version-{manifest['version']}.xpi"),
+    os.path.join("vtr-releases", "files", new_version_filename),
+    )
+
+download_url = f"https://croydon.github.io/vtr-releases/files/{new_version_filename}"
 
 with open(updatefile, "w") as update_file:
     new_version = {
