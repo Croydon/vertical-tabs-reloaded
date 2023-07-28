@@ -10,15 +10,19 @@ body {
 }
 
 /* Tab toolbar styling */
-#TabsToolbar:not(:-moz-lwtheme)  {
+#TabsToolbar  {
+	
 	flex: 0 1 var(--vtr-tabbar-height);
 	height: var(--vtr-tabbar-height);
 	border-bottom-left-radius: 0px;
 	box-shadow: none;
 	appearance: none;
-	-moz-border-right-colors: #fcfcfc rgb(154,154,154); /* FIXME: remove? */
 	background-color: var(--vtr-tabbar-background-color);
 	background-image: none;
+}
+
+#TabsToolbar img {
+	filter: var(--vtr-tabbar-filter);
 }
 
 #TabsToolbar[data-position="bottom"]
