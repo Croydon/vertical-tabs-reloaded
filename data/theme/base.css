@@ -7,7 +7,6 @@ body
     flex-flow: column;
     /*overflow-y: hidden;*/
     user-select: none;
-    -moz-user-select: none;
 }
 
 #tabbrowser-tabs {
@@ -144,6 +143,7 @@ body[data-tab-buttons-position="right"] .tabbrowser-tab .tab-buttons .tab-close-
 /* Apply crisp rendering for favicons at exactly 2dppx resolution */
 @media (resolution: 2dppx) {
   .tab-icon-image {
+    image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
   }
 }

@@ -1,9 +1,7 @@
 @import url("font-awesome.min.css");
 /* @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600"); */
 
-/*
-	Prologue by HTML5 UP | html5up.net/license | @ajlkn | CC BY 3.0 license
-*/
+/* Prologue by HTML5 UP | html5up.net/license | @ajlkn | CC BY 3.0 license */
 
 /* Reset */
 
@@ -1777,7 +1775,7 @@
 	form select,
 	form textarea {
 		position: relative;
-		-moz-appearance: none;
+		appearance: none;
 		display: block;
 		border: 0;
 		outline: 0;
@@ -1815,24 +1813,8 @@
 		color: #555 !important;
 	}
 
-	form ::-webkit-input-placeholder {
+	form ::placeholder {
 		color: #555 !important;
-	}
-
-	form :-moz-placeholder {
-		color: #555 !important;
-	}
-
-	form ::-moz-placeholder {
-		color: #555 !important;
-	}
-
-	form :-ms-input-placeholder {
-		color: #555 !important;
-	}
-
-	form ::-moz-focus-inner {
-		border: 0;
 	}
 
 /* Table */
@@ -1946,7 +1928,7 @@
 			font-style: normal;
 			font-weight: normal;
 			line-height: 1;
-			-moz-osx-font-smoothing: grayscale;
+			font-smooth: antialiased;
 		}
 
 		.icon > .label {
@@ -1956,9 +1938,6 @@
 /* Header */
 
 	#header {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -2382,7 +2361,7 @@
 						text-decoration: none;
 						font-style: normal;
 						font-weight: normal;
-						-moz-osx-font-smoothing: grayscale;
+						font-smooth: antialiased;
 						content: '\f0c9';
 						color: #fff;
 						font-size: 18px;
