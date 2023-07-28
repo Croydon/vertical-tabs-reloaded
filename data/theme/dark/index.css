@@ -8,6 +8,7 @@
     /* Tab Toolbar */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1;
+	--vtr-tabbar-filter: invert(77%) sepia(6%) saturate(55%) hue-rotate(131deg) brightness(97%) contrast(81%);
 
 	/* Single tab */
 	--vtr-tab-text-color: #fbfbfb;
