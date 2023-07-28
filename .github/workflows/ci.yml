@@ -53,10 +53,10 @@ jobs:
           web-ext --version
       - name: Deploy
         env:
-          GITHUB_BOT_USERNAME: ${{ secrets.GITHUB_BOT_USERNAME }}
-          GITHUB_BOT_TOKEN: ${{ secrets.GITHUB_BOT_TOKEN }}
-          GITHUB_BOT_NAME: ${{ secrets.GITHUB_BOT_NAME }}
-          GITHUB_BOT_EMAIL: ${{ secrets.GITHUB_BOT_EMAIL }}
+          BOT_USERNAME: ${{ vars.BOT_USERNAME }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_NAME: ${{ vars.BOT_NAME }}
+          BOT_EMAIL: ${{ vars.BOT_EMAIL }}
           AMO_API_USER: ${{ secrets.AMO_API_USER }}
           AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
         run: |
@@ -65,12 +65,12 @@ jobs:
           if [[ ! "${{ github.ref }}" == "refs/tags"* ]]; then 
             python dev/script/prepare_dev_release.py ;
             web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} --channel unlisted --artifacts-dir "artifacts" ;
-            git clone https://${GITHUB_BOT_USERNAME}:${GITHUB_BOT_TOKEN}@github.com/Croydon/vtr-releases.git vtr-releases ;
+            git clone https://${BOT_USERNAME}:${BOT_TOKEN}@github.com/Croydon/vtr-releases.git vtr-releases ;
             mv -v artifacts/* vtr-releases/files/ ;
             python dev/script/create_dev_release.py ;
             cd vtr-releases ;
-            git config --global user.name ${GITHUB_BOT_NAME} ; 
-            git config --global user.email ${GITHUB_BOT_EMAIL} ;
+            git config --global user.name ${BOT_NAME} ; 
+            git config --global user.email ${BOT_EMAIL} ;
             git add -A ;
             git commit -am "Automatically publish new version" ;
             git push ;
