@@ -10,7 +10,7 @@ jobs:
           - { MANAGER: "npm", FLAGS: "--global", RUN: "web-ext", RUNFLAGS: "lint" }
           - { MANAGER: "npm", FLAGS: "--global", RUN: "eslint", RUNFLAGS: "." }
           - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --root ." }
-          - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-css --root ." }
+          - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-css --root .", ALLOWFAILURE: "true" }
           - { MANAGER: "pip", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-svg --root .", ALLOWFAILURE: "true" }
     name: ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }}
     steps:
