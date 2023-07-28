@@ -22,7 +22,8 @@
     "style.tab.pinned.minified": {
         "name": "style.tab.pinned.minified",
         "type": "bool",
-        "title": "Enable minified pinned tabs (icon only)",
+        "title": "Enable minified pinned tabs",
+        "description": "Icon-only view",
         "value": true
     },
     "style.tab.buttons.position": {
@@ -142,7 +143,7 @@
     "options.sync.enabled": {
         "name": "options.sync.enabled",
         "type": "bool",
-        "title": "Sync options across all devices via Firefox Sync",
+        "title": "Sync options across all devices",
         "description": "You need to have Firefox Sync enabled",
         "value": true
     },
