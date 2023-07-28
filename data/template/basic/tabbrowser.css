@@ -5,6 +5,10 @@ body {
 	background-color: var(--vtr-tabbrowser-background-color);
 }
 
+#TabsToolbar {
+	filter: var(--vtr-tabbar-filter);
+}
+
 /* Tab toolbar styling */
 #TabsToolbar:not(:-moz-lwtheme)  {
 	flex: 0 1 var(--vtr-tabbar-height);

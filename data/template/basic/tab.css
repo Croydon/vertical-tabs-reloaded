@@ -181,27 +181,34 @@
 
 /* Keep the close button at a safe distance from the tab label. */
 .tab-close-button {
-	/* right: 4px;
-	 margin-left: 3px !important;
-	 margin-right: 1px !important;
-	 background-color: red;*/
-	 background-position: center center;
-	 width: var(--vtr-tab-button-close-width);
-	 height: var(--vtr-tab-button-close-height);
-	 background-size: var(--vtr-tab-button-close-width) var(--vtr-tab-button-close-height);
+    /* right: 4px;
+	margin-left: 3px !important;
+	margin-right: 1px !important;
+	background-color: red;*/
+	background-position: center center;
+	width: var(--vtr-tab-button-close-width);
+	height: var(--vtr-tab-button-close-height);
+	background-size: var(--vtr-tab-button-close-width) var(--vtr-tab-button-close-height);
+	filter: var(--vtr-tab-button-close-filter);
 }
 
 
 .tabbrowser-tab:not([pinned]) .tab-close-button {
+	background-color: var(--vtr-tab-button-close-regular-background-color);
 	background-image: var(--vtr-tab-button-close-regular-background-image);
+	border-radius: var(--vtr-tab-button-close-regular-border-radius);
 }
 
 .tabbrowser-tab:not([pinned]) .tab-close-button:hover {
+	background-color: var(--vtr-tab-button-close-hover-background-color);
 	background-image: var(--vtr-tab-button-close-hover-background-image);
+	border-radius: var(--vtr-tab-button-close-hover-border-radius);
 }
 
 .tabbrowser-tab:not([pinned]) .tab-close-button:active {
+	background-color: var(--vtr-tab-button-close-active-background-color);
 	background-image: var(--vtr-tab-button-close-active-background-image);
+	border-radius: var(--vtr-tab-button-close-active-border-radius);
 }
 
 /*
@@ -221,6 +228,7 @@
 {
 	background-size: var(--vtr-tab-button-sound-width) var(--vtr-tab-button-sound-height);
 	background-position: center center;
+	filter: var(--vtr-tab-button-sound-filter);
 }
 
 .tab-sound-button-playing {
