@@ -76,13 +76,16 @@
         "96": "data/icon-96.png",
         "128": "data/icon-128.png"
     },
-    "minimum_opera_version": "57.0",
-    "applications":
+    "browser_specific_settings":
     {
         "gecko":
         {
             "id": "verticaltabsreloaded@go-dev.de",
             "strict_min_version": "60.0"
+        },
+        "opera":
+        {
+            "strict_min_version": "57.0"
         }
     }
 }
