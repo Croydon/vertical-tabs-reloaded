@@ -55,8 +55,7 @@
             "dark": "data/icon-32.png",
             "size": 32
         }],
-        "default_title": "Toggle Tab Sidebar",
-        "browser_style": true
+        "default_title": "Toggle Tab Sidebar"
     },
     "commands":
     {
