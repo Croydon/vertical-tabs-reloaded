@@ -818,6 +818,15 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
             utils.tabs.updateTabIndexes();
         });
 
+        // Prevent auto-scrolling with middle click if closing tabs with middle click is enabled
+        document.getElementById("tabbrowser-tabs").addEventListener("mousedown", (e) =>
+        {
+            if (this.preferences("events.tab.close.mouse.middleclick") && e.button == "1")
+            {
+                e.preventDefault();
+            }
+        });
+
         // Doubleclick on free space within the tabbrowser opens a new tab
         document.getElementById("tabbrowser-tabs").addEventListener("dblclick", (e) =>
         {
@@ -826,15 +835,6 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
                 browser.tabs.create({
                     active: true,
                 });
-            }
-        });
-
-        // Prevent auto-scrolling with middle click if enabled
-        document.getElementById("tabbrowser-tabs").addEventListener("mousedown", (e) =>
-        {
-            if(e.button == "1")
-            {
-                e.preventDefault();
             }
         });
 

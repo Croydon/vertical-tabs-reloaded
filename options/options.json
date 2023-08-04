@@ -10,6 +10,7 @@
         "name": "events.tab.close.mouse.middleclick",
         "type": "bool",
         "title": "Close tabs with mouse middle click",
+        "description": "This prevents auto-scrolling via middle click",
         "value": false
     },
     "style.tab.button.close.displayalways": {
