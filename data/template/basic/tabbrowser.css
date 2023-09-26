@@ -5,13 +5,8 @@ body {
 	background-color: var(--vtr-tabbrowser-background-color);
 }
 
-#TabsToolbar {
-	filter: var(--vtr-tabbar-filter);
-}
-
 /* Tab toolbar styling */
 #TabsToolbar  {
-	
 	flex: 0 1 var(--vtr-tabbar-height);
 	height: var(--vtr-tabbar-height);
 	border-bottom-left-radius: 0px;
