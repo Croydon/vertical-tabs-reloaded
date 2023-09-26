@@ -27,8 +27,7 @@
     },
     "options_ui":
     {
-        "page": "options/options.html",
-        "browser_style": true
+        "page": "options/options.html"
     },
     "sidebar_action":
     {

@@ -1,8 +1,26 @@
+html,
 body {
-    font-size: 1.25em;
     background-color: initial;
+    box-sizing: border-box;
+    color: #222426;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    font: caption;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+
 }
 
+body * {
+    box-sizing: border-box;
+    text-align: start;
+}
+
+body {
+    font-size: 1.25em;
+}
 
 @media (prefers-color-scheme: dark) {
     * {
