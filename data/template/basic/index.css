@@ -7,11 +7,21 @@
 :root {
 	/* Tabbrowser */
 	--vtr-tabbrowser-background-color: #FBFBFB;
+	--vtr-tabbrowser-separation-sidebar-border-color: transparent;
+	--vtr-tabbrowser-separation-sidebar-border-style: solid;
+	--vtr-tabbrowser-separation-sidebar-border-width: 0;
 
 	/* Tab Toolbar */
 	--vtr-tabbar-height: 24px;
 	--vtr-tabbar-background-color: #f1f1f1;
 	--vtr-tabbar-filter: inherit;
+	--vtr-tabbar-separation-border-color: rgb(160, 160, 160);
+	--vtr-tabbar-tools-separation-border-color: lightgray;
+	--vtr-tabbar-tools-separation-border-style: solid;
+	--vtr-tabbar-tools-separation-border-width: 1px;
+	--vtr-tabbar-pinned-separation-border-color: transparent;
+	--vtr-tabbar-pinned-separation-border-style: none;
+	--vtr-tabbar-pinned-separation-border-width: 0;
 
 	/* Single tab */
 	--vtr-tab-text-color: #333333;

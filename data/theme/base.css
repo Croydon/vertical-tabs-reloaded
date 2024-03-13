@@ -33,7 +33,6 @@ body
 #TabsToolbar span {
     padding-left: 6px;
     padding-right: 6px;
-    border-right: 1px solid lightgray;
 }
 
 #TabsToolbar span:hover {

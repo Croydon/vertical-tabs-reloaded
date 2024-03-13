@@ -3,6 +3,12 @@ body {
 	padding: 0;
 	background: transparent;
 	background-color: var(--vtr-tabbrowser-background-color);
+	border-right-color: var(--vtr-tabbrowser-separation-sidebar-border-color);
+	border-right-style: var(--vtr-tabbrowser-separation-sidebar-border-style);
+	border-right-width: var(--vtr-tabbrowser-separation-sidebar-border-width);
+	border-left-color: var(--vtr-tabbrowser-separation-sidebar-border-color);
+	border-left-style: var(--vtr-tabbrowser-separation-sidebar-border-style);
+	border-left-width: var(--vtr-tabbrowser-separation-sidebar-border-width);
 }
 
 /* Tab toolbar styling */
@@ -20,12 +26,24 @@ body {
 	filter: var(--vtr-tabbar-filter);
 }
 
+#TabsToolbar span:not(:last-child) {
+	border-right-color: var(--vtr-tabbar-tools-separation-border-color);
+	border-right-style: var(--vtr-tabbar-tools-separation-border-style);
+	border-right-width: var(--vtr-tabbar-tools-separation-border-width);
+}
+
 #TabsToolbar[data-position="bottom"]
 {
-	border-top: 1px solid rgb(160,160,160);
+	border-top: 1px solid var(--vtr-tabbar-separation-border-color);
 }
 
 #TabsToolbar[data-position="top"]
 {
-	border-bottom: 1px solid rgb(160,160,160);
+	border-bottom: 1px solid var(--vtr-tabbar-separation-border-color);
+}
+
+#tabbrowser-tabs-pinned {
+	border-bottom-color: var(--vtr-tabbar-pinned-separation-border-color);
+	border-bottom-style: var(--vtr-tabbar-pinned-separation-border-style);
+	border-bottom-width: var(--vtr-tabbar-pinned-separation-border-width);
 }
