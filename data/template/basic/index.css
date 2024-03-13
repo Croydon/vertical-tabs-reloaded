@@ -162,12 +162,22 @@
 	--vtr-tab-button-close-regular-background-color: inherit;
 	--vtr-tab-button-close-regular-background-image: url("../../template/basic/icons/light/close-regular.png");
 	--vtr-tab-button-close-hover-background-color: inherit;
+	--vtr-tab-button-close-regular-border-radius: 0px;
+	--vtr-tab-button-close-regular-border-color: transparent;
+	--vtr-tab-button-close-regular-border-style: none;
+	--vtr-tab-button-close-regular-border-width: 0px;
+	--vtr-tab-button-close-hover-background-color: inherit;
 	--vtr-tab-button-close-hover-border-radius: 0px;
+	--vtr-tab-button-close-hover-border-color: transparent;
+	--vtr-tab-button-close-hover-border-style: none;
+	--vtr-tab-button-close-hover-border-width: 0px;
 	--vtr-tab-button-close-hover-background-image: url("../../template/basic/icons/light/close-hover.png");
 	--vtr-tab-button-close-active-background-color: inherit;
-	--vtr-tab-button-close-active-border-radius: 0px;
 	--vtr-tab-button-close-active-background-image: url("../../template/basic/icons/light/close-active.png");
 	--vtr-tab-button-close-active-border-radius: 0px;
+	--vtr-tab-button-close-active-border-color: transparent;
+	--vtr-tab-button-close-active-border-style: none;
+	--vtr-tab-button-close-active-border-width: 0px;
 
 	/* Sound buttons */
 	--vtr-tab-button-sound-width: 18px;

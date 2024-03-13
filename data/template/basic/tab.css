@@ -197,18 +197,27 @@
 	background-color: var(--vtr-tab-button-close-regular-background-color);
 	background-image: var(--vtr-tab-button-close-regular-background-image);
 	border-radius: var(--vtr-tab-button-close-regular-border-radius);
+	border-color: var(--vtr-tab-button-close-regular-border-color);
+	border-style: var(--vtr-tab-button-close-regular-border-style);
+	border-width: var(--vtr-tab-button-close-regular-border-width);
 }
 
 .tabbrowser-tab:not([pinned]) .tab-close-button:hover {
 	background-color: var(--vtr-tab-button-close-hover-background-color);
 	background-image: var(--vtr-tab-button-close-hover-background-image);
 	border-radius: var(--vtr-tab-button-close-hover-border-radius);
+	border-color: var(--vtr-tab-button-close-hover-border-color);
+	border-style: var(--vtr-tab-button-close-hover-border-style);
+	border-width: var(--vtr-tab-button-close-hover-border-width);
 }
 
 .tabbrowser-tab:not([pinned]) .tab-close-button:active {
 	background-color: var(--vtr-tab-button-close-active-background-color);
 	background-image: var(--vtr-tab-button-close-active-background-image);
 	border-radius: var(--vtr-tab-button-close-active-border-radius);
+	border-color: var(--vtr-tab-button-close-active-border-color);
+	border-style: var(--vtr-tab-button-close-active-border-style);
+	border-width: var(--vtr-tab-button-close-active-border-width);
 }
 
 /*
