@@ -165,6 +165,9 @@
 	--vtr-tab-pinned-hover-padding-bottom: var(--vtr-tab-hover-padding-bottom);
 	--vtr-tab-pinned-hover-padding-left: var(--vtr-tab-hover-padding-left);
 
+	/* Favicon */
+	--vtr-tab-icon-invert-dark-icons: 0;
+
 	/* Close buttons */
 	--vtr-tab-button-close-width: 20px;
 	--vtr-tab-button-close-height: 20px;

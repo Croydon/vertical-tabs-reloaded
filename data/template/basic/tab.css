@@ -175,6 +175,10 @@
 	opacity: 1;
 }
 
+.tab-icon-image-dark {
+	filter: invert(var(--vtr-tab-icon-invert-dark-icons));
+}
+
 .tabbrowser-tab:not(:hover):not([selected="true"]) .tab-close-button {
 	display: none;
 }

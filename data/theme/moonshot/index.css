@@ -122,6 +122,9 @@
 	--vtr-tab-hover-border-top: 2px solid #FFFFFF;
 	--vtr-tab-hover-border-bottom: 2px solid #FFFFFF;
 
+	/* Favicon */
+	--vtr-tab-icon-invert-dark-icons: 0.8;
+
 	/* Close button */
 	--vtr-tab-button-close-width: 18px;
 	--vtr-tab-button-close-height: 18px;

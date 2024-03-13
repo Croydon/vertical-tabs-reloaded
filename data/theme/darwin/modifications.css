@@ -17,10 +17,6 @@
     /*opacity: 0.7;   turn black into #b9b9b9
 }*/
 
-.tab-icon-image-dark {
-    filter: invert(1);
-}
-
 .tab-close-button:active {
      opacity: 0.75;   /* turn black into #8a8a8a */
 }
