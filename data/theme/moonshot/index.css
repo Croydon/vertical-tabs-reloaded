@@ -53,15 +53,8 @@
 	--vtr-tab-padding-left: 0;
 
 	/* Single tab selected */
-	/* --vtr-tab-selected-text-color: #fbfbfb; */
 	--vtr-tab-selected-text-color: #ddd;
-	/* --vtr-tab-selected-text-color: #888888; */
-	/* --vtr-tab-selected-background-color: #09f; */
-	--vtr-tab-selected-background-color: #09f;
 	--vtr-tab-selected-background-color: #0d456a;
-	/* --vtr-tab-selected-background-color: #001aff; */
-	/* --vtr-tab-selected-background: #09f; */
-	/* --vtr-tab-selected-background: #001aff; */
 	--vtr-tab-selected-background: #0d456a;
 	--vtr-tab-selected-font-weight: normal;
 	--vtr-tab-selected-text-shadow: none;
@@ -89,13 +82,8 @@
 
 	/* Single tab pinned */
 	--vtr-tab-pinned-text-color: #fbfbfb;
-	/* --vtr-tab-pinned-background-color: #0d456a; */
-	/* --vtr-tab-pinned-background-color: #0d6a61; */
 	--vtr-tab-pinned-background-color: var(--vtr-tab-background-color);
-	/* --vtr-tab-pinned-background-color: #132097; */
-	/* --vtr-tab-pinned-background: #27323B; */
 	--vtr-tab-pinned-background: var(--vtr-tab-background-color);
-	/* --vtr-tab-pinned-background: #132097; */
 	--vtr-tab-pinned-font-weight: inherit;
 	--vtr-tab-pinned-text-shadow: none;
 	--vtr-tab-pinned-border-radius: 0;
