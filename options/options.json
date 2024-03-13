@@ -105,7 +105,11 @@
 			{
 				"value": "feather",
 				"label": "Feather"
-			}
+			},
+            {
+                "value": "moonshot",
+                "label": "Moonshot"
+            }
 		]
 	},
 	"tabtoolbarPosition": {
