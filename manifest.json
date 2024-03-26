@@ -81,10 +81,6 @@
         {
             "id": "verticaltabsreloaded@go-dev.de",
             "strict_min_version": "60.0"
-        },
-        "opera":
-        {
-            "strict_min_version": "57.0"
         }
     }
 }
