@@ -1,6 +1,5 @@
 "use strict";
 
-/* exported main utils log */
 
 var main;
 var utils;
