@@ -31,8 +31,13 @@ jobs:
       - name: Run tests
         run: |
           set -e
-          if [[ -z "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} ; fi;
-          if [[ -n "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} || true ; fi;
+          if [[ -z "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} | tee test-output.log ; fi;
+          if [[ -n "${{ matrix.config.ALLOWFAILURE }}" ]]; then ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }} || true | tee test-output.log ; fi;
+      - name: Display test results on CI summary
+        run: |
+          echo "## Test results for ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }}" >> $GITHUB_STEP_SUMMARY
+          cat test-output.log >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
   deploy:
     runs-on: ubuntu-24.04
     name: Deploy
