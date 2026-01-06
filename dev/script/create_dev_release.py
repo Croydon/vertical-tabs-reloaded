@@ -22,7 +22,7 @@ os.rename(
     os.path.join("vtr-releases", "files", new_version_filename),
     )
 
-download_url = f"https://croydon.github.io/vtr-releases/files/{new_version_filename}"
+download_url = f"https://files.addons.cr0ydon.eu/vtr/files/{new_version_filename}"
 
 with open(updatefile, "w") as update_file:
     new_version = {

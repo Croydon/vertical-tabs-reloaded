@@ -17,7 +17,7 @@ with open(manifestfile, "w") as manifest_file:
     manifest["version_name"] = f"{version_three_digits}-alpha.{version_fourth_digit}"
     manifest["sidebar_action"]["default_title"] = "VTR (DEVELOPER VERSION)"
     manifest["browser_specific_settings"]["gecko"]["id"] = "vtrbeta@go-dev.de"
-    manifest["browser_specific_settings"]["gecko"]["update_url"] = "https://croydon.github.io/vtr-releases/updates.json"
+    manifest["browser_specific_settings"]["gecko"]["update_url"] = "https://files.addons.cr0ydon.eu/vtr/updates.json"
 
     manifest = json.dumps(manifest, indent=4)
     manifest_file.write("{}\n".format(manifest))
