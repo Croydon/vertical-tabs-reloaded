@@ -6,8 +6,9 @@ import os
 manifest = None
 updates = None
 manifestfile = os.path.join("manifest.json")
-updatefile = os.path.join("vtr-releases", "updates.json")
-webpage = os.path.join("vtr-releases", "index.html")
+root_addon_dir = os.path.join("browser-addons-files", "vtr")
+updatefile = os.path.join(root_addon_dir, "updates.json")
+webpage = os.path.join(root_addon_dir, "index.html")
 
 with open(manifestfile, "r") as manifest_file:
     manifest = json.load(manifest_file)
@@ -18,8 +19,8 @@ with open(updatefile, "r") as update_file:
 new_version_filename = f"vtr_developer_version-{manifest['version']}_{manifest['version_name']}.xpi"
 
 os.rename(
-    os.path.join("vtr-releases", "files", f"vtr_developer_version-{manifest['version']}.xpi"),
-    os.path.join("vtr-releases", "files", new_version_filename),
+    os.path.join(root_addon_dir, "files", f"vtr_developer_version-{manifest['version']}.xpi"),
+    os.path.join(root_addon_dir, "files", new_version_filename),
     )
 
 download_url = f"https://files.addons.cr0ydon.eu/vtr/files/{new_version_filename}"

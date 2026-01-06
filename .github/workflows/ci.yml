@@ -72,10 +72,10 @@ jobs:
           if [[ ! "${{ github.ref }}" == "refs/tags"* ]]; then 
             python dev/script/prepare_dev_release.py ;
             npx web-ext sign --api-key=${AMO_API_USER} --api-secret=${AMO_API_SECRET} --channel unlisted --artifacts-dir "artifacts" ;
-            git clone https://${BOT_USERNAME}:${BOT_TOKEN}@github.com/Croydon/vtr-releases.git vtr-releases ;
-            mv -v artifacts/* vtr-releases/files/ ;
+            git clone https://${BOT_USERNAME}:${BOT_TOKEN}@github.com/Croydon/browser-addons-files.git browser-addons-files ;
+            mv -v artifacts/* browser-addons-files/vtr/files/ ;
             python dev/script/create_dev_release.py ;
-            cd vtr-releases ;
+            cd browser-addons-files/vtr/ ;
             git config --global user.name ${BOT_NAME} ; 
             git config --global user.email ${BOT_EMAIL} ;
             git add -A ;
