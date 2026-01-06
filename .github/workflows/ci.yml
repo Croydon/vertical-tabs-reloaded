@@ -10,9 +10,9 @@ jobs:
         config:
           - { MANAGER: "npm", PACKAGE: "web-ext", FLAGS: "", RUN: "npx web-ext", RUNFLAGS: "lint" }
           - { MANAGER: "npm", PACKAGE: "eslint", FLAGS: "", RUN: "npx eslint", RUNFLAGS: "." }
-          - { MANAGER: "pip", PACKAGE: "html5validator", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --root ." }
-          - { MANAGER: "pip", PACKAGE: "html5validator", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-css --root .", ALLOWFAILURE: "true" }
-          - { MANAGER: "pip", PACKAGE: "html5validator", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-svg --root .", ALLOWFAILURE: "true" }
+          - { MANAGER: "pip", PACKAGE: "html5validator-2", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --root ." }
+          - { MANAGER: "pip", PACKAGE: "html5validator-2", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-css --root .", ALLOWFAILURE: "true" }
+          - { MANAGER: "pip", PACKAGE: "html5validator-2", FLAGS: "", RUN: "html5validator", RUNFLAGS: "--show-warnings --skip-non-svg --root .", ALLOWFAILURE: "true" }
     name: ${{ matrix.config.RUN }} ${{ matrix.config.RUNFLAGS }}
     steps:
       - uses: actions/checkout@v4
