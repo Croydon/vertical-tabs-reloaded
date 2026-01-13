@@ -2,7 +2,7 @@
     "name": "Vertical Tabs Reloaded",
     "short_name": "VTR",
     "description": "This Firefox add-on arranges tabs in a vertical rather than horizontal fashion.",
-    "version": "0.14.0.14",
+    "version": "0.14.0.15",
     "version_name": "0.14.0",
     "manifest_version": 2,
     "author": "Michael 'Croydon' Keck",
@@ -32,28 +32,12 @@
     "sidebar_action":
     {
         "default_title": "Vertical Tabs Reloaded",
-        "default_icon": "data/icon-16.png",
+        "default_icon": "data/icon/icon_small.svg",
         "default_panel": "vtr.html"
     },
     "browser_action":
     {
-        "default_icon":
-        {
-            "16": "data/icon-16.png",
-            "48": "data/icon.png",
-            "96": "data/icon-96.png",
-            "128": "data/icon-128.png"
-        },
-        "theme_icons": [{
-            "light": "data/icon/icon-16-white.png",
-            "dark": "data/icon-16.png",
-            "size": 16
-        },
-        {
-            "light": "data/icon/icon-32-white.png",
-            "dark": "data/icon-32.png",
-            "size": 32
-        }],
+        "default_icon": "data/icon/icon_small.svg",
         "default_title": "Toggle Tab Sidebar",
         "default_area": "navbar"
     },
@@ -68,12 +52,12 @@
             "description": "Hotkey for showing/hiding the tab sidebar"
         }
     },
-    "icons":
+    "icons": 
     {
-        "16": "data/icon-16.png",
-        "48": "data/icon.png",
-        "96": "data/icon-96.png",
-        "128": "data/icon-128.png"
+        "16": "data/icon/icon_small.svg",
+        "48": "data/icon/icon_small.svg",
+        "96": "data/icon/icon_small.svg",
+        "128": "data/icon/icon_small.svg"
     },
     "browser_specific_settings":
     {
