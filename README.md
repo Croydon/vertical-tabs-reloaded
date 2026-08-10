@@ -44,7 +44,7 @@ While full support for a year would be nice, it would mean freezing features for
 
 ### Firefox ESR 52 users
 
-Install the version v0.8.2 from here: https://addons.mozilla.org/de/firefox/addon/vertical-tabs-reloaded/versions/?page=1#version-0.8.2
+Install the version v0.8.2 from here: https://github.com/Croydon/vertical-tabs-reloaded/releases/tag/0.8.2
 
 
 ## Building
