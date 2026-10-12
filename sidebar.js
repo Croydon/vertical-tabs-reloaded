@@ -129,10 +129,7 @@ let VerticalTabsReloaded = class VerticalTabsReloaded
 
         setTimeout(() =>
         {
-            if(utils.dom.isElementInVisibleArea(tabElement) == false)
-            {
-                tabElement.scrollIntoView({block: "end", behavior: "smooth"});
-            }
+            tabElement.scrollIntoView({block: "nearest", behavior: "smooth"});
         }, 400);
         // FIREFIX: FIXME: time could be reduced till ~200 when https://bugzilla.mozilla.org/show_bug.cgi?id=1387372 is fixed
     }
